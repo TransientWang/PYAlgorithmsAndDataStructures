@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 if __name__ == '__main__':
-    list = [30.0, 40.0, 60.0, 70.0,10.0,196.0]
+    list = [30, 40, 60, 70,10,196]
     mList = []
-    r = [[0.0 for i in range(len(list))] for i in range(len(list))]  # 辅助数组 r[i][j] 代表i应该给j的钱数
-    mid = 0.0
+    r = [[0 for i in range(len(list))] for i in range(len(list))]  # 辅助数组 r[i][j] 代表i应该给j的钱数
+    mid = 0
     for i in range(0, len(list)):
         mid += list[i]
     mid /= len(list);
