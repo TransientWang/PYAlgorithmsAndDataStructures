@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
             rightChild.setX(t, False)
             queue.put(rightChild)  # 右孩子入队
-    # TODO  这个算法还没有彻底理解，应当在看看
+    # TODO  这个算法还没有彻底理解，应当再看看
     print('total:%d' % (bestp))
     for i in range(len(list)):
         # if bestX[i]:
