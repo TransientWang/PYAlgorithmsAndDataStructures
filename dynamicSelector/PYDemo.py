@@ -1,18 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 if __name__ == '__main__':
-    # list = [2, 1, 3, 4, 2, 3]
-    # min = 0
-    # smin = 100
-    # moden = 0
-    # fin = list[0]
-    # res = []
-    #
-    #
-    # def re(t, res):
-    #     if t == len(list) - 1:
-    #         res.append(1)
-    #     # for i in range(t, len(list)):
 
 
     def counts():
