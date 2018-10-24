@@ -69,44 +69,46 @@ if __name__ == '__main__':
 
     queue = Queue.Queue()
     list = [goods(2, 6), goods(5, 3), goods(4, 5), goods(2, 4)]
-    t, tcp, trp, trw = 0, 0, 0, 0
-    bestp, W, n, sumw, sumv = 0, 10, 0, 13, 18
-    bestX = [False for i in range(len(list))]
+    t, tcp, trp, trw = 0, 0, 0, 0  # t:当前处理的序号tcp:当前状物购物车物品价值 trp:当前剩余物品价值 trw:当前剩余容量
+    bestp, W, n, sumw, sumv = 0, 10, 0, 13, 18  # bestp当前最优值 W购物车承重  sumw 当前重量 sumv当前价值
+    bestX = [False for i in range(len(list))]  # 记录结果 哪些装了
     queue.put(Node(0, sumv, W, 0))
     while not queue.empty():
         liveNode = queue.get()
-
         t = liveNode.getId()
+        # 搜到最后一个物品进行结算
         if t > len(list) - 1 or liveNode.getRw() == 0:
             if liveNode.getCp() >= bestp:
                 for i in range(len(list)):
                     bestX[i] = liveNode.getX(i)
                 bestp = liveNode.getCp()
             continue
-
+        # 剪枝条件 当前价值 加上剩余价值  没有最优价值大的话就不用计算了
         if liveNode.getCp() + liveNode.getRp() < bestp:
             continue
 
-        tcp = liveNode.getCp()
-        trp = liveNode.getRp() - list[t].getValue()
-        trw = liveNode.getRw()
-        if trw >= list[t].getWeight():
-            leftChild = Node(tcp + list[t].getValue(), trp, trw - list[t].getWeight(), t + 1)
-            for i in range(1, t):
-                leftChild.setX(i,liveNode.getX(i))
-            leftChild.setX(t,True)
-            if leftChild.getCp() >= bestp:
-                bestp = leftChild.getCp()
-            queue.put(leftChild)
+        tcp = liveNode.getCp()  # 当前购物车中的价值
+        trp = liveNode.getRp() - list[t].getValue()  # 剩余价值，不管转入与否，当前剩余价值都会减少
+        trw = liveNode.getRw()  # 剩余容量
 
-        if tcp + trp >= bestp:
-            rightChild = Node(tcp, trp, trw, t + 1)
+        if trw >= list[t].getWeight():  # 满足条件的才会装入购物车
+            leftChild = Node(tcp + list[t].getValue(), trp, trw - list[t].getWeight(), t + 1)  # 下一节点 传递参数
             for i in range(0, t):
-                rightChild.setX(i, liveNode.getX(i))
+                leftChild.setX(i, liveNode.getX(i))  # 复制之前的解向量
+            leftChild.setX(t, True)
+            if leftChild.getCp() >= bestp:  # 比最优值大就更新
+                bestp = leftChild.getCp()
+            queue.put(leftChild)  # 做孩子入队
 
-            rightChild.setX(t,False)
-            queue.put(rightChild)
+        # 扩展右孩子
+        if tcp + trp >= bestp:  # 满足条件不放入购物车
+            rightChild = Node(tcp, trp, trw, t + 1)  # 向下传递参数
+            for i in range(0, t):
+                rightChild.setX(i, liveNode.getX(i))  # 复制解向量
 
+            rightChild.setX(t, False)
+            queue.put(rightChild)  # 右孩子入队
+    # TODO  这个算法还没有彻底理解，应当在看看
     print('total:%d' % (bestp))
     for i in range(len(list)):
         # if bestX[i]:
