@@ -111,5 +111,4 @@ if __name__ == '__main__':
     # TODO  这个算法还没有彻底理解，应当再看看
     print('total:%d' % (bestp))
     for i in range(len(list)):
-        # if bestX[i]:
         print(bestX[i]),
