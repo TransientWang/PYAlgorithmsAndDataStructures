@@ -63,14 +63,14 @@ if __name__ == '__main__':
     queue = Queue.Queue()
     list = [goods(2, 6), goods(5, 3), goods(4, 5), goods(2, 4)]
     t, tcp, trp, trw = 0, 0, 0, 0
-    bestp, W, n, sumw, sumv = 0, 10, 0, 0, 0
-    bestX = [0 for i in range(len(list))]
-    queue.put(Node(0, sumv, W, 1))
+    bestp, W, n, sumw, sumv = 0, 10, 0, 13, 18
+    bestX = [False for i in range(len(list))]
+    queue.put(Node(0, sumv, W, 0))
     while not queue.empty():
         liveNode = queue.get()
         t = liveNode.getId()
         if t > len(list) - 1 or liveNode.getRw() == 0:
-            if liveNode.getCp > bestp:
+            if liveNode.getCp() >= bestp:
                 for i in range(len(list)):
                     bestX[i] = liveNode._x[i]
                 bestp = liveNode.getCp()
@@ -87,7 +87,7 @@ if __name__ == '__main__':
             for i in range(t):
                 leftChild._x[i] = liveNode._x[i]
             leftChild._x[t] = True
-            if leftChild.getCp() > bestp:
+            if leftChild.getCp() >= bestp:
                 bestp = leftChild.getCp()
             queue.put(leftChild)
 
@@ -100,5 +100,5 @@ if __name__ == '__main__':
 
     print('total:%d' % (bestp))
     for i in range(len(list)):
-        if bestX[i]:
-            print(i),
+        # if bestX[i]:
+            print(bestX[i]),
