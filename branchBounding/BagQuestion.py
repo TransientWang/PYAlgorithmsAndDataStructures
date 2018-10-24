@@ -7,13 +7,20 @@ class Node:
     __rp = 0
     __rw = 0
     __id = 0
-    _x = [False for i in range(4)]
+    __x = [True for i in range(4)]
 
     def __init__(self, cp=0, rp=0, rw=0, id=0):
         self.__cp = cp
         self.__rp = rp
         self.__rw = rw
         self.__id = id
+        self.__x = [True for i in range(4)]
+
+    def setX(self, index, bol):
+        self.__x[index] = bol
+
+    def getX(self, index):
+        return self.__x[index]
 
     def getCp(self):
         return self.__cp
@@ -68,11 +75,12 @@ if __name__ == '__main__':
     queue.put(Node(0, sumv, W, 0))
     while not queue.empty():
         liveNode = queue.get()
+
         t = liveNode.getId()
         if t > len(list) - 1 or liveNode.getRw() == 0:
             if liveNode.getCp() >= bestp:
                 for i in range(len(list)):
-                    bestX[i] = liveNode._x[i]
+                    bestX[i] = liveNode.getX(i)
                 bestp = liveNode.getCp()
             continue
 
@@ -84,21 +92,22 @@ if __name__ == '__main__':
         trw = liveNode.getRw()
         if trw >= list[t].getWeight():
             leftChild = Node(tcp + list[t].getValue(), trp, trw - list[t].getWeight(), t + 1)
-            for i in range(t):
-                leftChild._x[i] = liveNode._x[i]
-            leftChild._x[t] = True
+            for i in range(1, t):
+                leftChild.setX(i,liveNode.getX(i))
+            leftChild.setX(t,True)
             if leftChild.getCp() >= bestp:
                 bestp = leftChild.getCp()
             queue.put(leftChild)
 
         if tcp + trp >= bestp:
-            rightNode = Node(tcp, trp, trw, t + 1)
-            for i in range(t):
-                rightNode._x[i] = liveNode._x[i]
-            rightNode._x[t] = False
-            queue.put(rightNode)
+            rightChild = Node(tcp, trp, trw, t + 1)
+            for i in range(0, t):
+                rightChild.setX(i, liveNode.getX(i))
+
+            rightChild.setX(t,False)
+            queue.put(rightChild)
 
     print('total:%d' % (bestp))
     for i in range(len(list)):
         # if bestX[i]:
-            print(bestX[i]),
+        print(bestX[i]),
