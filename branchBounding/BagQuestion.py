@@ -7,7 +7,7 @@ class Node:
     __rp = 0
     __rw = 0
     __id = 0
-    _x = [0 for i in range(4)]
+    _x = [False for i in range(4)]
 
     def __init__(self, cp=0, rp=0, rw=0, id=0):
         self.__cp = cp
