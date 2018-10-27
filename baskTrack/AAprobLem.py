@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
-
+'''
+AA制
+'''
 if __name__ == '__main__':
-    list = [30, 40, 60, 70,10,90]
+    list = [30, 40, 60, 70, 10, 90]
     mList = []
     r = [[0 for i in range(len(list))] for i in range(len(list))]  # 辅助数组 r[i][j] 代表i应该给j的钱数
     mid = 0
@@ -25,5 +27,5 @@ if __name__ == '__main__':
     for i in range(0, len(list)):
         for j in range(0, len(list)):
             if r[i][j] <> 0:
-                print(i, " gave ",r[i][j]," to ", j)
+                print(i, " gave ", r[i][j], " to ", j)
     print(mList)
