@@ -33,6 +33,25 @@ def score(self, value):
         self._score = value
 
 
+class Fib(object):
+    def __init__(self):
+        self.a,self.b = 0,1
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        print("我被调用"),
+        self.a,self.b = self.b,self.a+self.b
+        if self.a > 1000:
+            raise StopIteration
+        return self.a
+
+    def __getitem__(self, item):
+        a,b =1,1
+        for i in range(item):
+            a,b=b,a+b
+        return a
 if __name__ == '__main__':
     s = Student()
     s._score = 99
@@ -41,3 +60,9 @@ if __name__ == '__main__':
     print(s.score)
     s.birth = 2000
     print(s.age)
+
+    f = Fib()
+    for n in f:
+        print(n),
+    print()
+    print(f[3])
