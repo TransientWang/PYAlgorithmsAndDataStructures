@@ -6,10 +6,12 @@ class MyMetaClass(type):
         # print(cls)
         # print("\n")
         # print(args[1])
-        # kwargs["add"] = lambda self, value: self.append(value)
+        kwargs["add"] = lambda self, value: self.append(value)
         # print("\n")
         # print(kwargs.keys())
-        return type( "add",(list,), {"add":lambda self, value: self.append(value)})
+        # print("\n")
+        # return type( "add",(list,), kwargs)
+        return type(args[0],args[1], kwargs)
 
 class MyList(list):
     __metaclass__ = MyMetaClass
@@ -19,3 +21,4 @@ if __name__ == '__main__':
         li.add(1)
         li.add(2)
         print(li)
+        print(li.__class__)
