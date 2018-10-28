@@ -3,10 +3,9 @@
 动态规划
 '''
 
-
 '''
 爬楼梯问题
-一、最优解的机结构特征
+一、最优解的结构特征
     三种情况
         （1）当只有一阶楼梯时，只有一种解 ：爬一节
         （2）当有两阶楼梯时，有两种解：1、一次爬两阶 2、两次，每次爬一阶
@@ -62,16 +61,19 @@ def lengthOfLastWord(s):
     return res
 
 
-
-
-
 '''
-    一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
 
 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
 
 问总共有多少条不同的路径？
+
+一、最优解的结构特征
+    
+    
 '''
+
+
 def uniquePaths(m, n):
     """
     :type m: int
@@ -91,6 +93,46 @@ def uniquePaths(m, n):
     return uniquePathsSolution(1, 1, m, n)
 
 
+'''
+给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+
+说明：每次只能向下或者向右移动一步。
+一、分析最优解的结构特征
+    假设极端情况  当只有一行一列时  最优解就是grid[0][0]
+    有一行或者一列时 最优解 就是 这一行或者一列的和
+    在多行多列的情况时从自顶点向下来看 到每个点的最小距离为能到达它的两个前顶点中最小的一个解
+'''
+
+
+def minPathSum(grid):
+    """
+    :type grid: List[List[int]]
+    :rtype: int
+    """
+
+    res = [[0 for aa in range(len(grid[0]))] for bb in range(len(grid))]
+    res[0][0] = grid[0][0]
+
+    for i in range(1, len(grid[0])):
+        res[0][i] = grid[0][i] + res[0][i - 1]
+    for j in range(1, len(grid)):
+        res[j][0] = grid[j][0] + res[j - 1][0]
+    for x in range(1, len(grid)):
+        for y in range(1, len(grid[0])):
+            res[x][y] = res[x - 1][y] + grid[x][y] if res[x - 1][y] < res[x][y - 1] else res[x][y - 1] + grid[x][y]
+    for x in range(0, len(grid)):
+        for y in range(0, len(grid[0])):
+            print(res[x][y]),
+        print("\n")
+    return res[len(grid) - 1][len(grid[0]) - 1]
+
+
 if __name__ == '__main__':
-    print(uniquePaths(3,2))
+    grid = [
+  [1,3,1],
+  [1,5,1],
+  [4,2,1]
+]
+    print(minPathSum(grid))
+
 
