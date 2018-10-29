@@ -127,12 +127,54 @@ def minPathSum(grid):
     return res[len(grid) - 1][len(grid[0]) - 1]
 
 
+'''
+给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+
+如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+
+注意你不能在买入股票前卖出股票。
+一、分析问题的最优子结构特征
+        极端情况数组长度为1代表只有1天股票交易  那么最大收益为0
+        普通情况买进 日一定比卖出日小 才有肯能获得收益
+        重叠的子问题就是 最小买进 
+
+'''
+
+
+def maxProfit(prices):
+    """
+    :type prices: List[int]
+    :rtype: int
+    """
+    lens = len(prices)
+    max = 0  # 有没有一个初始值？
+    cmax = 0
+    for i in range(len(prices)):
+        k = i + 1
+        for j in range(0,k):
+            if prices[lens - j - 1] > prices[lens - i - 1]:
+                cmax = prices[lens - j - 1] - prices[lens - i - 1]
+                if cmax > max:
+                    max = cmax
+    return max
+'''
+TODO此问题应该在看看
+'''
+def maxProfit1(prices):
+    """
+    :type prices: List[int]
+    :rtype: int
+    """
+    if prices == None or len(prices) ==0:
+        return 0
+    Min = prices[0] #最小的时候买入
+    res =0 #结果
+    for i in prices:
+        Min = min(Min, i)  # 遍历到目前为止 Min总是最小值
+        res = max(res, i - Min)     #i-Min代表当前值减去当前最小值的一个比较 注意 当前最小值的索引一直在当前遍历位置之后
+                                    #也就是代表当前卖出减去最小买入
+
+    return res
+
 if __name__ == '__main__':
-    grid = [
-  [1,3,1],
-  [1,5,1],
-  [4,2,1]
-]
-    print(minPathSum(grid))
-
-
+    print(maxProfit1([7, 1, 5, 3, 6, 4]))
