@@ -160,15 +160,14 @@ def maxProfit(prices):
     return max
 
 
-'''
-TODO此问题应该在看看
-'''
+
 
 
 def maxProfit1(prices):
     """
     :type prices: List[int]
     :rtype: int
+    TODO  此问题应该在看看
     """
     if prices == None or len(prices) == 0:
         return 0
@@ -180,6 +179,7 @@ def maxProfit1(prices):
         # 也就是代表当前卖出减去最小买入
 
     return res
+
 
 
 '''
@@ -246,6 +246,10 @@ def rob(nums):
             r[i] = max(r[0:i-1]) + nums[i]
     # print(r)
     return max(r)
+
+
+
+
 
 if __name__ == '__main__':
     print(rob([2,7,9,3,1]))
