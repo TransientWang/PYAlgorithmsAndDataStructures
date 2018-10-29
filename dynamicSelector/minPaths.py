@@ -3,6 +3,7 @@
 动态规划
 '''
 
+
 '''
 爬楼梯问题
 一、最优解的结构特征
@@ -151,12 +152,14 @@ def maxProfit(prices):
     cmax = 0
     for i in range(len(prices)):
         k = i + 1
-        for j in range(0,k):
+        for j in range(0, k):
             if prices[lens - j - 1] > prices[lens - i - 1]:
                 cmax = prices[lens - j - 1] - prices[lens - i - 1]
                 if cmax > max:
                     max = cmax
     return max
+
+
 '''
 TODO此问题应该在看看
 '''
@@ -167,10 +170,10 @@ def maxProfit1(prices):
     :type prices: List[int]
     :rtype: int
     """
-    if prices == None or len(prices) ==0:
+    if prices == None or len(prices) == 0:
         return 0
-    Min = prices[0] #最小的时候买入
-    res =0 #结果
+    Min = prices[0]  # 最小的时候买入
+    res = 0  # 结果
     for i in prices:
         Min = min(Min, i)  # 遍历到目前为止 Min总是最小值
         res = max(res, i - Min)  # i-Min代表当前值减去当前最小值的一个比较 注意 当前最小值的索引一直在当前遍历位置之后
@@ -208,6 +211,41 @@ def minCostClimbingStairs(cost):
         list[i] = min(list[i - 1] + cost[i-1], list[i - 2]+ cost[i-2])
     return list[i-1]
 
+'''
+你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+
+给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
+一、分析最优解的结构特征  先从自顶向下 分析 加入偷到了最后一家 那么 需要考虑的最大值就是 这家的金额 加上0到i-2户
+    能偷到的最大值
+    当只有两户的时候只考虑哪家钱多偷哪家的
+    当只有一家的时候就偷他家的了
+二、递归的定义最优值
+    f(n) = d(n) + f(n-2)  ,n>2 
+    f(n) = Max(d(0),d(1))   ,n =2 
+    f(n) = d(0)            n=1
+    
+'''
+def rob(nums):
+    r=[0 for i in range(len(nums))]  # type: List[int] 代表临时最优值
+    if len(nums) == 0:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    if len(nums) ==2:
+        return max(nums[0],nums[1])
+
+    r[0] = nums[0]
+    r[1] = max(nums[0],nums[1])
+    for i in range(2,len(nums)):
+        if i ==2:
+            r[i] = r[0] + nums[i]
+        else:
+
+            print(r[0:i-2])
+            print(max(r[0:i-2]))
+            r[i] = max(r[0:i-1]) + nums[i]
+    # print(r)
+    return max(r)
 
 if __name__ == '__main__':
-    print(minCostClimbingStairs([0,0,1,1]))
+    print(rob([2,7,9,3,1]))
