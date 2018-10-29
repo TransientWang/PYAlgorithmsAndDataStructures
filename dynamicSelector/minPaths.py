@@ -160,6 +160,8 @@ def maxProfit(prices):
 '''
 TODO此问题应该在看看
 '''
+
+
 def maxProfit1(prices):
     """
     :type prices: List[int]
@@ -171,10 +173,41 @@ def maxProfit1(prices):
     res =0 #结果
     for i in prices:
         Min = min(Min, i)  # 遍历到目前为止 Min总是最小值
-        res = max(res, i - Min)     #i-Min代表当前值减去当前最小值的一个比较 注意 当前最小值的索引一直在当前遍历位置之后
-                                    #也就是代表当前卖出减去最小买入
+        res = max(res, i - Min)  # i-Min代表当前值减去当前最小值的一个比较 注意 当前最小值的索引一直在当前遍历位置之后
+        # 也就是代表当前卖出减去最小买入
 
     return res
 
+
+'''
+数组的每个索引做为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost[i](索引从0开始)。
+
+每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。
+
+您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。
+当索引位置为0的时候不耗费体力  跳过
+一、最优解的结构特征
+    当只有一个台阶时 则直接到达顶点 不用耗费代价
+    当只有两个台阶时 必须调到一个台阶上  则跳到一个最小的代价就可以
+    因为每次可以跳一步或者两步  所以可以考虑问题 为 跳一步+之前的代价  与 跳两步+之前的代价的最小者
+二、递归的定义最优值
+    list[i] = min(list[i - 1] + cost[i-1], list[i - 2]+ cost[i-2])
+三、以自底向上的方式求出最优值
+'''
+
+
+def minCostClimbingStairs(cost):
+    """
+    :type cost: List[int]
+    :rtype: int
+    """
+    if len(cost) ==2:
+        return min(cost[0], cost[1]) #如果只有两个台阶  那么只有一步  跳到代价小的那个台阶上即可
+    list = [0 for j in range(len(cost)+1)]  # 记录从i到j的最小代价，因为要跳出去。所以list的长度要比台阶数+1  list[0] =0 已经包含了只有一个台阶的最优解
+    for i in range(2,len(list)):  #跳到当前台阶上的代价为 从i-1开始跳的还是从i-2开始跳的
+        list[i] = min(list[i - 1] + cost[i-1], list[i - 2]+ cost[i-2])
+    return list[i-1]
+
+
 if __name__ == '__main__':
-    print(maxProfit1([7, 1, 5, 3, 6, 4]))
+    print(minCostClimbingStairs([0,0,1,1]))
