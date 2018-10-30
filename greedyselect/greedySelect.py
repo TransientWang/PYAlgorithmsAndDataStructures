@@ -120,29 +120,109 @@ def lemonadeChange(bills):
     fmon = 0
     tenmon = 0
     for i in bills:
-        if i == 5: #给5元不用找
+        if i == 5:  # 给5元不用找
             fmon += 1
 
-        elif i == 10: # 给10元找一张5元
-            tenmon +=1
+        elif i == 10:  # 给10元找一张5元
+            tenmon += 1
             if fmon > 0:
-                fmon -=1
+                fmon -= 1
             else:
-                return False #找不了就返回False
-        elif i ==20:  #给20  找15 先能找10元的先找10元，再找5元。 找不了 找3张5元的  找不了就返回
-            if tenmon >0:
-                tenmon -=1
-                if fmon >0:
-                    fmon-=1
+                return False  # 找不了就返回False
+        elif i == 20:  # 给20  找15 先能找10元的先找10元，再找5元。 找不了 找3张5元的  找不了就返回
+            if tenmon > 0:
+                tenmon -= 1
+                if fmon > 0:
+                    fmon -= 1
                 else:
                     return False
-            elif fmon >=3:
-                fmon-=3
+            elif fmon >= 3:
+                fmon -= 3
             else:
                 return False
 
     return True
 
 
+'''
+在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+
+你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+
+如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+'''
+'''
+直接遍历 时间复杂度过大
+'''
+def canCompleteCircuit(gas, cost):
+    """
+    :type gas: List[int]      第i个加油站有汽油gas[i]升
+    :type cost: List[int]     从i到i+1需要耗费汽油cost[i]
+    :rtype: int
+    """
+    i =0
+    k=0
+    total =0
+    while i< len(gas):
+        if gas[i] < cost[i]: #先找到第一个可以出发的位置
+            i+=1
+
+        else:
+            k =i
+            while True:
+                total += gas[k]  # 找到了先加油
+                if total >= cost[k]: #判断能否有足够的油去往下一站
+                    total -= cost[k] #有就走
+                    if k <len(gas)-1: #到了下一站，更新下一站索引
+                        k+=1
+                    else:
+                        k=0
+                    if k ==i:
+                        return i
+                else:
+                    if k ==i:
+                        return i
+                    else:
+                        break
+        i+=1
+        total =0
+    return -1
+
+
+
+'''
+贪心选择解题思路
+    一、贪心选择性质：原问题整体最优解 可以通过一系列局部最优的选择得到
+        
+        对于加油问题，汽车能否环绕一圈，可以通过选择每一节点能够达到获得
+        贪心选择性质就是每次选择是油箱里的油都必须可以到达下一节点，
+        下一节点能不能到达 依赖于已经走过的节点后油箱的剩余  而不依赖 没有
+        走过的节点 
+    二、最优子结构
+        汽车能否环绕一圈 包含汽车能否达到 i-1,i-2的子问题
+        
+'''
+def canCompleteCircuit1(gas, cost):
+    sum =0  #辅助计算从当前节点能否到达下一节点
+    total =0  #总油量是关键 如果遍历一遍总油量 还小于0 说明从哪里走都不可能走出一圈
+              #如果油量大于0那么一定可以有一点环绕 一圈  而且这个点一定可以从当前节点走到
+              #最后一个节点
+    for i in range(len(gas)):
+        total += gas[i] - cost[i]
+        sum += gas[i] - cost[i]
+        if sum < 0: #油量不够到达下一加油站
+            j=i+1 #尝试下一个加油站
+            sum =0
+    if total <0:
+        return -1
+    else:
+        return j
+
+
+
+
+
+
 if __name__ == '__main__':
-    print(lemonadeChange([5,5,10,10,20]))
+    print(canCompleteCircuit1([1,2,3,4,5],
+[3,4,5,1,2]))
