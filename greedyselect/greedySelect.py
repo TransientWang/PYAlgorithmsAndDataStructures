@@ -154,40 +154,41 @@ def lemonadeChange(bills):
 '''
 直接遍历 时间复杂度过大
 '''
+
+
 def canCompleteCircuit(gas, cost):
     """
     :type gas: List[int]      第i个加油站有汽油gas[i]升
     :type cost: List[int]     从i到i+1需要耗费汽油cost[i]
     :rtype: int
     """
-    i =0
-    k=0
-    total =0
-    while i< len(gas):
-        if gas[i] < cost[i]: #先找到第一个可以出发的位置
-            i+=1
+    i = 0
+    k = 0
+    total = 0
+    while i < len(gas):
+        if gas[i] < cost[i]:  # 先找到第一个可以出发的位置
+            i += 1
 
         else:
-            k =i
+            k = i
             while True:
                 total += gas[k]  # 找到了先加油
-                if total >= cost[k]: #判断能否有足够的油去往下一站
-                    total -= cost[k] #有就走
-                    if k <len(gas)-1: #到了下一站，更新下一站索引
-                        k+=1
+                if total >= cost[k]:  # 判断能否有足够的油去往下一站
+                    total -= cost[k]  # 有就走
+                    if k < len(gas) - 1:  # 到了下一站，更新下一站索引
+                        k += 1
                     else:
-                        k=0
-                    if k ==i:
+                        k = 0
+                    if k == i:
                         return i
                 else:
-                    if k ==i:
+                    if k == i:
                         return i
                     else:
                         break
-        i+=1
-        total =0
+        i += 1
+        total = 0
     return -1
-
 
 
 '''
@@ -202,21 +203,24 @@ def canCompleteCircuit(gas, cost):
         汽车能否环绕一圈 包含汽车能否达到 i-1,i-2的子问题
         
 '''
+
+
 def canCompleteCircuit1(gas, cost):
-    sum =0  #辅助计算从当前节点能否到达下一节点
-    total =0  #总油量是关键 如果遍历一遍总油量 还小于0 说明从哪里走都不可能走出一圈
-              #如果油量大于0那么一定可以有一点环绕 一圈  而且这个点一定可以从当前节点走到
-              #最后一个节点
+    sum = 0  # 辅助计算从当前节点能否到达下一节点
+    total = 0  # 总油量是关键 如果遍历一遍总油量 还小于0 说明从哪里走都不可能走出一圈
+    # 如果油量大于0那么一定可以有一点环绕 一圈  而且这个点一定可以从当前节点走到
+    # 最后一个节点
     for i in range(len(gas)):
         total += gas[i] - cost[i]
         sum += gas[i] - cost[i]
-        if sum < 0: #油量不够到达下一加油站
-            j=i+1 #尝试下一个加油站
-            sum =0
-    if total <0:
+        if sum < 0:  # 油量不够到达下一加油站
+            j = i + 1  # 尝试下一个加油站
+            sum = 0
+    if total < 0:
         return -1
     else:
         return j
+
 
 '''
 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
@@ -235,6 +239,8 @@ def canCompleteCircuit1(gas, cost):
     但是如果我们先只管升序排列的孩子
     然后把逆序的孩子倒过来 那么我们处理的就一直是升序排列的孩子了。想当于处理了一遍就OK了
 '''
+
+
 def candy(ratings):
     """
     :type ratings: List[int]
@@ -243,21 +249,16 @@ def candy(ratings):
     lens = len(ratings)
     r = [1 for i in range(lens)]
 
-    for x in range(1,lens):
-        if ratings[x] > ratings[x-1] and r[x] <= r[x-1]:
-            r[x]= r[x-1]+1
-    t = lens -1
-    for x in range(1,lens):
-        if ratings[t-x] > ratings[lens-x] and r[t-x] <= r[lens-x]:
-            r[t-x]= r[lens-x]+1
-    sum =0
+    for x in range(1, lens):
+        r[x] = r[x - 1] + 1 if ratings[x] > ratings[x - 1] and r[x] <= r[x - 1] else r[x]
+    t = lens - 1
+    for x in range(1, lens):
+        r[t - x] = r[lens - x] + 1 if ratings[t - x] > ratings[lens - x] and r[t - x] <= r[lens - x] else r[t - x]
+    sum = 0
     for q in r:
-        sum+=q
+        sum += q
     return sum
 
 
-
-
-
 if __name__ == '__main__':
-    print(candy([1,2,87,87,87,2,1]))
+    print(candy([1, 2, 87, 87, 87, 2, 1]))
