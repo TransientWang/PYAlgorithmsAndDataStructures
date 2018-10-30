@@ -218,11 +218,46 @@ def canCompleteCircuit1(gas, cost):
     else:
         return j
 
+'''
+老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+
+你需要按照以下要求，帮助老师给这些孩子分发糖果：
+
+每个孩子至少分配到 1 个糖果。
+相邻的孩子中，评分高的孩子必须获得更多的糖果。
+
+那么这样下来，老师至少需要准备多少颗糖果呢？
+
+
+思路 每个人至少分到一颗糖果
+    如果孩子都是按照评分从小到大排序，这时候只需要根据前一个孩子的平评分 跟新当前孩子的评分
+    如果是逆序的话 每次更新当前孩子，上上个孩子都会因为上一个孩子的变化 需要重新调整 也就是要回溯
+    但是如果我们先只管升序排列的孩子
+    然后把逆序的孩子倒过来 那么我们处理的就一直是升序排列的孩子了。想当于处理了一遍就OK了
+'''
+def candy(ratings):
+    """
+    :type ratings: List[int]
+    :rtype: int
+    """
+    lens = len(ratings)
+    r = [1 for i in range(lens)]
+
+    for x in range(1,lens):
+        if ratings[x] > ratings[x-1] and r[x] <= r[x-1]:
+            r[x]= r[x-1]+1
+    t = lens -1
+    for x in range(1,lens):
+        if ratings[t-x] > ratings[lens-x] and r[t-x] <= r[lens-x]:
+            r[t-x]= r[lens-x]+1
+    sum =0
+    for q in r:
+        sum+=q
+    return sum
 
 
 
 
 
 if __name__ == '__main__':
-    print(canCompleteCircuit1([1,2,3,4,5],
-[3,4,5,1,2]))
+    print(candy([1,2,87,87,87,2,1]))
