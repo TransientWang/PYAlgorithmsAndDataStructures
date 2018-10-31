@@ -1,0 +1,39 @@
+# -*- coding: UTF-8 -*-
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+def addTwoNumbers(l1, l2):
+    c = 0
+    head = ListNode(0)
+    node = head
+    while l1 != None or l2 != None:
+        t1, t2, sum = 0, 0, 0
+        if l1 != None:
+            t1 = l1.val
+            l1 = l1.next
+        if l2 != None:
+            t2 = l2.val
+            l2 = l2.next
+        sum = t1 + t2 + c
+
+        if sum < 10:
+            node.val = sum
+            c = 0
+        else:
+            c = 1
+            node.val = abs(10 - sum)
+
+        if l1 != None or l2 != None:
+            node.next = ListNode(0)
+            node = node.next
+        elif c==1:
+            node.next = ListNode(1)
+            node = node.next
+
+    return head
+
+if __name__ == '__main__':
+    pass
