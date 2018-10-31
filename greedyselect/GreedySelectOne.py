@@ -40,7 +40,38 @@ def canJump(nums):
             break
         reach = max(reach, i + nums[i])      #更新能达到的最远步数
     return reach >= len(nums) - 1
+'''
+假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
+k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
+每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
 
+'''
+def comp(x1,x2):
 
+    if x1[0] -x2[0] > 0:
+        return 1
+    elif x1[0] -x2[0] < 0:
+        return -1
+    else:
+        return x2[1] - x1[1]
+
+'''
+思路：先按H降序K升序 重排序原数组
+然后按K位置插入
+如果H小的人先排徐插入，那么他就受到没有排徐插入人的影响 ，有可能排在他的前面
+而贪心选择的思想是只关心已经排好序的，所以 应该先按身高从大到小排序
+这样 他在插入时候已经是最大的值考虑已经插入的，不用考虑剩下没插入的
+'''
+def reconstructQueue(people):
+    re =[]
+    compare = comp
+    people.sort(cmp = compare,reverse=True)
+    people.reverse()
+    print(people)
+    people.reverse()
+    for i in people:
+        re.insert(i[1],i)
+    return re
 if __name__ == '__main__':
-    print(canJump([2, 3, 1, 1, 4]))
+    print(reconstructQueue([[9,0],[7,0],[1,9],[3,0],[2,7],[5,3],[6,0],[3,4],[6,2],[5,2]]))
+
