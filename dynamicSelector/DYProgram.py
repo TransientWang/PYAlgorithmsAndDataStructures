@@ -31,9 +31,8 @@ def minimumTotal(triangle):
 
     r = [[0 for i in range(lens)] for i in range(lens)]  # 辅助数组  r[i][j]代表从0层到第i层第j节点的最优值
     i, j = 1, 0  # i 代表第i层  j代表第j列
-    k = 0  # 遍历每一层求出当层最优值的时候的临时变量
-    for t in range(lens):
-        r[0][t] = triangle[0][0]
+    # for t in range(lens):
+    r[0][0] = triangle[0][0]
     while i < len(triangle):  # 遍历每一层
         j = 0
         while j < len(triangle[i]):  # 遍历第i层的每一列
@@ -48,6 +47,7 @@ def minimumTotal(triangle):
                 # 求出最小值
             j += 1
         i += 1
+        print(r)
     return min(r[len(triangle) - 1])
 
 '''
@@ -66,9 +66,9 @@ def twoSum(nums, target):
     return result
 
 
+
 if __name__ == '__main__':
-    print(twoSum([-10,-1,-18,-19],
--19))
+    pass
 
 
 
