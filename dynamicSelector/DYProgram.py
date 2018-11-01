@@ -66,6 +66,31 @@ def twoSum(nums, target):
     return result
 
 
+'''
+戳气球
+有 n 个气球，编号为0 到 n-1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
+现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。
+这里的 left 和 right 代表和 i 相邻的两个气球的序号。
+注意当你戳破了气球 i 后，气球 left 和气球 right 就变成了相邻的气球。
+求所能获得硬币的最大数量。
+测试用例：3,1,5,8
+'''
+def maxCoins(nums):
+    nums.append(1)
+    nums.insert(0, 1)  # 在数组前面后面加上 1 计算方便
+    r = [[0 for z in range(len(nums))] for z in range(len(nums))] #r[i][j]表示第i和j气球之间的气球戳烂 能得到的最大硬币数量
+    orlen = len(nums) - 2  #原数组长度
+    for length in range(1, orlen+1):     #计算的每一子问题的长度
+        for head in range(1, orlen - length + 1 +1):        #子问题的起始点
+            tail = head + length - 1                        #子问题的结束点
+            for point in range(head, tail +1):              #子问题中间的戳气球的点
+                ocorn = r[head][tail]                       #子问题原最大值
+                latercoin = r[head][point - 1] + r[point + 1][tail] + nums[head - 1] * nums[point] * nums[tail + 1]
+                # 子问题当前值  head到Tail都被戳破后 每个被戳破点的能对换硬币值
+                r[head][tail] = max(ocorn, latercoin) #更新最优值
+
+
+    return r[1][len(nums) - 2]
 
 if __name__ == '__main__':
     pass
