@@ -33,27 +33,31 @@ def isSubsequence(s, t):
 
 
 def canJump(nums):
-    reach = 0 #代表能达到的最远步数
-    for i in range(len(nums)):             #遍历数组
-        if reach < i or reach >= len(nums): #如果当前位置比能达到的最远步数远的话，或者能达到最远步数 已经大于数组长度
-                                            #可以跳出循环
+    reach = 0  # 代表能达到的最远步数
+    for i in range(len(nums)):  # 遍历数组
+        if reach < i or reach >= len(nums):  # 如果当前位置比能达到的最远步数远的话，或者能达到最远步数 已经大于数组长度
+            # 可以跳出循环
             break
-        reach = max(reach, i + nums[i])      #更新能达到的最远步数
+        reach = max(reach, i + nums[i])  # 更新能达到的最远步数
     return reach >= len(nums) - 1
+
+
 '''
 假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
 k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
 每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
 
 '''
-def comp(x1,x2):
 
-    if x1[0] -x2[0] > 0:
+
+def comp(x1, x2):
+    if x1[0] - x2[0] > 0:
         return 1
-    elif x1[0] -x2[0] < 0:
+    elif x1[0] - x2[0] < 0:
         return -1
     else:
         return x2[1] - x1[1]
+
 
 '''
 思路：先按H降序K升序 重排序原数组
@@ -62,16 +66,19 @@ def comp(x1,x2):
 而贪心选择的思想是只关心已经排好序的，所以 应该先按身高从大到小排序
 这样 他在插入时候已经是最大的值考虑已经插入的，不用考虑剩下没插入的
 '''
+
+
 def reconstructQueue(people):
-    re =[]
+    re = []
     compare = comp
-    people.sort(cmp = compare,reverse=True)
+    people.sort(cmp=compare, reverse=True)
     people.reverse()
     print(people)
     people.reverse()
     for i in people:
-        re.insert(i[1],i)
+        re.insert(i[1], i)
     return re
+
 
 '''
 给定一个用字符数组表示的 CPU 需要执行的任务列表。其中包含使用大写的 A - Z 字母表示的26 种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个单位时间内执行完。CPU 在任何一个单位时间内都可以执行一个任务，或者在待命状态。
@@ -90,20 +97,49 @@ def reconstructQueue(people):
     所以最后要比较一下这两个值  取最大的
     
 '''
+
+
 def leastInterval(tasks, n):
     task = [0 for i in range(26)]
     for curTask in tasks:
-        task[ord(curTask) - ord('A')]+=1  #统计各个任务出现的次数
+        task[ord(curTask) - ord('A')] += 1  # 统计各个任务出现的次数
     task.sort(reverse=True)
-    maxNum=task[0]  #找出最长的那个任务
-    count =0   #计算最边上应该放几个任务 （最大任务数的任务  总共有几个）
+    maxNum = task[0]  # 找出最长的那个任务
+    count = 0  # 计算最边上应该放几个任务 （最大任务数的任务  总共有几个）
     for i in range(26):
         if task[i] == maxNum:
-            count+=1
+            count += 1
     # print(task)
-    return max((maxNum-1) * (n+1) + count,len(tasks))   #比较
+    return max((maxNum - 1) * (n + 1) + count, len(tasks))  # 比较
 
+
+'''
+第 i 个人的体重为 people[i]，每艘船可以承载的最大重量为 limit。
+
+每艘船最多可同时载两人，但条件是这些人的重量之和最多为 limit。
+
+返回载到每一个人所需的最小船数。(保证每个人都能被船载)。
+思路
+
+如果最重的人可以与最轻的人共用一艘船，那么就这样安排。否则，最重的人无法与任何人配对，那么他们将自己独自乘一艘船。
+
+这么做的原因是，如果最轻的人可以与任何人配对，那么他们也可以与最重的人配对。
+'''
+
+
+def numRescueBoats(people, limit):
+    people.sort()
+    count = 0
+    i = 0
+    j = len(people) - 1
+    # print(people)
+    while i <= j:
+        count += 1
+        if people[i] + people[j] <= limit:
+            i += 1
+        j -= 1
+    return count
 
 if __name__ == '__main__':
-    print(leastInterval(["A","A","A","B","B","B","C","D","E","F"],2))
-
+    print(numRescueBoats([3, 2, 2, 1],
+                         3))
