@@ -140,6 +140,72 @@ def numRescueBoats(people, limit):
         j -= 1
     return count
 
+
+def isMatch(s, p):
+    if len(p) == 0:
+        return len(s) == 0;
+    if len(p) == 1:
+        return len(s) == 1 and (p[0] == s[0] or p[0] == ".")
+
+    if p[1] != "*":
+        if len(s) == 0:
+            return False
+        return (p[0] == s[0] or p[0] == ".") and isMatch(s[1:], p[1:])
+    f = isMatch
+    while len(s) != 0 and (s[0] == p[0] or p[0] == "."):
+        if f(s, p[2:]):
+            return True
+        s = s[1:]
+    return isMatch(s, p[2:])
+
+
+'''
+给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+'''
+
+
+def removeDuplicates(nums):
+    if len(nums) <= 1:
+        return len(nums)
+    tmp = nums[0]
+    count = 1
+    i = 1
+    while i < len(nums):
+        if nums[i] != tmp:
+            tmp = nums[i]
+            count += 1
+            i += 1
+        else:
+            nums.remove(tmp)
+
+    return count
+
+
+def rotate(nums, k):
+    lens = len(nums) - 2
+    while k > 0:
+        tmp = nums[len(nums) - 1]
+        for i in range(lens + 1):
+            nums[lens - i + 1] = nums[lens - i]
+        nums[0] = tmp
+        k -= 1
+
+
+def rotateOne(nums, k):
+    r=[]
+    for i in nums:
+        r.append(i)
+
+    for i in range(len(nums)):
+        if (i + k) >= len(nums):
+            nums[(i + k) % len(nums)] = r[i]
+        else:
+            nums[(i + k)] = r[i]
+    print(nums)
+
+
 if __name__ == '__main__':
-    print(numRescueBoats([3, 2, 2, 1],
-                         3))
+    print(rotateOne([1,2,3,4,5,6,7],
+3))
