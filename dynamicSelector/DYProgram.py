@@ -79,6 +79,8 @@ def twoSum(nums, target):
 求所能获得硬币的最大数量。
 测试用例：3,1,5,8
 '''
+
+
 # TODO 此题目比较难，多回顾
 def maxCoins(nums):
     nums.append(1)
@@ -96,6 +98,50 @@ def maxCoins(nums):
 
     return r[1][len(nums) - 2]
 
+'''
+判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+
+数字 1-9 在每一行只能出现一次。
+数字 1-9 在每一列只能出现一次。
+数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+'''
+def isValidSudoku(board):
+    # dp = [[None for i in range(len(board))] for i in range(len(board))]
+
+    for x in range(len(board)):
+        dp = [0 for i in range(10)]
+        dp1 = [0 for i in range(10)]
+        for y in range(len(board)):
+            if board[x][y] != "." and dp[int(board[x][y])] == 0:
+                dp[int(board[x][y])] = 1
+            elif board[x][y] != ".":
+                return False
+            if board[y][x] != "." and dp1[int(board[y][x])] == 0:
+                dp1[int(board[y][x])] = 1
+            elif board[y][x] != ".":
+                return False
+    for x in range(3):
+        for y in range(3):
+            dp2 = [0 for i in range(10)]
+            for xx in range(x * 3, x * 3 +3):
+                for yy in range(y * 3, y * 3 +3):
+                    if board[xx][yy] != "." and dp2[int(board[xx][yy])] == 0:
+                        dp2[int(board[xx][yy])] = 1
+                    elif board[xx][yy] != "." :
+                        return False
+
+    return True
+
 
 if __name__ == '__main__':
-    pass
+    print(isValidSudoku([
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+    ]))
