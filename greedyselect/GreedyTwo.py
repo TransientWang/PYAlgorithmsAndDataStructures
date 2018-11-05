@@ -2,6 +2,8 @@
 '''
 给定两个数组，编写一个函数来计算它们的交集。
 '''
+
+
 def singleNumber(nums):
     tmp = nums[0]
     index = 0
@@ -29,7 +31,7 @@ def intersect(nums1, nums2):
     res = []
     while i < len(nums1) and j < len(nums2):
         if nums1[i] != nums2[j]:
-            if nums1[i] < nums2[j] and i< len(nums1):
+            if nums1[i] < nums2[j] and i < len(nums1):
                 i += 1
             elif nums1[i] > nums2[j] and j < len(nums2):
                 j += 1
@@ -43,7 +45,28 @@ def intersect(nums1, nums2):
     return res
 
 
+'''
+给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+'''
+
+
+def moveZeroes(nums):
+    index = 1
+    count = 0
+    while index < len(nums):
+        tmp = index
+        while nums[tmp - 1] == 0:
+            count += 0
+            nums[tmp - 1] = nums[tmp]
+            nums[tmp] = 0
+            tmp -= 1
+            if tmp == 0:
+                break
+
+        index += 1
+
+    print(nums)
+
 
 if __name__ == '__main__':
-    print(intersect([4,7,9,7,6,7],
-[5,0,0,6,1,6,2,2,4]))
+    print(moveZeroes([0,1,0,3,12]))
