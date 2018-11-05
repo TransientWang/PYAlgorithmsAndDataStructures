@@ -2,6 +2,7 @@
 '''
 给定两个数组，编写一个函数来计算它们的交集。
 '''
+import math
 
 
 def singleNumber(nums):
@@ -68,5 +69,45 @@ def moveZeroes(nums):
     print(nums)
 
 
+'''
+矩阵逆置
+'''
+
+
+def rotate(matrix):
+    lens = len(matrix[0]) - 1
+    for i in range(int(math.ceil(float(len(matrix[0])) / 2))):
+        for j in range(i,lens -i):
+            tmp = matrix[i][j]
+            matrix[i][j] = matrix[lens -j][i]
+            matrix[lens - j][i] = matrix[lens - i][lens -j]
+            matrix[lens - i][lens - j] = matrix[j][lens -i]
+            matrix[j][lens - i] = tmp
+
+    for x in range(len(matrix)):
+        for y in range(len(matrix)):
+            print(matrix[x][y]),
+        print("\n")
+
+def reverseString(s):
+    i = 0
+    j = len(s) - 1
+    ss = list(s)
+
+    while i < j:
+        tmp = ss[i]
+        ss[i] = ss[j]
+        ss[j] = tmp
+        i += 1
+        j -= 1
+
+    return "".join(ss)
+
+
 if __name__ == '__main__':
-    print(moveZeroes([0,1,0,3,12]))
+    print(rotate([
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ], ))
+
