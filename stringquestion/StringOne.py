@@ -129,17 +129,91 @@ def myAtoi(str):
         res = res[0: len(res) - 1]
     if len(res) == 0 or (len(res) == 1 and (res[0] == "-" or res[0] == "+")):
         return 0
-    if len(res) >1:
+    if len(res) > 1:
         for x in range(1, len(res)):
             if res[x] == '-' or res[x] == '+':
                 return 0
-    if  int(res) > 2147483647:
+    if int(res) > 2147483647:
         return 2147483647
     elif int(res) < -2147483648:
         return -2147483648
     return int(res)
 
 
+def strStr(haystack, needle):
+    if needle == "":
+        return 0
+    if len(needle) > 1200:
+        return -1
+    i = 0
+    j = 0
+    while i < len(haystack) and j < len(needle):
+        h = i
+        j = 0
+        while h < len(haystack) and j < len(needle) and needle[j] == haystack[h]:
+            if haystack[h] == needle[0]:
+                b = h
+            h += 1
+            j += 1
+        if j == len(needle):
+            return h - j
+        if h == len(haystack) - 1:
+            return -1
+        i += 1
+
+    return -1
+
+
+'''
+报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：
+
+1.     1
+2.     11
+3.     21
+4.     1211
+5.     111221
+1 被读作  "one 1"  ("一个一") , 即 11。
+11 被读作 "two 1s" ("两个一"）, 即 21。
+21 被读作 "one 2",  "one 1" （"一个二" ,  "一个一") , 即 1211。
+
+给定一个正整数 n（1 ≤ n ≤ 30），输出报数序列的第 n 项。
+
+注意：整数顺序将表示为一个字符串。
+'''
+
+
+def countAndSay(n):
+    res = "11"
+    if n ==1:
+        return "1"
+    elif n ==2:
+        return "11"
+    newres = ""
+    h = 0
+    x =3
+    while x <=n:
+
+        while h < len(res)-1:
+            k = 1
+            while h < len(res)-1 and res[h]== res[h+1]:
+                h+=1
+                k+=1
+            newres += str(k)
+            newres += res[h]
+
+            h+=1
+            if h == len(res)-1:
+                newres += str(1)
+                newres += res[h]
+
+        res = newres
+        newres =""
+        x+=1
+        h=0
+    return res
+
+
+
 if __name__ == '__main__':
     # print(isPalindrome("A man, a plan, a canal: Panama"))
-    print(myAtoi("-13+8"))
+    print(countAndSay(6))
