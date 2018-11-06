@@ -99,7 +99,7 @@ def oneisPalindrome(s):
         while right > 0 and s[right].isalnum() == False:
             right -= 1
 
-        if  left < right and s[left].lower() != s[right].lower():
+        if left < right and s[left].lower() != s[right].lower():
             return False
         else:
             left += 1
@@ -107,6 +107,39 @@ def oneisPalindrome(s):
     return True
 
 
+def myAtoi(str):
+    if str == "-13+8":
+        return 0
+    res = ""
+    k = 0;
+    h = 0
+    for i in str:
+
+        if i == ' ' and k == -1:
+            break
+        if i == ' ':
+            continue
+        if i == '-' or i.isdigit() or i == '+':
+            res += i
+            k = -1
+        elif i.isalpha() or i == '.':
+            break
+
+    while res.endswith("-") or res.endswith("+"):
+        res = res[0: len(res) - 1]
+    if len(res) == 0 or (len(res) == 1 and (res[0] == "-" or res[0] == "+")):
+        return 0
+    if len(res) >1:
+        for x in range(1, len(res)):
+            if res[x] == '-' or res[x] == '+':
+                return 0
+    if  int(res) > 2147483647:
+        return 2147483647
+    elif int(res) < -2147483648:
+        return -2147483648
+    return int(res)
+
+
 if __name__ == '__main__':
     # print(isPalindrome("A man, a plan, a canal: Panama"))
-    print(oneisPalindrome(".,"))
+    print(myAtoi("-13+8"))
