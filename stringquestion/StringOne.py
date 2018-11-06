@@ -49,9 +49,12 @@ def firstUniqChar(s):
         return -1
     return res
 
+
 '''
 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的一个字母异位词。
 '''
+
+
 def isAnagram(s, t):
     ss = list(s)
     tt = list(t)
@@ -61,5 +64,49 @@ def isAnagram(s, t):
         if ss[i] != tt[i]:
             return False
     return True
+
+
+'''
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+
+说明：本题中，我们将空字符串定义为有效的回文串。
+'''
+
+
+def isPalindrome(s):
+    s = list(s)
+    i = 0
+    while i < len(s):
+        if not s[i].isalnum():
+            s.remove(s[i])
+        else:
+            i += 1
+    if len(s) == 0 or len(s) == 1:
+        return True
+    for ind in range(len(s) / 2):
+        if s[ind].lower() != s[len(s) - 1 - ind].lower():
+            return False
+    return True
+
+
+def oneisPalindrome(s):
+    left = 0
+    right = len(s) - 1
+
+    while left < right:
+        while left < len(s) and s[left].isalnum() == False:
+            left += 1
+        while right > 0 and s[right].isalnum() == False:
+            right -= 1
+
+        if  left < right and s[left].lower() != s[right].lower():
+            return False
+        else:
+            left += 1
+            right -= 1
+    return True
+
+
 if __name__ == '__main__':
-    print(isAnagram("aacc"))
+    # print(isPalindrome("A man, a plan, a canal: Panama"))
+    print(oneisPalindrome(".,"))

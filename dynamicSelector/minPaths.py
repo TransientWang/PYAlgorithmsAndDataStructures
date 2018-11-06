@@ -163,6 +163,7 @@ def maxProfit(prices):
 
 
 
+
 def maxProfit1(prices):
     """
     :type prices: List[int]
@@ -248,8 +249,19 @@ def rob(nums):
     return max(r)
 
 
+'''
+一条包含字母 A-Z 的消息通过以下方式进行了编码：
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+给定一个只包含数字的非空字符串，请计算解码方法的总数。
+'''
+
+
 
 
 
 if __name__ == '__main__':
-    print(rob([2,7,9,3,1]))
+    # print(numDecodings("226"))
+    pass
