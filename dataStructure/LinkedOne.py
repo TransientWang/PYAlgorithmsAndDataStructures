@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+
+
 from dataStructure import ListNode
 
 '''
@@ -143,32 +145,24 @@ def isPalindrome(head):
     if head is None:
         return True
     length = 0
-    tmp = head
+    tmp = head  # type: ListNode 遍历链表长度的临时变量
     while tmp is not None:
         length += 1
         tmp = tmp.next
-    if length == 1:
-        return True
-    elif length == 2:
-        return head.val == head.next.val
-
-    mid = length / 2 - 1
-
-    r = 0
-
+    mid = length / 2 - 1  # type: Union[int, Any] 中间位置
+    t = 0  # type: int 临时变量，帮助逆置链表到中间位置
     del tmp
-
+    '''逆置链表'''
     cur, pre = head, None
-
-    while cur and r <= mid:
+    while cur and t <= mid:
         cur.next, pre, cur = pre, cur, cur.next
-        r += 1
-    del head, mid, r
+        t += 1
+    del head, mid, t
 
-    if length % 2 != 0:
+    if length % 2 != 0: #如果长度是奇数，则忽略中位数
         cur = cur.next
 
-    while pre is not None and cur is not None:
+    while pre is not None and cur is not None: #开始判断回文
         if pre.val == cur.val:
             pre = pre.next
             cur = cur.next
@@ -225,7 +219,7 @@ if __name__ == '__main__':
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = isPalindrome(head)
+    c = reverseListOne(head)
     print(c)
     # while c.next != None:
     #     print(c.val)
