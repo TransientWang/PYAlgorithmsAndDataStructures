@@ -130,15 +130,41 @@ def mergeTwoLists(l1, l2):
     return head
 
 
+'''
+判断回文链表
+'''
+
+
+def isPalindrome(head):
+    pass
+
+
+def hasCycle(head):
+    if head == None:
+        return False
+    dp = {}
+
+    while head != None:
+        if dp.has_key(head):
+            return True
+        else:
+            dp[head] = 1
+            head = head.next
+    return False
+
+
 if __name__ == '__main__':
-    head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(3)
-    head.next.next = ListNode.ListNode(5)
-    end = ListNode.ListNode(2)
-    end.next = ListNode.ListNode(4)
+    head = ListNode.ListNode(3)
+    head.next = ListNode.ListNode(2)
+    head.next.next = ListNode.ListNode(0)
+    head.next.next.next = ListNode.ListNode(-4)
+    head.next.next.next.next = head.next
+    # end = ListNode.ListNode(2)
+    # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = mergeTwoLists(head, end)
-    while c.next != None:
-        print(c.val)
-        c = c.next
-    print(c.val)
+    c = hasCycle(head)
+    print(c)
+    # while c.next != None:
+    #     print(c.val)
+    #     c = c.next
+    # print(c.val)
