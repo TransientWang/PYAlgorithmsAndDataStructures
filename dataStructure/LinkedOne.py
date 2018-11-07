@@ -70,14 +70,18 @@ def reverseList(head):
     cur.next = pre
     return cur
 
+
 '''
 反转链表 这个方法很神奇
 '''
+
+
 def reverseListOne(head):
-    cur, pre = head,None
+    cur, pre = head, None
     while cur:
         cur.next, pre, cur = pre, cur, cur.next
     return pre
+
 
 def reverseListTwo(head):
     if head.next == None:
@@ -87,13 +91,53 @@ def reverseListTwo(head):
     head.next = None
     return new_head
 
+
+'''
+链表合并
+'''
+
+
+def mergeTwoLists(l1, l2):
+    if l1 == None:
+        return l2
+    elif l2 == None:
+        return l1
+    head, cur = None, None
+
+    if l1.val <= l2.val:
+        head = l1
+        l1 = l1.next
+    else:
+        head = l2
+        l2 = l2.next
+    cur = head
+    while l1 != None and l2 != None:
+        if l1.val <= l2.val:
+            cur.next = l1
+            l1 = l1.next
+        else:
+            cur.next = l2
+            l2 = l2.next
+        cur = cur.next
+    while l1 != None:
+        cur.next = l1
+        l1 = l1.next
+        cur = cur.next
+    while l2 != None:
+        cur.next = l2
+        l2 = l2.next
+        cur = cur.next
+    return head
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
-    head.next.next.next.next = ListNode.ListNode(5)
-    c = reverseListTwo(head)
+    head.next = ListNode.ListNode(3)
+    head.next.next = ListNode.ListNode(5)
+    end = ListNode.ListNode(2)
+    end.next = ListNode.ListNode(4)
+    # head.next.next.next.next = ListNode.ListNode(5)
+    c = mergeTwoLists(head, end)
     while c.next != None:
         print(c.val)
         c = c.next
