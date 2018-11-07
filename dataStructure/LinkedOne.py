@@ -30,18 +30,54 @@ def removeNthFromEnd(head, n):
     while aft.next != None and k <= n:
         aft = aft.next
         k += 1
-    if aft.next ==None and k<=n: #当删除正数第一个情况
+    if aft.next == None and k <= n:  # 当删除正数第一个情况
         return head.next
     while aft.next != None:
         cur = cur.next
         aft = aft.next
 
     if cur.next != None:
-        if cur.next.next ==None:
+        if cur.next.next == None:
             cur.next = None
         else:
             cur.next = cur.next.next
     return head
+
+
+'''
+反转链表
+'''
+
+
+def reverseList(head):
+    if head.next == None:
+        return head
+    pre = head
+    cur = head.next
+    if cur.next == None:
+        cur.next = head
+        head.next = None
+        return cur
+    aft = cur.next
+    head.next = None
+
+    while cur.next != None:
+        cur.next = pre
+        pre = cur
+        cur = aft
+        if cur.next != None:
+            aft = aft.next
+    cur.next = pre
+    return cur
+
+'''
+反转链表 这个方法很神奇
+'''
+def reverseListOne(head):
+    cur, pre = head,None
+    while cur:
+        cur.next, pre, cur = pre, cur, cur.next
+    return pre
 
 
 if __name__ == '__main__':
@@ -50,7 +86,7 @@ if __name__ == '__main__':
     head.next.next = ListNode.ListNode(3)
     head.next.next.next = ListNode.ListNode(4)
     head.next.next.next.next = ListNode.ListNode(5)
-    c = removeNthFromEnd(head,5)
+    c = reverseListOne(head)
     while c.next != None:
         print(c.val)
         c = c.next
