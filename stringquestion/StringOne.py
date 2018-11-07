@@ -211,7 +211,9 @@ def countAndSay(n):
         x+=1
         h=0
     return res
-
+'''
+寻找最长公共前缀
+'''
 def longestCommonPrefix(strs):
     r = len(strs)
     if r == 0:
