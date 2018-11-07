@@ -85,13 +85,18 @@ def reverseListOne(head):
         cur.next, pre, cur = pre, cur, cur.next
     return pre
 
-
+'''
+反转链表 递归
+先直接走到倒数第二个一个节点，
+然后逆置倒数第一个节点，返回递归
+'''
 def reverseListTwo(head):
     if head.next == None:
-        return head
-    new_head = reverseListTwo(head.next)
-    head.next.next = head
-    head.next = None
+        return head              #尾节点返回
+    new_head = reverseListTwo(head.next) #当最后一次返回的时候new_head 为倒数第一个节点
+    head.next.next = head     #第一次返回后处理的节点head 此时还是倒数第二个，这样就可以将最后两个逆置了
+    head.next = None          #返回的new_head注意在if中是head,next也就是5，所以上一行代表吧new_head,next 5 指向 head 4
+                                #然后将 new_head返回递归调用
     return new_head
 
 
@@ -213,14 +218,14 @@ def hasCycleOne(head):
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(2)
-    head.next.next.next = ListNode.ListNode(2)
-    head.next.next.next.next = ListNode.ListNode(1)
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(4)
+    head.next.next.next.next = ListNode.ListNode(5)
 
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = reverseListOne(head)
+    c = reverseListTwo(head)
     print(c)
     # while c.next != None:
     #     print(c.val)
