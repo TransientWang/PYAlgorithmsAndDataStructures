@@ -139,6 +139,11 @@ def isPalindrome(head):
     pass
 
 
+'''
+链表有环
+'''
+
+
 def hasCycle(head):
     if head == None:
         return False
@@ -152,6 +157,22 @@ def hasCycle(head):
             head = head.next
     return False
 
+
+'''
+链表有环
+快慢指针 两指针相遇的时候 就证明链表有环
+'''
+def hasCycleOne(head):
+    if head is None or head.next is None:
+        return False
+    slow, fast = head, head.next.next
+
+    while slow != fast:
+        if fast is None or fast.next is None:
+            return False
+        slow = slow.next
+        fast = fast.next.next
+    return True
 
 if __name__ == '__main__':
     head = ListNode.ListNode(3)
