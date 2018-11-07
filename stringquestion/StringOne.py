@@ -212,8 +212,33 @@ def countAndSay(n):
         h=0
     return res
 
+def longestCommonPrefix(strs):
+    r = len(strs)
+    if r == 0:
+        return ""
+    lens = None
+    for i in strs:
+        lens = len(i) if lens ==None or len(i) < lens else lens
 
+    if lens == 0:
+        return ""
+
+    tmp =strs[0][0]
+    for i in range(lens):
+        for x in range(r):
+            if tmp == strs[x][0:i+1]:
+                tmp = strs[x][0:i+1]
+            else:
+                if i == 0:
+                    return ""
+                else:
+                    return strs[0][0:i]
+                break
+        if i+1 < lens:
+            tmp = strs[x][0:i + 2]
+
+    return tmp
 
 if __name__ == '__main__':
     # print(isPalindrome("A man, a plan, a canal: Panama"))
-    print(countAndSay(6))
+    print(longestCommonPrefix(["ba","aa"]))
