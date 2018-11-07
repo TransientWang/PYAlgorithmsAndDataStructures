@@ -79,6 +79,13 @@ def reverseListOne(head):
         cur.next, pre, cur = pre, cur, cur.next
     return pre
 
+def reverseListTwo(head):
+    if head.next == None:
+        return head
+    new_head = reverseListTwo(head.next)
+    head.next.next = head
+    head.next = None
+    return new_head
 
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
@@ -86,7 +93,7 @@ if __name__ == '__main__':
     head.next.next = ListNode.ListNode(3)
     head.next.next.next = ListNode.ListNode(4)
     head.next.next.next.next = ListNode.ListNode(5)
-    c = reverseListOne(head)
+    c = reverseListTwo(head)
     while c.next != None:
         print(c.val)
         c = c.next
