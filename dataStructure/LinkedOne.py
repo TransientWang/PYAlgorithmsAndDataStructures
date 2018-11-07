@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from dataStructure import ListNode
 
 '''
 删除链表中的节点
@@ -14,9 +15,43 @@ def deleteNode(node):
 
 '''
 删除链表的倒数第N个节点
+双指针aft先往后走N，然后cur与aft一起走
+当aft走到末尾时候 通过cur删除下一节点
+特殊情情况是删除第一个节点的时候
 '''
-def removeNthFromEnd(self, head, n):
-    pass
 
-    if __name__ == '__main__':
-        pass
+
+def removeNthFromEnd(head, n):
+    cur = head
+    aft = cur
+    k = 1
+    if head.next == None:
+        return None
+    while aft.next != None and k <= n:
+        aft = aft.next
+        k += 1
+    if aft.next ==None and k<=n: #当删除正数第一个情况
+        return head.next
+    while aft.next != None:
+        cur = cur.next
+        aft = aft.next
+
+    if cur.next != None:
+        if cur.next.next ==None:
+            cur.next = None
+        else:
+            cur.next = cur.next.next
+    return head
+
+
+if __name__ == '__main__':
+    head = ListNode.ListNode(1)
+    head.next = ListNode.ListNode(2)
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(4)
+    head.next.next.next.next = ListNode.ListNode(5)
+    c = removeNthFromEnd(head,5)
+    while c.next != None:
+        print(c.val)
+        c = c.next
+    print(c.val)
