@@ -132,11 +132,49 @@ def mergeTwoLists(l1, l2):
 
 '''
 判断回文链表
+要求时间复杂度O（n）空间复杂度为O（1）
+思路：
+先遍历一遍求出长度，然后直接逆置链表到一半的长度，（如果长度是奇数的话，忽略中间值）
+然后向两头遍历，遇到不相等的就说明不是回文
 '''
 
 
 def isPalindrome(head):
-    pass
+    if head is None:
+        return True
+    length = 0
+    tmp = head
+    while tmp is not None:
+        length += 1
+        tmp = tmp.next
+    if length == 1:
+        return True
+    elif length == 2:
+        return head.val == head.next.val
+
+    mid = length / 2 - 1
+
+    r = 0
+
+    del tmp
+
+    cur, pre = head, None
+
+    while cur and r <= mid:
+        cur.next, pre, cur = pre, cur, cur.next
+        r += 1
+    del head, mid, r
+
+    if length % 2 != 0:
+        cur = cur.next
+
+    while pre is not None and cur is not None:
+        if pre.val == cur.val:
+            pre = pre.next
+            cur = cur.next
+        else:
+            return False
+    return True
 
 
 '''
@@ -162,6 +200,8 @@ def hasCycle(head):
 链表有环
 快慢指针 两指针相遇的时候 就证明链表有环
 '''
+
+
 def hasCycleOne(head):
     if head is None or head.next is None:
         return False
@@ -174,16 +214,18 @@ def hasCycleOne(head):
         fast = fast.next.next
     return True
 
+
 if __name__ == '__main__':
-    head = ListNode.ListNode(3)
+    head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(0)
-    head.next.next.next = ListNode.ListNode(-4)
-    head.next.next.next.next = head.next
+    head.next.next = ListNode.ListNode(2)
+    head.next.next.next = ListNode.ListNode(2)
+    head.next.next.next.next = ListNode.ListNode(1)
+
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = hasCycle(head)
+    c = isPalindrome(head)
     print(c)
     # while c.next != None:
     #     print(c.val)
