@@ -68,5 +68,28 @@ def isPowerOfThree(n):
     return b % n == 0
 
 
+'''
+罗马数字转换
+'''
+
+def romanToInt(s):
+    map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+    result = 0
+    for i in range(len(s)):
+        if i == 0 or map[s[i]] <= map[s[i - 1]]:
+            result += map[s[i]]
+        else:
+            result = result + map[s[i]] - 2 * map[s[i - 1]]
+    return result
+
+'''
+ 位1的个数
+'''
+def hammingWeight(n):
+    new_n = bin(n)[2:].zfill(31)
+    new_n = list(new_n)
+    return new_n.count('1')
+
+
 if __name__ == '__main__':
-    print(isPowerOfThree(6))
+    print(hammingWeight(11))
