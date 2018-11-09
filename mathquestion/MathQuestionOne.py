@@ -109,15 +109,21 @@ def reverseBits(n):
     s = ''.join(l)
     return int(s, 2)
 
+
 '''
 帕斯卡三角形
+用两个数组保存临时结果
+数组长度比层数多2
+两边置0方便计算
 '''
+
+
 def generate(numRows):
-    if numRows ==0:
+    if numRows == 0:
         return []
-    if numRows ==1:
+    if numRows == 1:
         return [[1]]
-    res = [[1],[1,1]]
+    res = [[1], [1, 1]]
     dp = [0 for i in range(numRows + 2)]
     new_dp = [0 for i in range(numRows + 2)]
     dp[1] = 1
@@ -130,5 +136,27 @@ def generate(numRows):
     return res
 
 
+'''
+有效的括号
+用一个栈来保存对应的左括号，如果遇到右括号的时候从栈中弹出一个
+因为是按顺序排列的左括号 弹出来的一定是相应的右括号
+如果 不相等 就说明 括号没有对称
+'''
+
+
+def isValid(s):
+    dp = []
+    for i in s:
+        if i == "(":
+            dp.append(")")
+        elif i == "{":
+            dp.append("}")
+        elif i == "[":
+            dp.append("]")
+        elif not dp or dp.pop() != i:
+            return False
+    return not dp
+
+
 if __name__ == '__main__':
-    print(generate(0))
+    print(isValid("["))
