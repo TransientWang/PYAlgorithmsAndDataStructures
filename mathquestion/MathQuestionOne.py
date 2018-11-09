@@ -87,15 +87,20 @@ def romanToInt(s):
 '''
  位1的个数
 '''
+
+
 def hammingWeight(n):
     new_n = bin(n)[2:].zfill(31)
     print(new_n)
     new_n = list(new_n)
     return new_n.count('1')
 
+
 '''
 颠倒二进制位
 '''
+
+
 def reverseBits(n):
     l = list('{0:032b}'.format(n))
     l = list(map(int, l))
@@ -104,9 +109,26 @@ def reverseBits(n):
     s = ''.join(l)
     return int(s, 2)
 
-
+'''
+帕斯卡三角形
+'''
+def generate(numRows):
+    if numRows ==0:
+        return []
+    if numRows ==1:
+        return [[1]]
+    res = [[1],[1,1]]
+    dp = [0 for i in range(numRows + 2)]
+    new_dp = [0 for i in range(numRows + 2)]
+    dp[1] = 1
+    dp[2] = 1
+    for j in range(2, numRows):
+        for k in range(1, j + 2):
+            new_dp[k] = dp[k] + dp[k - 1]
+        dp = new_dp[:]
+        res.append(new_dp[1:j + 2])
+    return res
 
 
 if __name__ == '__main__':
-    print(reverseBits(10))
-
+    print(generate(0))
