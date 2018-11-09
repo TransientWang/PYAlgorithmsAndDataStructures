@@ -39,7 +39,8 @@ def fizzBuzz(n):
  然后我们用两个for循环来实现埃拉托斯特尼筛法，难度并不是很大，代码如下所示：
 '''
 
-def countPrimes(n): #TODO 应该再复习
+
+def countPrimes(n):  # TODO 应该再复习
     if n == 0 or n == 1:
         return 0
     dn = math.ceil(math.sqrt(n))
@@ -56,5 +57,16 @@ def countPrimes(n): #TODO 应该再复习
     return res
 
 
+def isPowerOfThree(n):
+    if n <= 0:
+        return False
+    maxint = 0x7fffffff
+    k = int(math.log(maxint, 3))
+
+    b = 3 ** k
+
+    return b % n == 0
+
+
 if __name__ == '__main__':
-    print(countPrimes(2))
+    print(isPowerOfThree(6))
