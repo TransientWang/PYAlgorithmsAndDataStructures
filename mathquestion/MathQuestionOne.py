@@ -158,5 +158,36 @@ def isValid(s):
     return not dp
 
 
+'''
+缺失的数字
+'''
+
+
+def missingNumber(nums):
+    t = 0
+    tmp = 0
+    for i in range(len(nums)):
+        t += i
+        tmp += nums[i]
+    t += len(nums)
+
+    return t - tmp
+
+
+def hammingDistance(x, y):
+    l1 = list('{0:032b}'.format(x))
+    l1 = list(map(int, l1))
+    l2 = list('{0:032b}'.format(y))
+    l2 = list(map(int, l2))
+
+    res = 0
+
+    for i in range(32):
+        if l1[i] != l2[i]:
+            res += 1
+
+    return res
+
+
 if __name__ == '__main__':
-    print(isValid("["))
+    print(hammingDistance(4, 14))
