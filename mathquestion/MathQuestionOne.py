@@ -72,6 +72,7 @@ def isPowerOfThree(n):
 罗马数字转换
 '''
 
+
 def romanToInt(s):
     map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
     result = 0
@@ -82,14 +83,30 @@ def romanToInt(s):
             result = result + map[s[i]] - 2 * map[s[i - 1]]
     return result
 
+
 '''
  位1的个数
 '''
 def hammingWeight(n):
     new_n = bin(n)[2:].zfill(31)
+    print(new_n)
     new_n = list(new_n)
     return new_n.count('1')
 
+'''
+颠倒二进制位
+'''
+def reverseBits(n):
+    l = list('{0:032b}'.format(n))
+    l = list(map(int, l))
+    l.reverse()
+    l = list(map(str, l))
+    s = ''.join(l)
+    return int(s, 2)
+
+
+
 
 if __name__ == '__main__':
-    print(hammingWeight(11))
+    print(reverseBits(10))
+
