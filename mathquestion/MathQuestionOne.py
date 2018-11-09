@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import math
+import random
 
 '''
 写一个程序，输出从 1 到 n 数字的字符串表示。
@@ -173,9 +174,12 @@ def missingNumber(nums):
 
     return t - tmp
 
+
 '''
 颠倒二进制位
 '''
+
+
 def hammingDistance(x, y):
     l1 = list('{0:032b}'.format(x))
     l1 = list(map(int, l1))
@@ -191,5 +195,43 @@ def hammingDistance(x, y):
     return res
 
 
+'''
+Shuffle an Array
+打乱一个没有重复元素的数组。
+'''
+
+
+class Solution(object):
+
+    def __init__(self, nums):
+        self.nums = nums
+        """
+        :type nums: List[int]
+        """
+
+    def reset(self):
+        return self.nums
+        """
+        Resets the array to its original configuration and return it.
+        :rtype: List[int]
+        """
+
+    def shuffle(self):
+        r = []
+        tmp = self.nums[:]
+        while tmp:
+            ran = int(random.uniform(0, len(tmp)))
+            r.append(tmp[ran])
+            tmp.remove(tmp[ran])
+        return r
+        """
+        Returns a random shuffling of the array.
+        :rtype: List[int]
+        """
+
+
 if __name__ == '__main__':
-    print(hammingDistance(4, 14))
+    s = Solution([1, 2, 3])
+
+    print(s.shuffle())
+    print(s.reset())
