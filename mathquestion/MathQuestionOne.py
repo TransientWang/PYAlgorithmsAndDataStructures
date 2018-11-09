@@ -173,7 +173,9 @@ def missingNumber(nums):
 
     return t - tmp
 
-
+'''
+颠倒二进制位
+'''
 def hammingDistance(x, y):
     l1 = list('{0:032b}'.format(x))
     l1 = list(map(int, l1))
