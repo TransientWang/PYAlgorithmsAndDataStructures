@@ -39,8 +39,7 @@ def fizzBuzz(n):
  然后我们用两个for循环来实现埃拉托斯特尼筛法，难度并不是很大，代码如下所示：
 '''
 
-
-def countPrimes(n): #TODO 应该在复习
+def countPrimes(n): #TODO 应该再复习
     if n == 0 or n == 1:
         return 0
     dn = math.ceil(math.sqrt(n))
