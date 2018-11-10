@@ -40,4 +40,3 @@ class GreddySelector:
 
 sel = GreddySelector()
 print((sel.bagSolution(sel.wList,sel.vList,sel.m)))
-print(_Gree)
