@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+import collections
+
 
 def threeSum(nums):
     nums.sort()
@@ -66,9 +68,48 @@ def setZeroes(matrix):
         matrix[0] = [0 for i in range(len(matrix[0]))]
     print(matrix)
 
+
+def groupAnagrams(strs):
+    if len(strs) is 0:
+        return []
+    dp = [[strs[0]]]
+
+    for i in range(1, len(strs)):
+        # l = list(strs[i])
+        l = sorted(strs[i])
+        flag = False
+        for j in range(len(dp)):
+            r = sorted(dp[j][0])
+            if l == r:
+                flag = False
+                dp[j].append(strs[i])
+                break
+            else:
+                flag = True
+
+        if flag:
+            dp.append([strs[i]])
+    return dp
+
+'''
+字谜分组
+维护一个映射 ans : {String -> List}，其中每个键
+ext{K}K 是一个排序字符串，每个值是初始输入的字符串列表，排序后等于 ext{K}K。
+在 Java 中，我们将键存储为字符串，例如，code。 在 Python 中，我们将键存储为散列化元组，
+例如，('c', 'o', 'd', 'e')。
+'''
+def groupAnagramsOne(strs):
+    ans = collections.defaultdict(list)
+
+    for i in strs:
+        ans[str(sorted(i))].append(i)
+
+    r =[]
+    for i in ans.values():
+        r.append(i)
+    return r
+
+
+
 if __name__ == '__main__':
-    print(setZeroes([
-        [1, 1, 1],
-        [1, 0, 1],
-        [1, 1, 1]
-    ]))
+    print(groupAnagramsOne(["eat", "tea", "tan", "ate", "nat", "bat"]))
