@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import collections
+from copy import deepcopy
 
 
 def threeSum(nums):
@@ -91,6 +92,7 @@ def groupAnagrams(strs):
             dp.append([strs[i]])
     return dp
 
+
 '''
 字谜分组
 维护一个映射 ans : {String -> List}，其中每个键
@@ -98,18 +100,49 @@ ext{K}K 是一个排序字符串，每个值是初始输入的字符串列表，
 在 Java 中，我们将键存储为字符串，例如，code。 在 Python 中，我们将键存储为散列化元组，
 例如，('c', 'o', 'd', 'e')。
 '''
+
+
 def groupAnagramsOne(strs):
     ans = collections.defaultdict(list)
 
     for i in strs:
         ans[str(sorted(i))].append(i)
 
-    r =[]
+    r = []
     for i in ans.values():
         r.append(i)
     return r
 
+'''
+无重复字符的最长子串
+维持一个滑动窗口
+有三种情况需要考虑
+一、当新加入的字符 不存在之前的子序列中的时候那么这个在字符就可以加入子串中
+二、当新加入的字符已经存在于子串中的时候，而且重复的位置在子串的第一位的时候，可以删除第一位的字符，并在结尾加入当前字符
+三、当新加入的字符已经存在于子串中的时候，而且重复的位置不在子串的第一位的时候，需要删除重复位置之前的子串
+并新加入当前字符
+最后需要有一个 值记录滑动窗口的最大值
+'''
+def lengthOfLongestSubstring(s):
+    if len(s) == 0:
+        return 0
+    tmp = [s[0]]
+    t = 1
+    for i in range(1, len(s)):
+        if tmp.count(s[i]) == 0:
+            tmp.append(s[i])
+            if len(tmp) > t:
+                t= len(tmp)
+        elif tmp.index(s[i]) != 0:
+            tmp = tmp[tmp.index(s[i]) + 1:]
+            tmp.append(s[i])
+        else:
+            if len(tmp) > t:
+                t= len(tmp)
+            tmp.remove(s[i])
+            tmp.append(s[i])
+    return t
 
 
 if __name__ == '__main__':
-    print(groupAnagramsOne(["eat", "tea", "tan", "ate", "nat", "bat"]))
+    print(lengthOfLongestSubstring("abcabcbb"))
