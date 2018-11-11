@@ -167,19 +167,44 @@ def longestPalindrome(s):
     left = 0
     index = 0
     maxLen = 0
-    for i in range(0, len(l)):
-        r[i] = 1 if i > max else min(r[2 * index - i], max - i) #min为了防止越界
+    for i in range(1, len(l)):
+        r[i] = 1 if i > max else min(r[2 * index - i], max - i)  # min为了防止越界
         while i + r[i] < len(l) and i - r[i] >= 0 and l[i + r[i]] == l[i - r[i]]:
-            r[i] += 1  #寻找回文串
-        if i + r[i] > max: #如果当前位置的回文串最右边的索引位置大于当前记录的最大値
-            index = i    #更新最大边界中心索引位置
-            max = i + r[i]-1 #跟新最大边界索引位置
-        if r[i] - 1 > maxLen: #更新回文串长度最大値
+            r[i] += 1  # 寻找回文串
+        if i + r[i] > max:  # 如果当前位置的回文串最右边的索引位置大于当前记录的最大値
+            index = i  # 更新最大边界中心索引位置
+            max = i + r[i] - 1  # 跟新最大边界索引位置
+        if r[i] - 1 > maxLen:  # 更新回文串长度最大値
             maxLen = int(r[i] - 1)
-            left = int((i - r[i]+1) / 2)
+            left = int((i - r[i] + 1) / 2)
+    print(r)
+    return s[left:left + maxLen]
 
-    return s[left:left+maxLen]
+
+'''
+ 递增的三元子序列
+给定一个未排序的数组，判断这个数组中是否存在长度为 3 的递增子序列。
+
+数学表达式如下:
+
+如果存在这样的 i, j, k,  且满足 0 ≤ i < j < k ≤ n-1，
+使得 arr[i] < arr[j] < arr[k] ，返回 true ; 否则返回 false 。
+'''
+
+
+def increasingTriplet(nums):
+    if len(nums) < 3:
+        return False
+    h, k = 2 << 30, 2 << 30
+    for i in nums:
+        if h >= i: #如果当前值小于h则更新h,
+            h = i
+        elif k >= i: #如果当前值大于h但是小于k
+            k = i
+        else:       #如果当前值大于k就说明 已经找到三个数按大小顺序排列直接返回True
+            return True
+    return False
 
 
 if __name__ == '__main__':
-    print(longestPalindrome("axxx"))
+    print(increasingTriplet([1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 20]))
