@@ -113,6 +113,7 @@ def groupAnagramsOne(strs):
         r.append(i)
     return r
 
+
 '''
 无重复字符的最长子串
 维持一个滑动窗口
@@ -123,6 +124,8 @@ def groupAnagramsOne(strs):
 并新加入当前字符
 最后需要有一个 值记录滑动窗口的最大值
 '''
+
+
 def lengthOfLongestSubstring(s):
     if len(s) == 0:
         return 0
@@ -132,17 +135,51 @@ def lengthOfLongestSubstring(s):
         if tmp.count(s[i]) == 0:
             tmp.append(s[i])
             if len(tmp) > t:
-                t= len(tmp)
+                t = len(tmp)
         elif tmp.index(s[i]) != 0:
             tmp = tmp[tmp.index(s[i]) + 1:]
             tmp.append(s[i])
         else:
             if len(tmp) > t:
-                t= len(tmp)
+                t = len(tmp)
             tmp.remove(s[i])
             tmp.append(s[i])
     return t
 
 
+'''
+给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000
+Manacher's 
+https://www.cnblogs.com/mini-coconut/p/9074315.html
+'''
+
+
+def longestPalindrome(s):
+    if len(s) == 0:
+        return ""
+
+    l = ["#"]
+    for i in range(len(s)):
+        l.append(s[i])
+        l.append("#")
+    r = [0 for i in range(len(l))]
+    max = 0
+    left = 0
+    index = 0
+    maxLen = 0
+    for i in range(0, len(l)):
+        r[i] = 1 if i > max else min(r[2 * index - i], max - i) #min为了防止越界
+        while i + r[i] < len(l) and i - r[i] >= 0 and l[i + r[i]] == l[i - r[i]]:
+            r[i] += 1  #寻找回文串
+        if i + r[i] > max: #如果当前位置的回文串最右边的索引位置大于当前记录的最大値
+            index = i    #更新最大边界中心索引位置
+            max = i + r[i]-1 #跟新最大边界索引位置
+        if r[i] - 1 > maxLen: #更新回文串长度最大値
+            maxLen = int(r[i] - 1)
+            left = int((i - r[i]+1) / 2)
+
+    return s[left:left+maxLen]
+
+
 if __name__ == '__main__':
-    print(lengthOfLongestSubstring("abcabcbb"))
+    print(longestPalindrome("axxx"))
