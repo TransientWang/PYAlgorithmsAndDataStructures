@@ -72,12 +72,34 @@ def oddEvenList(head):
     return head
 
 
+'''
+相交链表
+'''
+
+
+def getIntersectionNode(headA, headB):
+    p1, p2 = headA, headB
+    while p1 != p2:
+        p1 = headB if p1 == None else p1.next
+        p2 = headA if p2 == None else p2.next
+    return p1
+    # a = {}
+    # while headA:
+    #     a[headA] = 0
+    #     headA = headA.next
+    # while headB:
+    #     if a.get(headB) !=None:
+    #         return headB
+    #     headB = headB.next
+    # return None
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
-    h = oddEvenList(head)
-    while h:
-        print(h.val)
-        h = h.next
+    # head.next = ListNode.ListNode(2)
+    # head.next.next = ListNode.ListNode(3)
+    # head.next.next.next = ListNode.ListNode(4)
+    print(getIntersectionNode(head, head))
+    # while h:
+    #     print(h.val)
+    #     h = h.next
