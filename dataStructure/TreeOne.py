@@ -21,7 +21,10 @@ def find(root, l):
     if root.right != None:
         find(root.right, l)
 
-
+'''
+二叉树的锯齿形层次遍历
+注意直接反转结果，不要在队列上反转
+'''
 def zigzagLevelOrder(root):
     stack = [root]
     k = 1
