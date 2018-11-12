@@ -70,13 +70,58 @@ def buildTree(preorder, inorder):
     return head
 
 
-def build(tree):
-    pass
+'''
+每个节点的右向指针
+思路：此问题还是考察的二叉树层序遍历
+只要在每层遍历的过程中保存先前节点 并将 先前节点的下一个指向当前节点
+循环往复就可以
+'''
+
+
+class TreeLinkNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+        self.next = None
+
+
+def connect(root):
+    if root is None:
+        return None
+    r = TreeLinkNode(1)
+    mqueue = []
+
+    mqueue.append(root)
+
+    while len(mqueue) != 0:
+        l = len(mqueue)
+        tlNode = mqueue.pop(0)
+        if tlNode.left is not None:
+            mqueue.append(tlNode.left)
+        if tlNode.right is not None:
+            mqueue.append(tlNode.right)
+        while l > 1:
+            afNode = mqueue.pop(0)
+            if afNode.left is not None:
+                mqueue.append(afNode.left)
+            if afNode.right is not None:
+                mqueue.append(afNode.right)
+            tlNode.next = afNode
+            tlNode = afNode
+            l -= 1
+    return root
 
 
 if __name__ == '__main__':
     # t = TreeNode.TreeNode(1)
     # t.right = TreeNode.TreeNode(2)
     # t.right.left = TreeNode.TreeNode(3)
-    head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
+    root = TreeLinkNode(1)
+    root.left = TreeLinkNode(2)
+    root.right = TreeLinkNode(3)
+    head = connect(root)
     print(head.val)
+
+    # head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
+    # print(head.val)
