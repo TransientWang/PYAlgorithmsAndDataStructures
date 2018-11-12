@@ -21,10 +21,13 @@ def find(root, l):
     if root.right != None:
         find(root.right, l)
 
+
 '''
 二叉树的锯齿形层次遍历
 注意直接反转结果，不要在队列上反转
 '''
+
+
 def zigzagLevelOrder(root):
     stack = [root]
     k = 1
@@ -47,8 +50,33 @@ def zigzagLevelOrder(root):
     return result
 
 
+'''
+从前序与中序遍历序列构造二叉树
+思路：解决这个问题的是关键 是要明确二叉树的遍历是一个递归的过程
+根据前序遍历 可以得到 根节点 
+那么在 中序遍历中  可以根据前序遍历得到的根节点 获得到 根节点的左右子树信息
+然后回到 前序遍历序列 中找到得到的左子树，那么在前序遍历中找到的左子树序列 也满足前序遍历序列
+他的第一个索引 也一样是左子树的头结点  这就是一个递归的过程
+'''
+
+
+def buildTree(preorder, inorder):
+    if len(preorder) == 0 or len(inorder) == 0:
+        return None
+    head = TreeNode.TreeNode(preorder[0])
+    i = inorder.index(preorder[0])
+    head.left = buildTree(preorder[1:i + 1], inorder[:i])
+    head.right = buildTree(preorder[i + 1:], inorder[i + 1:])
+    return head
+
+
+def build(tree):
+    pass
+
+
 if __name__ == '__main__':
-    t = TreeNode.TreeNode(1)
-    t.right = TreeNode.TreeNode(2)
-    t.right.left = TreeNode.TreeNode(3)
-    print(zigzagLevelOrder(t))
+    # t = TreeNode.TreeNode(1)
+    # t.right = TreeNode.TreeNode(2)
+    # t.right.left = TreeNode.TreeNode(3)
+    head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
+    print(head.val)
