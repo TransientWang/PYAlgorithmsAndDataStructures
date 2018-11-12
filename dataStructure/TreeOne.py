@@ -113,15 +113,50 @@ def connect(root):
     return root
 
 
+'''
+二叉搜索树中第K小的元素
+给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。
+二叉搜索树：左子树上的节点都小于根节点的值，又子树的节点都大于根节点的值
+这是一个递归的过程
+思路：分治法，分为左右两边看，因为左边小所以先看左边
+先计算出左边节点数量 
+分为三种情况
+一、当左边节点的数量+1 == k 说明 根节点就是我们要找的节点
+二、当左边节点数量>=k的时候，说明需要寻找的节点就在左子树上，
+这时只需要不断从上到下缩小左子树的查找范围，就能返回到第一中情况
+三、当左子树数量+1 < k 说明第k小的节点在右子树上 此时 需要查找右子树上第 k-左子树数量-1(根节点) 个节点即可 
+'''
+
+
+def count(root):
+    if root is None:
+        return 0
+    else:
+        return 1 + count(root.left) + count(root.right)
+
+
+def kthSmallest(root, k):
+    if root is None:
+        return None
+
+    lcount = count(root.left)
+
+    if k == lcount + 1:
+        return root.val
+    elif k <= lcount:
+        return kthSmallest(root.left, k)
+    else:
+        return kthSmallest(root.right, k - lcount - 1)
+
+
 if __name__ == '__main__':
     # t = TreeNode.TreeNode(1)
     # t.right = TreeNode.TreeNode(2)
     # t.right.left = TreeNode.TreeNode(3)
     root = TreeLinkNode(1)
-    root.left = TreeLinkNode(2)
+    # root.left = TreeLinkNode(2)
     root.right = TreeLinkNode(3)
-    head = connect(root)
-    print(head.val)
+    print(kthSmallest(root, 2))
 
     # head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
     # print(head.val)
