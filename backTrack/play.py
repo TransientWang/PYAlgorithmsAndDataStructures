@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import math
-class play:
+class play(object):
     '''n皇后问题'''
     count = 0  # 结果数量
     n = 8;  # 皇后数量
