@@ -27,6 +27,7 @@ def coinChange(coins, amount):
 
 '''
 给定一个无序的整数数组，找到其中最长上升子序列的长度。
+用一个辅助数组来保存从0当前节点的最优值
 '''
 
 
@@ -37,17 +38,15 @@ def lengthOfLIS(nums):
     max_res = 1
     for i in range(len(nums)):
         dp.append(1)
-        for j in range(i):
+        for j in range(i):     #计算的子序列是从0开始，到i结束
             if nums[j] < nums[i] and dp[i] < dp[j] + 1:
                 dp[i] = dp[j] + 1
             if dp[i] > max_res:
                 max_res = dp[i]
-            k = j
     # for j in range(l):
     #     print(dp[j], end=" ")
     # print("\n")
     return max_res
-
 
 
 if __name__ == '__main__':
