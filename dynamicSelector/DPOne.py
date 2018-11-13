@@ -27,34 +27,29 @@ def coinChange(coins, amount):
 
 '''
 给定一个无序的整数数组，找到其中最长上升子序列的长度。
-这道题不适合贪心算法
 '''
 
 
 def lengthOfLIS(nums):
-    if len(nums)== 0:
-        return 1
-    l = len(nums)
-    dp = [[1 for i in range(l)] for i in range(l)]
-
-    max_res = 0
-    for i in range(l):
-        for j in range(l):
-            if i < j:
-                if nums[j] > max(nums[i:j]):
-                    dp[i][j] = dp[i][j - 1] + 1
-                else:
-                    dp[i][j] = dp[i][j - 1]
-                max_res = dp[i][j] if dp[i][j] > max_res else max_res
-
-
-    for i in range(l):
-        for j in range(l):
-            print(dp[i][j], end=" ")
-        print("\n")
+    if len(nums) == 0:
+        return 0
+    dp = []
+    max_res = 1
+    for i in range(len(nums)):
+        dp.append(1)
+        for j in range(i):
+            if nums[j] < nums[i] and dp[i] < dp[j] + 1:
+                dp[i] = dp[j] + 1
+            if dp[i] > max_res:
+                max_res = dp[i]
+            k = j
+    # for j in range(l):
+    #     print(dp[j], end=" ")
+    # print("\n")
     return max_res
 
 
+
 if __name__ == '__main__':
-    print(lengthOfLIS([10,9,2,5,3,4]))
+    print(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
 # [1,3,6,7,9,4,10,5,6]

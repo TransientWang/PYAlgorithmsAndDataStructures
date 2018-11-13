@@ -103,7 +103,33 @@ def reverseString(s):
 
     return "".join(ss)
 
+'''
+给定一个无序的整数数组，找到其中最长上升子序列的长度。
 
+'''
+def lengthOfLISGreedy(nums):
+    if len(nums) == 0:
+        return 0
+    r = [nums[0]] #维护维护一个递增序列
+    res = 0
+    for i in range(1, len(nums)):
+        if nums[i] > r[res]:      #当前元素大于递增序列的右端 直接加上
+            r.append(nums[i])
+            res += 1
+        else: #找到第一个比 nums[i]大的替换
+            left = 0
+            right = res
+            while left < right:
+                mid = int((left + (right-1)) /2)
+                if nums[i] == r[mid]:
+                    left = mid
+                    break
+                elif r[mid] >= nums[i]:
+                    right = mid
+                else:
+                    left = mid + 1
+            r[left] = nums[i]
+    return res+1
 if __name__ == '__main__':
     print((rotate([
         [1, 2, 3],
