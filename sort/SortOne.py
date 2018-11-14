@@ -163,7 +163,7 @@ def merge(intervals):
     :param intervals:
     :return:
     '''
-    intervals.sort(key= lambda item :item.start)
+    intervals.sort(key=lambda item: item.start)
     i = 0
     while i < len(intervals) - 1:
         if intervals[i].end >= intervals[i + 1].start or intervals[i].start >= intervals[i + 1].start or intervals[
@@ -185,10 +185,32 @@ def merge(intervals):
     return intervals
 
 
+def search(nums, target):
+    '''
+    搜索旋转排序数组
+    如果中间的数小于最右边的数，则右半段是有序的，若中间数大于最右边数，则左半段是有序的，
+    我们只要在有序的半段里用首尾两个数组来判断目标值是否在这一区域内，这样就可以确定保留哪半边了，代码如下
+    :param nums:
+    :param target:
+    :return:
+    '''
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = int((left + right) / 2)
+        if nums[mid] == target:
+            return mid
+        if nums[mid] > nums[-1]:  # 左边的有序
+            if nums[left] <= target and nums[mid] > target:
+                right = mid-1
+            else:
+                left = mid+1
+        else:
+            if nums[mid] < target and nums[right] >= target:
+                left = mid+1
+            else:
+                right = mid -1
+    return -1
+
 if __name__ == '__main__':
-    # [Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15, 18)]
-    for i in merge([Interval(1, 4), Interval(0, 0)]):
-        print(i.start)
-        print(i.end)
-    # arr = [1, 1, 1, 2, 2, 3]
-    # heapSort(arr)
+    print(search([4,5,6,7,0,1,2],
+0))
