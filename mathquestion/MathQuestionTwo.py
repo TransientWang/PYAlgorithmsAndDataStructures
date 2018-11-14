@@ -29,5 +29,41 @@ def isHappy(n):
             t = 0
 
 
+def trailingZeroes(n):
+    '''
+    给定一个整数 n，返回 n! 结果尾数中零的数量。
+    :param n:
+    :return:
+    '''
+    res = 0
+    n = n / 5
+    while n:
+        n = n / 5
+        res += 5
+    return res
+
+
+def myPow(x, n):
+    '''
+    自实现的pow
+    :param x:
+    :param n:
+    :return:
+    '''
+    if n == 0:
+        return 1
+    if n < 0:
+        return 1.0 / myPow(x, -n)
+    if n % 2 == 1:
+        return x * myPow(x * x, n // 2)
+    else:
+        return myPow(x * x, n // 2)
+
+def mySqrt(x):
+    '''
+
+    :param x:
+    :return:
+    '''
 if __name__ == '__main__':
-    print(isHappy(19))
+    print(trailingZeroes(1808548329))
