@@ -32,6 +32,7 @@ def heapSort(arr, k):
         heapAdjust(arr, 0)
     return res
 
+
 def sortCount(nums, min, max):
     '''
     计数排序：
@@ -77,14 +78,42 @@ def topKFrequent(nums, k):
             r[i] = 1
         else:
             r[i] += 1
-    d = []
-    for key, val in r.items():
-        d.append((val, key))
-    return heapSort(d, k)
+    # d = []
+    # for key, val in r.items():
+    #     d.append((val, key))
+    # return heapSort(d, k)
+    arry = [[num, r[num]] for num in r]
+    arry = sorted(arry, key=lambda item: 0 - item[1])
+    r = map(lambda item: item[0], arry)
+    return list(r)[:k]
 
+
+def findPeakElement(nums):
+    '''
+    峰值元素是指其值大于左右相邻值的元素。
+
+    给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。
+
+    数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。
+
+    你可以假设 nums[-1] = nums[n] = -∞。
+    >>> findPeakElement([1, 2])
+    :param self:
+    :param nums:
+    :return:
+    '''
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) / 2
+        if mid == len(nums) - 1:
+            return mid
+        if nums[mid] < nums[mid + 1]:
+            left = mid + 1
+        else:
+            right = mid
+    return right
 
 if __name__ == '__main__':
-    print(topKFrequent([1, 1, 1, 2, 2, 3],
-                       2))
+    print(findPeakElement([1, 2]))
     # arr = [1, 1, 1, 2, 2, 3]
     # heapSort(arr)
