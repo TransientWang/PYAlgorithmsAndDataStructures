@@ -59,11 +59,25 @@ def myPow(x, n):
     else:
         return myPow(x * x, n // 2)
 
+
 def mySqrt(x):
     '''
 
     :param x:
     :return:
     '''
+    low = 1
+    high = x
+    while low <= high:
+        mid = (low + high) / 2
+
+        if x / mid < mid:
+            high = mid-1
+        elif x / mid > mid:
+            low = mid + 1
+        else:
+            return mid
+    return low -1
+
 if __name__ == '__main__':
     print(trailingZeroes(1808548329))
