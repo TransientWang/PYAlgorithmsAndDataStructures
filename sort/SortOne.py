@@ -148,8 +148,47 @@ def searchRange(nums, target):
     return [left + 1, right - 1]
 
 
+class Interval(object):
+    def __init__(self, s=0, e=0):
+        self.start = s
+        self.end = e
+
+
+def merge(intervals):
+    '''
+    给出一个区间的集合，请合并所有重叠的区间。
+    输入: [[1,3],[2,6],[8,10],[15,18]]
+    输出: [[1,6],[8,10],[15,18]]
+    解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+    :param intervals:
+    :return:
+    '''
+    intervals.sort(key= lambda item :item.start)
+    i = 0
+    while i < len(intervals) - 1:
+        if intervals[i].end >= intervals[i + 1].start or intervals[i].start >= intervals[i + 1].start or intervals[
+            i].end >= intervals[i + 1].end:
+            s = intervals[i].start
+            e = intervals[i].end
+            if intervals[i].end >= intervals[i + 1].start:
+                e = intervals[i + 1].end
+
+            if intervals[i].start >= intervals[i + 1].start:
+                s = intervals[i + 1].start
+            if intervals[i].end >= intervals[i + 1].end:
+                e = intervals[i].end
+            intervals[i].start = s
+            intervals[i].end = e
+            intervals.remove(intervals[i + 1])
+        else:
+            i += 1
+    return intervals
+
+
 if __name__ == '__main__':
-    print(searchRange([2],
-                      2))
+    # [Interval(1, 3), Interval(2, 6), Interval(8, 10), Interval(15, 18)]
+    for i in merge([Interval(1, 4), Interval(0, 0)]):
+        print(i.start)
+        print(i.end)
     # arr = [1, 1, 1, 2, 2, 3]
     # heapSort(arr)
