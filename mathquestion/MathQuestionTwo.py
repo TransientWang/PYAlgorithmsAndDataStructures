@@ -102,7 +102,7 @@ def majorityElement(nums):
 
     count = 1
     t = nums[0]
-    for i in range(1,len(nums)):
+    for i in range(1, len(nums)):
         if t == nums[i]:
             count += 1
         else:
@@ -113,5 +113,26 @@ def majorityElement(nums):
     return t
 
 
+def evalRPN(tokens):
+    '''
+    逆波兰表达式求值
+    :param tokens:
+    :return:
+    '''
+    stack = []
+    while len(tokens) != 0:
+        t = tokens.pop(0)
+        if t != "+" and t != "-" and t != "*" and t != "/":
+            stack.append(t)
+        else:
+            t2 = stack.pop(-1)
+            t1 = stack.pop(-1)
+            tmp = eval(str(t1) + str(t) + str(t2))
+            stack.append(int(tmp))
+    import math
+    return int(stack.pop(0))
+
+
 if __name__ == '__main__':
-    print(majorityElement([3, 2, 3]))
+    print(evalRPN(["10"]))
+    pass
