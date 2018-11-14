@@ -113,7 +113,43 @@ def findPeakElement(nums):
             right = mid
     return right
 
+
+def searchRange(nums, target):
+    '''
+    给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+
+    你的算法时间复杂度必须是 O(log n) 级别。(二分法)
+
+    如果数组中不存在目标值，返回 [-1, -1]。
+    :param nums:
+    :param target:
+    :return:
+    '''
+    left, right = 0, len(nums) - 1
+    flag = True
+    mid = int((left + right) / 2)
+    while left <= right:
+
+        if nums[mid] < target:
+            left = mid + 1
+        elif nums[mid] > target:
+            right = mid - 1
+        else:
+            flag = False
+            break
+        mid = int((left + right) / 2)
+    if flag:
+        return [-1, -1]
+    left = right = mid
+    while left >= 0 and nums[left] == nums[mid]:
+        left -= 1
+    while right < len(nums) and nums[right] == nums[mid]:
+        right += 1
+    return [left + 1, right - 1]
+
+
 if __name__ == '__main__':
-    print(findPeakElement([1, 2]))
+    print(searchRange([2],
+                      2))
     # arr = [1, 1, 1, 2, 2, 3]
     # heapSort(arr)
