@@ -201,16 +201,41 @@ def search(nums, target):
             return mid
         if nums[mid] > nums[-1]:  # 左边的有序
             if nums[left] <= target and nums[mid] > target:
-                right = mid-1
+                right = mid - 1
             else:
-                left = mid+1
+                left = mid + 1
         else:
             if nums[mid] < target and nums[right] >= target:
-                left = mid+1
+                left = mid + 1
             else:
-                right = mid -1
+                right = mid - 1
     return -1
 
+
+def searchMatrix(matrix, target):
+    '''
+    左下角的元素是这一行中最小的元素，同时又是这一列中最大的元素。比较左下角元素和目标：
+    若左下角元素等于目标，则找到
+    若左下角元素大于目标，则目标不可能存在于当前矩阵的最后一行，问题规模可以减小为在去掉最后一行的子矩阵中寻找目标
+    若左下角元素小于目标，则目标不可能存在于当前矩阵的第一列，问题规模可以减小为在去掉第一列的子矩阵中寻找目标
+    若最后矩阵减小为空，则说明不存在
+    :param target:
+    :return:
+    '''
+    if len(matrix) == 0 or len(matrix[0]) == 0:
+        return False
+
+    x, y =  len(matrix) - 1,0
+    while x >=0  and y < len(matrix[0]):
+        if matrix[x][y] == target:
+            return True
+        if matrix[x][y] > target:
+            x -= 1
+        else:
+            y += 1
+
+    return False
+
+
 if __name__ == '__main__':
-    print(search([4,5,6,7,0,1,2],
-0))
+    print(searchMatrix([[-1],[-1]], 5))
