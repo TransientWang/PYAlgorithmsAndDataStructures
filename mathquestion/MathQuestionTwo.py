@@ -72,12 +72,46 @@ def mySqrt(x):
         mid = (low + high) / 2
 
         if x / mid < mid:
-            high = mid-1
+            high = mid - 1
         elif x / mid > mid:
             low = mid + 1
         else:
             return mid
-    return low -1
+    return low - 1
+
+
+def divide(dividend, divisor):
+    '''
+
+    :param dividend:
+    :param divisor:
+    :return:
+    '''
+    if divisor < 0:
+        divisor = 0 - divisor
+    while dividend > divisor:
+        dividend -= divisor
+
+
+def majorityElement(nums):
+    '''
+    求众数
+    :param nums:
+    :return:
+    '''
+
+    count = 1
+    t = nums[0]
+    for i in range(1,len(nums)):
+        if t == nums[i]:
+            count += 1
+        else:
+            count -= 1
+        if count == 0:
+            t = nums[i]
+            count = 1
+    return t
+
 
 if __name__ == '__main__':
-    print(trailingZeroes(1808548329))
+    print(majorityElement([3, 2, 3]))
