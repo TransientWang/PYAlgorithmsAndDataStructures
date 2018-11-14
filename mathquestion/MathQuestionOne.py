@@ -229,7 +229,9 @@ class Solution(object):
         :rtype: List[int]
         """
 
-
+def sortColors(nums):
+    nums.sort()
+    return nums
 if __name__ == '__main__':
     s = Solution([1, 2, 3])
 
