@@ -88,5 +88,41 @@ def subsets(nums):
     return res
 
 
+def exist(board, word):
+    '''
+    给定一个二维网格和一个单词，找出该单词是否存在于网格中。
+
+    单词必须按照字母顺序，通过相邻的单元格内的字母构成，
+    其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+    思路：回溯法，剪枝条件为 边界值 和 当前位置的值 是否是word[i]的值
+    同时将已遍历过的索引设置一个标记让防止重复遍历 在遍历完四周还要恢复
+    :param board:
+    :param word:
+    :return:
+    '''
+    row = len(board)
+    colum = len(board[0])
+
+    def find(x, y, i):
+        if x < 0 or y < 0 or x > row - 1 or y > colum - 1 or board[x][y] != word[i]:
+            return False
+        t = board[x][y]
+        if i == len(word) - 1 and t ==word[i]:
+            return True
+        board[x][y] = 0
+        bool = find(x + 1, y, i + 1) or find(x - 1, y, i + 1) or find(x, y + 1, i + 1) or find(x, y - 1, i + 1)
+        board[x][y] =t
+        return bool
+
+    for i in range(row):
+        for j in range(colum):
+            if board[i][j] == word[0]:
+                if find(i, j, 0):
+                    return True
+
+    return False
+
+
 if __name__ == '__main__':
-    print(subsets([1, 2, 3]))
+    print(exist([["a"]],
+"ab"))
