@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+
 def isHappy(n):
     '''
     编写一个算法来判断一个数是不是“快乐数”。
@@ -80,19 +81,6 @@ def mySqrt(x):
     return low - 1
 
 
-def divide(dividend, divisor):
-    '''
-
-    :param dividend:
-    :param divisor:
-    :return:
-    '''
-    if divisor < 0:
-        divisor = 0 - divisor
-    while dividend > divisor:
-        dividend -= divisor
-
-
 def majorityElement(nums):
     '''
     求众数
@@ -133,6 +121,49 @@ def evalRPN(tokens):
     return int(stack.pop(0))
 
 
+def divide(dividend, divisor):
+    '''
+
+    :param dividend:
+    :param divisor:
+    :return:
+    '''
+    if dividend == -2 ** 31 and divisor == -1:
+        return 2 ** 31 - 1
+
+    bool = 1
+    if dividend > 0:
+        bool *= -1
+    if divisor > 0:
+        bool *= -1
+    ded = abs(dividend)
+    div = abs(divisor)
+
+    res = 0
+    while ded >= div:
+        tmp = div
+        count = 1
+        while ded >= tmp << 1:
+            tmp <<= 1
+            count <<= 1
+        res += count
+        ded -= tmp
+    return res if bool == 1 else -res
+
+
+def titleToNumber(s):
+    '''
+    Excel表列序号
+    :param s:
+    :return:
+    '''
+    l = list(s)
+
+    res = 0
+    for i in range(len(l)):
+        res = res * 26 + ord(l[i]) - 64
+    return res
+
+
 if __name__ == '__main__':
-    print(evalRPN(["10"]))
-    pass
+    print(titleToNumber("AB"))
