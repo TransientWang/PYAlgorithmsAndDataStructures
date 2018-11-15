@@ -60,5 +60,37 @@ def backTrack(h, digits, tmp, res):
         backTrack(h+1,digits,tmp,res)
 
 
+def numIslands(grid):
+    '''
+    给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，
+    并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
+    思路：广度优先搜索 遍历地图，如果遇到1 则吧count+1 然后将其相邻为1的节点填充2
+    :param grid:
+    :return:
+    '''
+    if grid == []:
+        return 0
+    row = len(grid)
+    colum = len(grid[0])
+
+    def search(x, y):
+        grid[x][y] = "2"
+        if x + 1 < row and grid[x + 1][y] == "1":  # 右边
+            search(x + 1, y)
+        if x - 1 >= 0 and grid[x - 1][y] == "1":  # 左边
+            search(x - 1, y)
+        if y + 1 < colum and grid[x][y + 1] == "1":  # 上
+            search(x, y + 1)
+        if y - 1 >= 0 and grid[x][y - 1] == "1":  # 下
+            search(x, y - 1)
+
+    count = 0
+    for i in range(row):
+        for j in range(colum):
+            if grid[i][j] == "1":
+                count += 1
+                search(i, j)
+    print(grid)
+    return count
 if __name__ == '__main__':
     letterCombinations("23")
