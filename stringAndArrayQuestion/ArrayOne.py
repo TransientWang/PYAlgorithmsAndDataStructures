@@ -23,5 +23,38 @@ def productExceptSelf(nums):
     return res
 
 
+def spiralOrder(matrix):
+    '''
+    给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
+    :param matrix:
+    :return:
+    '''
+    map = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+    x = 0
+    y = 0
+    k = 4
+    h = 0
+    t1 = len(matrix[0]) - 1
+    t2 = len(matrix) - 1
+    t = t1
+    for i in range(len(matrix) * len(matrix[0])):
+        print(matrix[x][y], end=" ")
+        h += 1
+
+        x += map[k % 4][0]
+        y += map[k % 4][1]
+        if h == t:
+            if t == t1:
+                t = t2
+            else:
+                t = t1
+            h = 0
+            k += 1
+
+
 if __name__ == '__main__':
-    print(productExceptSelf([1, 2, 3, 4]))
+    print(spiralOrder([
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12]
+    ]))
