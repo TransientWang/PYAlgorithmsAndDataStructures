@@ -26,35 +26,37 @@ def productExceptSelf(nums):
 def spiralOrder(matrix):
     '''
     给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
+    思路：这个问题 需要考虑的方面有两个，一个是遍历的方向，另一个是每一方向遍历的步数，
+    方向可以有四个，步数每一方向走完，下次在走这个方向的时候就会减少一
     :param matrix:
     :return:
     '''
-    map = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+    row = len(matrix) - 1
+    if row == -1 or row == 0:
+        return matrix
+    if row == 0:
+        return matrix[0]
+    column = len(matrix[0])
+    map = ((0, 1), (1, 0), (0, -1), (-1, 0))  # 记录方向
+    vector = 0  # 标记方向
     x = 0
-    y = 0
-    k = 4
-    h = 0
-    t1 = len(matrix[0]) - 1
-    t2 = len(matrix) - 1
-    t = t1
-    for i in range(len(matrix) * len(matrix[0])):
-        print(matrix[x][y], end=" ")
-        h += 1
-
-        x += map[k % 4][0]
-        y += map[k % 4][1]
-        if h == t:
-            if t == t1:
-                t = t2
-            else:
-                t = t1
-            h = 0
-            k += 1
+    y = -1
+    res = []
+    while row >= 0 and column > 0:  # 将横向和走向放在一起走，注意横向步数条件是 >0
+        for i in range(column):  # 走横向
+            x += map[vector % 4][0]
+            y += map[vector % 4][1]
+            res.append(matrix[x][y])
+        vector += 1
+        for j in range(row):  # 走纵向
+            x += map[vector % 4][0]
+            y += map[vector % 4][1]
+            res.append(matrix[x][y])
+        vector += 1
+        row -= 1
+        column -= 1
+    return res
 
 
 if __name__ == '__main__':
-    print(spiralOrder([
-        [1, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12]
-    ]))
+    print(spiralOrder([[7], [9], [6]]))
