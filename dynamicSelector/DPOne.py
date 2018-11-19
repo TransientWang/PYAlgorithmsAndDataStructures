@@ -49,6 +49,25 @@ def lengthOfLIS(nums):
     return max_res
 
 
+def maxArea(height):
+    '''
+    盛最多水的容器
+    给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+
+    说明：你不能倾斜容器，且 n 的值至少为 2。
+    思路：典型的动态规划，但是 时间复杂度要求在o(n²)以下，次问题只遍历一遍，让左右索引向中间移动就可以了
+    :param height:
+    :return:
+    '''
+    res = 0
+    i, j = 0, len(height) - 1
+    while i < j:
+        res = max(min(height[i], height[j]) * (j - i), res)
+        if height[i] <= height[j]:
+            i += 1
+        else:
+            j -= 1
+    return res
 if __name__ == '__main__':
     print(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
 # [1,3,6,7,9,4,10,5,6]
