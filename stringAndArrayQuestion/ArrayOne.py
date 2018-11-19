@@ -58,5 +58,32 @@ def spiralOrder(matrix):
     return res
 
 
+def firstMissingPositive(nums):
+    '''
+    丢失的第一个正整数
+    将找到的元素放到正确的位置，如果发现某个元素一直没找到，则该元素即为所求
+
+    循环不变式：如果某命题初始为真，且每次改变后仍保持该命题为真，则若干次改变后该命题为真
+    只允许时间复杂度O(n)的算法，并且只能使用常数级别的空间。
+
+    分析：把当前数放到该放的位置即可，如1应该放到第0个位置，2应该放到第1个位置。
+        :param nums:
+    :return:
+    '''
+    i = 0
+    while i < len(nums):
+        if nums[i] > 0 and nums[i] <= len(nums) and nums[i] != nums[nums[i] - 1]:
+            tmp = nums[i]
+            nums[i] = nums[tmp - 1]
+            nums[tmp - 1] = tmp
+        else:
+            i += 1
+    print(nums)
+    for i in range(len(nums)):
+        if nums[i] != i + 1:
+            return i + 1
+    return len(nums) + 1
+
+
 if __name__ == '__main__':
-    print(spiralOrder([[7], [9], [6]]))
+    print(firstMissingPositive([3, 4, -1, 1]))
