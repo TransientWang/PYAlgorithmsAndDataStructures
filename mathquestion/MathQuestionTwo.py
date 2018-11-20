@@ -165,5 +165,14 @@ def titleToNumber(s):
     return res
 
 
+def isPowerOfTwo(n):
+    if n == 1:
+        return True
+    h = 2
+    while h < n:
+        h *= 2
+    return n == h
+
+
 if __name__ == '__main__':
-    print(titleToNumber("AB"))
+    print(isPowerOfTwo(4))
