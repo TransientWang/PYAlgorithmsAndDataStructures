@@ -175,4 +175,4 @@ def isPowerOfTwo(n):
 
 
 if __name__ == '__main__':
-    print(isPowerOfTwo(4))
+    pass
