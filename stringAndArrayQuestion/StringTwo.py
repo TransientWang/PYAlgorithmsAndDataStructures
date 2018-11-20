@@ -4,6 +4,12 @@ from copy import deepcopy
 
 
 def threeSum(nums):
+    '''
+    三数之和
+    先排顺序，然后遍历
+    :param nums:
+    :return:
+    '''
     nums.sort()
     print(nums)
     result = []
@@ -37,7 +43,34 @@ def threeSum(nums):
 
     return result
 
+def threeSumClosest(nums, target):
+    '''
+    最接近的三数之和
+    与三数值和思路差不多
+    但是要注意的是tmp需要与target比较
+    :param nums:
+    :param target:
+    :return:
+    '''
+    res = 10000000
+    nums.sort()
+    r = 0
+    for i in range(len(nums) - 2):
+        left = i + 1
+        right = len(nums) - 1
+        while right > left:
+            tmp = nums[i] + nums[left] + nums[right]
+            if abs(tmp - target) < res:
+                res = abs(tmp - target)
+                r = nums[i] + nums[left] + nums[right]
+            if tmp > target:
+                left += 1
+            elif tmp < target:
+                right -= 1
+            else:
+                return target
 
+    return r
 '''
 给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
 思路：首先想到的是行里发现有0 的话那么，这一行肯定是首先需要全都变为 0 的
