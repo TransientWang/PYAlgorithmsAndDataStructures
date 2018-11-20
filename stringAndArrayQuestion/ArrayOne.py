@@ -85,5 +85,44 @@ def firstMissingPositive(nums):
     return len(nums) + 1
 
 
+def longestConsecutive(nums):
+    '''
+     最长连续序列
+    给定一个未排序的整数数组，找出最长连续序列的长度。
+
+    要求算法的时间复杂度为 O(n)。
+    思路：用hashMap 存储数字个数字坐在序列的长度
+    排除出现重复数字的情况
+    一、当数字 i-1 在map中的时候 取map[i-1]的值left
+    二、当数字 i+1 在map中的时候 去map[i+1]的值right
+    此时数字i的值就是 left+right+1
+    三、但是还有一种情况就是数字 i在序列的最左边 或最右边
+    这时候map[i+1]或map[i-1]的值就不是此序列的最长值了
+    所以可以 借助left和right 找到 此序列的端点值 map[i-left] map[i+eight]
+    将这两点也更新 就能保证正确
+    :param nums:
+    :return:
+    '''
+    dpmap = {}
+    res = 0
+    for i in nums:
+        if i not in dpmap:
+            left = 0
+            right = 0
+            if dpmap.get(i - 1) is not None:
+                left = dpmap[i - 1]
+            if dpmap.get(i + 1) is not None:
+                right = dpmap[i + 1]
+            if left != 0 or right != 0:
+                dpmap[i] = left + right + 1
+                dpmap[i - left] = dpmap[i]
+                dpmap[i + right] = dpmap[i]
+            else:
+                dpmap[i] = 1
+            res = dpmap[i] if dpmap[i] > res else res
+    print(dpmap)
+    return res
+
+
 if __name__ == '__main__':
-    print(firstMissingPositive([3, 4, -1, 1]))
+    print(longestConsecutive([1, 2, 0, 1]))
