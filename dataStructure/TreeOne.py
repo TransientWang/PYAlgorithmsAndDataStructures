@@ -50,17 +50,18 @@ def zigzagLevelOrder(root):
     return result
 
 
-'''
-从前序与中序遍历序列构造二叉树
-思路：解决这个问题的是关键 是要明确二叉树的遍历是一个递归的过程
-根据前序遍历 可以得到 根节点 
-那么在 中序遍历中  可以根据前序遍历得到的根节点 获得到 根节点的左右子树信息
-然后回到 前序遍历序列 中找到得到的左子树，那么在前序遍历中找到的左子树序列 也满足前序遍历序列
-他的第一个索引 也一样是左子树的头结点  这就是一个递归的过程
-'''
-
-
 def buildTree(preorder, inorder):
+    '''
+    从前序与中序遍历序列构造二叉树
+    思路：解决这个问题的是关键 是要明确二叉树的遍历是一个递归的过程
+    根据前序遍历 可以得到 根节点
+    那么在 中序遍历中  可以根据前序遍历得到的根节点 获得到 根节点的左右子树信息
+    然后回到 前序遍历序列 中找到得到的左子树，那么在前序遍历中找到的左子树序列 也满足前序遍历序列
+    他的第一个索引 也一样是左子树的头结点  这就是一个递归的过程
+    :param preorder:
+    :param inorder:
+    :return:
+    '''
     if len(preorder) == 0 or len(inorder) == 0:
         return None
     head = TreeNode.TreeNode(preorder[0])
@@ -70,15 +71,31 @@ def buildTree(preorder, inorder):
     return head
 
 
-'''
-每个节点的右向指针
-思路：此问题还是考察的二叉树层序遍历
-只要在每层遍历的过程中保存先前节点 并将 先前节点的下一个指向当前节点
-循环往复就可以
-'''
+def buildTreeOne(inorder, postorder):
+    '''
+    从中序与后序遍历序列构造二叉树
+    :param inorder:
+    :param postorder:
+    :return:
+    '''
+    pass
+    if len(inorder) == 0 or len(postorder) == 0:
+        return None
+    head = TreeNode.TreeNode(postorder[-1])
+    i = inorder.index(postorder[-1])
+    head.left = buildTreeOne(inorder[:i], postorder[:len(inorder[:i])])
+    head.right = buildTreeOne(inorder[i+1:], postorder[len(inorder[:i]):len(postorder) - 1])
+    return head
 
 
 class TreeLinkNode:
+    '''
+    每个节点的右向指针
+    思路：此问题还是考察的二叉树层序遍历
+    只要在每层遍历的过程中保存先前节点 并将 先前节点的下一个指向当前节点
+    循环往复就可以
+    '''
+
     def __init__(self, x):
         self.val = x
         self.left = None
@@ -182,6 +199,7 @@ def numIslands(grid):
     print(grid)
     return count
 
+
 if __name__ == '__main__':
     # t = TreeNode.TreeNode(1)
     # t.right = TreeNode.TreeNode(2)
@@ -189,4 +207,5 @@ if __name__ == '__main__':
     root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
     root.right = TreeLinkNode(3)
-
+    head = buildTreeOne([9, 3, 15, 20, 7], [9, 15, 7, 20, 3])
+    print(head)
