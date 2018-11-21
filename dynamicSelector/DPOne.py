@@ -38,7 +38,7 @@ def lengthOfLIS(nums):
     max_res = 1
     for i in range(len(nums)):
         dp.append(1)
-        for j in range(i):     #计算的子序列是从0开始，到i结束
+        for j in range(i):  # 计算的子序列是从0开始，到i结束
             if nums[j] < nums[i] and dp[i] < dp[j] + 1:
                 dp[i] = dp[j] + 1
             if dp[i] > max_res:
@@ -68,6 +68,30 @@ def maxArea(height):
         else:
             j -= 1
     return res
+
+
+def maxProduct(nums):
+    '''
+     乘积最大子序列
+     关键点在，如果整个序列的符号个数是偶数，那么就 只关心 出现0的情况
+     遇到负号的情况,如果整个序列的符号个数是奇数，那么还需要记录最小值
+     这样这个最小值在遇到下一个辅助的时候就变成了正值
+
+    :param nums:
+    :return:
+    '''
+    maxVal = nums[0]
+    minVal = nums[0]
+    dp = nums[0]
+    for i in range(1, len(nums)):
+        tmp = maxVal
+        maxVal = max(maxVal * nums[i], minVal * nums[i], nums[i])  # 如果序列都是大于0的数，那么唯一关心的数字就是0
+        minVal = min(tmp * nums[i], minVal * nums[i], nums[i])  # 如果序列出现了小于0的数字，那么需要把这个小于0的数字记录下来
+        #当在此出现小于0的数字时，便于比较
+        dp = max(maxVal, dp)
+    return dp
+
+
 if __name__ == '__main__':
-    print(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
+    print(maxProduct([0, 1, 1]))
 # [1,3,6,7,9,4,10,5,6]
