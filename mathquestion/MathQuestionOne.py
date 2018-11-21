@@ -3,18 +3,18 @@
 import math
 import random
 
-'''
-写一个程序，输出从 1 到 n 数字的字符串表示。
-
-1. 如果 n 是3的倍数，输出“Fizz”；
-
-2. 如果 n 是5的倍数，输出“Buzz”；
-
-3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。
-'''
-
 
 def fizzBuzz(n):
+    '''
+    写一个程序，输出从 1 到 n 数字的字符串表示。
+
+    1. 如果 n 是3的倍数，输出“Fizz”；
+
+    2. 如果 n 是5的倍数，输出“Buzz”；
+
+    3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。
+    '''
+
     res = []
     for i in range(1, n + 1):
         if i >= 5 and i % 3 == 0 and i % 5 == 0:
@@ -30,18 +30,16 @@ def fizzBuzz(n):
     return res
 
 
-'''
-质数的个数
-埃拉托斯特尼筛法Sieve of Eratosthenes中，
-我们从2开始遍历到根号n，先找到第一个质数2，
-然后将其所有的倍数全部标记出来，然后到下一个质数3，
-标记其所有倍数，一次类推，直到根号n，此时数组中未被标记的数字就是质数。
-我们需要一个n-1长度的bool型数组来记录每个数字是否被标记，长度为n-1的原因是题目说是小于n的质数个数，并不包括n。
- 然后我们用两个for循环来实现埃拉托斯特尼筛法，难度并不是很大，代码如下所示：
-'''
-
-
 def countPrimes(n):  # TODO 应该再复习
+    '''
+    质数的个数
+    埃拉托斯特尼筛法Sieve of Eratosthenes中，
+    我们从2开始遍历到根号n，先找到第一个质数2，
+    然后将其所有的倍数全部标记出来，然后到下一个质数3，
+    标记其所有倍数，一次类推，直到根号n，此时数组中未被标记的数字就是质数。
+    我们需要一个n-1长度的bool型数组来记录每个数字是否被标记，长度为n-1的原因是题目说是小于n的质数个数，并不包括n。
+     然后我们用两个for循环来实现埃拉托斯特尼筛法，难度并不是很大，代码如下所示：
+    '''
     if n == 0 or n == 1:
         return 0
     dn = math.ceil(math.sqrt(n))
@@ -69,12 +67,10 @@ def isPowerOfThree(n):
     return b % n == 0
 
 
-'''
-罗马数字转换
-'''
-
-
 def romanToInt(s):
+    '''
+    罗马数字转换
+    '''
     map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
     result = 0
     for i in range(len(s)):
@@ -85,12 +81,10 @@ def romanToInt(s):
     return result
 
 
-'''
- 位1的个数
-'''
-
-
 def hammingWeight(n):
+    '''
+     位1的个数
+    '''
     new_n = bin(n)[2:].zfill(31)
     print(new_n)
     new_n = list(new_n)
@@ -111,15 +105,13 @@ def reverseBits(n):
     return int(s, 2)
 
 
-'''
-帕斯卡三角形
-用两个数组保存临时结果
-数组长度比层数多2
-两边置0方便计算
-'''
-
-
 def generate(numRows):
+    '''
+    帕斯卡三角形
+    用两个数组保存临时结果
+    数组长度比层数多2
+    两边置0方便计算
+    '''
     if numRows == 0:
         return []
     if numRows == 1:
@@ -137,15 +129,13 @@ def generate(numRows):
     return res
 
 
-'''
-有效的括号
-用一个栈来保存对应的左括号，如果遇到右括号的时候从栈中弹出一个
-因为是按顺序排列的左括号 弹出来的一定是相应的右括号
-如果 不相等 就说明 括号没有对称
-'''
-
-
 def isValid(s):
+    '''
+    有效的括号
+    用一个栈来保存对应的左括号，如果遇到右括号的时候从栈中弹出一个
+    因为是按顺序排列的左括号 弹出来的一定是相应的右括号
+    如果 不相等 就说明 括号没有对称
+    '''
     dp = []
     for i in s:
         if i == "(":
@@ -159,12 +149,13 @@ def isValid(s):
     return not dp
 
 
-'''
-缺失的数字
-'''
+
 
 
 def missingNumber(nums):
+    '''
+    缺失的数字
+    '''
     t = 0
     tmp = 0
     for i in range(len(nums)):
@@ -217,6 +208,10 @@ class Solution(object):
         """
 
     def shuffle(self):
+        """
+               Returns a random shuffling of the array.
+               :rtype: List[int]
+               """
         r = []
         tmp = self.nums[:]
         while tmp:
@@ -224,14 +219,13 @@ class Solution(object):
             r.append(tmp[ran])
             tmp.remove(tmp[ran])
         return r
-        """
-        Returns a random shuffling of the array.
-        :rtype: List[int]
-        """
+
 
 def sortColors(nums):
     nums.sort()
     return nums
+
+
 if __name__ == '__main__':
     s = Solution([1, 2, 3])
 

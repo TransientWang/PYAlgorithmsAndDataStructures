@@ -146,20 +146,18 @@ def groupAnagramsOne(strs):
         r.append(i)
     return r
 
-
-'''
-无重复字符的最长子串
-维持一个滑动窗口
-有三种情况需要考虑
-一、当新加入的字符 不存在之前的子序列中的时候那么这个在字符就可以加入子串中
-二、当新加入的字符已经存在于子串中的时候，而且重复的位置在子串的第一位的时候，可以删除第一位的字符，并在结尾加入当前字符
-三、当新加入的字符已经存在于子串中的时候，而且重复的位置不在子串的第一位的时候，需要删除重复位置之前的子串
-并新加入当前字符
-最后需要有一个 值记录滑动窗口的最大值
-'''
-
-
 def lengthOfLongestSubstring(s):
+    '''
+    无重复字符的最长子串
+    维持一个滑动窗口
+    有三种情况需要考虑
+    一、当新加入的字符 不存在之前的子序列中的时候那么这个在字符就可以加入子串中
+    二、当新加入的字符已经存在于子串中的时候，而且重复的位置在子串的第一位的时候，可以删除第一位的字符，并在结尾加入当前字符
+    三、当新加入的字符已经存在于子串中的时候，而且重复的位置不在子串的第一位的时候，需要删除重复位置之前的子串
+    并新加入当前字符
+    最后需要有一个 值记录滑动窗口的最大值
+    '''
+
     if len(s) == 0:
         return 0
     tmp = [s[0]]
@@ -180,14 +178,12 @@ def lengthOfLongestSubstring(s):
     return t
 
 
-'''
-给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000
-Manacher's 
-https://www.cnblogs.com/mini-coconut/p/9074315.html
-'''
-
-
 def longestPalindrome(s):
+    '''
+    给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000
+    Manacher's
+    https://www.cnblogs.com/mini-coconut/p/9074315.html
+    '''
     if len(s) == 0:
         return ""
 
@@ -213,19 +209,16 @@ def longestPalindrome(s):
     print(r)
     return s[left:left + maxLen]
 
-
-'''
- 递增的三元子序列
-给定一个未排序的数组，判断这个数组中是否存在长度为 3 的递增子序列。
-
-数学表达式如下:
-
-如果存在这样的 i, j, k,  且满足 0 ≤ i < j < k ≤ n-1，
-使得 arr[i] < arr[j] < arr[k] ，返回 true ; 否则返回 false 。
-'''
-
-
 def increasingTriplet(nums):
+    '''
+     递增的三元子序列
+    给定一个未排序的数组，判断这个数组中是否存在长度为 3 的递增子序列。
+
+    数学表达式如下:
+
+    如果存在这样的 i, j, k,  且满足 0 ≤ i < j < k ≤ n-1，
+    使得 arr[i] < arr[j] < arr[k] ，返回 true ; 否则返回 false 。
+    '''
     if len(nums) < 3:
         return False
     h, k = 2 << 30, 2 << 30

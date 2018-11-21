@@ -3,27 +3,29 @@
 
 from dataStructure import ListNode
 
-'''
-删除链表中的节点
-由于只有下一个节点 不能获取到上一节点
-解决办法是 将下一节点的值 赋值给当前被删除节点，然后删除下一节点
-'''
+
 
 
 def deleteNode(node):
+    '''
+    删除链表中的节点
+    由于只有下一个节点 不能获取到上一节点
+    解决办法是 将下一节点的值 赋值给当前被删除节点，然后删除下一节点
+    '''
     node.val = node.next.val
     node.next = node.next.__next__
 
 
-'''
-删除链表的倒数第N个节点
-双指针aft先往后走N，然后cur与aft一起走
-当aft走到末尾时候 通过cur删除下一节点
-特殊情情况是删除第一个节点的时候
-'''
+
 
 
 def removeNthFromEnd(head, n):
+    '''
+    删除链表的倒数第N个节点
+    双指针aft先往后走N，然后cur与aft一起走
+    当aft走到末尾时候 通过cur删除下一节点
+    特殊情情况是删除第一个节点的时候
+    '''
     cur = head
     aft = cur
     k = 1
@@ -73,24 +75,26 @@ def reverseList(head):
     return cur
 
 
-'''
-反转链表 这个方法很神奇
-将当前的下一个赋值给下次循环的当前值，根据传入头找到链表的尾
-'''
+
 
 
 def reverseListOne(head):
+    '''
+    反转链表 这个方法很神奇
+    将当前的下一个赋值给下次循环的当前值，根据传入头找到链表的尾
+    '''
     cur, pre = head, None
     while cur:
         cur.next, pre, cur = pre, cur, cur.next
     return pre
 
-'''
-反转链表 递归
-先直接走到倒数第二个一个节点，
-然后逆置倒数第一个节点，返回递归
-'''
+
 def reverseListTwo(head):
+    '''
+    反转链表 递归
+    先直接走到倒数第二个一个节点，
+    然后逆置倒数第一个节点，返回递归
+    '''
     if head.__next__ == None:
         return head              #尾节点返回
     new_head = reverseListTwo(head.__next__) #当最后一次返回的时候new_head 为倒数第一个节点
@@ -100,12 +104,10 @@ def reverseListTwo(head):
     return new_head
 
 
-'''
-链表合并
-'''
-
-
 def mergeTwoLists(l1, l2):
+    '''
+    链表合并
+    '''
     if l1 == None:
         return l2
     elif l2 == None:
@@ -138,16 +140,16 @@ def mergeTwoLists(l1, l2):
     return head
 
 
-'''
-判断回文链表
-要求时间复杂度O（n）空间复杂度为O（1）
-思路：
-先遍历一遍求出长度，然后直接逆置链表到一半的长度，（如果长度是奇数的话，忽略中间值）
-然后向两头遍历，遇到不相等的就说明不是回文
-'''
 
 
 def isPalindrome(head):
+    '''
+    判断回文链表
+    要求时间复杂度O（n）空间复杂度为O（1）
+    思路：
+    先遍历一遍求出长度，然后直接逆置链表到一半的长度，（如果长度是奇数的话，忽略中间值）
+    然后向两头遍历，遇到不相等的就说明不是回文
+    '''
     if head is None:
         return True
     length = 0
@@ -156,7 +158,7 @@ def isPalindrome(head):
         length += 1
         tmp = tmp.__next__
     mid = length / 2 - 1  # type: Union[int, Any] 中间位置
-    t = 0  # type: int 临时变量，帮助逆置链表到中间位置
+    t = 0  # type: int 临时变量,帮助逆置链表到中间位置
     del tmp
     '''逆置链表'''
     cur, pre = head, None
@@ -177,12 +179,13 @@ def isPalindrome(head):
     return True
 
 
-'''
-链表有环
-'''
 
 
 def hasCycle(head):
+    '''
+    链表有环
+    '''
+
     if head == None:
         return False
     dp = {}
@@ -196,13 +199,14 @@ def hasCycle(head):
     return False
 
 
-'''
-链表有环
-快慢指针 两指针相遇的时候 就证明链表有环
-'''
+
 
 
 def hasCycleOne(head):
+    '''
+    链表有环
+    快慢指针 两指针相遇的时候 就证明链表有环
+    '''
     if head is None or head.__next__ is None:
         return False
     slow, fast = head, head.next.__next__

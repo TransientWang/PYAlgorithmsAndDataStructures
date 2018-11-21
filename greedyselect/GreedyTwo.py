@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
-'''
-给定两个数组，编写一个函数来计算它们的交集。
-'''
+
 import math
 
 
 def singleNumber(nums):
+    '''
+    给定两个数组，编写一个函数来计算它们的交集。
+    '''
     tmp = nums[0]
     index = 0
     left = 0
@@ -46,12 +47,13 @@ def intersect(nums1, nums2):
     return res
 
 
-'''
-给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
-'''
 
 
 def moveZeroes(nums):
+    '''
+    给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+    '''
+
     index = 1
     count = 0
     while index < len(nums):
@@ -69,12 +71,13 @@ def moveZeroes(nums):
     print(nums)
 
 
-'''
-矩阵逆置
-'''
 
 
 def rotate(matrix):
+    '''
+    矩阵逆置
+    '''
+
     lens = len(matrix[0]) - 1
     for i in range(int(math.ceil(float(len(matrix[0])) / 2))):
         for j in range(i,lens -i):
@@ -103,11 +106,12 @@ def reverseString(s):
 
     return "".join(ss)
 
-'''
-给定一个无序的整数数组，找到其中最长上升子序列的长度。
 
-'''
 def lengthOfLISGreedy(nums):
+    '''
+    给定一个无序的整数数组，找到其中最长上升子序列的长度。
+
+    '''
     if len(nums) == 0:
         return 0
     r = [nums[0]] #维护维护一个递增序列

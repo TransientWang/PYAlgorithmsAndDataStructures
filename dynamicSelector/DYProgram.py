@@ -5,26 +5,27 @@ def findKthLargest(nums, k):
     return nums[k - 1]
 
 
-'''
-给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
-一、分析最优子结构特征
-    当三角形只有一层时 
-    triangle[0][0]就是最优值
-    当自顶向下看的时候 每一步 都依赖于前一步所选则最优值
-    而且前一步的最优值 不一定是下一步选择的最优值
-    所以要用而额外空间去存储 从 第一层到 每一层每一节点的最优值
-二、递归定义最优值
-            if j == 0 :
-                r[i][j] = triangle[i][j] + r[i - 1][j]
-            elif j == len(triangle[i]) - 1:
-                r[i][j] = triangle[i][j] + r[i - 1][j-1]
-            else:
-                r[i][j] = triangle[i][j] + min(r[i - 1][j], r[i - 1][j - 1])
-    
-'''
+
 
 
 def minimumTotal(triangle):
+    '''
+    给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
+    一、分析最优子结构特征
+        当三角形只有一层时
+        triangle[0][0]就是最优值
+        当自顶向下看的时候 每一步 都依赖于前一步所选则最优值
+        而且前一步的最优值 不一定是下一步选择的最优值
+        所以要用而额外空间去存储 从 第一层到 每一层每一节点的最优值
+    二、递归定义最优值
+                if j == 0 :
+                    r[i][j] = triangle[i][j] + r[i - 1][j]
+                elif j == len(triangle[i]) - 1:
+                    r[i][j] = triangle[i][j] + r[i - 1][j-1]
+                else:
+                    r[i][j] = triangle[i][j] + min(r[i - 1][j], r[i - 1][j - 1])
+
+    '''
     if len(triangle) == 1:  # 极端情况  只有一层的时候 返回唯一的一个节点值
         return triangle[0][0]
     lens = len(triangle[len(triangle) - 1])  # 最后一层的长度
@@ -69,20 +70,20 @@ def twoSum(nums, target):
     return result
 
 
-'''
-    
-戳气球     
-有 n 个气球，编号为0 到 n-1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
-现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。
-这里的 left 和 right 代表和 i 相邻的两个气球的序号。
-注意当你戳破了气球 i 后，气球 left 和气球 right 就变成了相邻的气球。
-求所能获得硬币的最大数量。
-测试用例：3,1,5,8
-'''
 
-
-# TODO 此题目比较难，多回顾
 def maxCoins(nums):
+    '''
+    TODO 此题目比较难，多回顾
+    戳气球
+    有 n 个气球，编号为0 到 n-1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
+    现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。
+    这里的 left 和 right 代表和 i 相邻的两个气球的序号。
+    注意当你戳破了气球 i 后，气球 left 和气球 right 就变成了相邻的气球。
+    求所能获得硬币的最大数量。
+    测试用例：3,1,5,8
+    '''
+
+
     nums.append(1)
     nums.insert(0, 1)  # 在数组前面后面加上 1 计算方便
     r = [[0 for z in range(len(nums))] for z in range(len(nums))]  # r[i][j]表示第i和j气球之间的气球戳烂 能得到的最大硬币数量
@@ -98,14 +99,15 @@ def maxCoins(nums):
 
     return r[1][len(nums) - 2]
 
-'''
-判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
 
-数字 1-9 在每一行只能出现一次。
-数字 1-9 在每一列只能出现一次。
-数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
-'''
 def isValidSudoku(board):
+    '''
+    判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+
+    数字 1-9 在每一行只能出现一次。
+    数字 1-9 在每一列只能出现一次。
+    数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+    '''
     # dp = [[None for i in range(len(board))] for i in range(len(board))]
 
     for x in range(len(board)):
