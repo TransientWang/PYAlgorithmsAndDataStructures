@@ -148,5 +148,29 @@ def findDuplicate(nums):
     return slow
 
 
+def maxSlidingWindow(nums, k):
+    '''
+    给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口 k 内的数字。滑动窗口每次只向右移动一位。
+
+    返回滑动窗口最大值。
+    思路：先求出第一个滑动窗口的值，然后从第一个向后遍历，如果下一个进来的值等于当前最大值，那么直接将当前最大值加入结果集
+    如果下一个进来的值大于当前最大值,那么当前最大值就是下一个进来的值
+    如果当前最大值 在滑动窗口外，只能比较出滑动窗口里的最大值
+    :param nums:
+    :param k:
+    :return:
+    '''
+    if not nums or k <= 0 or k > len(nums):
+        return []
+    res = [max(nums[:k])]
+    maxVal = res[0]
+    for i in range(1, len(nums) - k + 1):
+        if nums[i + k - 1] > maxVal:
+            maxVal = nums[i + k - 1]
+        elif nums[i-1] == maxVal:
+            maxVal = max(nums[i:i + k])
+        res.append(maxVal)
+
+    return res
 if __name__ == '__main__':
-    print(findDuplicate([1, 3, 4, 2, 2]))
+    print(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
