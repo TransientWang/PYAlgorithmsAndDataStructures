@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import copy
+
 
 def coinChange(coins, amount):
     '''
@@ -95,9 +97,7 @@ def wordBreak(s, wordDict):
     '''
     单词拆分
     给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。
-
     说明：
-
     拆分时可以重复使用字典中的单词。
     你可以假设字典中没有重复的单词。
     :param s:
@@ -112,9 +112,61 @@ def wordBreak(s, wordDict):
                 continue
             if dp[i - len(wordDict[j])] and s[i - len(wordDict[j]):i] == wordDict[j]:
                 dp[i] = True
+                break
     return dp[-1]
 
 
+def wordBreakOne(s, wordDict):
+    '''
+      单词拆分 II
+    给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。返回所有这些可能的句子。
+    说明：
+    分隔时可以重复使用字典中的单词。
+    你可以假设字典中没有重复的单词。
+    思路：遇到需要列出可行组合的情况首先想到的就是回溯法，这道题目值需要深度优先遍历，而且需要减枝函数注意边界条件
+    当字符串为0的时候可以将结果加入结果集
+    首先求出woedDict里面单词的最长长度maxVal，
+    从字符串的开头先判断该字符串能否由wirdDict里面的单词连成句子
+    然后遍历maxVal长度如果出现的单词，就进行下一层遍历，没有继续遍历
+    :param s:
+    :param wordDict:
+    :return:
+    '''
+    res = []
+    maxVal = 0
+    for i in wordDict:
+        if len(i) > maxVal:
+            maxVal = len(i)
+    def check(ss):  # 减枝函数
+        dp = [False for i in range(len(ss) + 1)]
+        dp[0] = True
+        for i in range(1, len(ss) + 1):
+            for j in range(len(wordDict)):
+                if i < len(wordDict[j]):
+                    continue
+                if dp[i - len(wordDict[j])] and ss[i - len(wordDict[j]):i] == wordDict[j]:
+                    dp[i] = True
+                    break
+        return dp[-1]
+
+    def DFS(ss, r):  # 深度优先遍历
+        if check(ss):
+            if ss == "":
+                x = copy.deepcopy(r)
+                r = ""
+                return res.append(x)
+
+            for i in range(maxVal + 1):
+                for j in range(len(wordDict)):
+                    if i <= len(ss) and ss[:i] == wordDict[j]:
+                        DFS(ss[i:], str(r + " " + ss[:i]).strip())
+
+    DFS(s, "")
+    return res
+
+
 if __name__ == '__main__':
-    print(wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"]))
-# [1,3,6,7,9,4,10,5,6]
+    print(wordBreakOne(
+        "pineapplepenapple"
+        , ["apple", "pen", "applepen", "pine", "pineapple"]))
+    # [1,3,6,7,9,4,10,5,6]
