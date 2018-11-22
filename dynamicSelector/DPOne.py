@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 
-
-
 def coinChange(coins, amount):
     '''
     零钱兑换
@@ -88,11 +86,35 @@ def maxProduct(nums):
         tmp = maxVal
         maxVal = max(maxVal * nums[i], minVal * nums[i], nums[i])  # 如果序列都是大于0的数，那么唯一关心的数字就是0
         minVal = min(tmp * nums[i], minVal * nums[i], nums[i])  # 如果序列出现了小于0的数字，那么需要把这个小于0的数字记录下来
-        #当在此出现小于0的数字时，便于比较
+        # 当在此出现小于0的数字时，便于比较
         dp = max(maxVal, dp)
     return dp
 
 
+def wordBreak(s, wordDict):
+    '''
+    单词拆分
+    给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。
+
+    说明：
+
+    拆分时可以重复使用字典中的单词。
+    你可以假设字典中没有重复的单词。
+    :param s:
+    :param wordDict:
+    :return:
+    '''
+    dp = [False for i in range(len(s) + 1)]  # dp[i]表示s[0:i]可以拆分成单词
+    dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(len(wordDict)):
+            if i < len(wordDict[j]):
+                continue
+            if dp[i - len(wordDict[j])] and s[i - len(wordDict[j]):i] == wordDict[j]:
+                dp[i] = True
+    return dp[-1]
+
+
 if __name__ == '__main__':
-    print(maxProduct([0, 1, 1]))
+    print(wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"]))
 # [1,3,6,7,9,4,10,5,6]
