@@ -195,6 +195,7 @@ def maxProfit(prices):
 
 def maxProfitOne(prices):
     '''
+    TODO
     上一题的不超时解法
     有三中情况
     一、该索引位置卖出的时候的最大值
@@ -214,7 +215,7 @@ def maxProfitOne(prices):
     pass
     buy = -2 ** 31  # buy[i]
     preBuy = 0  # buy[i-1]
-    sell = 0   #sell[i]
+    sell = 0  # sell[i]
     preSell = 0  # sell[i-2]
     for price in prices:
         preBuy = buy
@@ -225,5 +226,5 @@ def maxProfitOne(prices):
 
 
 if __name__ == '__main__':
-    print(maxProfitOne([1,2,3,0,2]))
+    print(maxProfitOne([1, 2, 3, 0, 2]))
     # [1,3,6,7,9,4,10,5,6]
