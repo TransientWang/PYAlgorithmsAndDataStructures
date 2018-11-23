@@ -137,6 +137,7 @@ def wordBreakOne(s, wordDict):
     for i in wordDict:
         if len(i) > maxVal:
             maxVal = len(i)
+
     def check(ss):  # 减枝函数
         dp = [False for i in range(len(ss) + 1)]
         dp[0] = True
@@ -165,8 +166,33 @@ def wordBreakOne(s, wordDict):
     return res
 
 
+def maxProfit(prices):
+    '''
+    给定一个整数数组，其中第 i 个元素代表了第 i 天的股票价格 。​
+
+设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+
+你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+    此方法超时
+    计算第j-i天能获取的收益+ i-2天之前的最大收益
+    :param prices:
+    :return:
+    '''
+    maxVal = 0
+    res =0
+    price = [0 for i in range(len(prices) + 1)]
+    for i in range(1, len(prices) + 1):
+        for j in range(i + 1, len(prices) + 1):
+            maxVal = price[i - 2] if price[i - 2] > maxVal and i > 1 else maxVal
+            if prices[j - 1] > prices[i - 1]:
+                t = prices[j - 1] - prices[i - 1] + maxVal
+                price[j] = t if t > price[j] else price[j]
+                res = price[j] if price[j] > res else res
+    print(price)
+    return res
+
+
 if __name__ == '__main__':
-    print(wordBreakOne(
-        "pineapplepenapple"
-        , ["apple", "pen", "applepen", "pine", "pineapple"]))
+    print(maxProfit([6, 1, 6, 4, 3, 0, 2]))
     # [1,3,6,7,9,4,10,5,6]
