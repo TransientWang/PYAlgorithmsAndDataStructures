@@ -5,9 +5,6 @@ def findKthLargest(nums, k):
     return nums[k - 1]
 
 
-
-
-
 def minimumTotal(triangle):
     '''
     给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
@@ -70,7 +67,6 @@ def twoSum(nums, target):
     return result
 
 
-
 def maxCoins(nums):
     '''
     TODO 此题目比较难，多回顾
@@ -82,7 +78,6 @@ def maxCoins(nums):
     求所能获得硬币的最大数量。
     测试用例：3,1,5,8
     '''
-
 
     nums.append(1)
     nums.insert(0, 1)  # 在数组前面后面加上 1 计算方便
@@ -125,25 +120,60 @@ def isValidSudoku(board):
     for x in range(3):
         for y in range(3):
             dp2 = [0 for i in range(10)]
-            for xx in range(x * 3, x * 3 +3):
-                for yy in range(y * 3, y * 3 +3):
+            for xx in range(x * 3, x * 3 + 3):
+                for yy in range(y * 3, y * 3 + 3):
                     if board[xx][yy] != "." and dp2[int(board[xx][yy])] == 0:
                         dp2[int(board[xx][yy])] = 1
-                    elif board[xx][yy] != "." :
+                    elif board[xx][yy] != ".":
                         return False
 
     return True
 
 
+def numSquares(n):
+    '''
+    给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+    这个方法超时
+    :param n:
+    :return:
+    '''
+    while n % 4 == 0:
+        n /= 4
+    if n % 8 == 7:
+        return 4
+    dp = [2 ** 31 for i in range(n + 1)]  #dp[i]表示i最少平方和个数
+    dp[0] = 0
+
+    for i in range(n + 1):
+        for j in range(1, n + 1):
+            if i + j * j > n:
+                break
+            dp[i + j * j] = min(dp[i] + 1, dp[i + j * j])
+
+    return dp[-1]
+
+
+def numSquaresOne(n):
+    '''
+    四平方和定理
+    根据四平方和定理，任意一个正整数均可表示为4个整数的平方和，其实是可以表示为4个以内的平方数之和，那么就是说返回结果只有1,2,3或4其中的一个，首先我们将数字化简一下，由于一个数如果含有因子4，那么我们可以把4都去掉，并不影响结果，比如2和8,3和12等等，返回的结果都相同，读者可自行举更多的栗子。还有一个可以化简的地方就是，如果一个数除以8余7的话，那么肯定是由4个完全平方数组成
+    :param n:
+    :return:
+    '''
+    import math
+    while n % 4 == 0:
+        n /= 4
+    if n % 8 == 7:
+        return 4
+    n = int(n)
+    i = 0
+    while i ** 2 <= n:
+        b = int(math.sqrt(n - i ** 2))
+        if i ** 2 + b ** 2 == n:
+            return 1 if 0 in [i, b] else 2
+
+    return 3
+
+
 if __name__ == '__main__':
-    print((isValidSudoku([
-        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
-        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-        [".", "9", "8", ".", ".", ".", ".", "6", "."],
-        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
-        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-        [".", "6", ".", ".", ".", ".", "2", "8", "."],
-        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-        [".", ".", ".", ".", "8", ".", ".", "7", "9"]
-    ])))
+    print(numSquaresOne(6))
