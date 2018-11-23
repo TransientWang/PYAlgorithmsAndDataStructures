@@ -141,7 +141,7 @@ def numSquares(n):
         n /= 4
     if n % 8 == 7:
         return 4
-    dp = [2 ** 31 for i in range(n + 1)]  #dp[i]表示i最少平方和个数
+    dp = [2 ** 31 for i in range(n + 1)]  # dp[i]表示i最少平方和个数
     dp[0] = 0
 
     for i in range(n + 1):
