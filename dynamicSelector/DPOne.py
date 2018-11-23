@@ -180,7 +180,7 @@ def maxProfit(prices):
     :return:
     '''
     maxVal = 0
-    res =0
+    res = 0
     price = [0 for i in range(len(prices) + 1)]
     for i in range(1, len(prices) + 1):
         for j in range(i + 1, len(prices) + 1):
@@ -193,6 +193,37 @@ def maxProfit(prices):
     return res
 
 
+def maxProfitOne(prices):
+    '''
+    上一题的不超时解法
+    有三中情况
+    一、该索引位置卖出的时候的最大值
+    二、该索引位置买入的时候的最大值
+    三、该索引位置冷调期时候的最大值
+    rest[i] = max(sell[i-1], buy[i-1], rest[i-1])
+    buy[i] = max(rest[i-1]-price,buy[i-1])
+    sell[i] = max(buy[i-1] + price,sell[i-1])
+    由于冷冻期的存在，sell[i-1] = rest[i]
+    把rest[i]去掉
+    buy[i] = max(sell[i-2]-price,buy[i-1])
+    sell[i] = max(buy[i-1] + price,sell[i-1])
+    可以看出 i  只跟 i-1和i-2有关  所以可以省略数组，用一次遍历就可以解决问题
+    :param prices:
+    :return:
+    '''
+    pass
+    buy = -2 ** 31  # buy[i]
+    preBuy = 0  # buy[i-1]
+    sell = 0   #sell[i]
+    preSell = 0  # sell[i-2]
+    for price in prices:
+        preBuy = buy
+        buy = max(preSell - price, preBuy)
+        preSell = sell
+        sell = max(preBuy + price, preSell)
+    return sell
+
+
 if __name__ == '__main__':
-    print(maxProfit([6, 1, 6, 4, 3, 0, 2]))
+    print(maxProfitOne([1,2,3,0,2]))
     # [1,3,6,7,9,4,10,5,6]
