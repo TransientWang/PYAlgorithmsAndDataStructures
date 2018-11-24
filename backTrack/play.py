@@ -34,9 +34,6 @@ class play(object):
                     self.backTrack(t + 1)
 
 
-
-
-
 def permute(nums):
     '''
     给定一个没有重复数字的序列，返回其所有可能的全排列。
@@ -108,11 +105,11 @@ def exist(board, word):
         if x < 0 or y < 0 or x > row - 1 or y > colum - 1 or board[x][y] != word[i]:
             return False
         t = board[x][y]
-        if i == len(word) - 1 and t ==word[i]:
+        if i == len(word) - 1 and t == word[i]:
             return True
         board[x][y] = 0
         bool = find(x + 1, y, i + 1) or find(x - 1, y, i + 1) or find(x, y + 1, i + 1) or find(x, y - 1, i + 1)
-        board[x][y] =t
+        board[x][y] = t
         return bool
 
     for i in range(row):
@@ -124,6 +121,52 @@ def exist(board, word):
     return False
 
 
+def findWords(board, words):
+    '''
+    单词搜索二
+    这种方法会超时
+    正确解法是 前缀树 + DFS
+    :param board:
+    :param words:
+    :return:
+    '''
+    row = len(board[0]) - 1
+    colum = len(board) - 1
+    first = [words[i][0] for i in range(len(words))]
+
+    def find(word, x, y, p, l):
+
+        if x < 0 or x > colum or y < 0 or y > row or board[x][y] == "0":
+            return False
+        word += board[x][y]
+        if len(word) != 0 and word[-1] != p[l]:
+            return False
+        elif str(word) == p:
+            return True
+
+        t = board[x][y]
+        board[x][y] = "0"
+        bool = find(word, x + 1, y, p, l + 1) or find(word, x, y + 1, p, l + 1) or \
+               find(word, x - 1, y, p, l + 1) or find(word, x, y - 1, p, l + 1)
+        board[x][y] = t
+        return bool
+
+    res = []
+    for x in range(colum + 1):
+        for y in range(row + 1):
+            if board[x][y] in first:
+                k = []
+                for i in range(len(first)):
+                    if first[i] == board[x][y]:
+                        k.append(i)
+                for i in k:
+                    if find("", x, y, words[i], 0):
+                        first[first.index(board[x][y])] = "-1"
+                        res.append(words[i])
+
+    return list(set(res))
+
+
 if __name__ == '__main__':
-    print(exist([["a"]],
-"ab"))
+    print(findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]],
+["oath","pea","eat","rain"]))
