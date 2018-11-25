@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 
-
 def letterCombinations(digits):
     '''
     电话号码的字母组合
@@ -30,8 +29,6 @@ def backTrack(h, digits, tmp, res):
         backTrack(h + 1, digits, t, res)
 
 
-
-
 def generateParenthesis(n):
     '''
     生成括号
@@ -58,19 +55,12 @@ def generateParenthesis(n):
             res.append(tmp)
             return
         if left < n:
-            generateBackTrack(tmp+'(',left+1,right)
+            generateBackTrack(tmp + '(', left + 1, right)
         if right < left:
-            generateBackTrack(tmp+')', left, right+1)
+            generateBackTrack(tmp + ')', left, right + 1)
 
     generateBackTrack()
     print(res)
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     generateParenthesis(3)

@@ -167,6 +167,42 @@ def findWords(board, words):
     return list(set(res))
 
 
+def findWordsOne(board: list, words: list):
+    row = len(board) - 1
+    colum = len(board[0]) - 1
+    from dataStructure import TrieNode
+    res = []
+
+    def find(x: int, y: int, p, curNode: TrieNode.Trie):
+
+        p += board[x][y]
+        if curNode.get("#") is not None and curNode["#"] is True:
+            res.append(p[:len(p)])
+        t = board[x][y]
+        board[x][y] = "-1"
+        if x + 1 <= row and board[x + 1][y] in curNode:
+            find(x + 1, y, p, curNode[board[x + 1][y]])
+        if x - 1 >= 0 and board[x - 1][y] in curNode:
+            find(x - 1, y, p, curNode[board[x - 1][y]])
+        if y + 1 <= colum and board[x][y + 1] in curNode:
+            find(x, y + 1, p, curNode[board[x][y + 1]])
+        if y - 1 >= 0 and board[x][y - 1] in curNode:
+            find(x, y - 1, p, curNode[board[x][y - 1]])
+        board[x][y] = t
+
+    node = TrieNode.Trie()
+    for i in words:
+        node.insert(i)
+    for x in range(row + 1):
+        for y in range(colum + 1):
+            if board[x][y] in node.root:
+                find(x, y, "", node.root[board[x][y]])
+
+    return list(set(res))
+
+
 if __name__ == '__main__':
-    print(findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]],
-["oath","pea","eat","rain"]))
+    print(findWordsOne([["a","b","c"],
+                        ["a","e","d"],
+                        ["a","f","g"]],
+["abcdefg","gfedcbaaa","eaabcdgfa","befa","dgc","ade"]))
