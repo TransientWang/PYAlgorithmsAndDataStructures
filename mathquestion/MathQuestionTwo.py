@@ -195,11 +195,6 @@ def maxPoints(points):
     :param points:
     :return:
     '''
-
-    if len(points) == 0:
-        return 0
-    if len(points) == 1:
-        return 1
     r = 0
     for i in range(len(points)):
         res = 0
@@ -222,5 +217,5 @@ def maxPoints(points):
 
 
 if __name__ == '__main__':
-    print(maxPoints([Point(1, 1), Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]))
+    print(maxPoints([]))
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
