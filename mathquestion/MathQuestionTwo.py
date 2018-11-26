@@ -216,6 +216,32 @@ def maxPoints(points):
     return r
 
 
+def log(func):
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+
+    return wrapper
+
+
+def largestNumber(nums):
+    '''
+    考察排序 贪心思想
+    关键在于排序的规则
+    考虑：如果位数相同的话，那么大的肯定应该在高位
+    如果位数不同，高位数大的也应该在前面。需要解决的问题就是位数不同的问题
+    解决办法就是，正反concat两个被排序的数字（a+b,b+a)，比较这两个数就相当于比较两个位数相同的数字了
+    最大数
+    :param nums:
+    :return:
+    '''
+    res = ""
+    from functools import cmp_to_key
+    comp = cmp_to_key(lambda a, b: int(b + a) - int(a + b))
+    return "".join(sorted(map(str, nums), key=comp)).lstrip("0") or "0"
+
+
 if __name__ == '__main__':
-    print(maxPoints([]))
+
+    print(largestNumber([0]))
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
