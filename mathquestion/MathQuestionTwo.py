@@ -191,6 +191,7 @@ def maxPoints(points):
     注意的情况有：1、第二层遍历的时候直接遍历原数组就可以，不用单独把这一点排除如果排除增加了复杂性
     2、有垂直于X轴没有斜率的情况，标记一下就可以
     3、在遇到与比较点相同的点的时候（same数量最小也是1 因为比较点没有排除在外）记录下其数量，然后跳过在更新最大值的时候加上就可以
+    4、由于精度问题，都转换成浮点数就可以了
     :param points:
     :return:
     '''
@@ -204,14 +205,12 @@ def maxPoints(points):
         res = 0
         dpMap = {}
         p = points[i]
-
         same = 0
         for point in points:
             if p.x == point.x and p.y == point.y:
                 same += 1
                 continue
-            g = math.gcd((p.x - point.x), (p.y - point.y))
-            d = ((p.x - point.x) / g) / ((p.y - point.y) / g) if p.y != point.y else 10000
+            d = float((p.x - point.x) / (p.y - point.y)) if p.y != point.y else 10000
             if dpMap.get(d) is None:
                 dpMap[d] = 1
             else:
