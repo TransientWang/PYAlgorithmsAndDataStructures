@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import math
+
 
 def isHappy(n):
     '''
@@ -174,5 +176,52 @@ def isPowerOfTwo(n):
     return n == h
 
 
+class Point:
+    def __init__(self, a=0, b=0):
+        self.x = a
+        self.y = b
+
+
+def maxPoints(points):
+    '''
+    hash
+    给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。
+    时间复杂度 o(n)=n²
+    两层循环 第一层计算出与每一个点在同一直线上最多的点的个数
+    注意的情况有：1、第二层遍历的时候直接遍历原数组就可以，不用单独把这一点排除如果排除增加了复杂性
+    2、有垂直于X轴没有斜率的情况，标记一下就可以
+    3、在遇到与比较点相同的点的时候（same数量最小也是1 因为比较点没有排除在外）记录下其数量，然后跳过在更新最大值的时候加上就可以
+    :param points:
+    :return:
+    '''
+
+    if len(points) == 0:
+        return 0
+    if len(points) == 1:
+        return 1
+    r = 0
+    for i in range(len(points)):
+        res = 0
+        dpMap = {}
+        p = points[i]
+
+        same = 0
+        for point in points:
+            if p.x == point.x and p.y == point.y:
+                same += 1
+                continue
+            g = math.gcd((p.x - point.x), (p.y - point.y))
+            d = ((p.x - point.x) / g) / ((p.y - point.y) / g) if p.y != point.y else 10000
+            if dpMap.get(d) is None:
+                dpMap[d] = 1
+            else:
+                dpMap[d] += 1
+            res = max(dpMap[d], res)
+        r = max(r, res + same)
+
+    return r
+
+
 if __name__ == '__main__':
-    pass
+    print(maxPoints([Point(1, 1), Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]))
+    # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
