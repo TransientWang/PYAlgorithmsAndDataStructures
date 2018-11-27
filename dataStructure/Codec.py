@@ -95,36 +95,37 @@ def ladderLength(beginWord, endWord, wordList):
     :param wordList:
     :return:
     '''
-
-    dmap = {word: 1 for word in wordList}
-
+    import string
+    dmap = set(wordList)
     queue = [beginWord]
     queue.insert(0, ",")
-    time = 0
+    time = 2
     while len(queue) != 0:
         s = queue.pop()
         if s != ",":
             for i in range(len(s)):
-                for k in range(ord("a"), ord("z") + 1):
-                    t = s[:i] + chr(k) + s[i + 1:]
+                for k in string.ascii_lowercase:
+                    t = s[:i] + k + s[i + 1:]
                     if t in dmap:
-
                         queue.insert(0, t)
-                        dmap.pop(t)
+                        dmap.discard(t)
                         if t == endWord:
-                            print(queue)
-                            return time + 2
-
-
+                            return time
         elif len(queue) != 0:
             queue.insert(0, ",")
             time += 1
-
     return 0
 
 
 def ladderLengthOne(beginWord, endWord, wordList):
-
+    '''
+    单词接龙
+    最快的解法
+    :param beginWord:
+    :param endWord:
+    :param wordList:
+    :return:
+    '''
     import string
     begin_set, end_set = {beginWord}, {endWord}
     word_list_set = set(wordList)
@@ -158,6 +159,6 @@ if __name__ == '__main__':
     # root.right.left = TreeNode.TreeNode(4)
     # root.right.right = TreeNode.TreeNode(5)
 
-    print(ladderLengthOne(beginWord = "hit",
-endWord = "cog",
-wordList = ["hot","dot","dog","lot","log","cog"]))
+    print(ladderLengthOne(beginWord="hit",
+                          endWord="cog",
+                          wordList=["hot", "dot", "dog", "lot", "log", "cog"]))
