@@ -85,10 +85,66 @@ def heapAdjest(list, index, heapSize):
         heapAdjest(list, right, heapSize)
 
 
+def sortList(head):
+    '''
+    链表排序
+    在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+    :param head:
+    :return:
+    '''
+    if head is None or head.next is None:
+        return head
+    left = head
+    mid = getMid(head)
+    right = mid.next
+    mid.next = None
+    left = sortList(left)
+    right = sortList(right)
+    return merge(left, right)
+
+
+def getMid(node):
+    slowNode = node
+    fastNode = node.next
+    while fastNode is not None and fastNode.next is not None:
+        slowNode = slowNode.next
+        fastNode = fastNode.next.next
+    return slowNode
+
+
+def merge(left, right):
+    if not left:
+        return right
+    elif not right:
+        return left
+    res = ListNode.ListNode(0)
+    cur = res
+
+    while left is not None and right is not None:
+        if left.val < right.val:
+            cur.next = ListNode.ListNode(left.val)
+            cur = cur.next
+            left = left.next
+        else:
+            cur.next = ListNode.ListNode(right.val)
+            cur = cur.next
+            right = right.next
+    while left:
+        cur.next = ListNode.ListNode(left.val)
+        cur = cur.next
+        left = left.next
+    while right:
+        cur.next = ListNode.ListNode(right.val)
+        cur = cur.next
+        right = right.next
+
+    return res.next
+
+
 if __name__ == '__main__':
-    r1 = ListNode.ListNode(-8)
-    r1.next = ListNode.ListNode(-6)
-    r1.next.next = ListNode.ListNode(-5)
+    r1 = ListNode.ListNode(3)
+    r1.next = ListNode.ListNode(4)
+    r1.next.next = ListNode.ListNode(1)
 
     r2 = ListNode.ListNode(-8)
     r2.next = ListNode.ListNode(-6)
@@ -97,7 +153,7 @@ if __name__ == '__main__':
     r3 = ListNode.ListNode(-8)
     r3.next = ListNode.ListNode(-7)
 
-    root = mergeKListsOne([r1, r2, r3])
+    root = sortList(r1)
     while root is not None:
         print(root.val, end=" ")
         root = root.next
