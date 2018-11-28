@@ -89,6 +89,10 @@ def sortList(head):
     '''
     链表排序
     在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+    合并排序
+    重点在于 没法设置合并的边界
+    所以在找到中点的时候就要把原链表从中点断开
+
     :param head:
     :return:
     '''
@@ -104,6 +108,11 @@ def sortList(head):
 
 
 def getMid(node):
+    '''
+    快慢指针进行查找链表中点
+    :param node:
+    :return:
+    '''
     slowNode = node
     fastNode = node.next
     while fastNode is not None and fastNode.next is not None:
@@ -113,6 +122,12 @@ def getMid(node):
 
 
 def merge(left, right):
+    '''
+    合并
+    :param left:
+    :param right:
+    :return:
+    '''
     if not left:
         return right
     elif not right:
