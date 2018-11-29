@@ -156,19 +156,50 @@ def merge(left, right):
     return res.next
 
 
+import copy
+
+
+def lowestCommonAncestor(root, p, q):
+    """
+    二叉树的最近公共祖先
+    思路：
+    如果根节点为None，或者跟节点== q | p
+    则可以直接返回
+    如果不相等
+    则寻找左孩子，右孩子
+    如果左孩子右孩子返回的不等于空那么一定p或q或空
+    如过都不为空，根节点就是最近公共祖先
+    如果有一个为空，则继续递的找
+     :type root: TreeNode
+     :type p: TreeNode
+     :type q: TreeNode
+     :rtype: TreeNode
+     """
+
+    if root is  None or root.val == p or root.val == q:
+        return root
+    left = lowestCommonAncestor(root.left, p, q)
+    right = lowestCommonAncestor(root.right, p, q)
+    if left and right:
+        return root
+    else:
+        return right if left == None else left
+
+
 if __name__ == '__main__':
-    r1 = ListNode.ListNode(3)
-    r1.next = ListNode.ListNode(4)
-    r1.next.next = ListNode.ListNode(1)
+    from dataStructure import TreeNode
 
-    r2 = ListNode.ListNode(-8)
-    r2.next = ListNode.ListNode(-6)
-    r2.next.next = ListNode.ListNode(-6)
+    root = TreeNode.TreeNode(3)
 
-    r3 = ListNode.ListNode(-8)
-    r3.next = ListNode.ListNode(-7)
+    root.left = TreeNode.TreeNode(5)
+    root.right = TreeNode.TreeNode(1)
 
-    root = sortList(r1)
-    while root is not None:
-        print(root.val, end=" ")
-        root = root.next
+    root.left.left = TreeNode.TreeNode(6)
+    root.left.right = TreeNode.TreeNode(2)
+
+    root.left.right.left = TreeNode.TreeNode(7)
+    root.left.right.right = TreeNode.TreeNode(4)
+
+    root.right.left = TreeNode.TreeNode(0)
+    root.right.right = TreeNode.TreeNode(8)
+    print(lowestCommonAncestor(root, 5, 1).val)
