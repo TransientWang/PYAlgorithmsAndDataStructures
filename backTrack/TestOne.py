@@ -36,8 +36,6 @@ class MyTestCase(unittest.TestCase):
                     self.backTrack(t + 1)
 
 
-
-
 def letterCombinations(digits):
     '''
     电话号码的字母组合
@@ -46,20 +44,22 @@ def letterCombinations(digits):
     给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
     '''
     res = []
-    backTrack(0,digits,"",res)
+    backTrack(0, digits, "", res)
     print(res)
+
+
 def backTrack(h, digits, tmp, res):
-    if h > len(digits)+1:
+    if h > len(digits) + 1:
         res.append(tmp)
         return
     number = ("", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz")
-    s="dawd"
+    s = "dawd"
     for i in range(3):
-        number[digits[h]+2][i]
-        t = tmp + number[digits[h]+2][i]
-        backTrack(h+1,digits,tmp,res)
+        number[digits[h] + 2][i]
+        t = tmp + number[digits[h] + 2][i]
+        backTrack(h + 1, digits, tmp, res)
 
 
 
 if __name__ == '__main__':
-    letterCombinations("23")
+    pass

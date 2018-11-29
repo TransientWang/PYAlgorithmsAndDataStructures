@@ -201,8 +201,47 @@ def findWordsOne(board: list, words: list):
     return list(set(res))
 
 
+def isMatch(s, p):
+    """
+    TODO 好好看看
+    通配符
+    思路：贪心算法。
+    问题的关键在于’*’,而不是’?’。因为’?’只能与单个字符匹配。
+    而’*’可以不匹配任何字符或者匹配一个或多个。
+
+    贪心原则为: 先假设 * 只匹配0个字符，此时应记住p索引的位置，然后往下继续匹配。若匹配不成功，则回来，让’‘匹配1个字符，然后继续匹配。。。。以此重复。匹配字符数逐渐+1
+    '?' 可以匹配任何单个字符。
+    '*' 可以匹配任意字符串（包括空字符串）。
+    :type s: str
+    :type p: str
+    :rtype: bool
+    """
+    pass
+    len_p = len(p)
+    len_s = len(s)
+    s_index = 0  # 字符串遍历起始索引
+    p_index = 0  # 模式串的遍历起始索引
+    s_start = 0  # 在遇到*的时候的
+    p_start = -1  # 在遇到*
+    while s_index < len_s:
+        if p_index < len_p and p[p_index] == "*":
+            p_start = p_index
+            p_index += 1
+            s_start = s_index
+        elif p_index < len_p and (p[p_index] == "?" or p[p_index] == s[s_index]):
+            p_index += 1
+            s_index += 1
+        elif p_start > -1:  # 如果p_index>0说明曾经碰见过 *，而且p[p_index]现在是*后面的第一个字母但是与是不匹配
+            s_start += 1  # ，因为*可以匹配任意的字符串 ，而且当前的字符并不匹配P串后面的字符，所以将S串要开始的索引后移一位
+            s_index = s_start
+            p_index = p_start
+        else:
+            return False
+    for i in range(p_index, len_p):
+        if p[i] != "*":
+            return False
+    return True
+
+
 if __name__ == '__main__':
-    print(findWordsOne([["a","b","c"],
-                        ["a","e","d"],
-                        ["a","f","g"]],
-["abcdefg","gfedcbaaa","eaabcdgfa","befa","dgc","ade"]))
+    print(isMatch("aad", "*d"))
