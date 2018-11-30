@@ -35,12 +35,42 @@ def maxPathSum(root):
     return sums[0]
 
 
-if __name__ == '__main__':
-    pass
-    root = TreeNode.TreeNode(-10)
-    root.left = TreeNode.TreeNode(-9)
-    root.right = TreeNode.TreeNode(-20)
-    # root.right.left = TreeNode.TreeNode(15)
-    # root.right.right = TreeNode.TreeNode(7)
+def findCircleNum(M):
+    '''
+    班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
 
-    print(maxPathSum(root))
+    给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。
+    DFS:维护一个已经遍历过得人的数组
+    如果这个人没有遍历过，就标记已遍历，然后在图中搜索这一行中为1 ，且还没有遍历过得人，
+    找到后继续对这个人标记，然后递归搜索
+    :param self:
+    :param M:
+    :return:
+    '''
+    pass
+    if M is None or len(M) == 0:
+        return 0
+    row = len(M)
+    colum = len(M[0])
+    visit = [False for i in range(row)]
+
+    count = 0
+
+    def find(x):
+        for y in range(colum):
+            if M[x][y] == 1 and visit[y] == 0:
+                visit[y] = True
+                find(y)
+
+    for i in range(row):
+        if visit[i] == False:
+            find(i)
+            count += 1
+
+    return count
+
+
+if __name__ == '__main__':
+    print(findCircleNum([[1, 1, 0],
+                         [1, 1, 1],
+                         [0, 1, 1]]))

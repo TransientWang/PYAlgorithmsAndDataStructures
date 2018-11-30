@@ -175,7 +175,6 @@ def lowestCommonAncestor(root, p, q):
      :type q: TreeNode
      :rtype: TreeNode
      """
-
     if root is  None or root.val == p or root.val == q:
         return root
     left = lowestCommonAncestor(root.left, p, q)
@@ -185,7 +184,35 @@ def lowestCommonAncestor(root, p, q):
     else:
         return right if left == None else left
 
+def lowestCommonAncestor(root, p, q):
+    """
+            :type root: TreeNode
+            :type p: TreeNode
+            :type q: TreeNode
+            :rtype: TreeNode
+            """
 
+    def isParent(p, node):
+        if not p:
+            return False
+        if p == node:
+            return True
+        return isParent(p.left, node) or isParent(p.right, node)
+
+    if root in [None, p, q]:
+        return root
+    if isParent(p, q):
+        return p
+    if isParent(q, p):
+        return q
+    while root:
+        if isParent(root.left, p) and isParent(root.left, q):
+            root = root.left
+        elif isParent(root.right, p) and isParent(root.right, q):
+            root = root.right
+        else:
+            return root
+    return None
 if __name__ == '__main__':
     from dataStructure import TreeNode
 

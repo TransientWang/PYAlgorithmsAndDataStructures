@@ -11,7 +11,7 @@ class Trie(object):
 
     （3）每个节点的所有子节点包含的字符串不相同。
         '''
-        self.__root__ = {}
+        self.root = {}
 
     def insert(self, word):
         """
@@ -19,7 +19,7 @@ class Trie(object):
         :type word: str
         :rtype: void
         """
-        curNode = self.__root__
+        curNode = self.root
         for i in word:
             if i not in curNode:
                 curNode[i] = {}
@@ -32,7 +32,7 @@ class Trie(object):
         :type word: str
         :rtype: bool
         """
-        curNode = self.__root__
+        curNode = self.root
         for i in word:
             if i not in curNode:
                 return False
@@ -47,7 +47,7 @@ class Trie(object):
         :type prefix: str
         :rtype: bool
         """
-        curNode = self.__root__
+        curNode = self.root
         for i in prefix:
             if i not in curNode:
                 return False
