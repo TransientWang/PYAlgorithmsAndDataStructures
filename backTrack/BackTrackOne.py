@@ -62,6 +62,7 @@ def generateParenthesis(n):
     generateBackTrack()
     print(res)
 
+
 def partition(s):
     '''
     分割回文串
@@ -77,6 +78,7 @@ def partition(s):
     '''
     pass
     res = []
+
     def isPalindrome(subSring):
         begin = 0
         end = len(subSring) - 1
@@ -91,7 +93,7 @@ def partition(s):
     def find(string, result, index):
         if index == len(string):
             res.append(result)
-        for i in range(index, len(string)+1):
+        for i in range(index, len(string) + 1):
             if string[index:i] != "" and isPalindrome(string[index:i]):
                 if index == 0:
                     find(string, [string[index:i]], i)
@@ -102,6 +104,50 @@ def partition(s):
     return res
 
 
+def removeInvalidParentheses(s):
+    '''
+    TODO 好好理解
+    Remove Invalid Parentheses
+    删除最小数量的无效括号，使得输入的字符串有效，返回所有可能的结果。
+    说明: 输入可能包含了除 ( 和 ) 以外的字符。
+    解法I：深度优先搜索（DFS）+剪枝（Pruning）
+
+利用评价函数计算字符串中未匹配括号的个数
+
+尝试从输入字符串中移除括号，若得到的新字符串的失配括号比原字符串少，则继续搜索；
+
+否则剪枝。
+    :param s:
+    :return:
+    '''
+    pass
+    res = []
+    mp = {"(": 1, ")": -1}
+
+    def vaildate(subString):
+        a = b = 0
+        for i in subString:
+            a += mp.get(i, 0)
+            b += a < 0
+            a = max(a, 0)
+        return a + b
+
+    def find(string):
+        mins = vaildate(string)
+        if mins == 0:
+            res.append(string)
+            return
+        for i in range(len(string)):
+            if string[i] in ["(", ")"]:
+                tmp = string[:i] + string[i + 1:]
+                if tmp not in visited and vaildate(tmp) < mins:
+                    visited.add(tmp)
+                    find(tmp)
+
+    visited = set([s])
+    find(s)
+    return res if len(res) > 0 else [""]
+
+
 if __name__ == '__main__':
-    print(partition("aab")
-)
+    print(removeInvalidParentheses(")(f"))
