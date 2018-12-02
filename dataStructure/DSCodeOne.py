@@ -70,7 +70,34 @@ def findCircleNum(M):
     return count
 
 
+def longestIncreasingPath(matrix):
+    if len(matrix) == 0 or matrix is None:
+        return 0
+    pass
+    max_res = [0]
+    row = len(matrix) - 1
+    colum = len(matrix[0]) - 1
+    dp = [[0 for i in range(colum + 1)] for i in range(row + 1)]
+
+    def find(x, y, pre, times):
+        if x < 0 or x > row or y < 0 or y > colum or matrix[x][y] == "x":
+            max_res[0] = times if times > max_res[0] else max_res[0]
+            return
+        if matrix[x][y] > pre:
+            t = matrix[x][y]
+            matrix[x][y] = "x"
+            find(x + 1, y, t, times + 1)
+            find(x - 1, y, t, times + 1)
+            find(x, y + 1, t, times + 1)
+            find(x, y - 1, t, times + 1)
+            matrix[x][y] = t
+
+    for i in range(row + 1):
+        for j in range(colum + 1):
+            find(i, j, -1, 0)
+
+    return max_res
+
+
 if __name__ == '__main__':
-    print(findCircleNum([[1, 1, 0],
-                         [1, 1, 1],
-                         [0, 1, 1]]))
+    print(longestIncreasingPath([[3, 4, 5], [3, 2, 6], [2, 2, 1]]))
