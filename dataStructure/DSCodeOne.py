@@ -71,33 +71,52 @@ def findCircleNum(M):
 
 
 def longestIncreasingPath(matrix):
+    '''
+     矩阵中的最长递增路径
+     给定一个整数矩阵，找出最长递增路径的长度。
+
+    对于每个单元格，你可以往上，下，左，右四个方向移动。 你不能在对角线方向上移动或移动到边界外（即不允许环绕）。
+    思路：这道题考察了DFS和动态规划，因为需要计算每一个点的最大长度，如果只用DFS计算就会超时
+    解决办法就是动态规划
+    用一个数组来保存[x,y]点的最长长度，当计算到某个点的时候 如果辅助数组上该点不为0那么就代表该点已经计算过了，
+    直接返回该点的数值，如果该点没有计算过，则dfs计算 当前点符合条件的时候用下一个节点计算的返回值+1就是当前节点的
+    最大值。然后比较求出周围四个点中最大的点，返回其值
+    :param matrix:
+    :return:
+    '''
     if len(matrix) == 0 or matrix is None:
         return 0
-    pass
-    max_res = [0]
+    direct = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    max_res = 1
     row = len(matrix) - 1
     colum = len(matrix[0]) - 1
-    dp = [[0 for i in range(colum + 1)] for i in range(row + 1)]
+    dp = [[0 for z in range(colum + 1)] for z in range(row + 1)]
 
-    def find(x, y, pre, times):
-        if x < 0 or x > row or y < 0 or y > colum or matrix[x][y] == "x":
-            max_res[0] = times if times > max_res[0] else max_res[0]
-            return
-        if matrix[x][y] > pre:
-            t = matrix[x][y]
-            matrix[x][y] = "x"
-            find(x + 1, y, t, times + 1)
-            find(x - 1, y, t, times + 1)
-            find(x, y + 1, t, times + 1)
-            find(x, y - 1, t, times + 1)
-            matrix[x][y] = t
+    def find(x, y):
+        if dp[x][y] !=0:
+            return dp[x][y]
+        res = 1
+        for di in direct:
+            t = x + di[0]
+            k = y + di[1]
+            if t < 0 or t > row or k < 0 or k > colum or matrix[t][k] <= matrix[x][y]:
+                continue
+            length = 1 + find(t, k)
+            res = max(res,length)
+        dp[x][y] = res
+
+        return res
 
     for i in range(row + 1):
         for j in range(colum + 1):
-            find(i, j, -1, 0)
+            max_res = max(find(i, j),max_res)
 
     return max_res
 
 
 if __name__ == '__main__':
-    print(longestIncreasingPath([[3, 4, 5], [3, 2, 6], [2, 2, 1]]))
+    print(longestIncreasingPath([
+        [9, 9, 4],
+        [6, 6, 8],
+        [2, 1, 1]
+    ]))
