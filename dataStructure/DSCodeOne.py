@@ -139,6 +139,7 @@ def countSmaller(nums):
     nums.reverse()
     for i in range(len(nums)):
         search(nums[i], i)
+    t.reverse()
     return t
 
 
