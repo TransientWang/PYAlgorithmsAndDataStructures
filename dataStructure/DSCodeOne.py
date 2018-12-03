@@ -93,7 +93,7 @@ def longestIncreasingPath(matrix):
     dp = [[0 for z in range(colum + 1)] for z in range(row + 1)]
 
     def find(x, y):
-        if dp[x][y] !=0:
+        if dp[x][y] != 0:
             return dp[x][y]
         res = 1
         for di in direct:
@@ -102,21 +102,45 @@ def longestIncreasingPath(matrix):
             if t < 0 or t > row or k < 0 or k > colum or matrix[t][k] <= matrix[x][y]:
                 continue
             length = 1 + find(t, k)
-            res = max(res,length)
+            res = max(res, length)
         dp[x][y] = res
 
         return res
 
     for i in range(row + 1):
         for j in range(colum + 1):
-            max_res = max(find(i, j),max_res)
+            max_res = max(find(i, j), max_res)
 
     return max_res
 
 
+def countSmaller(nums):
+    '''
+    计算右侧小于当前元素的个数
+    给定一个整数数组 nums，按要求返回一个新数组 counts。数组 counts 有该性质： counts[i] 的值是  nums[i] 右侧小于 nums[i] 的元素的数量
+    :param nums:
+    :return:
+    '''
+    tmp = []
+    t = [0 for i in range(len(nums))]
+
+    def search(key, i):
+        left, right = 0, len(tmp)
+        while left < right:
+            mid = left + (right - left) // 2
+            if tmp[mid] >= key:
+                right = mid
+            else:
+                left = mid +1
+
+        tmp.insert(left, key)
+        t[i] = left
+
+    nums.reverse()
+    for i in range(len(nums)):
+        search(nums[i], i)
+    return t
+
+
 if __name__ == '__main__':
-    print(longestIncreasingPath([
-        [9, 9, 4],
-        [6, 6, 8],
-        [2, 1, 1]
-    ]))
+    print(countSmaller([5, 2, 6, 1]))
