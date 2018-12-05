@@ -161,7 +161,7 @@ def canFinish(numCourses, prerequisites):
     """
 
     visited = [0 for i in range(numCourses)]
-    hmap = {i: [] for i in range(numCourses)}  # 邻接表
+    hmap = {i[0]: [] for i in prerequisites}  # 邻接表
     for k in prerequisites:
         hmap[k[0]].append(k[1])
 
@@ -181,10 +181,55 @@ def canFinish(numCourses, prerequisites):
     for i in range(numCourses):
         if dfs(i):
             return False
-    print(visited)
+
     return True
 
 
+def findOrder(numCourses, prerequisites):
+    """
+     课程表 II
+现在你总共有 n 门课需要选，记为 0 到 n-1。
+
+在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
+
+给定课程总量以及它们的先决条件，返回你为了学完所有课程所安排的学习顺序。
+
+可能会有多个正确的顺序，你只要返回一种就可以了。如果不可能完成所有课程，返回一个空数组。
+
+示例 1:
+    :type numCourses: int
+    :type prerequisites: List[List[int]]
+    :rtype: List[int]
+    """
+    pass
+    visit = [0 for i in range(numCourses)]
+
+    hmap = {k[0]: [] for k in prerequisites}
+    for i in prerequisites:
+        hmap[i[0]].append(i[1])
+    res = []
+
+    def dfs(cur):
+        if visit[cur] == 1:
+            return True
+        if visit[cur] == 2:
+            return False
+        visit[cur] = 1
+        if hmap.get(cur) is not None:
+            for i in hmap[cur]:
+                if dfs(i):
+                    return True
+        visit[cur] = 2
+        res.append(cur)
+        return False
+
+    for i in range(numCourses):
+        if dfs(i):
+            return []
+
+    return res
+
+
 if __name__ == '__main__':
-    print(canFinish(3,
-                    [[1, 0], [2, 0]]))
+    print(findOrder(2,
+                    [[0, 1], [1, 0]]))
