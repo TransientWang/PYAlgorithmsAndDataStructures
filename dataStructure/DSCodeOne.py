@@ -131,7 +131,7 @@ def countSmaller(nums):
             if tmp[mid] >= key:
                 right = mid
             else:
-                left = mid +1
+                left = mid + 1
 
         tmp.insert(left, key)
         t[i] = left
@@ -143,5 +143,48 @@ def countSmaller(nums):
     return t
 
 
+import collections
+
+
+def canFinish(numCourses, prerequisites):
+    """
+    课程表
+    现在你总共有 n 门课需要选，记为 0 到 n-1。
+
+    在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
+
+    给定课程总量以及它们的先决条件，判断是否可能完成所有课程的学习？
+    思路：通过DFS，判断是否有拓补排序
+    :type numCourses: int
+    :type prerequisites: List[List[int]]
+    :rtype: bool
+    """
+
+    visited = [0 for i in range(numCourses)]
+    hmap = {i: [] for i in range(numCourses)}  # 邻接表
+    for k in prerequisites:
+        hmap[k[0]].append(k[1])
+
+    def dfs(cur):
+        if visited[cur] == 1:  # 当前节点正在被搜索，但是还没有搜索完毕
+            return True
+        if visited[cur] == 2:  # 当前节点已经被搜索完毕
+            return False
+        visited[cur] = 1
+        if hmap.get(cur) != None:
+            for i in hmap[cur]:
+                if dfs(i):
+                    return True  # 如果该节点的后继节点是1，说明有环。直接返回True,则该节点不会被标记成2,
+        visited[cur] = 2
+        return False
+
+    for i in range(numCourses):
+        if dfs(i):
+            return False
+    print(visited)
+    return True
+
+
 if __name__ == '__main__':
-    print(countSmaller([5, 2, 6, 1]))
+    print(canFinish(3,
+                    [[1, 0], [2, 0]]))
