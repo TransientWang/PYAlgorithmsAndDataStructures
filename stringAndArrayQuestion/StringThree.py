@@ -36,5 +36,41 @@ def minWindow(s, t):
     return s[cstart:cstart + res]
 
 
+def calculate(s):
+    '''
+    基本计算器 II
+    实现一个基本的计算器来计算一个简单的字符串表达式的值。
+
+字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
+思路：用栈来存储数字，由于涉及到优先级，所以遇到减号
+ 将后面的数字变成负值入栈，乘除法先计算，加减法遍历完后再计算
+    :param s:
+    :return:
+    '''
+    lens = len(s)
+    res = 0
+    stack = []
+    op = "+"  # 保留上一次运算符号
+    tmp = 0
+    for i in range(lens):
+        if s[i].isdigit():
+            tmp = tmp * 10 + int(s[i])
+        if (not s[i].isdigit() and s[i] != " ") or i == lens - 1:
+            if op == "+":
+                stack.append(tmp)
+            if op == "-":
+                stack.append(-tmp)
+            if op == "*" or op == "/":
+                tmp = int(stack[-1] * tmp if op == "*" else stack[-1] / tmp)
+                stack.pop()
+                stack.append(tmp)
+
+            tmp = 0
+            op = s[i]
+    while len(stack) != 0:
+        res += stack.pop()
+    return res
+
+
 if __name__ == '__main__':
-    print(minWindow("aa", "aa"))
+    print(calculate("14-3/2"))
