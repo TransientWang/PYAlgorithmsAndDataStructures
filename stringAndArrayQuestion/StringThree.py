@@ -19,7 +19,6 @@ def minWindow(s, t):
         hmap[ord(i)] += 1  # 在t串中的字符出现一次+1
     count = 0
     res = 2 ** 31
-
     while end < len(s):
         if hmap[ord(s[end])] > 0:  # 匹配count+1
             count += 1
