@@ -72,5 +72,34 @@ def calculate(s):
     return res
 
 
+def trap(height):
+    '''
+    接雨水
+    给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+    思路：两次遍历，第一次从右到左，记录当前位置最高值，
+    第二次从左到右从第二个点开始，比较水面高度（min(maxL, maxRs[i])延迟记录），存水量 =min(maxL, maxRs[i])= height[i]
+
+    :param height:
+    :return:
+    '''
+    if height is None or len(height) <= 2:
+        return 0
+    maxRs = [0 for i in range(len(height))]
+    maxL = height[0]
+    maxR = 0
+    res = 0
+    for i in range(len(height) - 1, -1, - 1):
+        if height[i] > maxR:
+            maxRs[i] = maxR = height[i]
+        else:
+            maxRs[i] = maxR
+
+    for i in range(1, len(height)):
+        if height[i] > maxL:
+            maxL = height[i]
+        res += max((min(maxL, maxRs[i]) - height[i]), 0)
+    return res
+
+
 if __name__ == '__main__':
-    print(calculate("14-3/2"))
+    print(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
