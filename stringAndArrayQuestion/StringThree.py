@@ -78,7 +78,7 @@ def trap(height):
     给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
     思路：两次遍历，第一次从右到左，记录当前位置最高值，
     第二次从左到右从第二个点开始，比较水面高度（min(maxL, maxRs[i])延迟记录），存水量 =min(maxL, maxRs[i])= height[i]
-
+    TODO 重新看
     :param height:
     :return:
     '''
