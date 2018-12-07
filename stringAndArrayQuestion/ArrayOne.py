@@ -167,10 +167,47 @@ def maxSlidingWindow(nums, k):
     for i in range(1, len(nums) - k + 1):
         if nums[i + k - 1] > maxVal:
             maxVal = nums[i + k - 1]
-        elif nums[i-1] == maxVal:
+        elif nums[i - 1] == maxVal:
             maxVal = max(nums[i:i + k])
         res.append(maxVal)
 
     return res
+
+
+def largestRectangleArea(heights):
+    '''
+    柱状图中最大的矩形
+    给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+    求在该柱状图中，能够勾勒出来的矩形的最大面积。
+    思路：如果是一个递增的序列那么，最大值可以为 max(heights[i]*len(heights)) heights.pop(0)
+    如果不是递增，不好找到规律。
+    所以需要构建出这个递增序列。
+    从heights[0]开始，当heights[1]比heights[0]大的时候，可以不用着急求出最大值，如果比heights[0]小，
+    那么就需要记录前面比heights[0]高的矩形的最大值，然后将他们都消减成与heights[1]一般高，才符合递增。
+    这就需要用到栈
+    :param heights:
+    :return:
+    '''
+    stack = []
+    res = 0
+    for i in heights:
+        if len(stack) == 0 or i >= stack[-1]:
+            stack.append(i)
+        else:
+            t = 1
+            while len(stack) > 0 and i < stack[-1]:
+                tmp = stack.pop() * t
+                t += 1
+                res = max(tmp, res)
+            while t >=1:
+                stack.append(i)
+                t-=1
+    while len(stack) != 0:
+        res = max(res, stack[0] * len(stack))
+        stack.pop(0)
+    return res
+
+
+
 if __name__ == '__main__':
-    print(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
+    print(largestRectangleArea([2,1,5,6,2,3]))
