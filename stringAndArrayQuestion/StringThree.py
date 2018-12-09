@@ -101,5 +101,52 @@ def trap(height):
     return res
 
 
+def KMP(string, pattern):
+    '''
+    KMP算法
+    :param string: 字符串
+    :param pattern: 模式
+    :return: 模式首字母在字符串中的位置
+    '''
+    next = [0 for i in range(len(pattern))]
+    next[0] = -1
+
+    def getNext():
+        '''
+        next[i] 表示pattern到前位置的子串的前缀与后相同的最远位置的后缀起始点。
+        :return:
+        '''
+        j = 0
+        k = -1
+        while j < len(pattern) - 1:
+            if k == -1 or pattern[j] == pattern[k]:
+                j += 1
+                k += 1
+                if pattern[j] == pattern[k]:
+                    next[j] = next[k]
+                else:
+                    next[j] = k
+            else: #当匹配失败的时候string上的指针不用动，pattern上的指针需要回到与string 上i索引的位置的
+                # 前一个索引位置开始向前匹配到pattern上从0到匹配失败索引位置的前一个索引为止的子串。
+                # 这与个子串后缀相同的最长子串前缀的末尾索引位置。
+                k = next[k]
+
+    getNext()
+    print(next)
+
+    i, j = 0, 0
+    while i < len(string) and j < len(pattern):
+        if j == -1 or string[i] == pattern[j]:
+            i += 1
+            j += 1
+        else:
+            j = next[j]
+
+    if j == len(pattern):
+        return i - j
+    else:
+        return -1
+
+
 if __name__ == '__main__':
-    print(trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+    print(KMP("fndabcdaabcdabdbddw", "abcdabd"))
