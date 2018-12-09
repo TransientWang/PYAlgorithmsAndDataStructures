@@ -205,6 +205,5 @@ def largestRectangleArea(heights):
     return res
 
 
-
 if __name__ == '__main__':
-    print(largestRectangleArea([2,1,5,6,2,3]))
+    print(largestRectangleArea([2, 1, 5, 6, 2, 3]))
