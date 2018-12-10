@@ -103,6 +103,7 @@ def exist(board, word):
     row = len(board)
     colum = len(board[0])
 
+
     def find(x, y, i):
         if x < 0 or y < 0 or x > row - 1 or y > colum - 1 or board[x][y] != word[i]:
             return False
