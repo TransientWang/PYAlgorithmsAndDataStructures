@@ -171,7 +171,7 @@ def multiply(num1, num2):
     n2 = list(num2)
     n1.reverse()
     n2.reverse()
-    count = 0
+
     stack = []
     k = 0
     for i in n1:
