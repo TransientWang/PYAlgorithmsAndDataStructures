@@ -15,7 +15,7 @@ def fractionToDecimal(numerator, denominator):
     denominator = abs(denominator)
     hmap = {}
     result = str(int(numerator / denominator))  # 整数部分
-    remainder = numerator % denominator #余数，也是下一次计算的被除数
+    remainder = numerator % denominator  # 余数，也是下一次计算的被除数
     if remainder != 0:
         result += "."
     index = len(result) - 1
@@ -36,6 +36,19 @@ def fractionToDecimal(numerator, denominator):
     return result
 
 
-if __name__ == '__main__':
+def isPalindrome(x):
+    '''
+    回文数
+    判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+    :param x:
+    :return:
+    '''
+    if x < 0:
+        return False
+    s = list(str(x))
+    s.reverse()
+    return x - int("".join(s)) == 0
 
-    print(fractionToDecimal(2, 3))
+
+if __name__ == '__main__':
+    print(isPalindrome(-121))
