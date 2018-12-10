@@ -126,7 +126,7 @@ def KMP(string, pattern):
                     next[j] = next[k]
                 else:
                     next[j] = k
-            else: #当匹配失败的时候string上的指针不用动，pattern上的指针需要回到与string 上i索引的位置的
+            else:  # 当匹配失败的时候string上的指针不用动，pattern上的指针需要回到与string 上i索引的位置的
                 # 前一个索引位置开始向前匹配到pattern上从0到匹配失败索引位置的前一个索引为止的子串。
                 # 这与个子串后缀相同的最长子串前缀的末尾索引位置。
                 k = next[k]
@@ -148,5 +148,74 @@ def KMP(string, pattern):
         return -1
 
 
+def multiply(num1, num2):
+    '''
+    字符串相乘
+    给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+    意思就是模拟一下数字相乘的过程，
+    那吗就是用nums1的每一位分别与nums2相乘
+    到下一位的时候乘完的结果后面还要加上索引位置数量的0
+    然后保存起来
+    都乘完后，就有了
+    len(num1)个数字
+    再把这些数字相加
+
+    注意的地方就是，遇到相乘/相加大于10的数字进位的数要保存下来，append % 得出的数
+    :param num1:
+    :param num2:
+    :return:
+    '''
+    if num1 == "0" or num2 == "0":
+        return 0
+    n1 = list(num1)
+    n2 = list(num2)
+    n1.reverse()
+    n2.reverse()
+    count = 0
+    stack = []
+    k = 0
+    for i in n1:
+        t = 0
+        tmp = ""
+        for j in n2:
+            p = int(i) * int(j)
+            p += t
+            t = p // 10
+            p %= 10
+            tmp += str(p)
+        if t != 0:
+            tmp += str(t)
+
+        tmps = list(tmp)
+
+        tmps = ["0" for i in range(k)] + tmps
+        k += 1
+        stack.append(tmps)
+    tmp = stack.pop()
+
+
+    while len(stack) > 0:
+        t = 0
+        tmps = stack.pop()
+        z = ""
+        pos = 0
+        while pos < max(len(tmps), len(tmp)):
+            t1 = tmp[pos] if pos < len(tmp) else 0
+            t2 = tmps[pos] if pos < len(tmps) else 0
+            p = int(t1) + int(t2) + t
+            t = p // 10
+            p %= 10
+            z += str(p)
+            pos += 1
+        if t != 0:
+            z += str(t)
+        z = list(z)
+        tmp = z
+    tmp = list(tmp)
+    tmp.reverse()
+    return "".join(tmp)
+
+
 if __name__ == '__main__':
-    print(KMP("fndabcdaabcdabdbddw", "abcdabd"))
+    print(multiply("123456789",
+"987654321"))
