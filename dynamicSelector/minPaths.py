@@ -4,33 +4,32 @@
 '''
 
 
-'''
-爬楼梯问题
-一、最优解的结构特征
-    三种情况
-        （1）当只有一阶楼梯时，只有一种解 ：爬一节
-        （2）当有两阶楼梯时，有两种解：1、一次爬两阶 2、两次，每次爬一阶
-        （3）当有两阶以上时，可以拆分，一下
-                                可以先考虑第一步  当一第步走一阶时  还剩下 n-1阶楼梯  求  n-1阶楼梯的走法
-                                                  当第一步走两阶时  还剩下  n-2 阶楼梯 求 n-2阶楼梯的走法
-                                由此可以看出 当自顶向下看时 n阶台阶的走法 是由n-1阶 + n-2阶走法构成的  
-二、根据最优值的特征建立递归算式
-       f(n) =  +
-               | n=1    ,1
-               | n=2    ,2
-               | n=3    , f(n-1)+f(n-2)                                                 
-'''
-
-
-def climbStairs(self, n):
+def climbStairs(n):
     """
+    70.爬楼梯
+    分析：
+    这道问题属于动态规划的问题
+    可以自顶向下看
+    假设只有三阶，那么第三阶的走法只有两个，即从倒数第二个上来，和倒数第三个上来。
+    那么只要知道了上倒数第二个台阶的走法，和倒数第三个台阶的走法，就可以求出解。
+    那么倒数第二个和倒数第三个的走法也可以用一样的步骤去求得。
+    可以看出，每一阶的问题只跟前两个台阶有关，那么本来需要一个辅助数组，现在就需要两个变量就可以，
+    即：t1+t2=t3
+    这里t3可以替换t2,t2可以变成t1，就可以进入下次循环
+    这样这个问题就可以看做是一个斐波那契数列
+    考察点：动态规划、斐波那契数列
      :type n: int
      :rtype: int
     """
-    list = [1, 2]
-    for i in range(2, n):
-        list.append(list[i - 1] + list[i - 2])
-    return list[n - 1]
+    if n == 1:
+        return 1
+    t1 = 1
+    t2 = 1
+    i = 1
+    while i <= n:
+        t1, t2 = t1 + t2, t1
+        i += 1
+    return t2
 
 
 """
@@ -160,10 +159,6 @@ def maxProfit(prices):
     return max
 
 
-
-
-
-
 def maxProfit1(prices):
     """
     :type prices: List[int]
@@ -180,7 +175,6 @@ def maxProfit1(prices):
         # 也就是代表当前卖出减去最小买入
 
     return res
-
 
 
 '''
@@ -205,12 +199,13 @@ def minCostClimbingStairs(cost):
     :type cost: List[int]
     :rtype: int
     """
-    if len(cost) ==2:
-        return min(cost[0], cost[1]) #如果只有两个台阶  那么只有一步  跳到代价小的那个台阶上即可
-    list = [0 for j in range(len(cost)+1)]  # 记录从i到j的最小代价，因为要跳出去。所以list的长度要比台阶数+1  list[0] =0 已经包含了只有一个台阶的最优解
-    for i in range(2,len(list)):  #跳到当前台阶上的代价为 从i-1开始跳的还是从i-2开始跳的
-        list[i] = min(list[i - 1] + cost[i-1], list[i - 2]+ cost[i-2])
-    return list[i-1]
+    if len(cost) == 2:
+        return min(cost[0], cost[1])  # 如果只有两个台阶  那么只有一步  跳到代价小的那个台阶上即可
+    list = [0 for j in range(len(cost) + 1)]  # 记录从i到j的最小代价，因为要跳出去。所以list的长度要比台阶数+1  list[0] =0 已经包含了只有一个台阶的最优解
+    for i in range(2, len(list)):  # 跳到当前台阶上的代价为 从i-1开始跳的还是从i-2开始跳的
+        list[i] = min(list[i - 1] + cost[i - 1], list[i - 2] + cost[i - 2])
+    return list[i - 1]
+
 
 '''
 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
@@ -226,25 +221,27 @@ def minCostClimbingStairs(cost):
     f(n) = d(0)            n=1
     
 '''
+
+
 def rob(nums):
-    r=[0 for i in range(len(nums))]  # type: List[int] 代表临时最优值
+    r = [0 for i in range(len(nums))]  # type: List[int] 代表临时最优值
     if len(nums) == 0:
         return 0
     if len(nums) == 1:
         return nums[0]
-    if len(nums) ==2:
-        return max(nums[0],nums[1])
+    if len(nums) == 2:
+        return max(nums[0], nums[1])
 
     r[0] = nums[0]
-    r[1] = max(nums[0],nums[1])
-    for i in range(2,len(nums)):
-        if i ==2:
+    r[1] = max(nums[0], nums[1])
+    for i in range(2, len(nums)):
+        if i == 2:
             r[i] = r[0] + nums[i]
         else:
 
-            print((r[0:i-2]))
-            print((max(r[0:i-2])))
-            r[i] = max(r[0:i-1]) + nums[i]
+            print((r[0:i - 2]))
+            print((max(r[0:i - 2])))
+            r[i] = max(r[0:i - 1]) + nums[i]
     # print(r)
     return max(r)
 
@@ -258,10 +255,6 @@ def rob(nums):
 给定一个只包含数字的非空字符串，请计算解码方法的总数。
 '''
 
-
-
-
-
 if __name__ == '__main__':
-    # print(numDecodings("226"))
+    print(climbStairs(5))
     pass
