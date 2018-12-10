@@ -159,10 +159,8 @@ def maxProfit1(prices):
     min_val = prices[0]
     for i in (prices):
         min_val = min(min_val, i)
-        res = max(i-min_val,res)
+        res = max(i - min_val, res)
     return res
-
-
 
 
 def minCostClimbingStairs(cost):
@@ -191,25 +189,24 @@ def minCostClimbingStairs(cost):
     return list[i - 1]
 
 
-
 def rob(nums):
     '''
     198.打家劫舍
     你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 
     给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
-    一、分析最优解的结构特征  先从自顶向下 分析 加入偷到了最后一家 那么 需要考虑的最大值就是 这家的金额 加上0到i-2户
-        能偷到的最大值
-        当只有两户的时候只考虑哪家钱多偷哪家的
-        当只有一家的时候就偷他家的了
-    二、递归的定义最优值
-        f(n) = d(n) + f(n-2)  ,n>2
-        f(n) = Max(d(0),d(1))   ,n =2
-        f(n) = d(0)            n=1
+    思路：动态规划问题，自顶向下看，小偷偷到最后一家的时候，有两种选择，
+    1、偷到当前家前2家+偷当前家
+    2、当前家偷，偷到当前家前一家。
+    那么从第一项开始比较特殊，只要之前加上两家为0就可以。
+
     :param nums:
     :return:
     '''
-
+    rob = [0 for i in range(len(nums) + 2)]
+    for i in range(len(nums)):
+        rob[i] = rob[i - 2] + nums[i] if rob[i - 2] + nums[i] > rob[i - 1] else rob[i - 1]
+    return max(rob)
 
 
 '''
@@ -222,5 +219,5 @@ def rob(nums):
 '''
 
 if __name__ == '__main__':
-    # print(numDecodings("226"))
+    print(rob([0]))
     pass
