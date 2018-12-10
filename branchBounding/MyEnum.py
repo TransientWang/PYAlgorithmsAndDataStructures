@@ -34,25 +34,33 @@ class MyList(list, metaclass=MyMetaClass):
 
 
 def maxSubArray(nums):
-    sum = 0
+    '''
+    53.最大子序和
+    思路：唯一要考虑的事情就是负数，按照动态规划的考虑方式，
+    到最后一位索引的时候，如果之前的序列和+当前元素比当前元素大，
+    有两种情况 1、当前是正数，之前序列和是正数
+    2，当前是负数，之前是正数。
+    第一种情况只需要记录现在最大值，
+    第二种情况，还需要记录之前的最大值，便于比较。
+    所以合二为一就可以了
+    :param nums:
+    :return:
+    '''
     res = nums[0]
+    max_val = 0
     for i in nums:
-        if sum + i < i:
-            sum = i
+        if i + max_val >= i:
+            max_val += i
         else:
-            sum += i
-        if sum > res:
-            res = sum
+            max_val = i
+        res = max(max_val, res)
     return res
-
-
-
 
 
 if __name__ == '__main__':
     # print(maxSubArray([-1]))
     # print(lengthOfLastWord("a"))
-    print((uniquePaths(3, 2)))
+    print((maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4])))
     # li = MyList()
     # li.add(1)
     # li.add(2)
