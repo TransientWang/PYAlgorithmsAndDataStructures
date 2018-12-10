@@ -161,19 +161,23 @@ def maxProfit(prices):
 
 def maxProfit1(prices):
     """
+    121. 买卖股票的最佳时机
     :type prices: List[int]
     :rtype: int
-    TODO  此问题应该在看看
+    分析：股票只能买入和卖出一次，并且买入在前。
+    假设只有两天，设第一天价格为最小值，那么当天买入卖出，收益为0
+    接着往下走，第二天如果第二天比第一天价格高，那么结果应该是第二天减去第一天。
+    如果第二天比第一天高，那么就显然不能获取收益
+    关键点就在于，最小价格，是否在最大价格之前。
+    所以当遍历数组的时候，遍历到当前索引时，需要记录从0到该点的最小值，然后如果当前点-最小值，
+    比最终收益大，就可以更细，如果小，就说明，前面的最大值，减去前面的最小值，比当前点的解更优，
+    所以保存之前的最优解。省去了数组。
     """
-    if prices == None or len(prices) == 0:
-        return 0
-    Min = prices[0]  # 最小的时候买入
-    res = 0  # 结果
-    for i in prices:
-        Min = min(Min, i)  # 遍历到目前为止 Min总是最小值
-        res = max(res, i - Min)  # i-Min代表当前值减去当前最小值的一个比较 注意 当前最小值的索引一直在当前遍历位置之后
-        # 也就是代表当前卖出减去最小买入
-
+    res = 0
+    min_val = prices[0]
+    for i in (prices):
+        min_val = min(min_val, i)
+        res = max(i-min_val,res)
     return res
 
 
@@ -256,5 +260,5 @@ def rob(nums):
 '''
 
 if __name__ == '__main__':
-    print(climbStairs(5))
+    print(maxProfit1([7,1,5,3,6,4]))
     pass
