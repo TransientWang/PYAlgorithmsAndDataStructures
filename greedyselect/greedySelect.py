@@ -24,13 +24,21 @@ def maxProfit(prices):
     :type prices: List[int]
     :rtype: int
     """
-    if prices == []:
+    if len(prices) == 0:
         return 0
-    res = 0
-    for i in range(1, len(prices)):
-        if prices[i] > prices[i - 1]:
-            res += prices[i] - prices[i - 1]
-    return res
+    valley = prices[0]  # 在前
+    peak = prices[0]  # 在后
+    sum = 0
+    i = 0
+    while i < len(prices) - 1:
+        while i < len(prices) - 1 and prices[i] >= prices[i + 1]:
+            i += 1
+        valley = prices[i]  # 先找出一个波谷
+        while i < len(prices) - 1 and prices[i] <= prices[i + 1]:
+            i += 1
+        peak = prices[i]  # 再找出一个波峰
+        sum += peak - valley
+    return sum
 
 
 def maxProfit2(prices):
@@ -40,7 +48,6 @@ def maxProfit2(prices):
     """
     if len(prices) == 0:
         return 0
-    cur = prices[0]
     sum = 0
     for i in range(1, len(prices)):
         if prices[i] > prices[i - 1]:
