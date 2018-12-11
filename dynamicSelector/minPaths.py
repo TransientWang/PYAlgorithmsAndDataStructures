@@ -191,6 +191,7 @@ def minCostClimbingStairs(cost):
 
 def rob(nums):
     '''
+    review
     198.打家劫舍
     你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 
@@ -209,15 +210,37 @@ def rob(nums):
     return max(rob)
 
 
-'''
-一条包含字母 A-Z 的消息通过以下方式进行了编码：
-'A' -> 1
-'B' -> 2
-...
-'Z' -> 26
-给定一个只包含数字的非空字符串，请计算解码方法的总数。
-'''
+def rob2(nums):
+    '''
+    213.打劫劫舍2
+    你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都围成一圈，
+    这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，
+    如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+    给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
+    思路：因为是一个环形，所以偷第一家就不能偷最后一家
+    偷最后一家就不能偷第一家
+    所以分成两种情况计算就可以
+    :param self:
+    :param nums:
+    :return:
+    '''
+
+    def robHelp(left, right):
+        if right - left <= 1:
+            return nums[left]
+        dp = [0 for i in range(len(nums))]
+        dp[left] = nums[left]
+        dp[left + 1] = max(nums[left], nums[left + 1])
+        for i in range(left + 2, right):
+            dp[i] = max(nums[i] + dp[i - 2], dp[i - 1])
+        return dp[right - 1]
+
+    if len(nums) <= 1:
+        return nums[0]
+    return max(robHelp(0, len(nums) - 1), robHelp(1, len(nums)))
+
+
 
 if __name__ == '__main__':
-    print(rob([0]))
+    print(rob2([1, 2, 3,4]))
     pass
