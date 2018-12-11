@@ -4,6 +4,8 @@ import math
 
 def maxProfit(prices):
     """
+    review
+    122.买卖股票的最佳时机 II
     给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
 
     设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
@@ -15,26 +17,20 @@ def maxProfit(prices):
           规模更小的问题，而后的每一步收拾当前的最佳的选择。这种选择依赖 已作出的选择，但不依赖未作出的选择，
        二、最优子结构：当一个问题的最优解包含其子问题的最优解时，称子问题具有最优子结构性质没问题的最优子结构性质
        是该问题是够可用贪心算法求解的关键
-
+    思路：遍历数组，如果当前值 比上一个值大的话，最大值就加上差，不是就移动向下一位，
+    这样连续增长相当于最大值减去最小值。
+    有大有小也会把不符合的跳过去了。
 
     :type prices: List[int]
     :rtype: int
     """
-    if len(prices) == 0:
+    if prices == []:
         return 0
-    valley = prices[0]  # 在前
-    peak = prices[0]  # 在后
-    sum = 0
-    i = 0
-    while i < len(prices) - 1:
-        while i < len(prices) - 1 and prices[i] >= prices[i + 1]:
-            i += 1
-        valley = prices[i]  # 先找出一个波谷
-        while i < len(prices) - 1 and prices[i] <= prices[i + 1]:
-            i += 1
-        peak = prices[i]  # 再找出一个波峰
-        sum += peak - valley
-    return sum
+    res = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            res += prices[i] - prices[i - 1]
+    return res
 
 
 def maxProfit2(prices):
@@ -175,7 +171,6 @@ def canCompleteCircuit(gas, cost):
     return -1
 
 
-
 def canCompleteCircuit1(gas, cost):
     '''
     贪心选择解题思路
@@ -205,9 +200,6 @@ def canCompleteCircuit1(gas, cost):
         return -1
     else:
         return j
-
-
-
 
 
 def candy(ratings):
@@ -245,4 +237,4 @@ def candy(ratings):
 
 
 if __name__ == '__main__':
-    print((candy([1, 2, 87, 87, 87, 2, 1])))
+    print((maxProfit([1,2,3,4,5])))
