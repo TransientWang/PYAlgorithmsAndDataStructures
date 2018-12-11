@@ -163,26 +163,29 @@ def isMatch(s, p):
 
 def removeDuplicates(nums):
     '''
+    26.删除排序数组中的重复项
     给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
 
-不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+    不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+    思路：保存上一个，跟当前比较 一样就删除，不一样就更新上一个。
+    注意的就是删除元素后长度减少 用while循环
     :param nums:
     :return:
     '''
     if len(nums) <= 1:
         return len(nums)
-    tmp = nums[0]
-    count = 1
-    i = 1
-    while i < len(nums):
+    tmp =nums[0]
+    i =1
+    count =1
+    while count < len(nums):
         if nums[i] != tmp:
+            i+=1
+            count+=1
             tmp = nums[i]
-            count += 1
-            i += 1
         else:
             nums.remove(tmp)
 
-    return count
+
 
 
 def rotate(nums, k):
