@@ -5,25 +5,29 @@ import math
 
 def singleNumber(nums):
     '''
-    给定两个数组，编写一个函数来计算它们的交集。
+    136. 只出现一次的数字
+    给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
     '''
-    tmp = nums[0]
-    index = 0
-    left = 0
-    right = 0
-
-    while index < len(nums):
-        if tmp == nums[index]:
-            right = index
-        elif right - left == 0:
-            return nums[left]
-        else:
-            tmp = nums[index]
-            left = index
-            right = index
-        index += 1
-    return tmp
-
+    # tmp = nums[0]
+    # index = 0
+    # left = 0
+    # right = 0
+    #
+    # while index < len(nums):
+    #     if tmp == nums[index]:
+    #         right = index
+    #     elif right - left == 0:
+    #         return nums[left]
+    #     else:
+    #         tmp = nums[index]
+    #         left = index
+    #         right = index
+    #     index += 1
+    # return tmp
+    res =0
+    for i in nums:
+        res ^= i
+    return res
 
 def intersect(nums1, nums2):
     nums1.sort()
@@ -45,8 +49,6 @@ def intersect(nums1, nums2):
             i += 1
             j += 1
     return res
-
-
 
 
 def moveZeroes(nums):
@@ -71,8 +73,6 @@ def moveZeroes(nums):
     print(nums)
 
 
-
-
 def rotate(matrix):
     '''
     矩阵逆置
@@ -80,17 +80,18 @@ def rotate(matrix):
 
     lens = len(matrix[0]) - 1
     for i in range(int(math.ceil(float(len(matrix[0])) / 2))):
-        for j in range(i,lens -i):
+        for j in range(i, lens - i):
             tmp = matrix[i][j]
-            matrix[i][j] = matrix[lens -j][i]
-            matrix[lens - j][i] = matrix[lens - i][lens -j]
-            matrix[lens - i][lens - j] = matrix[j][lens -i]
+            matrix[i][j] = matrix[lens - j][i]
+            matrix[lens - j][i] = matrix[lens - i][lens - j]
+            matrix[lens - i][lens - j] = matrix[j][lens - i]
             matrix[j][lens - i] = tmp
 
     for x in range(len(matrix)):
         for y in range(len(matrix)):
             print((matrix[x][y]), end=' ')
         print("\n")
+
 
 def reverseString(s):
     i = 0
@@ -114,17 +115,17 @@ def lengthOfLISGreedy(nums):
     '''
     if len(nums) == 0:
         return 0
-    r = [nums[0]] #维护维护一个递增序列
+    r = [nums[0]]  # 维护维护一个递增序列
     res = 0
     for i in range(1, len(nums)):
-        if nums[i] > r[res]:      #当前元素大于递增序列的右端 直接加上
+        if nums[i] > r[res]:  # 当前元素大于递增序列的右端 直接加上
             r.append(nums[i])
             res += 1
-        else: #找到第一个比 nums[i]大的替换
+        else:  # 找到第一个比 nums[i]大的替换
             left = 0
             right = res
             while left < right:
-                mid = int((left + (right-1)) /2)
+                mid = int((left + (right - 1)) / 2)
                 if nums[i] == r[mid]:
                     left = mid
                     break
@@ -133,11 +134,8 @@ def lengthOfLISGreedy(nums):
                 else:
                     left = mid + 1
             r[left] = nums[i]
-    return res+1
-if __name__ == '__main__':
-    print((rotate([
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ], )))
+    return res + 1
 
+
+if __name__ == '__main__':
+    print(singleNumber([1, 2, 2, 4, 5, 5,1 ]))
