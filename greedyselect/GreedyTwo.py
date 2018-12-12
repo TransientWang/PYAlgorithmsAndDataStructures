@@ -31,6 +31,12 @@ def singleNumber(nums):
     return res
 
 def intersect(nums1, nums2):
+    '''
+    350. 两个数组的交集 II
+    :param nums1:
+    :param nums2:
+    :return:
+    '''
     nums1.sort()
     nums2.sort()
     i = 0
