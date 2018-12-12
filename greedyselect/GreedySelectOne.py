@@ -50,10 +50,6 @@ k是排在这个人前面且身高大于或等于h的人数。 编写一个算�
 '''
 
 
-
-
-
-
 def comp(x1, x2):
     if x1[0] - x2[0] > 0:
         return 1
@@ -61,6 +57,7 @@ def comp(x1, x2):
         return -1
     else:
         return x2[1] - x1[1]
+
 
 def reconstructQueue(people):
     '''
@@ -114,7 +111,6 @@ def leastInterval(tasks, n):
     return max((maxNum - 1) * (n + 1) + count, len(tasks))  # 比较
 
 
-
 def numRescueBoats(people, limit):
     '''
     第 i 个人的体重为 people[i]，每艘船可以承载的最大重量为 limit。
@@ -161,6 +157,7 @@ def isMatch(s, p):
         s = s[1:]
     return isMatch(s, p[2:])
 
+
 def removeDuplicates(nums):
     '''
     26.删除排序数组中的重复项
@@ -174,42 +171,64 @@ def removeDuplicates(nums):
     '''
     if len(nums) <= 1:
         return len(nums)
-    tmp =nums[0]
-    i =1
-    count =1
+    tmp = nums[0]
+    i = 1
+    count = 1
     while count < len(nums):
         if nums[i] != tmp:
-            i+=1
-            count+=1
+            i += 1
+            count += 1
             tmp = nums[i]
         else:
             nums.remove(tmp)
 
 
+def rotateOne(nums, k):
+    '''
+    review
+    189.旋转数组
+    给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+    思路：元素的新位置在 (index+k) % 数组长度，但是这种情况需要空间复杂度为o（n）。
+    :param nums:
+    :param k:
+    :return:
+    '''
+    lens = len(nums)
+    r = [0 for i in range(lens)]
+    for i in range(lens):
+        index = (i + k) % lens
+        r[index] = nums[i]
+
+    nums = r
 
 
 def rotate(nums, k):
-    lens = len(nums) - 2
-    while k > 0:
-        tmp = nums[len(nums) - 1]
-        for i in range(lens + 1):
-            nums[lens - i + 1] = nums[lens - i]
-        nums[0] = tmp
-        k -= 1
+    '''
+    review
+    189.旋转数组
+    思路：原地解法
+    k%len(nums)保证不溢出
+    1.左边反转
+    2.右边反转
+    3.全部反转
+    :param nums:
+    :param k:
+    :return:
+    '''
 
+    def reverse(left, right):
+        while left < right:
+            t = nums[left]
+            nums[left] = nums[right]
+            nums[right] = t
+            left += 1
+            right -= 1
 
-def rotateOne(nums, k):
-    r=[]
-    for i in nums:
-        r.append(i)
-
-    for i in range(len(nums)):
-        if (i + k) >= len(nums):
-            nums[(i + k) % len(nums)] = r[i]
-        else:
-            nums[(i + k)] = r[i]
+    reverse(0, len(nums) - k % len(nums) - 1)
+    reverse(len(nums) - k % len(nums), len(nums) - 1)
+    reverse(0, len(nums) - 1)
     print(nums)
 
 
 if __name__ == '__main__':
-    print(reconstructQueue([[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]))
+    print(rotate([1, 2, 3, 4, 5, 6], 11))
