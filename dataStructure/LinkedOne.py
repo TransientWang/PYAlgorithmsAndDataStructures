@@ -4,8 +4,6 @@
 from dataStructure import ListNode
 
 
-
-
 def deleteNode(node):
     '''
     删除链表中的节点
@@ -16,44 +14,42 @@ def deleteNode(node):
     node.next = node.next.__next__
 
 
-
-
-
 def removeNthFromEnd(head, n):
     '''
-    删除链表的倒数第N个节点
+    review
+    19.删除链表的倒数第N个节
     双指针aft先往后走N，然后cur与aft一起走
     当aft走到末尾时候 通过cur删除下一节点
     特殊情情况是删除第一个节点的时候
+    思路:遍历链表用指针，要求遍历一遍，一个显然不够，那就再加一个。
+    第一个原地，第二个后移n位，再同时后移。这样第二个遍历到末尾的时候，第一个正好再倒数第N的位置
+    注意链表长度比N小的情况
     '''
-    cur = head
-    aft = cur
-    k = 1
-    if head.__next__ == None:
+    if head.next is None:
         return None
-    while aft.__next__ != None and k <= n:
-        aft = aft.__next__
-        k += 1
-    if aft.__next__ == None and k <= n:  # 当删除正数第一个情况
-        return head.__next__
-    while aft.__next__ != None:
-        cur = cur.__next__
-        aft = aft.__next__
-
-    if cur.__next__ != None:
-        if cur.next.__next__ == None:
-            cur.next = None
+    first = head
+    second = first
+    i = 0
+    while second.next != None and i < n:
+        second = second.next
+        i += 1
+    while second.next != None:
+        first = first.next
+        second = second.next
+    if first.next != None:
+        if first.next.next != None:
+            first.next = first.next.next
         else:
-            cur.next = cur.next.__next__
+            first.next = None
+
     return head
 
 
-'''
-反转链表
-'''
-
-
 def reverseList(head):
+    '''
+    反转链表
+    '''
+
     if head.__next__ == None:
         return head
     pre = head
@@ -75,9 +71,6 @@ def reverseList(head):
     return cur
 
 
-
-
-
 def reverseListOne(head):
     '''
     反转链表 这个方法很神奇
@@ -96,11 +89,11 @@ def reverseListTwo(head):
     然后逆置倒数第一个节点，返回递归
     '''
     if head.__next__ == None:
-        return head              #尾节点返回
-    new_head = reverseListTwo(head.__next__) #当最后一次返回的时候new_head 为倒数第一个节点
-    head.next.next = head     #第一次返回后处理的节点head 此时还是倒数第二个，这样就可以将最后两个逆置了
-    head.next = None          #返回的new_head注意在if中是head,next也就是5，所以上一行代表吧new_head,next 5 指向 head 4
-                                #然后将 new_head返回递归调用
+        return head  # 尾节点返回
+    new_head = reverseListTwo(head.__next__)  # 当最后一次返回的时候new_head 为倒数第一个节点
+    head.next.next = head  # 第一次返回后处理的节点head 此时还是倒数第二个，这样就可以将最后两个逆置了
+    head.next = None  # 返回的new_head注意在if中是head,next也就是5，所以上一行代表吧new_head,next 5 指向 head 4
+    # 然后将 new_head返回递归调用
     return new_head
 
 
@@ -140,8 +133,6 @@ def mergeTwoLists(l1, l2):
     return head
 
 
-
-
 def isPalindrome(head):
     '''
     判断回文链表
@@ -167,18 +158,16 @@ def isPalindrome(head):
         t += 1
     del head, mid, t
 
-    if length % 2 != 0: #如果长度是奇数，则忽略中位数
+    if length % 2 != 0:  # 如果长度是奇数，则忽略中位数
         cur = cur.__next__
 
-    while pre is not None and cur is not None: #开始判断回文
+    while pre is not None and cur is not None:  # 开始判断回文
         if pre.val == cur.val:
             pre = pre.__next__
             cur = cur.__next__
         else:
             return False
     return True
-
-
 
 
 def hasCycle(head):
@@ -197,9 +186,6 @@ def hasCycle(head):
             dp[head] = 1
             head = head.__next__
     return False
-
-
-
 
 
 def hasCycleOne(head):
@@ -229,7 +215,7 @@ if __name__ == '__main__':
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = reverseListTwo(head)
+    c = removeNthFromEnd(head, 1)
     print(c)
     # while c.next != None:
     #     print(c.val)
