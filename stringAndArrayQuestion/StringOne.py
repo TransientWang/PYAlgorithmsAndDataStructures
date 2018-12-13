@@ -1,27 +1,23 @@
 # -*- coding: UTF-8 -*-
 import math
 
-'''
-给定一个 32 位有符号整数，将整数中的数字进行反转。
-在 Integer.max 与 Integer.min 之间
-'''
-
 
 def reverse(x):
-    tmp = 0
-    strs = ""
-    if len(str(abs(x))) < len(str(x)):
-        strs += "-"
-    for i in range(len(str(abs(x))) - 1):
-        tmp = (abs(x) % 10 ** (i + 1) - tmp) / (10 ** i)
-        strs += str(tmp)
+    '''
+    7.整数反转
+    给定一个 32 位有符号整数，将整数中的数字进行反转。
+    在 Integer.max 与 Integer.min 之间
+    '''
 
-    end = abs(x) / (10 ** (len(str(abs(x))) - 1))
-    strs += str(end)
+    res = "" if x > 0 else "-"
 
-    if int(strs) > 2147483647 or int(strs) < -2147483647:
+    lens = len(str(abs(x)))
+    for i in range(lens):
+        res += str(abs(x) % 10)
+        x = abs(x) // 10
+    if int(res) > 2147483647 or int(res) < -2147483647:
         return 0
-    return int(strs)
+    return int(res)
 
 
 '''
@@ -184,65 +180,68 @@ def strStr(haystack, needle):
 
 def countAndSay(n):
     res = "11"
-    if n ==1:
+    if n == 1:
         return "1"
-    elif n ==2:
+    elif n == 2:
         return "11"
     newres = ""
     h = 0
-    x =3
-    while x <=n:
+    x = 3
+    while x <= n:
 
-        while h < len(res)-1:
+        while h < len(res) - 1:
             k = 1
-            while h < len(res)-1 and res[h]== res[h+1]:
-                h+=1
-                k+=1
+            while h < len(res) - 1 and res[h] == res[h + 1]:
+                h += 1
+                k += 1
             newres += str(k)
             newres += res[h]
 
-            h+=1
-            if h == len(res)-1:
+            h += 1
+            if h == len(res) - 1:
                 newres += str(1)
                 newres += res[h]
 
         res = newres
-        newres =""
-        x+=1
-        h=0
+        newres = ""
+        x += 1
+        h = 0
     return res
+
+
 '''
 寻找最长公共前缀
 '''
+
+
 def longestCommonPrefix(strs):
     r = len(strs)
     if r == 0:
         return ""
     lens = None
     for i in strs:
-        lens = len(i) if lens ==None or len(i) < lens else lens
+        lens = len(i) if lens == None or len(i) < lens else lens
 
     if lens == 0:
         return ""
 
-    tmp =strs[0][0]
+    tmp = strs[0][0]
     for i in range(lens):
         for x in range(r):
-            if tmp == strs[x][0:i+1]:
-                tmp = strs[x][0:i+1]
+            if tmp == strs[x][0:i + 1]:
+                tmp = strs[x][0:i + 1]
             else:
                 if i == 0:
                     return ""
                 else:
                     return strs[0][0:i]
                 break
-        if i+1 < lens:
+        if i + 1 < lens:
             tmp = strs[x][0:i + 2]
 
     return tmp
 
 
-
 if __name__ == '__main__':
     # print(isPalindrome("A man, a plan, a canal: Panama"))
-    print((longestCommonPrefix(["ba","aa"])))
+    print((reverse(-123)))
