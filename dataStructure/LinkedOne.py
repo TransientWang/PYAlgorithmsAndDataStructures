@@ -137,38 +137,40 @@ def mergeTwoLists(l1, l2):
 
 def isPalindrome(head):
     '''
-    判断回文链表
-    要求时间复杂度O（n）空间复杂度为O（1）
-    思路：
-    先遍历一遍求出长度，然后直接逆置链表到一半的长度，（如果长度是奇数的话，忽略中间值）
-    然后向两头遍历，遇到不相等的就说明不是回文
+	234.回文链表
+	review
+    思路：快慢指针
+    快指针一次移动两位
+    慢指针一次移动一位，这样快指针到末尾的时候满指针吗刚好到中间
+    左边的每次反转，右边的继续遍历
+    注意：奇数的时候需要忽略中间值。所以需要记录链表长度
+    考察点：快慢指针
+    :param head:
+    :return:
     '''
     if head is None:
         return True
-    length = 0
-    tmp = head  # type: ListNode 遍历链表长度的临时变量
-    while tmp is not None:
-        length += 1
-        tmp = tmp.__next__
-    mid = length / 2 - 1  # type: Union[int, Any] 中间位置
-    t = 0  # type: int 临时变量,帮助逆置链表到中间位置
-    del tmp
-    '''逆置链表'''
-    cur, pre = head, None
-    while cur and t <= mid:
-        cur.next, pre, cur = pre, cur, cur.next
-        t += 1
-    del head, mid, t
+    left, cur, right = head, head, None
+    i = 0  # 快慢指针辅助计数
+    lens = 1  # 链表长度
+    while cur.next != None:
+        cur = cur.next
+        i += 1
+        lens += 1
+        if i == 2:
+            left.next, left, right = right, left.next, left  # 反转链表
+            i = 0
+    if i != 0: #偶数情况，还需要继续反转后移一位
+        left.next, left, right = right, left.next, left
+    if lens % 2 == 1:
+        left = left.next
 
-    if length % 2 != 0:  # 如果长度是奇数，则忽略中位数
-        cur = cur.__next__
-
-    while pre is not None and cur is not None:  # 开始判断回文
-        if pre.val == cur.val:
-            pre = pre.__next__
-            cur = cur.__next__
-        else:
+    while left != None and right != None:
+        if left.val != right.val:
             return False
+        left = left.next
+        right = right.next
+
     return True
 
 
@@ -210,15 +212,15 @@ def hasCycleOne(head):
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
-    head.next.next.next.next = ListNode.ListNode(5)
+    head.next.next = ListNode.ListNode(2)
+    head.next.next.next = ListNode.ListNode(1)
+    # head.next.next.next.next = ListNode.ListNode(5)
 
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    c = removeNthFromEnd(head, 1)
-    print(c)
+    print(isPalindrome(head))
+    # print(c)
     # while c.next != None:
     #     print(c.val)
     #     c = c.next
