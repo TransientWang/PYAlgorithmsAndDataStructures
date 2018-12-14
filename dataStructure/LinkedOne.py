@@ -73,18 +73,20 @@ def reverseList(head):
 
 def reverseListOne(head):
     '''
-    反转链表 这个方法很神奇
+    206.反转链表 迭代
     将当前的下一个赋值给下次循环的当前值，根据传入头找到链表的尾
+    多重赋值，等号右边从左到右首先完成计算，然后从右到左复制给左边
+    将等号左右两边认为成元组，右边元组先完成计算，然赋值给左边元组等号一遍的顺序可以调换。
     '''
     cur, pre = head, None
     while cur:
-        cur.next, pre, cur = pre, cur, cur.next
+        cur.next, cur, pre = pre, cur.next, cur  # 逻辑：将cur赋值给pre|cur游标后移一位|cur.next->pre
     return pre
 
 
 def reverseListTwo(head):
     '''
-    反转链表 递归
+    206.反转链表 递归
     先直接走到倒数第二个一个节点，
     然后逆置倒数第一个节点，返回递归
     '''
