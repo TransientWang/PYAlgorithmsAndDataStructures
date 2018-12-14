@@ -160,7 +160,7 @@ def isPalindrome(head):
         if i == 2:
             left.next, left, right = right, left.next, left  # 反转链表
             i = 0
-    if i != 0: #偶数情况，还需要继续反转后移一位
+    if i != 0:  # 偶数情况，还需要继续反转后移一位
         left.next, left, right = right, left.next, left
     if lens % 2 == 1:
         left = left.next
@@ -172,6 +172,7 @@ def isPalindrome(head):
         right = right.next
 
     return True
+
 
 
 def hasCycle(head):
@@ -194,18 +195,19 @@ def hasCycle(head):
 
 def hasCycleOne(head):
     '''
-    链表有环
+    `
+    review
     快慢指针 两指针相遇的时候 就证明链表有环
     '''
-    if head is None or head.__next__ is None:
+    if head is None or head.next is None:
         return False
-    slow, fast = head, head.next.__next__
-
+    slow, fast = head, head.next.next
     while slow != fast:
-        if fast is None or fast.__next__ is None:
+        if fast is None or fast.next is None:
             return False
-        slow = slow.__next__
-        fast = fast.next.__next__
+        fast = fast.next.next
+        slow = slow.next
+
     return True
 
 
