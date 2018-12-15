@@ -118,6 +118,30 @@ def isSymmetricOne(root):
     return True
 
 
+def levelOrder(root):
+    '''
+    102.二叉树层次遍历
+    :param root:
+    :return:
+    '''
+    if not root:
+        return []
+    quque = [root]
+    res = []
+    while len(quque) != 0:
+        lens = len(quque)
+        t = []
+        for i in range(lens):
+            k = quque.pop(0)
+            t.append(k.val)
+            if k.left is not None:
+                quque.append(k.left)
+            if k.right is not None:
+                quque.append(k.right)
+
+        res.append(t)
+    return res
+
 
 if __name__ == '__main__':
     isValidBST(None)
