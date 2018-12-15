@@ -10,13 +10,17 @@ from dataStructure import TreeNode
 class sol(object):
 
     def sortedArrayToBST(self, nums):
-        if not nums:
-            return None
-        mid = len(nums) / 2
-        node = TreeNode.TreeNode(nums[mid])
-        node.left = self.sortedArrayToBST(nums[:mid])
-        node.right = self.sortedArrayToBST(nums[mid + 1:])
-        return node
+        '''
+        108.将有序数组转换为二叉搜索树
+        思路：中间位置元素为树根
+        :param nums:
+        :return:
+        '''
+        mid = len(nums) // 2
+        root = TreeNode.TreeNode(nums[mid])
+        root.left = self.sortedArrayToBST(nums[:mid])
+        root.right = self.sortedArrayToBST(nums[mid + 1:])
+        return root
 
     def addTwoNumbers(l1, l2):
         c = 0
@@ -47,9 +51,6 @@ class sol(object):
                 node = node.__next__
 
         return head
-
-
-
 
 
 def oddEvenList(head):
