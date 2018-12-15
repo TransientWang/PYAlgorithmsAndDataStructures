@@ -177,7 +177,7 @@ def isPalindrome(head):
 
 def hasCycle(head):
     '''
-    链表有环
+    141.环形链表
     '''
 
     if head == None:
@@ -195,7 +195,7 @@ def hasCycle(head):
 
 def hasCycleOne(head):
     '''
-    `
+    141.环形链表
     review
     快慢指针 两指针相遇的时候 就证明链表有环
     '''
