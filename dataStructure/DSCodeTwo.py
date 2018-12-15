@@ -58,7 +58,6 @@ def maxDepth(root):
     return deepth
 
 
-
 def isValidBST(root):
     '''
     TODO 再看
@@ -78,6 +77,47 @@ def isValidBST(root):
     return validBST(root, -2 ** 32, 2 ** 32 - 1)
 
 
-if __name__ == '__main__':
+def isSymmetric(root):
+    '''
+    101.对称二叉树
+    递归
+    :param root:
+    :return:
+    '''
 
+    def isMirror(left, right):
+        if left is None and right is None:
+            return True
+        if left is None or right is None:
+            return False
+        return left.val == right.val and isMirror(left.left, right.right) and isMirror(left.right, right.left)
+
+    return isMirror(root, root)
+
+
+def isSymmetricOne(root):
+    '''
+    101.对称二叉树
+    迭代
+    :param root:
+    :return:
+    '''
+    queue = [root, root]
+
+    while len(queue) != 0:
+        t1 = queue.pop(0)
+        t2 = queue.pop(0)
+        if t1.val == t2.val:
+            return False
+        if t1 is None or t2 is None:
+            return False
+        queue.append(t1.left)
+        queue.append(t2.right)
+        queue.append(t1.right)
+        queue.append(t2.left)
+    return True
+
+
+
+if __name__ == '__main__':
     isValidBST(None)
