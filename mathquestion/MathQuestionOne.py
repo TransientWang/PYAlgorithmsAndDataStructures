@@ -119,25 +119,21 @@ def reverseBits(n):
 
 def generate(numRows):
     '''
+    review
     帕斯卡三角形
     用两个数组保存临时结果
     数组长度比层数多2
     两边置0方便计算
     '''
-    if numRows == 0:
-        return []
-    if numRows == 1:
-        return [[1]]
-    res = [[1], [1, 1]]
+    res = [[1]]
     dp = [0 for i in range(numRows + 2)]
-    new_dp = [0 for i in range(numRows + 2)]
     dp[1] = 1
-    dp[2] = 1
-    for j in range(2, numRows):
-        for k in range(1, j + 2):
-            new_dp[k] = dp[k] + dp[k - 1]
+    new_dp = [0 for i in range(numRows + 2)]
+    for i in range(1, numRows):
+        for j in range(1, i + 2):
+            new_dp[j] = dp[j] + dp[j - 1]
         dp = new_dp[:]
-        res.append(new_dp[1:j + 2])
+        res.append(dp[1:i+2])
     return res
 
 
@@ -199,12 +195,11 @@ def hammingDistance(x, y):
     #         res += 1
     #
     # return res
-    res =0
+    res = 0
     for i in range(32):
         if (x & (i << i)) ^ (y & (i << i)):
-            res +=1
+            res += 1
     return res
-
 
 
 '''
@@ -248,5 +243,4 @@ def sortColors(nums):
 
 
 if __name__ == '__main__':
-    print(0x01)
-    pass
+    print(generate(5))
