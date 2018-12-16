@@ -133,28 +133,28 @@ def generate(numRows):
         for j in range(1, i + 2):
             new_dp[j] = dp[j] + dp[j - 1]
         dp = new_dp[:]
-        res.append(dp[1:i+2])
+        res.append(dp[1:i + 2])
     return res
 
 
 def isValid(s):
     '''
-    有效的括号
+    20.有效的括号
     用一个栈来保存对应的左括号，如果遇到右括号的时候从栈中弹出一个
     因为是按顺序排列的左括号 弹出来的一定是相应的右括号
     如果 不相等 就说明 括号没有对称
     '''
-    dp = []
-    for i in s:
-        if i == "(":
-            dp.append(")")
-        elif i == "{":
-            dp.append("}")
-        elif i == "[":
-            dp.append("]")
-        elif not dp or dp.pop() != i:
+    stack = []
+    dp = ["(", "[", "{"]
+    fdp = [")", "]", "}"]
+    for i in range(len(s)):
+        if s[i] in dp:
+            stack.append(dp.index(s[i]))
+        elif len(stack) == 0:
             return False
-    return not dp
+        elif stack.pop() != fdp.index(s[i]):
+            return False
+    return True if len(stack) == 0 else False
 
 
 def missingNumber(nums):
@@ -243,4 +243,4 @@ def sortColors(nums):
 
 
 if __name__ == '__main__':
-    print(generate(5))
+    print(isValid("]"))
