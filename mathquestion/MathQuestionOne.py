@@ -181,18 +181,30 @@ def missingNumber(nums):
 
 
 def hammingDistance(x, y):
-    l1 = list('{0:032b}'.format(x))
-    l1 = list(map(int, l1))
-    l2 = list('{0:032b}'.format(y))
-    l2 = list(map(int, l2))
-
-    res = 0
-
+    '''
+    461.汉明距离
+    :param x:
+    :param y:
+    :return:
+    '''
+    # l1 = list('{0:032b}'.format(x))
+    # l1 = list(map(int, l1))
+    # l2 = list('{0:032b}'.format(y))
+    # l2 = list(map(int, l2))
+    #
+    # res = 0
+    #
+    # for i in range(32):
+    #     if l1[i] != l2[i]:
+    #         res += 1
+    #
+    # return res
+    res =0
     for i in range(32):
-        if l1[i] != l2[i]:
-            res += 1
-
+        if (x & (i << i)) ^ (y & (i << i)):
+            res +=1
     return res
+
 
 
 '''
