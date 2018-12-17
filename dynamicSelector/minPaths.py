@@ -60,28 +60,29 @@ def lengthOfLastWord(s):
 
 def uniquePaths(m, n):
     """
+    62.不同路径
     一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
 
     机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
 
     问总共有多少条不同的路径？
 
-    一、最优解的结构特征
+    思路：动态规划
+    dp[i][j] =dp[i-1][j]+dp[i][j-1]
     :type m: int
     :type n: int
     :rtype: int
     """
 
-    def uniquePathsSolution(m, n, tm, tn):
-        if m == tm and n != tn:
-            return uniquePathsSolution(m, n + 1, tm, tn)
-        elif n == tn and m != tm:
-            return uniquePathsSolution(m + 1, n, tm, tn)
-        elif m == tm and n == tn:
-            return 1
-        return uniquePathsSolution(m + 1, n, tm, tn) + uniquePathsSolution(m, n + 1, tm, tn)
-
-    return uniquePathsSolution(1, 1, m, n)
+    dp = [[0 for i in range(m)] for i in range(n)]
+    for i in range(m):
+        dp[0][i] = 1
+    for i in range(n):
+        dp[i][0] = 1
+    for i in range(1, n):
+        for j in range(1, m):
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+    return dp[-1][-1]
 
 
 def minPathSum(grid):
@@ -240,7 +241,6 @@ def rob2(nums):
     return max(robHelp(0, len(nums) - 1), robHelp(1, len(nums)))
 
 
-
 if __name__ == '__main__':
-    print(rob2([1, 2, 3,4]))
+    print(uniquePaths(3, 2))
     pass
