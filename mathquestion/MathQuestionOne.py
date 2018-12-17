@@ -191,13 +191,13 @@ def hammingDistance(x, y):
     # res = 0
     #
     # for i in range(32):
-    #     if l1[i] != l2[i]:
+    #     if l1[i] != l2[i]: def canJump
     #         res += 1
     #
     # return res
     res = 0
     for i in range(32):
-        if (x & (i << i)) ^ (y & (i << i)):
+        if (x & (1 << i)) ^ (y & (1 << i)):
             res += 1
     return res
 

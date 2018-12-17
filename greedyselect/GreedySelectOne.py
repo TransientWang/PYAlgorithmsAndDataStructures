@@ -1,14 +1,14 @@
 # -*- coding: UTF-8 -*-
-'''
-给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
-
-你可以认为 s 和 t 中仅包含英文小写字母。字符串 t 可能会很长（长度 ~= 500,000），而 s 是个短字符串（长度 <=100）。
-
-字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。（例如，"ace"是"abcde"的一个子序列，而"aec"不是）。
-'''
 
 
 def isSubsequence(s, t):
+    '''
+    给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
+
+    你可以认为 s 和 t 中仅包含英文小写字母。字符串 t 可能会很长（长度 ~= 500,000），而 s 是个短字符串（长度 <=100）。
+
+    字符串的一个子序列是原始字符串删除一些（也可以不删除）字符而不改变剩余字符相对位置形成的新字符串。（例如，"ace"是"abcde"的一个子序列，而"aec"不是）。
+    '''
     lens = len(s)
     if lens == 0:
         return True
@@ -21,36 +21,74 @@ def isSubsequence(s, t):
     return False
 
 
-'''
-给定一个非负整数数组，你最初位于数组的第一个位置。
-
-数组中的每个元素代表你在该位置可以跳跃的最大长度。
-
-判断你是否能够到达最后一个位置。
-这个问题我们关心能够到达末尾（不要求刚好到达），只要最远能到达位置大于数组长度就可以
-不用关心剩余步数
-'''
-
-
 def canJump(nums):
-    reach = 0  # 代表能达到的最远步数
-    for i in range(len(nums)):  # 遍历数组
-        if reach < i or reach >= len(nums):  # 如果当前位置比能达到的最远步数远的话，或者能达到最远步数 已经大于数组长度
-            # 可以跳出循环
+    '''
+    55.跳跃游戏
+    给定一个非负整数数组，你最初位于数组的第一个位置。
+
+    数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+    判断你是否能够到达最后一个位置。
+    这个问题我们关心能够到达末尾（不要求刚好到达），只要最远能到达位置大于数组长度就可以
+    不用关心剩余步数
+    思路：如果当前所在位置<=当前能达到最大距离，并且当前索引+当前可走距离 > 当前能达到最大距离，就更相信最大距离。
+    最后判断 最大距离+1（数组索引从0开始的） 是否比数组长度长
+    '''
+    # reach = 0
+    # l = len(nums)
+    # for i in range(l):
+    #     if reach < i or reach >= l:
+    #         break
+    #     reach = max(reach, i + nums[i])
+    # return reach >= l - 1
+    max_len = 0
+    for i, num in enumerate(nums):
+        if i <= max_len and i + num > max_len:
+            max_len = i + num
+        else:
             break
-        reach = max(reach, i + nums[i])  # 更新能达到的最远步数
-    return reach >= len(nums) - 1
+    return True if max_len + 1 >= len(nums) else False
 
 
-'''
-假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
-k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
-每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
+def canJumpTwo(nums):
+    '''
+    45. 跳跃游戏 II
+    给定一个非负整数数组，你最初位于数组的第一个位置。
 
-'''
+    数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+    你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+    思路：遍历数组
+    如果当前索引+当前能走的步数 > 数组长度，则步数+1 返回
+    如果达不到，就比较索引i能达到的最大位置区间内，能达到的最远处
+
+    :param nums:
+    :return:
+    '''
+
+    count = 0
+    i = 0
+    while i < len(nums):
+        if i + nums[i] >= len(nums) - 1:
+            count += 1
+            break
+        max_pos = i
+        for j in range(i + 1, i + nums[i]):
+            if nums[max_pos] + max_pos <= nums[j] + j:
+                max_pos = j
+        i = max_pos
+        count += 1
+    return count
 
 
 def comp(x1, x2):
+    '''
+    假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
+    k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
+    每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
+
+    '''
+
     if x1[0] - x2[0] > 0:
         return 1
     elif x1[0] - x2[0] < 0:
@@ -231,4 +269,4 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(rotate([1, 2, 3, 4, 5, 6], 11))
+    print(canJumpTwo([8, 0, 9, 6, 6, 9]))
