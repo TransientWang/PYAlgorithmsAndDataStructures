@@ -69,37 +69,46 @@ def threeSumClosest(nums, target):
     return r
 
 
-'''
-给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
-思路：首先想到的是行里发现有0 的话那么，这一行肯定是首先需要全都变为 0 的
-然后 列变为0 但是在继续判断是会因为  之前这行的某一个 数字因为其他行的影响为0，而误删掉这一整行
-所以可以 用一个辅助数组，来记录那一列需要删除，而不要着急 遇到0就删除一整行在这一行每个索引遍历完后再
-删除这一行，最后遍历辅助数组 删除相应的列就好
-
-如果不用辅助数组 可以用 矩阵第一行来记录
-'''
-
-
 def setZeroes(matrix):
-    rFlag = False
-    for i in range(len(matrix)):
-        flag = False
-        for j in range(len(matrix[0])):
-            if i == 0 and matrix[i][j] is 0:
-                rFlag = True
-            if matrix[i][j] is 0:
-                flag = True
-                matrix[0][j] = 0
-        if flag and i > 0:
-            matrix[i] = [0 for i in range(len(matrix[0]))]
-    for x in range(len(matrix[0])):
-        if matrix[0][x] is 0:
-            for y in range(len(matrix)):
-                matrix[y][x] = 0
-    if rFlag:
-        matrix[0] = [0 for i in range(len(matrix[0]))]
-    print(matrix)
+    '''
+    73.矩阵置零
+    给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
+    思路：首先想到的是行里发现有0 的话那么，这一行肯定是首先需要全都变为 0 的
+    然后 列变为0 但是在继续判断是会因为  之前这行的某一个 数字因为其他行的影响为0，而误删掉这一整行
+    所以可以 用一个辅助数组，来记录那一列需要删除，而不要着急 遇到0就删除一整行在这一行每个索引遍历完后再
+    删除这一行，最后遍历辅助数组 删除相应的列就好
+    如果不用辅助数组 可以用 矩阵第一行来记录
+    '''
+    # 解法
+    m = len(matrix)
+    n = len(matrix[0])
+    idx = []
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == 0:
+                idx.append((i, j))
 
+    # while idx:
+    #     i, j = idx.pop()
+    #     matrix[i] = [0] * n
+    #     for k in matrix:
+    #         k[j] = 0
+    #解法
+    # for i in range(len(matrix)):
+    #     for j in range(len(matrix[0])):
+    #         if matrix[i][j] == 0:
+    #             matrix[i][j] = 2 ** 31
+    #             for y in range(len(matrix[0])):
+    #                 if matrix[i][y] != 0:
+    #                     matrix[i][y] = 2 ** 31
+    #             for x in range(len(matrix)):
+    #                 if matrix[x][j] != 0:
+    #                     matrix[x][j] = 2 ** 31
+    # for i in range(len(matrix)):
+    #     for j in range(len(matrix[0])):
+    #         if matrix[i][j] == 2 ** 31:
+    #             matrix[i][j] = 0
+    # return matrix
 
 def groupAnagrams(strs):
     if len(strs) is 0:
@@ -233,4 +242,8 @@ def increasingTriplet(nums):
 
 
 if __name__ == '__main__':
-    print(threeSum([-1, 0, 1, 2, -1, -4]))
+    print(setZeroes([
+        [0, 1, 2, 0],
+        [3, 4, 5, 2],
+        [1, 3, 1, 5]
+    ]))
