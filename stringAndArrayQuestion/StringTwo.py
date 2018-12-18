@@ -5,43 +5,39 @@ from copy import deepcopy
 
 def threeSum(nums):
     '''
-    三数之和
-    先排顺序，然后遍历
+    15.三数之和
+    先排顺序，然后双指针遍历,
     :param nums:
     :return:
     '''
     nums.sort()
-    print(nums)
+    lens = len(nums) - 1
     result = []
-    if len(nums) <= 2:
-        return result
-    for x in range(len(nums)):
-        if nums[x] > 0:
+    for i, num in enumerate(nums):
+        if num > 0:
             break
-        elif x > 0 and nums[x] == nums[x - 1]:
+        elif i > 0 and num == nums[i - 1]:  # 去重
             continue
-        i = x + 1
-        j = len(nums) - 1
+        left = i + 1
+        right = lens
 
-        while i < j:
-            res = []
-            res.append(nums[x])
-            if nums[i] + nums[j] > -nums[x]:
-                j -= 1
-            elif nums[i] + nums[j] < -nums[x]:
-                i += 1
-            elif nums[i] + nums[j] == -nums[x]:
-                res.append(nums[i])
-                res.append(nums[j])
+        while left < right:
+            tmp = nums[left] + nums[right] + num
+            if tmp == 0:
+                result.append([num, nums[left], nums[right]])
+                while left < right and nums[left] == nums[left + 1]:  # 去重
+                    left += 1
+                while left < right and nums[right] == nums[right - 1]:  # 去重
+                    right -= 1
+                left += 1
+                right -= 1
 
-                while i < j and nums[i] == nums[i + 1]: i += 1
-                while i < j and nums[j] == nums[j - 1]: j -= 1
-                i += 1
-                j -= 1
-                if len(res) > 1:
-                    result.append(res)
+            elif tmp > 0:
+                right -= 1
+            elif tmp < 0:
+                left += 1
+    print(result)
 
-    return result
 
 def threeSumClosest(nums, target):
     '''
@@ -71,6 +67,8 @@ def threeSumClosest(nums, target):
                 return target
 
     return r
+
+
 '''
 给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
 思路：首先想到的是行里发现有0 的话那么，这一行肯定是首先需要全都变为 0 的
@@ -146,6 +144,7 @@ def groupAnagramsOne(strs):
         r.append(i)
     return r
 
+
 def lengthOfLongestSubstring(s):
     '''
     无重复字符的最长子串
@@ -209,6 +208,7 @@ def longestPalindrome(s):
     print(r)
     return s[left:left + maxLen]
 
+
 def increasingTriplet(nums):
     '''
      递增的三元子序列
@@ -223,14 +223,14 @@ def increasingTriplet(nums):
         return False
     h, k = 2 << 30, 2 << 30
     for i in nums:
-        if h >= i: #如果当前值小于h则更新h,
+        if h >= i:  # 如果当前值小于h则更新h,
             h = i
-        elif k >= i: #如果当前值大于h但是小于k
+        elif k >= i:  # 如果当前值大于h但是小于k
             k = i
-        else:       #如果当前值大于k就说明 已经找到三个数按大小顺序排列直接返回True
+        else:  # 如果当前值大于k就说明 已经找到三个数按大小顺序排列直接返回True
             return True
     return False
 
 
 if __name__ == '__main__':
-    print(increasingTriplet([1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 20]))
+    print(threeSum([-1, 0, 1, 2, -1, -4]))
