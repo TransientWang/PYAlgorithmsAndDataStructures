@@ -176,7 +176,7 @@ def lengthOfLongestSubstring(s):
             window.pop(0)
         else:
             max_len = max(len(window), max_len)
-            window = window[window.index(o)+1:]
+            window = window[window.index(o) + 1:]
             window.append(o)
 
     max_len = max(len(window), max_len)
@@ -185,34 +185,31 @@ def lengthOfLongestSubstring(s):
 
 def longestPalindrome(s):
     '''
+    5.最长回文子串
     给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000
     Manacher's
     https://www.cnblogs.com/mini-coconut/p/9074315.html
     '''
-    if len(s) == 0:
-        return ""
-
-    l = ["#"]
-    for i in range(len(s)):
-        l.append(s[i])
-        l.append("#")
-    r = [0 for i in range(len(l))]
-    max = 0
+    r = ["#"]
+    for i in s:
+        r.append(i)
+        r.append("#")
+    lens = [1 for i in range(len(r))]
+    max_index = 0
+    max_pos = 0
     left = 0
-    index = 0
-    maxLen = 0
-    for i in range(1, len(l)):
-        r[i] = 1 if i > max else min(r[2 * index - i], max - i)  # min为了防止越界
-        while i + r[i] < len(l) and i - r[i] >= 0 and l[i + r[i]] == l[i - r[i]]:
-            r[i] += 1  # 寻找回文串
-        if i + r[i] > max:  # 如果当前位置的回文串最右边的索引位置大于当前记录的最大値
-            index = i  # 更新最大边界中心索引位置
-            max = i + r[i] - 1  # 跟新最大边界索引位置
-        if r[i] - 1 > maxLen:  # 更新回文串长度最大値
-            maxLen = int(r[i] - 1)
-            left = int((i - r[i] + 1) / 2)
-    print(r)
-    return s[left:left + maxLen]
+    max_len = 0
+    for i in range(1, len(lens)):
+        lens[i] = 1 if i < max_pos else min(lens[2 * max_index - i], max_pos - i)
+        while i + lens[i] < len(r) and i - lens[i] > -1 and r[i + lens[i]] == r[i - lens[i]]:
+            lens[i] += 1
+        if i + lens[i] > max_pos:
+            max_index = i
+            max_pos = i + lens[i] - 1
+        if lens[i] - 1 > max_len:
+            max_len = lens[i] - 1
+            left = (i - lens[i] + 1) // 2
+    return s[left:left + max_len]
 
 
 def increasingTriplet(nums):
@@ -239,4 +236,4 @@ def increasingTriplet(nums):
 
 
 if __name__ == '__main__':
-    print(lengthOfLongestSubstring("ohvhjdml"))
+    print(longestPalindrome("babad"))
