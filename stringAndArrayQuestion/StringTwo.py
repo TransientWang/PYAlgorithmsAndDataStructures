@@ -93,7 +93,7 @@ def setZeroes(matrix):
     #     matrix[i] = [0] * n
     #     for k in matrix:
     #         k[j] = 0
-    #解法
+    # 解法
     # for i in range(len(matrix)):
     #     for j in range(len(matrix[0])):
     #         if matrix[i][j] == 0:
@@ -109,6 +109,7 @@ def setZeroes(matrix):
     #         if matrix[i][j] == 2 ** 31:
     #             matrix[i][j] = 0
     # return matrix
+
 
 def groupAnagrams(strs):
     if len(strs) is 0:
@@ -156,7 +157,7 @@ def groupAnagramsOne(strs):
 
 def lengthOfLongestSubstring(s):
     '''
-    无重复字符的最长子串
+    3.无重复字符的最长子串
     维持一个滑动窗口
     有三种情况需要考虑
     一、当新加入的字符 不存在之前的子序列中的时候那么这个在字符就可以加入子串中
@@ -165,25 +166,21 @@ def lengthOfLongestSubstring(s):
     并新加入当前字符
     最后需要有一个 值记录滑动窗口的最大值
     '''
-
-    if len(s) == 0:
-        return 0
-    tmp = [s[0]]
-    t = 1
-    for i in range(1, len(s)):
-        if tmp.count(s[i]) == 0:
-            tmp.append(s[i])
-            if len(tmp) > t:
-                t = len(tmp)
-        elif tmp.index(s[i]) != 0:
-            tmp = tmp[tmp.index(s[i]) + 1:]
-            tmp.append(s[i])
+    window = []
+    max_len = 0
+    for i, o in enumerate(s):
+        if o not in window:
+            window.append(o)
+        elif o == window[0]:
+            window.append(o)
+            window.pop(0)
         else:
-            if len(tmp) > t:
-                t = len(tmp)
-            tmp.remove(s[i])
-            tmp.append(s[i])
-    return t
+            max_len = max(len(window), max_len)
+            window = window[window.index(o)+1:]
+            window.append(o)
+
+    max_len = max(len(window), max_len)
+    return max_len
 
 
 def longestPalindrome(s):
@@ -242,8 +239,4 @@ def increasingTriplet(nums):
 
 
 if __name__ == '__main__':
-    print(setZeroes([
-        [0, 1, 2, 0],
-        [3, 4, 5, 2],
-        [1, 3, 1, 5]
-    ]))
+    print(lengthOfLongestSubstring("ohvhjdml"))
