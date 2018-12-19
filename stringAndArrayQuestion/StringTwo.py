@@ -234,5 +234,7 @@ def increasingTriplet(nums):
     return False
 
 
+
+
 if __name__ == '__main__':
-    print(longestPalindrome("babad"))
+    print(increasingTriplet([2, 5, 3, 4, 5]))
