@@ -1,32 +1,42 @@
 # -*- coding: UTF-8 -*-
 from dataStructure import TreeNode
 
+
 def inorderTraversal(root):
     '''
-    给定一个二叉树，返回它的中序 遍历。
+    94.二叉树的中序遍历 TODO：迭代不熟悉
+    给定一个二叉树，返回它的中序遍历。
     '''
-    l = []
-    find(root, l)
-    return l
-
-
-def find(root, l):
-    if not root:
-        return
-    if root.left != None:
-        find(root.left, l)
-    l.append(root.val)
-    if root.right != None:
-        find(root.right, l)
-
-
-'''
-二叉树的锯齿形层次遍历
-注意直接反转结果，不要在队列上反转
-'''
-
+    # res = []
+    #
+    # def find(root):
+    #     if not root:
+    #         return
+    #     if root.left:
+    #         find(root.left)
+    #     res.append(root.val)
+    #     if root.right:
+    #         find(root.right)
+    # find(root)
+    # return res
+    stack = []
+    cur = root
+    res = []
+    while cur or len(stack):
+        while cur:
+            stack.append(cur)
+            cur = cur.left
+        if len(stack):
+            cur = stack.pop()
+            res.append(cur.val)
+            cur = cur.right
+    return res
 
 def zigzagLevelOrder(root):
+    '''
+    二叉树的锯齿形层次遍历
+    注意直接反转结果，不要在队列上反转
+    '''
     stack = [root]
     k = 1
     result = []
@@ -82,7 +92,7 @@ def buildTreeOne(inorder, postorder):
     head = TreeNode.TreeNode(postorder[-1])
     i = inorder.index(postorder[-1])
     head.left = buildTreeOne(inorder[:i], postorder[:len(inorder[:i])])
-    head.right = buildTreeOne(inorder[i+1:], postorder[len(inorder[:i]):len(postorder) - 1])
+    head.right = buildTreeOne(inorder[i + 1:], postorder[len(inorder[:i]):len(postorder) - 1])
     return head
 
 
@@ -126,7 +136,6 @@ def connect(root):
             tlNode = afNode
             l -= 1
     return root
-
 
 
 def count(root):
@@ -198,11 +207,11 @@ def numIslands(grid):
 
 
 if __name__ == '__main__':
-    # t = TreeNode.TreeNode(1)
-    # t.right = TreeNode.TreeNode(2)
-    # t.right.left = TreeNode.TreeNode(3)
+    t = TreeNode.TreeNode(1)
+    t.right = TreeNode.TreeNode(2)
+    t.right.left = TreeNode.TreeNode(3)
     root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
     root.right = TreeLinkNode(3)
-    head = buildTreeOne([9, 3, 15, 20, 7], [9, 15, 7, 20, 3])
+    head = inorderTraversal(t)
     print(head)
