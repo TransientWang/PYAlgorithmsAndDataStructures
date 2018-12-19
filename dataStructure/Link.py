@@ -64,7 +64,6 @@ def oddEvenList(head):
         return None
     slow = head
     fast = head.next
-
     while fast and fast.next:
         s_tmp = slow.next
         slow.next = fast.next
@@ -78,32 +77,27 @@ def oddEvenList(head):
 
 def getIntersectionNode(headA, headB):
     '''
-    相交链表
+    160.相交链表
+    思路：不用hash.两个链表不论是否相交，长度只有两种情况，相等和不相等。
+    在遍历链表的时候，两个指针如果遍历到末尾，就重新从另一个链表头开始遍历。
+    这样两个指针相当于遍历的长度相等，那么如果有相交点的话，因为长度相等，所以肯定会相遇。
     '''
     p1, p2 = headA, headB
     while p1 != p2:
-        p1 = headB if p1 == None else p1.next
-        p2 = headA if p2 == None else p2.next
+        p1 = headB if p1 is None else p1.next
+        p2 = headA if p2 is None else p2.next
     return p1
-    # a = {}
-    # while headA:
-    #     a[headA] = 0
-    #     headA = headA.next
-    # while headB:
-    #     if a.get(headB) !=None:
-    #         return headB
-    #     headB = headB.next
-    # return None
 
 
 if __name__ == '__main__':
-    head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
-    head.next.next.next.next = ListNode.ListNode(5)
-    head.next.next.next.next.next = ListNode.ListNode(6)
-    h = oddEvenList(head)
-    while h:
-        print(h.val)
-        h = h.next
+    headA = ListNode.ListNode(1)
+    headB = ListNode.ListNode(1)
+    headA.next = ListNode.ListNode(2)
+    # head.next.next = ListNode.ListNode(3)
+    # head.next.next.next = ListNode.ListNode(4)
+    # head.next.next.next.next = ListNode.ListNode(5)
+    # head.next.next.next.next.next = ListNode.ListNode(6)
+    print(getIntersectionNode(headA,headB))
+    # while h:
+    #     print(h.val)
+    #     h = h.next
