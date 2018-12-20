@@ -156,6 +156,7 @@ def kthSmallest(root, k):
     这时只需要不断从上到下缩小左子树的查找范围，就能返回到第一中情况
     三、当左子树数量+1 < k 说明第k小的节点在右子树上 此时 需要查找右子树上第 k-左子树数量-1(根节点) 个节点即可
     '''
+
     def count(root):
         if not root:
             return 0
@@ -174,35 +175,27 @@ def kthSmallest(root, k):
 
 def numIslands(grid):
     '''
+    200.岛屿的个数
     给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，
     并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
-    思路：广度优先搜索 遍历地图，如果遇到1 则吧count+1 然后将其相邻为1的节点填充2
+    思路：广度优先搜索 遍历地图，如果遇到1 则吧count+1 然后将其相邻为1的节点填充0
     :param grid:
     :return:
     '''
-    if grid == []:
-        return 0
-    row = len(grid)
-    colum = len(grid[0])
-
-    def search(x, y):
-        grid[x][y] = "2"
-        if x + 1 < row and grid[x + 1][y] == "1":  # 右边
-            search(x + 1, y)
-        if x - 1 >= 0 and grid[x - 1][y] == "1":  # 左边
-            search(x - 1, y)
-        if y + 1 < colum and grid[x][y + 1] == "1":  # 上
-            search(x, y + 1)
-        if y - 1 >= 0 and grid[x][y - 1] == "1":  # 下
-            search(x, y - 1)
+    def find(x, y):
+        if x > -1 and x < len(grid) and y > -1 and y < len(grid[0]) and grid[x][y] == "1":
+            grid[x][y] = "0"
+            find(x + 1, y)
+            find(x - 1, y)
+            find(x, y + 1)
+            find(x, y - 1)
 
     count = 0
-    for i in range(row):
-        for j in range(colum):
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
             if grid[i][j] == "1":
                 count += 1
-                search(i, j)
-    print(grid)
+                find(i, j)
     return count
 
 
@@ -215,5 +208,11 @@ if __name__ == '__main__':
     root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
     # root.right = TreeLinkNode(3)
-    head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
-    print(head)
+    # head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
+    # print(head)
+    grid = [["1", "1", "1", "1", "0"],
+            ["1", "1", "0", "1", "0"],
+            ["1", "1", "0", "0", "0"],
+            ["0", "0", "0", "0", "0"]]
+    numIslands(grid)
+    print(grid)
