@@ -117,30 +117,29 @@ class TreeLinkNode:
 
 
 def connect(root):
+    '''
+    review
+     每个节点的右向指针
+    :param root:
+    :return:
+    '''
     if root is None:
         return None
-    r = TreeLinkNode(1)
-    mqueue = []
-
-    mqueue.append(root)
-
-    while len(mqueue) != 0:
-        l = len(mqueue)
-        tlNode = mqueue.pop(0)
-        if tlNode.left is not None:
-            mqueue.append(tlNode.left)
-        if tlNode.right is not None:
-            mqueue.append(tlNode.right)
-        while l > 1:
-            afNode = mqueue.pop(0)
-            if afNode.left is not None:
-                mqueue.append(afNode.left)
-            if afNode.right is not None:
-                mqueue.append(afNode.right)
-            tlNode.next = afNode
-            tlNode = afNode
-            l -= 1
-    return root
+    if not root.left or not root.right:
+        return
+    queue = [root.left, root.right]
+    while len(queue):
+        lens = len(queue)
+        for i in range(lens - 1):
+            first = queue[i]
+            second = queue[i + 1]
+            first.next = second
+        for i in range(lens):
+            tmp = queue.pop(0)
+            if tmp.left:
+                queue.append(tmp.left)
+            if tmp.right:
+                queue.append(tmp.right)
 
 
 def count(root):
