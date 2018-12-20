@@ -142,9 +142,9 @@ def connect(root):
                 queue.append(tmp.right)
 
 
-def count(root):
+def kthSmallest(root, k):
     '''
-    二叉搜索树中第K小的元素
+    230.二叉搜索树中第K小的元素
     给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。
     二叉搜索树：左子树上的节点都小于根节点的值，又子树的节点都大于根节点的值
     这是一个递归的过程
@@ -156,24 +156,20 @@ def count(root):
     这时只需要不断从上到下缩小左子树的查找范围，就能返回到第一中情况
     三、当左子树数量+1 < k 说明第k小的节点在右子树上 此时 需要查找右子树上第 k-左子树数量-1(根节点) 个节点即可
     '''
-    if root is None:
-        return 0
-    else:
+    def count(root):
+        if not root:
+            return 0
         return 1 + count(root.left) + count(root.right)
 
-
-def kthSmallest(root, k):
-    if root is None:
+    if not root:
         return None
-
-    lcount = count(root.left)
-
-    if k == lcount + 1:
+    num = count(root.left)
+    if k == num + 1:
         return root.val
-    elif k <= lcount:
+    elif k <= num:
         return kthSmallest(root.left, k)
     else:
-        return kthSmallest(root.right, k - lcount - 1)
+        return kthSmallest(root.right, k - num - 1)
 
 
 def numIslands(grid):
