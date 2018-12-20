@@ -32,30 +32,33 @@ def inorderTraversal(root):
             cur = cur.right
     return res
 
+
 def zigzagLevelOrder(root):
     '''
-    二叉树的锯齿形层次遍历
-    注意直接反转结果，不要在队列上反转
+    103.二叉树的锯齿形层次遍历
+    注意直接反转结果，不要在在结束后在队列上反转，要每一步判断反转
     '''
-    stack = [root]
-    k = 1
-    result = []
-    while len(stack) != 0:
-        i = len(stack)
-        r = []
-        while i > 0:
-            t = stack.pop(0)
-            r.append(t.val)
-            if t.left:
-                stack.append(t.left)
-            if t.right:
-                stack.append(t.right)
-            i -= 1
-        if k % 2 == 0:
-            r.reverse()
+    if not root:
+        return []
+    queue = [root]
+    k = 0
+    res = []
+    while len(queue) != 0:
+        t = []
+        lens = len(queue)
+        for i in range(lens):
+            node = queue.pop(0)
+            t.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        if k % 2 == 1:
+            t.reverse()
         k += 1
-        result.append(r)
-    return result
+
+        res.append(t)
+    return res
 
 
 def buildTree(preorder, inorder):
@@ -208,10 +211,12 @@ def numIslands(grid):
 
 if __name__ == '__main__':
     t = TreeNode.TreeNode(1)
-    t.right = TreeNode.TreeNode(2)
-    t.right.left = TreeNode.TreeNode(3)
+    t.left = TreeNode.TreeNode(2)
+    t.left.left = TreeNode.TreeNode(4)
+    t.right = TreeNode.TreeNode(3)
+    t.right.right = TreeNode.TreeNode(5)
     root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
-    root.right = TreeLinkNode(3)
-    head = inorderTraversal(t)
+    # root.right = TreeLinkNode(3)
+    head = zigzagLevelOrder(t)
     print(head)
