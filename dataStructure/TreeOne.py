@@ -63,7 +63,7 @@ def zigzagLevelOrder(root):
 
 def buildTree(preorder, inorder):
     '''
-    从前序与中序遍历序列构造二叉树
+    105.从前序与中序遍历序列构造二叉树
     思路：解决这个问题的是关键 是要明确二叉树的遍历是一个递归的过程
     根据前序遍历 可以得到 根节点
     那么在 中序遍历中  可以根据前序遍历得到的根节点 获得到 根节点的左右子树信息
@@ -73,13 +73,15 @@ def buildTree(preorder, inorder):
     :param inorder:
     :return:
     '''
-    if len(preorder) == 0 or len(inorder) == 0:
+    if not len(preorder) or not len(inorder):
         return None
-    head = TreeNode.TreeNode(preorder[0])
-    i = inorder.index(preorder[0])
-    head.left = buildTree(preorder[1:i + 1], inorder[:i])
-    head.right = buildTree(preorder[i + 1:], inorder[i + 1:])
-    return head
+    root = TreeNode.TreeNode(preorder[0])
+
+    index_ = inorder.index(preorder[0])
+    root.left = buildTree(preorder[1:index_ + 1], inorder[:index_])
+    root.right = buildTree(preorder[index_ + 1:], inorder[index_ + 1:])
+
+    return root
 
 
 def buildTreeOne(inorder, postorder):
@@ -218,5 +220,5 @@ if __name__ == '__main__':
     root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
     # root.right = TreeLinkNode(3)
-    head = zigzagLevelOrder(t)
+    head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
     print(head)
