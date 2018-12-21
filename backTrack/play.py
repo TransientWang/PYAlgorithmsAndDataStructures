@@ -94,9 +94,9 @@ def subsets(nums):
     return res
 
 
-
 def exist(board, word):
     '''
+    79.单词搜索
     给定一个二维网格和一个单词，找出该单词是否存在于网格中。
 
     单词必须按照字母顺序，通过相邻的单元格内的字母构成，
@@ -127,6 +127,36 @@ def exist(board, word):
                 if find(i, j, 0):
                     return True
 
+    return False
+
+
+def existOne(board, word):
+    """
+    79.单词搜索
+    :param board:
+    :param word:
+    :return:
+    """
+    def find(x, y, tmp):
+        if (x < 0 or x >= len(board) or y < 0 or y >= len(board[0])):
+            return False
+        tmp += board[x][y]
+        if word[:len(tmp)] != tmp:
+            return False
+        elif tmp == word:
+            return True
+        t = board[x][y]
+        board[x][y] = "."
+        bool = find(x + 1, y, tmp) \
+               or find(x - 1, y, tmp) \
+               or find(x, y + 1, tmp) or find(x, y - 1, tmp)
+        board[x][y] = t
+        return bool
+
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == word[0] and find(i, j, ""):
+                return True
     return False
 
 
@@ -253,4 +283,8 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(subsets([1, 2, 3]))
+    print(existOne([
+        ['A', 'B', 'C', 'E'],
+        ['S', 'F', 'C', 'S'],
+        ['A', 'D', 'E', 'E']
+    ], "ABCCED"))
