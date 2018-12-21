@@ -137,6 +137,7 @@ def existOne(board, word):
     :param word:
     :return:
     """
+
     def find(x, y, tmp):
         if (x < 0 or x >= len(board) or y < 0 or y >= len(board[0])):
             return False
@@ -147,9 +148,10 @@ def existOne(board, word):
             return True
         t = board[x][y]
         board[x][y] = "."
-        bool = find(x + 1, y, tmp) \
-               or find(x - 1, y, tmp) \
-               or find(x, y + 1, tmp) or find(x, y - 1, tmp)
+        bool = find(x + 1, y, tmp) or \
+               find(x - 1, y, tmp) or \
+               find(x, y + 1, tmp) or \
+               find(x, y - 1, tmp)
         board[x][y] = t
         return bool
 
