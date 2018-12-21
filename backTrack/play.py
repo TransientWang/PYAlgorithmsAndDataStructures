@@ -79,6 +79,12 @@ def permuteOne(nums):
 
 
 def subsets(nums):
+    """
+    78.子集
+    和全排列基本一致
+    :param nums:
+    :return:
+    """
     res = [[]]
     for i in range(len(nums)):
         sub = subsets(nums[i + 1:])
@@ -86,6 +92,7 @@ def subsets(nums):
             t = [nums[i]] + j
             res.append(t)
     return res
+
 
 
 def exist(board, word):
@@ -246,4 +253,4 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(permuteOne([1, 2, 3]))
+    print(subsets([1, 2, 3]))
