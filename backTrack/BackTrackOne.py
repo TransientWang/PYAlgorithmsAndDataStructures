@@ -3,31 +3,29 @@
 
 def letterCombinations(digits):
     '''
-    电话号码的字母组合
+    17.电话号码的字母组合
     给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+    思路：回溯法的本质是深度优先遍历（递归函数+终结条件）+剪枝函数
+    DFS的结题思路就是在回溯函数中横向累积也就是for循环求出当前层的可能，然后递归，遇到终结条件
+    或者剪枝函数时候结束该分支的遍历。
 
-    给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
     :param digits:
     :return:
     '''
-    res = []
-    if digits == "":
-        return res
-
-    backTrack(0, digits, "", res)
-    print(res)
-
-
-def backTrack(h, digits, tmp, res):
-    if h > len(digits) - 1:
-        res.append(tmp)
-        return
     number = ("", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz")
+    if digits == "":
+        return []
+    res = []
 
-    for i in range(len(number[int(digits[h])])):
-        t = tmp + number[int(digits[h])][i]
-        backTrack(h + 1, digits, t, res)
+    def backTrack(h, string):
+        if h == len(digits):
+            res.append(string)
+            return
+        for i, s in enumerate(number[int(digits[h])]):
+            backTrack(h + 1, string + s)
 
+    backTrack(0, "")
+    return res
 
 def generateParenthesis(n):
     '''
@@ -150,4 +148,4 @@ def removeInvalidParentheses(s):
 
 
 if __name__ == '__main__':
-    print(removeInvalidParentheses(")(f"))
+    print(letterCombinations("23"))
