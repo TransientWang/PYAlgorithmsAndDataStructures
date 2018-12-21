@@ -27,38 +27,64 @@ def letterCombinations(digits):
     backTrack(0, "")
     return res
 
+
 def generateParenthesis(n):
-    '''
-    生成括号
+    """
+    :type n: int
+    :rtype: List[str]
+
+    22.生成括号
     给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
     例如，给出 n = 3，生成结果为
     如果用 暴力法，我们需要省城2的N次方个组合，然后筛选出来
-    回溯法：可以只在判断括号是否有效之后再继续添加括号
+    回溯法：
+    解法1：可以只在判断括号是否有效之后再继续添加括号
     如果 左括号 数量小于n 就可以添加一个左括号
     如果 右括号数量 小于n就可以继续添加一个右括号
+    解法2：给生成的组合评分，左括号：1 右括号：-1
+    搜索过程中小于0的组个直接停止。
+    最后评分为0的加入结果集
     :param n:
     :return:
-    '''
+    """
+    Parenth = ("(", ")")
     res = []
 
-    def generateBackTrack(tmp="", left=0, right=0):
-        '''
+    # def generateBackTrack(tmp="", left=0, right=0):
+    #     '''
+    #
+    #     :param tmp:
+    #     :param left: 左括号的值
+    #     :param right: 右括号的值
+    #     :return:
+    #     '''
+    #     if len(tmp) == 2 * n:
+    #         res.append(tmp)
+    #         return
+    #     if left < n:
+    #         generateBackTrack(tmp + '(', left + 1, right)
+    #     if right < left:
+    #         generateBackTrack(tmp + ')', left, right + 1)
 
-        :param tmp:
-        :param left: 左括号的值
-        :param right: 右括号的值
+    def backTrack(h, tmp, score):
+        '''
+        :param h:DFS层数
+        :param tmp:临时组合
+        :param score:组合的评分，剪枝条件
         :return:
         '''
-        if len(tmp) == 2 * n:
-            res.append(tmp)
+        if score < 0:  # 剪枝条件
             return
-        if left < n:
-            generateBackTrack(tmp + '(', left + 1, right)
-        if right < left:
-            generateBackTrack(tmp + ')', left, right + 1)
+        if h == n * 2: #终结条件
+            if score == 0:
+                res.append(tmp)
+            return
 
-    generateBackTrack()
-    print(res)
+        for i in range(2): #dfs过程
+            backTrack(h + 1, tmp + Parenth[i], score + 1 if i == 0 else score - 1)
+
+    backTrack(0, "", 0)
+    return res
 
 
 def partition(s):
@@ -148,4 +174,4 @@ def removeInvalidParentheses(s):
 
 
 if __name__ == '__main__':
-    print(letterCombinations("23"))
+    print(generateParenthesis(3))
