@@ -36,19 +36,16 @@ class play(object):
 
 def permute(nums):
     '''
+    46.全排列
     给定一个没有重复数字的序列，返回其所有可能的全排列。
+    BFS:分支线界限法，一般由一个循环开始回溯
     '''
-    import copy
-    if not nums:
-        return
     res = []
-    if len(nums) == 0:
-        return res
-    if len(nums) == 0:
+    if len(nums) == 1:
         return [nums]
 
     def backTrack(before, nums):
-        now = copy.deepcopy(before)
+        now = before[:]
         if len(nums) == 1:
             now.append(nums[0])
             res.append(now)
@@ -65,12 +62,17 @@ def permute(nums):
 
 
 def permuteOne(nums):
+    """
+    46.全排列
+    :param nums:
+    :return:
+    """
     if len(nums) == 1:
         return [nums]
     res = []
     for i in range(len(nums)):
         num = nums[i]
-        sub = permuteOne(nums[:i] + nums[i + 1:])
+        sub = permuteOne(nums[:i] + nums[i + 1:])  # 子序列的组个
         for j in sub:
             res.append([num] + j)
     return res
@@ -100,7 +102,6 @@ def exist(board, word):
     '''
     row = len(board)
     colum = len(board[0])
-
 
     def find(x, y, i):
         if x < 0 or y < 0 or x > row - 1 or y > colum - 1 or board[x][y] != word[i]:
@@ -245,4 +246,4 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(isMatch("aad", "*d"))
+    print(permuteOne([1, 2, 3]))
