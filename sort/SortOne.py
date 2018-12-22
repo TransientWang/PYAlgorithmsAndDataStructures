@@ -114,6 +114,7 @@ def findPeakElement(nums):
 
 def searchRange(nums, target):
     '''
+    34.在排序数组中查找元素的第一个和最后一个位置
     给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
 
     你的算法时间复杂度必须是 O(log n) 级别。(二分法)
@@ -123,27 +124,25 @@ def searchRange(nums, target):
     :param target:
     :return:
     '''
-    left, right = 0, len(nums) - 1
-    flag = True
-    mid = int((left + right) / 2)
-    while left <= right:
-
-        if nums[mid] < target:
-            left = mid + 1
-        elif nums[mid] > target:
-            right = mid - 1
-        else:
-            flag = False
-            break
-        mid = int((left + right) / 2)
-    if flag:
+    if len(nums) == 0:
         return [-1, -1]
-    left = right = mid
-    while left >= 0 and nums[left] == nums[mid]:
-        left -= 1
-    while right < len(nums) and nums[right] == nums[mid]:
-        right += 1
-    return [left + 1, right - 1]
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            break
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    if nums[mid] != target:
+        return [-1, -1]
+    i = j = mid
+    while i >= 0 and nums[i] == target:
+        i -= 1
+    while j < len(nums) and nums[j] == target:
+        j += 1
+    return [i + 1, j - 1]
 
 
 class Interval(object):
@@ -236,4 +235,5 @@ def searchMatrix(matrix, target):
 
 
 if __name__ == '__main__':
-    print(topKFrequent([1, 1, 1, 2, 2, 3], 3))
+    print(searchRange([1,4],
+4))
