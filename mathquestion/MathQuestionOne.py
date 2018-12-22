@@ -238,9 +238,36 @@ class Solution(object):
 
 
 def sortColors(nums):
-    nums.sort()
+    '''
+    75.颜色分类
+    :param nums:
+    :return:
+    '''
+
+    def quickSort(nums, left, right):
+        partition = 1
+        l = left
+        r = right
+        i = left
+        while i <= r:
+            if nums[i] < partition:
+                swap(nums, i, l)
+                i += 1
+                l += 1
+            elif nums[i] > partition:
+                swap(nums, i, r)
+                r -= 1
+            else:
+                i += 1
+
+    def swap(nums, i, j):
+        t = nums[j]
+        nums[j] = nums[i]
+        nums[i] = t
+
+    quickSort(nums, 0, len(nums) - 1)
     return nums
 
 
 if __name__ == '__main__':
-    print(isValid("]"))
+    print(sortColors([2, 0, 2, 1, 1, 0]))
