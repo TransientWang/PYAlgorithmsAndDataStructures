@@ -74,18 +74,15 @@ def topKFrequent(nums, k):
     '''
     r = {}
     for i in nums:
-        if r.get(i) is None:
+        if r.get(i, 0) == 0:
             r[i] = 1
         else:
             r[i] += 1
-    # d = []
-    # for key, val in r.items():
-    #     d.append((val, key))
-    # return heapSort(d, k)
-    arry = [[num, r[num]] for num in r]
-    arry = sorted(arry, key=lambda item: 0 - item[1])
-    r = map(lambda item: item[0], arry)
-    return list(r)[:k]
+    array = [[key, r[key]] for key in r]
+    array=sorted(array, key=lambda item: item[1],reverse=True)
+
+    t = map(lambda item: item[0], array)
+    return list(t)[:k]
 
 
 def findPeakElement(nums):
@@ -225,8 +222,8 @@ def searchMatrix(matrix, target):
     if len(matrix) == 0 or len(matrix[0]) == 0:
         return False
 
-    x, y =  len(matrix) - 1,0
-    while x >=0  and y < len(matrix[0]):
+    x, y = len(matrix) - 1, 0
+    while x >= 0 and y < len(matrix[0]):
         if matrix[x][y] == target:
             return True
         if matrix[x][y] > target:
@@ -238,4 +235,4 @@ def searchMatrix(matrix, target):
 
 
 if __name__ == '__main__':
-    print(searchMatrix([[-1],[-1]], 5))
+    print(topKFrequent([1, 1, 1, 2, 2, 3], 3))

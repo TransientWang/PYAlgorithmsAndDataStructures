@@ -1,8 +1,52 @@
 # -*- coding: UTF-8 -*-
 
 def findKthLargest(nums, k):
-    nums.sort(reverse=True)
-    return nums[k - 1]
+    """
+    215	.数组中的第K个最大元素
+    思路：分治思想+快速排序
+    快排一次，如果哨兵位置 ==k 直接返回
+    如果哨兵位置大于k说明第k个元素应该从左边找，反之从右边找
+    如果数量非常大，可以用堆
+    :param nums:
+    :param k:
+    :return:
+    """
+
+    def swap(nums, i, j):
+        t = nums[j]
+        nums[j] = nums[i]
+        nums[i] = t
+
+    def find(left, right):
+        if left > right:
+            return
+        tmp = nums[left]
+        i = left
+        j = right
+        while i < j:
+            while i < j and nums[j] < tmp: ##注意是左边最大，应该从右边开始找
+                j -= 1
+            while i < j and nums[i] >= tmp:
+                i += 1
+
+            if i < j:
+                swap(nums, i, j)
+        nums[left] = nums[i]
+        nums[i] = tmp
+
+        return i
+
+    def search(left, right, k):
+        m = find(left, right)
+        print(nums)
+        if m - left + 1 == k:
+            return nums[m]
+        elif k < m - left + 1:
+            return search(left, m - 1, k)
+        else:
+            return search(m + 1, right, k - (m - left + 1))
+
+    return search(0, len(nums) - 1, k)
 
 
 def minimumTotal(triangle):
@@ -179,4 +223,4 @@ def numSquaresOne(n):
 
 
 if __name__ == '__main__':
-    print(numSquaresOne(6))
+    print(findKthLargest([3, 2, 1, 5, 6, 4], 2))
