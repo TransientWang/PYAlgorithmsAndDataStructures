@@ -79,7 +79,7 @@ def topKFrequent(nums, k):
         else:
             r[i] += 1
     array = [[key, r[key]] for key in r]
-    array=sorted(array, key=lambda item: item[1],reverse=True)
+    array = sorted(array, key=lambda item: item[1], reverse=True)
 
     t = map(lambda item: item[0], array)
     return list(t)[:k]
@@ -87,6 +87,7 @@ def topKFrequent(nums, k):
 
 def findPeakElement(nums):
     '''
+    162	.寻找峰值
     峰值元素是指其值大于左右相邻值的元素。
 
     给定一个输入数组 nums，其中 nums[i] ≠ nums[i+1]，找到峰值元素并返回其索引。
@@ -101,7 +102,7 @@ def findPeakElement(nums):
     '''
     left, right = 0, len(nums) - 1
     while left < right:
-        mid = (left + right) / 2
+        mid = (left + right) // 2
         if mid == len(nums) - 1:
             return mid
         if nums[mid] < nums[mid + 1]:
