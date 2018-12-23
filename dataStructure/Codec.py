@@ -6,65 +6,50 @@ class Codec:
 
     def serialize(self, root):
         """Encodes a tree to a single string.
-
+        297.二叉树的序列化与反序列化
         :type root: TreeNode
         :rtype: str
         """
-        if root is None:
+        if not root:
             return None
-        res = []
-        queue = []
-        queue.append(root)
-
+        queue = [root]
+        ser = []
         while len(queue) != 0:
             tmp = queue.pop(0)
-            if not tmp is None:
-                res.append(tmp.val)
-
-                if tmp.left is None:
-                    queue.append(None)
-                else:
-                    queue.append(tmp.left)
-                    # res.append(tmp.left.val)
-                if tmp.right is None:
-                    queue.append(None)
-                else:
-                    queue.append(tmp.right)
-                    # res.append(tmp.right.val)
-
+            if tmp:
+                ser.append(tmp)
+                queue.append(tmp.left)
+                queue.append(tmp.right)
             else:
-                res.append(None)
-        while res[-1] is None:
-            res = res[:-1]
-        return res
+                ser.append(None)
+        return ser
 
     def deserialize(self, data):
-        """Decodes your encoded data to tree.
-
+        """
+        反序列化用一个queue保存构建的树
+        Decodes your encoded data to tree.
         :type data: str
         :rtype: TreeNode
         """
-        if data is None:
-            return None
-        stack = []
-        root = TreeNode.TreeNode(data.pop(0))
-        stack.append(root)
+
+        root = data.pop(0)
+
+        stack = [root]
+
         while len(data) != 0:
             tmp = stack.pop(0)
-            if len(data) > 0:
-
-                if len(data) > 0 and data[0] is None:
-                    data.pop(0)
-                elif len(data) > 0:
-                    leftNode = TreeNode.TreeNode(data.pop(0))
-                    tmp.left = leftNode
-                    stack.append(leftNode)
-                if len(data) > 0 and data[0] is None:
-                    data.pop(0)
-                elif len(data) > 0:
-                    rightNode = TreeNode.TreeNode(data.pop(0))
-                    tmp.right = rightNode
-                    stack.append(rightNode)
+            if len(data) > 0 and data[0] is None:
+                data.pop(0)
+            elif len(data) > 0:
+                leftNode = data.pop(0)
+                tmp.left = leftNode
+                stack.append(leftNode)
+            if len(data) > 0 and data[0] is None:
+                data.pop(0)
+            elif len(data) > 0:
+                rightNode = data.pop(0)
+                tmp.right = rightNode
+                stack.append(rightNode)
 
         return root
 
@@ -218,13 +203,16 @@ def solve(board):
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
-    # root.right = TreeNode.TreeNode(3)
-    # root.right.left = TreeNode.TreeNode(4)
-    # root.right.right = TreeNode.TreeNode(5)
+    root.right = TreeNode.TreeNode(3)
+    root.right.left = TreeNode.TreeNode(4)
+    root.right.right = TreeNode.TreeNode(5)
+    codex = Codec()
+    p = codex.deserialize(codex.serialize(root))
+    print(p)
 
-    print(solve([["O", "X", "O", "O", "X", "X"],
-                 ["O", "X", "X", "X", "O", "X"],
-                 ["X", "O", "O", "X", "O", "O"],
-                 ["X", "O", "X", "X", "X", "X"],
-                 ["O", "O", "X", "O", "X", "X"],
-                 ["X", "X", "O", "O", "O", "O"]]))
+    # print(solve([["O", "X", "O", "O", "X", "X"],
+    #              ["O", "X", "X", "X", "O", "X"],
+    #              ["X", "O", "O", "X", "O", "O"],
+    #              ["X", "O", "X", "X", "X", "X"],
+    #              ["O", "O", "X", "O", "X", "X"],
+    #              ["X", "X", "O", "O", "O", "O"]]))
