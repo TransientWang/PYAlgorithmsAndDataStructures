@@ -46,19 +46,21 @@ def trailingZeroes(n):
 
 def myPow(x, n):
     '''
-    自实现的pow
+    50.自实现的pow
     :param x:
     :param n:
     :return:
     '''
     if n == 0:
         return 1
+    if n == 1:
+        return x
     if n < 0:
         return 1.0 / myPow(x, -n)
     if n % 2 == 1:
-        return x * myPow(x * x, n // 2)
+        return x * myPow(x ** 2, n >> 1)
     else:
-        return myPow(x * x, n // 2)
+        return myPow(x ** 2, n >> 1)
 
 
 def mySqrt(x):
@@ -157,12 +159,6 @@ def titleToNumber(s):
     :param s:
     :return:
     '''
-    # l = list(s)
-    #
-    # res = 0
-    # for i in range(len(l)):
-    #     res = res * 26 + ord(l[i]) - 64
-    # return res
     res = 0
     for i in s:
         res = res * 26 + ord(i) - 64
@@ -244,5 +240,5 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(titleToNumber("ZY"))
+    print(myPow(2.00000,10))
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
