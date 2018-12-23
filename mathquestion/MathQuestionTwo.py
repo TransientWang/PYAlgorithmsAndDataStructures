@@ -65,22 +65,30 @@ def myPow(x, n):
 
 def mySqrt(x):
     '''
-
+    69.x 的平方根(牛顿迭代法)
+    其他解法：对于一个非负数n，它的平方根不会小于大于（n/2+1）
     :param x:
     :return:
     '''
-    low = 1
-    high = x
-    while low <= high:
-        mid = (low + high) / 2
-
-        if x / mid < mid:
-            high = mid - 1
-        elif x / mid > mid:
-            low = mid + 1
-        else:
-            return mid
-    return low - 1
+    # low = 1
+    # high = x
+    # while low <= high:
+    #     mid = (low + high) / 2
+    #     if x / mid < mid:
+    #         high = mid - 1
+    #     elif x / mid > mid:
+    #         low = mid + 1
+    #     else:
+    #         return mid
+    # return low - 1
+    if x == 0:
+        return 0
+    last = 0
+    res = 1
+    while abs(res - last) > 1e-6:
+        last = res
+        res = (res + x / res) / 2
+    return int(res)
 
 
 def majorityElement(nums):
@@ -240,5 +248,6 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(myPow(2.00000,10))
+    print(mySqrt(8))
+
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
