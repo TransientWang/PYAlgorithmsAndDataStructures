@@ -153,15 +153,19 @@ def divide(dividend, divisor):
 
 def titleToNumber(s):
     '''
-    Excel表列序号
+    171.Excel表列序号
     :param s:
     :return:
     '''
-    l = list(s)
-
+    # l = list(s)
+    #
+    # res = 0
+    # for i in range(len(l)):
+    #     res = res * 26 + ord(l[i]) - 64
+    # return res
     res = 0
-    for i in range(len(l)):
-        res = res * 26 + ord(l[i]) - 64
+    for i in s:
+        res = res * 26 + ord(i) - 64
     return res
 
 
@@ -240,5 +244,5 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(isHappy(19))
+    print(titleToNumber("ZY"))
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
