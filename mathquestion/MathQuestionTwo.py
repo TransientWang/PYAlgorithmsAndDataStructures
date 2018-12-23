@@ -5,6 +5,7 @@ import math
 
 def isHappy(n):
     '''
+    202.快乐数
     编写一个算法来判断一个数是不是“快乐数”。
 
     一个“快乐数”定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，
@@ -15,21 +16,17 @@ def isHappy(n):
     :return:
     '''
     s = str(n)
-    t = 0
-    dp = []
-    import math
-    while True:
-        for i in s:
-            i = int(i) ** 2
-            t += i
-        if t == 1:
-            return True
-        elif dp.count(t) != 0:
+    dMap = []
+    while s != "1":
+        if s in dMap:
             return False
         else:
-            dp.append(t)
-            s = str(t)
-            t = 0
+            dMap.append(s)
+        r = 0
+        for i in s:
+            r += int(i) ** 2
+        s = str(r)
+    return True
 
 
 def trailingZeroes(n):
@@ -242,6 +239,5 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-
-    print(largestNumber([0]))
+    print(isHappy(19))
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
