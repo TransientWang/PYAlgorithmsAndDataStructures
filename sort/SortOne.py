@@ -184,7 +184,7 @@ def merge(intervals):
 
 def search(nums, target):
     '''
-    搜索旋转排序数组
+    33.搜索旋转排序数组
     如果中间的数小于最右边的数，则右半段是有序的，若中间数大于最右边数，则左半段是有序的，
     我们只要在有序的半段里用首尾两个数组来判断目标值是否在这一区域内，这样就可以确定保留哪半边了，代码如下
     :param nums:
@@ -192,12 +192,13 @@ def search(nums, target):
     :return:
     '''
     left, right = 0, len(nums) - 1
+
     while left <= right:
-        mid = int((left + right) / 2)
+        mid = (left + right) // 2
         if nums[mid] == target:
             return mid
-        if nums[mid] > nums[-1]:  # 左边的有序
-            if nums[left] <= target and nums[mid] > target:
+        elif nums[mid] > nums[-1]:  # 左边有序
+            if nums[left] <= target and nums[mid] > target:  # 通过两边边界值 确定新边界
                 right = mid - 1
             else:
                 left = mid + 1
@@ -211,29 +212,34 @@ def search(nums, target):
 
 def searchMatrix(matrix, target):
     '''
+    240.搜索二维矩阵 II
     左下角的元素是这一行中最小的元素，同时又是这一列中最大的元素。比较左下角元素和目标：
     若左下角元素等于目标，则找到
     若左下角元素大于目标，则目标不可能存在于当前矩阵的最后一行，问题规模可以减小为在去掉最后一行的子矩阵中寻找目标
     若左下角元素小于目标，则目标不可能存在于当前矩阵的第一列，问题规模可以减小为在去掉第一列的子矩阵中寻找目标
     若最后矩阵减小为空，则说明不存在
+    思路：类似二分法，但是需要找一个起始点，这个点可以从两边缩小范围，如果在左上角，那么只能坐标+1但不确定x还是y+1。
+    左下角就可以小了+纵坐标 ，大了 - 横坐标
     :param target:
     :return:
     '''
     if len(matrix) == 0 or len(matrix[0]) == 0:
         return False
-
     x, y = len(matrix) - 1, 0
+
     while x >= 0 and y < len(matrix[0]):
         if matrix[x][y] == target:
             return True
-        if matrix[x][y] > target:
-            x -= 1
-        else:
+        elif matrix[x][y] < target:
             y += 1
-
+        else:
+            x -= 1
     return False
 
 
+
+
+
 if __name__ == '__main__':
-    print(searchRange([1,4],
-4))
+    print(searchRange([1, 4],
+                      4))
