@@ -133,7 +133,7 @@ def evalRPN(tokens):
 
 def divide(dividend, divisor):
     '''
-
+    29.两数相除
     :param dividend:
     :param divisor:
     :return:
@@ -141,24 +141,19 @@ def divide(dividend, divisor):
     if dividend == -2 ** 31 and divisor == -1:
         return 2 ** 31 - 1
 
-    bool = 1
-    if dividend > 0:
-        bool *= -1
-    if divisor > 0:
-        bool *= -1
-    ded = abs(dividend)
-    div = abs(divisor)
-
+    bool = (divisor > 0) ^ (dividend > 0)
+    dnd = abs(dividend)
+    dor = abs(divisor)
     res = 0
-    while ded >= div:
-        tmp = div
+    while dnd >= dor:
+        t = dor
         count = 1
-        while ded >= tmp << 1:
-            tmp <<= 1
+        while dnd >= (t << 1):
             count <<= 1
+            t <<= 1
         res += count
-        ded -= tmp
-    return res if bool == 1 else -res
+        dnd -= t
+    return res if not bool else -res
 
 
 def titleToNumber(s):
@@ -248,6 +243,6 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(mySqrt(8))
+    print(divide(8, 2))
 
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
