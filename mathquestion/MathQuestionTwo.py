@@ -110,6 +110,24 @@ def majorityElement(nums):
     return tmp
 
 
+def getSum(a, b):
+    """
+    371.两整数之和
+    32 bits integer max
+    MAX = 0x7FFFFFFF
+    32 bits interger min
+    MIN = 0x80000000
+    int -1 的补码 0xFFFFFFFF
+    :param self:
+    :param a:
+    :param b:
+    :return:
+    """
+    while b:
+        a, b = (a ^ b) & 0xFFFFFFFF, ((a & b) << 1) & 0xFFFFFFFF
+    return a if a < 0X7fffffff else ~(a ^ 0xFFFFFFFF)
+
+
 def evalRPN(tokens):
     '''
     150	.逆波兰表达式求值
@@ -241,6 +259,7 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
+    print(getSum(11, 23))
+
 
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
