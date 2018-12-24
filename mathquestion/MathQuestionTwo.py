@@ -114,7 +114,7 @@ def getSum(a, b):
     """
     371.两整数之和
     32 bits integer max
-    MAX = 0x7FFFFFFF
+    MAX = 0x7FFFFFFF == 2147483647
     32 bits interger min
     MIN = 0x80000000
     int -1 的补码 0xFFFFFFFF
@@ -260,6 +260,6 @@ def largestNumber(nums):
 
 if __name__ == '__main__':
     print(getSum(11, 23))
-
+    print( ~(-2147483649^0xFFFFFFFF))
 
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]

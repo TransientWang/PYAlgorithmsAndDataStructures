@@ -118,6 +118,7 @@ def reconstructQueue(people):
 
 def leastInterval(tasks, n):
     '''
+    621.任务调度器
     给定一个用字符数组表示的 CPU 需要执行的任务列表。其中包含使用大写的 A - Z 字母表示的26 种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个单位时间内执行完。CPU 在任何一个单位时间内都可以执行一个任务，或者在待命状态。
 
     然而，两个相同种类的任务之间必须有长度为 n 的冷却时间，因此至少有连续 n 个单位时间内 CPU 在执行不同的任务，或者在待命状态。
@@ -136,6 +137,18 @@ def leastInterval(tasks, n):
     :param n:
     :return:
     '''
+    # dmap = {}
+    # max_val = 0
+    # for i in tasks:
+    #     if dmap.get(i, -1) != -1:
+    #         dmap[i] += 1
+    #     else:
+    #         dmap[i] = 1
+    #     max_val = max(max_val, dmap[i])
+    # count = 0
+    # for v in dmap.values():
+    #     if v == max_val:
+    #         count += 1
     task = [0 for i in range(26)]
     for curTask in tasks:
         task[ord(curTask) - ord('A')] += 1  # 统计各个任务出现的次数
@@ -269,4 +282,5 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(canJumpTwo([8, 0, 9, 6, 6, 9]))
+    print(leastIntervalOne(["A","A","A","B","B","B"],
+2))
