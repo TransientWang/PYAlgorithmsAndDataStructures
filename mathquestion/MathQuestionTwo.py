@@ -97,44 +97,42 @@ def majorityElement(nums):
     :param nums:
     :return:
     '''
+    count = 0
+    tmp = 0
 
-    count = 1
-    t = nums[0]
-    for i in range(1, len(nums)):
-        if t == nums[i]:
+    for num in nums:
+        if count == 0:
+            tmp = num
+        if tmp == num:
             count += 1
         else:
             count -= 1
-        if count == 0:
-            t = nums[i]
-            count = 1
-    return t
+    return tmp
 
 
 def evalRPN(tokens):
     '''
-    逆波兰表达式求值
+    150	.逆波兰表达式求值
     :param tokens:
     :return:
     '''
     stack = []
-    while len(tokens) != 0:
-        t = tokens.pop(0)
-        if t != "+" and t != "-" and t != "*" and t != "/":
-            stack.append(t)
+    for k in tokens:
+        if k != "+" and k != "-" and k != "*" and k != "/":
+            stack.append(int(k))
         else:
-            t2 = stack.pop(-1)
-            t1 = stack.pop(-1)
-            tmp = eval(str(t1) + str(t) + str(t2))
+            t1 = stack.pop()
+            t2 = stack.pop()
+            tmp = eval(str(t2) + str(k) + str(t1))
             stack.append(int(tmp))
-    import math
-    return int(stack.pop(0))
+
+    return stack.pop()
 
 
 def divide(dividend, divisor):
     '''
     29.两数相除
-    :param dividend:
+    :param dividend:majorityElement
     :param divisor:
     :return:
     '''
@@ -243,6 +241,6 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(divide(8, 2))
+    print(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
 
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
