@@ -93,7 +93,7 @@ def mySqrt(x):
 
 def majorityElement(nums):
     '''
-    求众数
+    169.求众数
     :param nums:
     :return:
     '''
