@@ -23,6 +23,7 @@ def productExceptSelf(nums):
 
 def spiralOrder(matrix):
     '''
+    54.螺旋矩阵
     给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
     思路：这个问题 需要考虑的方面有两个，一个是遍历的方向，另一个是每一方向遍历的步数，
     方向可以有四个，步数每一方向走完，下次在走这个方向的时候就会减少一
@@ -30,7 +31,7 @@ def spiralOrder(matrix):
     :return:
     '''
     row = len(matrix) - 1
-    if row == -1 or row == 0:
+    if row == -1:
         return matrix
     if row == 0:
         return matrix[0]
@@ -54,6 +55,7 @@ def spiralOrder(matrix):
         row -= 1
         column -= 1
     return res
+
 
 
 def firstMissingPositive(nums):
@@ -204,4 +206,4 @@ def largestRectangleArea(heights):
 
 
 if __name__ == '__main__':
-    print(productExceptSelf([1, 2, 3, 4]))
+    print(spiralOrderOne([[7],[9],[6]]))
