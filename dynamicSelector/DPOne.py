@@ -41,7 +41,7 @@ def lengthOfLIS(nums):
 
 def maxArea(height):
     '''
-    盛最多水的容器
+    11.盛最多水的容器
     给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
 
     说明：你不能倾斜容器，且 n 的值至少为 2。
@@ -49,15 +49,15 @@ def maxArea(height):
     :param height:
     :return:
     '''
-    res = 0
-    i, j = 0, len(height) - 1
-    while i < j:
-        res = max(min(height[i], height[j]) * (j - i), res)
-        if height[i] <= height[j]:
-            i += 1
+    result = 0
+    left, right = 0, len(height) - 1
+    while left < right:
+        result = max(result, min(height[left], height[right]) * (right - left))
+        if height[left] < height[right]:
+            left += 1
         else:
-            j -= 1
-    return res
+            right -= 1
+    return result
 
 
 def maxProduct(nums):
@@ -215,5 +215,5 @@ def maxProfitOne(prices):
 
 
 if __name__ == '__main__':
-    print(lengthOfLIS([4, 10, 4, 3, 8, 9]))
+    print(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
     # [1,3,6,7,9,4,10,5,6]
