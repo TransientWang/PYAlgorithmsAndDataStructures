@@ -9,7 +9,7 @@ def productExceptSelf(nums):
     '''
     r = [1 for i in range(len(nums))]
     r1 = [1 for i in range(len(nums))]
-    res = [1 for i in range(len(nums))]
+    output = [1 for i in range(len(nums))]
     for i in range(len(nums) - 1):
         r[i + 1] = nums[i] * r[i] if i >= 0 else nums[i]
 
@@ -17,8 +17,8 @@ def productExceptSelf(nums):
         r1[i] = nums[-i] * r1[i - 1] if i >= 0 else nums[-i]
     r1.reverse()
     for i in range(len(nums)):
-        res[i] = r[i] * r1[i]
-    return res
+        output[i] = r[i] * r1[i]
+    return output
 
 
 def spiralOrder(matrix):
