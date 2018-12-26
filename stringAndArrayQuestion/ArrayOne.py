@@ -82,7 +82,7 @@ def firstMissingPositive(nums):
 
 def longestConsecutive(nums):
     '''
-     最长连续序列
+    128.最长连续序列
     给定一个未排序的整数数组，找出最长连续序列的长度。
 
     要求算法的时间复杂度为 O(n)。
@@ -98,24 +98,24 @@ def longestConsecutive(nums):
     :param nums:
     :return:
     '''
-    dpmap = {}
+    dpMap = {}
     res = 0
     for i in nums:
-        if i not in dpmap:
+        if i not in dpMap:
             left = 0
             right = 0
-            if dpmap.get(i - 1) is not None:
-                left = dpmap[i - 1]
-            if dpmap.get(i + 1) is not None:
-                right = dpmap[i + 1]
+            if i + 1 in dpMap.keys():
+                right = dpMap[i + 1]
+            if i - 1 in dpMap.keys():
+                left = dpMap[i-1]
             if left != 0 or right != 0:
-                dpmap[i] = left + right + 1
-                dpmap[i - left] = dpmap[i]
-                dpmap[i + right] = dpmap[i]
+                dpMap[i] = left + right + 1
+                dpMap[i - left] = dpMap[i]
+                dpMap[i + right] = dpMap[i]
             else:
-                dpmap[i] = 1
-            res = dpmap[i] if dpmap[i] > res else res
-    print(dpmap)
+                dpMap[i] = 1
+        res = max(res, dpMap[i])
+    print(dpMap)
     return res
 
 
@@ -201,4 +201,4 @@ def largestRectangleArea(heights):
 
 
 if __name__ == '__main__':
-    print(firstMissingPositive([3, 4, -1, 1]))
+    print(longestConsecutive([1,2,0,1]))
