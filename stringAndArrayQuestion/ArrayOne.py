@@ -57,10 +57,9 @@ def spiralOrder(matrix):
     return res
 
 
-
 def firstMissingPositive(nums):
     '''
-    丢失的第一个正整数
+    41. 缺失的第一个正数
     将找到的元素放到正确的位置，如果发现某个元素一直没找到，则该元素即为所求
 
     循环不变式：如果某命题初始为真，且每次改变后仍保持该命题为真，则若干次改变后该命题为真
@@ -70,17 +69,13 @@ def firstMissingPositive(nums):
         :param nums:
     :return:
     '''
-    i = 0
-    while i < len(nums):
-        if nums[i] > 0 and nums[i] <= len(nums) and nums[i] != nums[nums[i] - 1]:
-            tmp = nums[i]
-            nums[i] = nums[tmp - 1]
-            nums[tmp - 1] = tmp
-        else:
-            i += 1
-    print(nums)
     for i in range(len(nums)):
-        if nums[i] != i + 1:
+        while 0 <= nums[i] - 1 < len(nums) and nums[i] != nums[nums[i] - 1]:
+            idx = nums[i] - 1
+            nums[i], nums[idx] = nums[idx], nums[i]
+
+    for i in range(len(nums)):
+        if i + 1 != nums[i]:
             return i + 1
     return len(nums) + 1
 
@@ -206,4 +201,4 @@ def largestRectangleArea(heights):
 
 
 if __name__ == '__main__':
-    print(spiralOrderOne([[7],[9],[6]]))
+    print(firstMissingPositive([3, 4, -1, 1]))
