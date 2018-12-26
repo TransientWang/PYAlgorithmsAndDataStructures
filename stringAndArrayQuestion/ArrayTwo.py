@@ -2,38 +2,34 @@
 
 def gameOfLife(board):
     '''
-    生命游戏
+    289.生命游戏
     状态转换
     0 死细胞到死细胞
     1 活细胞到活细胞
-    2 或细胞到死细胞
+    2 活细胞到死细胞
     3 死细胞到活细胞
     :param board:
     :return:
     '''
-    vectorx = (1, -1, 0, 0, 1, 1, -1, -1)  # 八个方向向量
-    vectory = (0, 0, 1, -1, 1, -1, 1, -1)
+    vector = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]
 
-    row = len(board)
-    colum = len(board[0])
-    for i in range(row):
-        for j in range(colum):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
             count = 0
-            for v in range(8):
-                x = i + vectorx[v]
-                y = j + vectory[v]
-                if x >= 0 and x < row and y >= 0 and y < colum and (board[x][y] == 1 or board[x][y] == 2):
+            for vec in vector:
+                x = i + vec[0]
+                y = j + vec[1]
+                if x >= len(board) or x < 0 or y >= len(board[0]) or y < 0:
+                    continue
+                elif board[x][y] == 1 or board[x][y] == 2:
                     count += 1
             if board[i][j] and (count < 2 or count > 3):
                 board[i][j] = 2
             elif not board[i][j] and count == 3:
                 board[i][j] = 3
-    for i in range(row):
-        for j in range(colum):
-            board[i][j] %= 2
-
-    for i in range(row):
-        print(board[i])
+    for x in range(len(board)):
+        for y in range(len(board[0])):
+            board[x][y] %= 2
 
 
 def containsDuplicate(nums):
@@ -69,22 +65,20 @@ def containsNearbyDuplicate(nums, k):
     :type k: int
     :rtype: bool
     """
-    if len(nums) < 2: #这几行过滤了大量的情况。
+    if len(nums) < 2:  # 这几行过滤了大量的情况。
         return False
     if len(nums) == len(set(nums)):
         return False
 
-    tp = set() #防止重复元素过高，造成超时
+    tp = set()  # 防止重复元素过高，造成超时
     for i, num in enumerate(nums):
         if num in tp:
             return True
         tp.add(num)
         if len(tp) > k:
-            tp.remove(nums[i-k])
-
-
+            tp.remove(nums[i - k])
 
 
 if __name__ == '__main__':
-    print(containsNearbyDuplicate([1,2,3,1,2,3],
-2))
+    print(containsNearbyDuplicate([1, 2, 3, 1, 2, 3],
+                                  2))
