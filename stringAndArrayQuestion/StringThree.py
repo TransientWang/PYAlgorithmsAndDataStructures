@@ -4,7 +4,6 @@ def minWindow(s, t):
     '''
     最小窗口子字符串
     给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串。
-
     TODO 双指针是求解字符串问题的通用解法
     :param s:
     :param t:
@@ -35,7 +34,14 @@ def minWindow(s, t):
     res = 0 if res == 2 ** 31 else res
     return s[cstart:cstart + res]
 
-
+def minWindowOne(s, t):
+    '''
+    TODO 这道题 27 日没做完
+    :param s:
+    :param t:
+    :return:
+    '''
+    pass
 def calculate(s):
     '''
     227.基本计算器 II
