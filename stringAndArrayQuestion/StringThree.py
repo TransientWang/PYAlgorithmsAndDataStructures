@@ -38,36 +38,35 @@ def minWindow(s, t):
 
 def calculate(s):
     '''
-    基本计算器 II
+    227.基本计算器 II
     实现一个基本的计算器来计算一个简单的字符串表达式的值。
+    字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
+    思路：用栈来存储数字，由于涉及到优先级，所以遇到减号
+    将后面的数字变成负值入栈，乘除法先计算，加减法遍历完后再计算，
+    延迟计算，遇到符号再入栈
 
-字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
-思路：用栈来存储数字，由于涉及到优先级，所以遇到减号
- 将后面的数字变成负值入栈，乘除法先计算，加减法遍历完后再计算
     :param s:
     :return:
     '''
-    lens = len(s)
-    res = 0
     stack = []
-    op = "+"  # 保留上一次运算符号
+    op = "+"
     tmp = 0
-    for i in range(lens):
-        if s[i].isdigit():
-            tmp = tmp * 10 + int(s[i])
-        if (not s[i].isdigit() and s[i] != " ") or i == lens - 1:
+    for i, dig in enumerate(s):
+        if dig.isdigit():
+            tmp = tmp * 10 + int(dig)
+        if not dig.isdigit() and dig != " " or i == len(s) - 1:  # 最后一个数也要入栈
             if op == "+":
                 stack.append(tmp)
-            if op == "-":
+            elif op == "-":
                 stack.append(-tmp)
-            if op == "*" or op == "/":
-                tmp = int(stack[-1] * tmp if op == "*" else stack[-1] / tmp)
-                stack.pop()
+            elif op == "/" or op == "*":
+                t = stack.pop()
+                tmp = t * tmp if op == "*" else int(t / tmp)
                 stack.append(tmp)
-
+            op = dig
             tmp = 0
-            op = s[i]
-    while len(stack) != 0:
+    res = 0
+    while stack:
         res += stack.pop()
     return res
 
@@ -193,7 +192,6 @@ def multiply(num1, num2):
         stack.append(tmps)
     tmp = stack.pop()
 
-
     while len(stack) > 0:
         t = 0
         tmps = stack.pop()
@@ -217,5 +215,5 @@ def multiply(num1, num2):
 
 
 if __name__ == '__main__':
-    print(multiply("123456789",
-"987654321"))
+    print(calculate("14-3/2"))
+    print()
