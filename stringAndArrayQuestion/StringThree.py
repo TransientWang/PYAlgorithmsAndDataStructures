@@ -2,7 +2,7 @@
 
 def minWindow(s, t):
     '''
-    最小窗口子字符串
+    76.最小窗口子字符串
     给定一个字符串 S 和一个字符串 T，请在 S 中找出包含 T 所有字母的最小子串。
     TODO 双指针是求解字符串问题的通用解法
     :param s:
@@ -27,21 +27,13 @@ def minWindow(s, t):
             if end - start < res:  # 记录最短长度
                 res = end - start
                 cstart = start
-            if hmap[ord(s[start])] == 0:  # 如果首字符==0说明，手指针字符在t中。count-1
+            if hmap[ord(s[start])] == 0:  #子串缩小到左边界为t中的字符为结束条件，让下次右边界能有t中的字符重新进入窗口当中
                 count -= 1
             hmap[ord(s[start])] += 1  # 手指针遍历过得字符次数+1，还原（针对t中的字符）
             start += 1  # 手指针后移
     res = 0 if res == 2 ** 31 else res
     return s[cstart:cstart + res]
 
-def minWindowOne(s, t):
-    '''
-    TODO 这道题 27 日没做完
-    :param s:
-    :param t:
-    :return:
-    '''
-    pass
 def calculate(s):
     '''
     227.基本计算器 II
