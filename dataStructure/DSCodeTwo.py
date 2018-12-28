@@ -8,7 +8,7 @@ class RandomListNode(object):
 
 def copyRandomList(head):
     '''
-    赋值随机指针
+    138.赋值随机指针
     :param head:
     :return:
     '''
