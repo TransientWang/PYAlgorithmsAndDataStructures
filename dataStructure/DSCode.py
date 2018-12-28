@@ -4,7 +4,7 @@ from dataStructure import ListNode
 
 def mergeKLists(lists):
     '''
-    合并K个元素的有序链表
+    23.合并K个元素的有序链表
     超时
     n:lists长度
     m:单个链表长度
@@ -18,9 +18,9 @@ def mergeKLists(lists):
         if len(lists) > 0:
             m = -1
             h = 2 ** 31
-            l = len(lists) - 1
+            L = len(lists) - 1
             i = 0
-            while i <= l:
+            while i <= L:
                 if lists[i] is not None:
                     if lists[i].val <= h:
                         h = lists[i].val
@@ -28,7 +28,7 @@ def mergeKLists(lists):
                     i += 1
                 else:
                     lists.remove(None)
-                    l -= 1
+                    L -= 1
             if m != -1:
                 t.next = ListNode.ListNode(lists[m].val)
                 t = t.next
@@ -40,7 +40,7 @@ def mergeKLists(lists):
 
 def mergeKListsOne(lists):
     '''
-    合并K个元素的有序链表
+    23.合并K个元素的有序链表
     其实考的是nlgn的排序算法，把链表里的数存在数组里堆排序
     或者快排
     然后在重新变成链表输出
