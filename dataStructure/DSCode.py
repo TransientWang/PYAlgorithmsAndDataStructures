@@ -87,7 +87,7 @@ def heapAdjest(list, index, heapSize):
 
 def sortList(head):
     '''
-    链表排序
+    148.链表排序
     在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
     合并排序
     重点在于 没法设置合并的边界
@@ -113,12 +113,12 @@ def getMid(node):
     :param node:
     :return:
     '''
-    slowNode = node
-    fastNode = node.next
-    while fastNode is not None and fastNode.next is not None:
-        slowNode = slowNode.next
-        fastNode = fastNode.next.next
-    return slowNode
+    slow = node
+    fast = node.next
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+    return slow
 
 
 def merge(left, right):
@@ -175,7 +175,7 @@ def lowestCommonAncestor(root, p, q):
      :type q: TreeNode
      :rtype: TreeNode
      """
-    if root is  None or root.val == p or root.val == q:
+    if root is None or root.val == p or root.val == q:
         return root
     left = lowestCommonAncestor(root.left, p, q)
     right = lowestCommonAncestor(root.right, p, q)
@@ -183,6 +183,7 @@ def lowestCommonAncestor(root, p, q):
         return root
     else:
         return right if left == None else left
+
 
 def lowestCommonAncestor(root, p, q):
     """
@@ -213,6 +214,8 @@ def lowestCommonAncestor(root, p, q):
         else:
             return root
     return None
+
+
 if __name__ == '__main__':
     from dataStructure import TreeNode
 
