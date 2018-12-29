@@ -161,7 +161,7 @@ import copy
 
 def lowestCommonAncestor(root, p, q):
     """
-    二叉树的最近公共祖先
+    236.二叉树的最近公共祖先
     思路：
     如果根节点为None，或者跟节点== q | p
     则可以直接返回
@@ -175,14 +175,14 @@ def lowestCommonAncestor(root, p, q):
      :type q: TreeNode
      :rtype: TreeNode
      """
-    if root is None or root.val == p or root.val == q:
+    if not root or root.val == p.val or root.val == q.val:
         return root
     left = lowestCommonAncestor(root.left, p, q)
     right = lowestCommonAncestor(root.right, p, q)
     if left and right:
         return root
     else:
-        return right if left == None else left
+        return left if left else right
 
 
 def lowestCommonAncestor(root, p, q):
