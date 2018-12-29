@@ -56,7 +56,7 @@ class Codec:
 
 def ladderLength(beginWord, endWord, wordList):
     '''
-    单词接龙
+    127.单词接龙
     给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：
 
     每次转换只能改变一个字母。
@@ -80,59 +80,30 @@ def ladderLength(beginWord, endWord, wordList):
     :param wordList:
     :return:
     '''
+    if endWord not in wordList:
+        return 0
+    if beginWord in wordList:
+        wordList.remove(beginWord)
     import string
-    dmap = set(wordList)
-    queue = [beginWord]
-    queue.insert(0, ",")
-    time = 2
-    while len(queue) != 0:
-        s = queue.pop()
-        if s != ",":
-            for i in range(len(s)):
-                for k in string.ascii_lowercase:
-                    t = s[:i] + k + s[i + 1:]
-                    if t in dmap:
-                        queue.insert(0, t)
-                        dmap.discard(t)
-                        if t == endWord:
-                            return time
-        elif len(queue) != 0:
-            queue.insert(0, ",")
-            time += 1
-    return 0
 
-
-def ladderLengthOne(beginWord, endWord, wordList):
-    '''
-    单词接龙
-    最快的解法
-    :param beginWord:
-    :param endWord:
-    :param wordList:
-    :return:
-    '''
-    import string
     begin_set, end_set = {beginWord}, {endWord}
     word_list_set = set(wordList)
-    size = len(beginWord)
-    step = 2
 
+    step = 2  # 开始一层，结束一层没有计算
     while begin_set and end_set:
         if len(begin_set) > len(end_set):
-            begin_set, end_set = end_set, begin_set
-
+            begin_set, end_set = end_set, begin_set  # 减少计算量
         tmp = set()
-        for word in begin_set:
-            for i in range(size):
+        for word in begin_set:  # 遍历每一层
+            for i in range(len(word)):
                 for c in string.ascii_lowercase:
                     new_word = word[:i] + c + word[i + 1:]
                     if new_word in end_set:
                         return step
                     if new_word in word_list_set:
-                        word_list_set.discard(new_word)
-
-                        tmp.add(new_word)
-        begin_set = tmp
+                        word_list_set.discard(new_word)  # 从单词集里删除已查找到单词
+                        tmp.add(new_word)  # 找到的单词加入当前层
+        begin_set = tmp  # 交给下一层
         step += 1
     return 0
 
@@ -207,9 +178,9 @@ if __name__ == '__main__':
     root.right.left = TreeNode.TreeNode(4)
     root.right.right = TreeNode.TreeNode(5)
     codex = Codec()
-    p = codex.deserialize(codex.serialize(root))
-    print(p)
-
+    # p = codex.deserialize(codex.serialize(root))
+    # print(p)
+    ladderLengthOne("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"])
     # print(solve([["O", "X", "O", "O", "X", "X"],
     #              ["O", "X", "X", "X", "O", "X"],
     #              ["X", "O", "O", "X", "O", "O"],
