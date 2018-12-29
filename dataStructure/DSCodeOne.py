@@ -4,7 +4,8 @@ from dataStructure import TreeNode
 
 def maxPathSum(root):
     '''
-    二叉树中的最大路径和
+    124.二叉树中的最大路径和
+    DFS
     给定一个非空二叉树，返回其最大路径和。
 
 本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。
@@ -21,16 +22,16 @@ def maxPathSum(root):
     :param root:
     :return:
     '''
-    sums = [-10000]
 
-    def find(root, s):
+    def find(root, sums):
         if not root:
             return 0
-        l = max(find(root.left, s), 0)
-        r = max(find(root.right, s), 0)
-        s[0] = max(s[0], l + r + root.val)
-        return max(l, r) + root.val
+        left = max(find(root.left, sums), 0)
+        right = max(find(root.right, sums), 0)
+        sums[0] = max(sums[0], left + right + root.val)
+        return max(left, right) + root.val
 
+    sums = [-1000]
     find(root, sums)
     return sums[0]
 
@@ -231,5 +232,7 @@ def findOrder(numCourses, prerequisites):
 
 
 if __name__ == '__main__':
-    print(findOrder(2,
-                    [[0, 1], [1, 0]]))
+    root = TreeNode.TreeNode(1)
+    root.left = TreeNode.TreeNode(2)
+    root.right = TreeNode.TreeNode(3)
+    print(maxPathSum(root))
