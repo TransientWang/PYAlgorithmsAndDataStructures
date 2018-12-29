@@ -97,7 +97,7 @@ def ladderLength(beginWord, endWord, wordList):
         for word in begin_set:  # 遍历每一层
             for i in range(len(word)):
                 for c in string.ascii_lowercase:
-                    new_word = word[:i] + c + word[i + 1:]
+                    new_word = word[:i] + c + word[i + 1:]  # 替换
                     if new_word in end_set:
                         return step
                     if new_word in word_list_set:
@@ -111,64 +111,51 @@ def ladderLength(beginWord, endWord, wordList):
 def solve(board):
     '''
     考察点BFS
-    被围绕的区域
+    130.被围绕的区域
     给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
     找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
-    思路：直接用空间换时间的解决办法，
-    开辟两个数组 dp,dp1大小同board一样，
-    dp表示与边缘相连接的“O
-    dp1表示已经遍历过得节点
-    开始直接从四个边缘开始找遇到“O"就将dp，dp1相应位置标记
-    然后选择周围没走过的切=="O"的继续遍历
-    最后遍历Board，只要dp相应位置不为1就置“X”就可以了
-    在找周围的
+    思路：遍历周边区域就可以，遇到 O 就将 O 替换成 # 然后BFS
+    最后将0替换成X 将#替换成 O
     :param board:
     :return:
     '''
     if len(board) == 0:
         return
-    row = len(board) - 1
-    colum = len(board[0]) - 1
-    dp = [[0 for i in range(colum + 1)] for i in range(row + 1)]
-    dp2 = [[0 for i in range(colum + 1)] for i in range(row + 1)]
+    row = len(board)
+    colum = len(board[0])
 
     def find(x, y):
-        if board[x][y] == "X":
-            return
-        else:
-            dp[x][y] = 1
-            dp2[x][y] = 1
-            if x + 1 <= row and board[x + 1][y] == "O" and dp2[x + 1][y] != 1:
-                find(x + 1, y)
-            if x - 1 >= 0 and board[x - 1][y] == "O" and dp2[x - 1][y] != 1:
-                find(x - 1, y)
-            if y + 1 <= colum and board[x][y + 1] == "O" and dp2[x][y + 1] != 1:
-                find(x, y + 1)
-            if y - 1 >= 0 and board[x][y - 1] == "O" and dp2[x][y - 1] != 1:
-                find(x, y - 1)
+        if (x >= 0 and x < row and y >= 0 and y < colum) and board[x][y] == "O":
+            board[x][y] = "#"
 
-    for i in range(colum + 1):
-        if board[0][i] == "O":
-            find(0, i)
-    for i in range(colum + 1):
-        if board[row][i] == "O":
-            find(row, i)
-    for i in range(row + 1):
+            find(x + 1, y)
+            find(x - 1, y)
+            find(x, y + 1)
+            find(x, y - 1)
+            # board[x][y] = "O" # 不能有这一步,
+
+    for i in range(row):
         if board[i][0] == "O":
             find(i, 0)
-    for i in range(row + 1):
-        if board[i][colum] == "O":
-            find(i, colum)
     for i in range(row):
-        for j in range(colum):
-            if dp[i][j] == 0 and board[i][j] == "O":
-                board[i][j] = "X"
+        if board[i][colum - 1] == "O":
+            find(i, colum - 1)
+    for i in range(colum):
+        if board[0][i] == "O":
+            find(0, i)
+    for i in range(colum):
+        if board[row - 1][i] == "O":
+            find(row - 1, i)
 
-    for i in board:
-        print(i)
-    print("\r\n")
-    for i in dp:
-        print(i)
+    for x in range(row):
+        for y in range(colum):
+            if board[x][y] == "O":
+                board[x][y] = "X"
+            elif board[x][y] == "#":
+                board[x][y] = "O"
+
+    for i in range(row):
+        print(board[i])
 
 
 if __name__ == '__main__':
@@ -180,10 +167,13 @@ if __name__ == '__main__':
     codex = Codec()
     # p = codex.deserialize(codex.serialize(root))
     # print(p)
-    ladderLengthOne("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"])
-    # print(solve([["O", "X", "O", "O", "X", "X"],
-    #              ["O", "X", "X", "X", "O", "X"],
-    #              ["X", "O", "O", "X", "O", "O"],
-    #              ["X", "O", "X", "X", "X", "X"],
-    #              ["O", "O", "X", "O", "X", "X"],
-    #              ["X", "X", "O", "O", "O", "O"]]))
+
+    print(solve([["O", "X", "O", "O", "O", "O", "O", "O", "O"],
+                 ["O", "O", "O", "X", "O", "O", "O", "O", "X"],
+                 ["O", "X", "O", "X", "O", "O", "O", "O", "X"],
+                 ["O", "O", "O", "O", "X", "O", "O", "O", "O"],
+                 ["X", "O", "O", "O", "O", "O", "O", "O", "X"],
+                 ["X", "X", "O", "O", "X", "O", "X", "O", "X"],
+                 ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+                 ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+                 ["O", "O", "O", "O", "O", "X", "X", "O", "O"]]))
