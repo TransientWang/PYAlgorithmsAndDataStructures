@@ -183,7 +183,7 @@ def canFinish(numCourses, prerequisites):
 
 
 def canFinishOne(numCourses, prerequisites):
-    in_count = [0 for i in range(numCourses)] #出度
+    in_count = [0 for i in range(numCourses)]  # 出度
     record = [[] for i in range(numCourses)]
     for i in prerequisites:
         in_count[i[0]] = in_count[i[0]] + 1
@@ -206,9 +206,10 @@ def canFinishOne(numCourses, prerequisites):
     else:
         return True
 
+
 def findOrder(numCourses, prerequisites):
     """
-     课程表 II
+     210.课程表 II
 现在你总共有 n 门课需要选，记为 0 到 n-1。
 
 在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
@@ -222,32 +223,29 @@ def findOrder(numCourses, prerequisites):
     :type prerequisites: List[List[int]]
     :rtype: List[int]
     """
-    pass
     visit = [0 for i in range(numCourses)]
-
-    hmap = {k[0]: [] for k in prerequisites}
+    hMap = {i[0]: [] for i in prerequisites}
     for i in prerequisites:
-        hmap[i[0]].append(i[1])
+        hMap[i[0]].append(i[1])
     res = []
 
-    def dfs(cur):
-        if visit[cur] == 1:
+    def find(x):
+        if visit[x] == 1:
             return True
-        if visit[cur] == 2:
+        if visit[x] == 2:
             return False
-        visit[cur] = 1
-        if hmap.get(cur) is not None:
-            for i in hmap[cur]:
-                if dfs(i):
+        visit[x] = 1
+        if x in hMap:
+            for i in hMap[x]:
+                if find(i):
                     return True
-        visit[cur] = 2
-        res.append(cur)
+        res.append(x)
+        visit[x] = 2
         return False
 
     for i in range(numCourses):
-        if dfs(i):
+        if find(i):
             return []
-
     return res
 
 
@@ -255,5 +253,4 @@ if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
-    print(canFinishOne(3,
-[[1,0],[1,2],[0,1]]))
+    print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
