@@ -146,7 +146,7 @@ import collections
 
 def canFinish(numCourses, prerequisites):
     """
-    课程表
+    207.课程表
     现在你总共有 n 门课需要选，记为 0 到 n-1。
 
     在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
@@ -159,9 +159,7 @@ def canFinish(numCourses, prerequisites):
     """
 
     visited = [0 for i in range(numCourses)]
-    hmap = {i[0]: [] for i in prerequisites}  # 邻接表
-    for k in prerequisites:
-        hmap[k[0]].append(k[1])
+    hmap = {i[0]: i[1:] for i in prerequisites}  # 邻接表
 
     def dfs(cur):
         if visited[cur] == 1:  # 当前节点正在被搜索，但是还没有搜索完毕
@@ -171,8 +169,9 @@ def canFinish(numCourses, prerequisites):
         visited[cur] = 1
         if hmap.get(cur) != None:
             for i in hmap[cur]:
-                if dfs(i):
-                    return True  # 如果该节点的后继节点是1，说明有环。直接返回True,则该节点不会被标记成2,
+                if dfs(i):  # 如果该节点的后继节点是1，说明有环。直接返回True,则该节点不会被标记成2,
+                    return True
+
         visited[cur] = 2
         return False
 
@@ -182,6 +181,30 @@ def canFinish(numCourses, prerequisites):
 
     return True
 
+
+def canFinishOne(numCourses, prerequisites):
+    in_count = [0 for i in range(numCourses)] #出度
+    record = [[] for i in range(numCourses)]
+    for i in prerequisites:
+        in_count[i[0]] = in_count[i[0]] + 1
+        record[i[1]].append(i[0])
+
+    que = []
+    for i in range(len(in_count)):
+        if (in_count[i] == 0):
+            que.append(i)
+
+    while (que):
+        node = que.pop(0)
+        for i in record[node]:
+            in_count[i] = in_count[i] - 1
+            if (in_count[i] == 0):
+                que.append(i)
+
+    if (sum(in_count)):
+        return False
+    else:
+        return True
 
 def findOrder(numCourses, prerequisites):
     """
@@ -232,4 +255,5 @@ if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
-    print(maxPathSum(root))
+    print(canFinishOne(3,
+[[1,0],[1,2],[0,1]]))
