@@ -185,6 +185,7 @@ def maxProfit(prices):
 def maxProfitOne(prices):
     '''
     TODO
+    309.最佳买卖股票时机含冷冻期
     上一题的不超时解法
     有三中情况
     一、该索引位置卖出的时候的最大值
@@ -203,9 +204,9 @@ def maxProfitOne(prices):
     '''
     pass
     buy = -2 ** 31  # buy[i]
-    preBuy = 0  # buy[i-1]
+    preBuy = 0  # 上次卖的
     sell = 0  # sell[i]
-    preSell = 0  # sell[i-2]
+    preSell = 0  # 上次买的
     for price in prices:
         preBuy = buy
         buy = max(preSell - price, preBuy)
@@ -214,6 +215,7 @@ def maxProfitOne(prices):
     return sell
 
 
+
 if __name__ == '__main__':
-    print(maxProductOne([-2, 0, -1]))
+    print(maxProfitOne([1,2,3,0,2]))
     # [1,3,6,7,9,4,10,5,6]
