@@ -62,7 +62,7 @@ gameOfLife
 
 def maxProduct(nums):
     '''
-     乘积最大子序列
+     152.乘积最大子序列
      关键点在，如果整个序列的符号个数是偶数，那么就 只关心 出现0的情况
      遇到负号的情况,如果整个序列的符号个数是奇数，那么还需要记录最小值
      这样这个最小值在遇到下一个辅助的时候就变成了正值
@@ -70,16 +70,16 @@ def maxProduct(nums):
     :param nums:
     :return:
     '''
-    maxVal = nums[0]
-    minVal = nums[0]
-    dp = nums[0]
-    for i in range(1, len(nums)):
-        tmp = maxVal
-        maxVal = max(maxVal * nums[i], minVal * nums[i], nums[i])  # 如果序列都是大于0的数，那么唯一关心的数字就是0
-        minVal = min(tmp * nums[i], minVal * nums[i], nums[i])  # 如果序列出现了小于0的数字，那么需要把这个小于0的数字记录下来
+    min_val = 1
+    real_val = nums[0]
+    max_val = 1
+    for val in nums:
+        tmp = max_val
+        max_val = max(tmp * val, min_val * val, val)  # 如果序列都是大于0的数，那么唯一关心的数字就是0
+        min_val = min(tmp * val, min_val * val, val)  # 如果序列出现了小于0的数字，那么需要把这个小于0的数字记录下来
         # 当在此出现小于0的数字时，便于比较
-        dp = max(maxVal, dp)
-    return dp
+        real_val = max(max_val, real_val)
+    return real_val
 
 
 def wordBreak(s, wordDict):
@@ -215,5 +215,5 @@ def maxProfitOne(prices):
 
 
 if __name__ == '__main__':
-    print(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
+    print(maxProductOne([-2, 0, -1]))
     # [1,3,6,7,9,4,10,5,6]
