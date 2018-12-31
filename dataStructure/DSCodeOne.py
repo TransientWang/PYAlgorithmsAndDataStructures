@@ -101,6 +101,7 @@ def longestIncreasingPath(matrix):
                 res = max(lens, res)
         hMap[x][y] = res
         return res
+
     max_res = 1
     for i in range(row):
         for j in range(colum):
@@ -110,32 +111,30 @@ def longestIncreasingPath(matrix):
     return max_res
 
 
-
 def countSmaller(nums):
     '''
-    计算右侧小于当前元素的个数
+    315.计算右侧小于当前元素的个数
     给定一个整数数组 nums，按要求返回一个新数组 counts。数组 counts 有该性质： counts[i] 的值是  nums[i] 右侧小于 nums[i] 的元素的数量
+    思路：插入排序，存储元素在排序数组中的位置，用二分提高时间复杂度
     :param nums:
     :return:
     '''
     tmp = []
     t = [0 for i in range(len(nums))]
 
-    def search(key, i):
+    def serarch(key, index):
         left, right = 0, len(tmp)
         while left < right:
             mid = left + (right - left) // 2
-            if tmp[mid] >= key:
+            if key < tmp[mid]:
                 right = mid
             else:
                 left = mid + 1
-
         tmp.insert(left, key)
-        t[i] = left
-
-    nums.reverse()
+        t[index] = left
+    nums.reverse() # 从右侧开始找
     for i in range(len(nums)):
-        search(nums[i], i)
+        serarch(nums[i], i)
     t.reverse()
     return t
 
@@ -252,6 +251,4 @@ if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
-    print(longestIncreasingPathOne([[3, 4, 5],
-                                    [3, 2, 6],
-                                    [2, 2, 1]]))
+    print(countSmaller([5, 2, 6, 1]))
