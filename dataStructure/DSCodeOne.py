@@ -70,7 +70,7 @@ def findCircleNum(M):
 
 def longestIncreasingPath(matrix):
     '''
-     矩阵中的最长递增路径
+     329.矩阵中的最长递增路径
      给定一个整数矩阵，找出最长递增路径的长度。
 
     对于每个单元格，你可以往上，下，左，右四个方向移动。 你不能在对角线方向上移动或移动到边界外（即不允许环绕）。
@@ -84,32 +84,31 @@ def longestIncreasingPath(matrix):
     '''
     if len(matrix) == 0 or matrix is None:
         return 0
-    direct = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-    max_res = 1
-    row = len(matrix) - 1
-    colum = len(matrix[0]) - 1
-    dp = [[0 for z in range(colum + 1)] for z in range(row + 1)]
+    direct = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    row = len(matrix)
+    colum = len(matrix[0])
+    hMap = [[0 for i in range(colum)] for i in range(row)]
 
     def find(x, y):
-        if dp[x][y] != 0:
-            return dp[x][y]
+        if hMap[x][y] != 0:
+            return hMap[x][y]
         res = 1
-        for di in direct:
-            t = x + di[0]
-            k = y + di[1]
-            if t < 0 or t > row or k < 0 or k > colum or matrix[t][k] <= matrix[x][y]:
-                continue
-            length = 1 + find(t, k)
-            res = max(res, length)
-        dp[x][y] = res
-
+        for i in direct:
+            k = x + i[0]
+            v = y + i[1]
+            if k >= 0 and k < row and v >= 0 and v < colum and matrix[k][v] > matrix[x][y]:
+                lens = 1 + find(k, v)
+                res = max(lens, res)
+        hMap[x][y] = res
         return res
-
-    for i in range(row + 1):
-        for j in range(colum + 1):
-            max_res = max(find(i, j), max_res)
-
+    max_res = 1
+    for i in range(row):
+        for j in range(colum):
+            max_res = max(max_res, find(i, j))
+    for i in range(row):
+        print(hMap[i])
     return max_res
+
 
 
 def countSmaller(nums):
@@ -253,4 +252,6 @@ if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
-    print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
+    print(longestIncreasingPathOne([[3, 4, 5],
+                                    [3, 2, 6],
+                                    [2, 2, 1]]))
