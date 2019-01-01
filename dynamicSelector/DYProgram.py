@@ -24,7 +24,7 @@ def findKthLargest(nums, k):
         i = left
         j = right
         while i < j:
-            while i < j and nums[j] < tmp: ##注意是左边最大，应该从右边开始找
+            while i < j and nums[j] < tmp:  ##注意是左边最大，应该从右边开始找
                 j -= 1
             while i < j and nums[i] >= tmp:
                 i += 1
@@ -176,6 +176,7 @@ def isValidSudoku(board):
 
 def numSquares(n):
     '''
+    279	.完全平方数
     给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
     这个方法超时
     :param n:
@@ -199,6 +200,7 @@ def numSquares(n):
 
 def numSquaresOne(n):
     '''
+    279	.完全平方数
     四平方和定理
     根据四平方和定理，任意一个正整数均可表示为4个整数的平方和，其实是可以表示为4个以内的平方数之和，
     那么就是说返回结果只有1,2,3或4其中的一个，首先我们将数字化简一下，由于一个数如果含有因子4，
@@ -218,9 +220,10 @@ def numSquaresOne(n):
         b = int(math.sqrt(n - i ** 2))
         if i ** 2 + b ** 2 == n:
             return 1 if 0 in [i, b] else 2
+        i += 1
 
     return 3
 
 
 if __name__ == '__main__':
-    print(findKthLargest([3, 2, 1, 5, 6, 4], 2))
+    print(numSquaresOne(12))
