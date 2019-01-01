@@ -84,7 +84,7 @@ def maxProduct(nums):
 
 def wordBreak(s, wordDict):
     '''
-    单词拆分
+    139.单词拆分
     给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，判定 s 是否可以被空格拆分为一个或多个在字典中出现的单词。
     说明：
     拆分时可以重复使用字典中的单词。
@@ -93,13 +93,12 @@ def wordBreak(s, wordDict):
     :param wordDict:
     :return:
     '''
-    dp = [False for i in range(len(s) + 1)]  # dp[i]表示s[0:i]可以拆分成单词
-    dp[0] = True
-    for i in range(1, len(s) + 1):
-        for j in range(len(wordDict)):
-            if i < len(wordDict[j]):
+    dp = [False for i in range(len(s) + 1)]  # 多1防止s长度为0的情况
+    for i in range(1, len(s)+1):
+        for word in wordDict:
+            if i < len(word):
                 continue
-            if dp[i - len(wordDict[j])] and s[i - len(wordDict[j]):i] == wordDict[j]:
+            if dp[i - len(word)] and s[i - len(word):i] == word:
                 dp[i] = True
                 break
     return dp[-1]
@@ -107,7 +106,7 @@ def wordBreak(s, wordDict):
 
 def wordBreakOne(s, wordDict):
     '''
-      单词拆分 II
+    140.单词拆分 II
     给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。返回所有这些可能的句子。
     说明：
     分隔时可以重复使用字典中的单词。
@@ -122,37 +121,33 @@ def wordBreakOne(s, wordDict):
     :return:
     '''
     res = []
-    maxVal = 0
-    for i in wordDict:
-        if len(i) > maxVal:
-            maxVal = len(i)
+    max_val = 0
+    for word in wordDict:
+        max_val = max(max_val, len(word))
 
-    def check(ss):  # 减枝函数
-        dp = [False for i in range(len(ss) + 1)]
+    def check(s):
+        dp = [False for i in range(len(s) + 1)] # 多1防止s长度为0的情况
         dp[0] = True
-        for i in range(1, len(ss) + 1):
+        for i in range(1, len(s) + 1):
             for j in range(len(wordDict)):
                 if i < len(wordDict[j]):
                     continue
-                if dp[i - len(wordDict[j])] and ss[i - len(wordDict[j]):i] == wordDict[j]:
+                if dp[i - len(wordDict[j])] and s[i - len(wordDict[j]):i] == wordDict[j]:
                     dp[i] = True
                     break
         return dp[-1]
 
-    def DFS(ss, r):  # 深度优先遍历
+    def DFS(ss, result):
         if check(ss):
             if ss == "":
-                x = copy.deepcopy(r)
-                r = ""
-                return res.append(x)
-
-            for i in range(maxVal + 1):
-                for j in range(len(wordDict)):
-                    if i <= len(ss) and ss[:i] == wordDict[j]:
-                        DFS(ss[i:], str(r + " " + ss[:i]).strip())
-
-    DFS(s, "")
+                return res.append(result)
+            for i in range(max_val+1):
+                for word in wordDict:
+                    if i <= len(ss) and ss[:i] == word:
+                        DFS(ss[i:], str(result + " " + ss[:i]).strip())
+    DFS(s,"")
     return res
+
 
 
 def maxProfit(prices):
@@ -215,7 +210,6 @@ def maxProfitOne(prices):
     return sell
 
 
-
 if __name__ == '__main__':
-    print(maxProfitOne([1,2,3,0,2]))
+    print(wordBreakTwo("pineapplepenapple",["apple", "pen", "applepen", "pine", "pineapple"]))
     # [1,3,6,7,9,4,10,5,6]
