@@ -2,6 +2,7 @@
 import math
 
 import copy
+from dataStructure import TrieNode
 
 
 class play(object):
@@ -161,85 +162,43 @@ def existOne(board, word):
                 return True
     return False
 
-
-def findWords(board, words):
+def findWords(board: list, words: list):
     '''
-    单词搜索二
-    这种方法会超时
+    212.单词搜索二
     正确解法是 前缀树 + DFS
     :param board:
     :param words:
     :return:
     '''
-    row = len(board[0]) - 1
-    colum = len(board) - 1
-    first = [words[i][0] for i in range(len(words))]
+    row = len(board)
+    colum = len(board[0])
+    res = set()
 
-    def find(word, x, y, p, l):
+    def find(x, y, word, TrieNode):
+        if x >= 0 and x < row and y >= 0 and y < colum and board[x][y] in TrieNode:
+            TrieNode = TrieNode[board[x][y]]
+            word += board[x][y]
+            if TrieNode.get("#", 9) == True:
+                res.append(word)
+            t = board[x][y]
+            board[x][y] = 3
+            find(x + 1, y, word, TrieNode)
+            find(x - 1, y, word, TrieNode)
+            find(x, y + 1, word, TrieNode)
+            find(x, y - 1, word, TrieNode)
+            board[x][y] = t
 
-        if x < 0 or x > colum or y < 0 or y > row or board[x][y] == "0":
-            return False
-        word += board[x][y]
-        if len(word) != 0 and word[-1] != p[l]:
-            return False
-        elif str(word) == p:
-            return True
-
-        t = board[x][y]
-        board[x][y] = "0"
-        bool = find(word, x + 1, y, p, l + 1) or find(word, x, y + 1, p, l + 1) or \
-               find(word, x - 1, y, p, l + 1) or find(word, x, y - 1, p, l + 1)
-        board[x][y] = t
-        return bool
-
-    res = []
-    for x in range(colum + 1):
-        for y in range(row + 1):
-            if board[x][y] in first:
-                k = []
-                for i in range(len(first)):
-                    if first[i] == board[x][y]:
-                        k.append(i)
-                for i in k:
-                    if find("", x, y, words[i], 0):
-                        first[first.index(board[x][y])] = "-1"
-                        res.append(words[i])
-
-    return list(set(res))
-
-
-def findWordsOne(board: list, words: list):
-    row = len(board) - 1
-    colum = len(board[0]) - 1
-    from dataStructure import TrieNode
-    res = []
-
-    def find(x: int, y: int, p, curNode: TrieNode.Trie):
-
-        p += board[x][y]
-        if curNode.get("#") is not None and curNode["#"] is True:
-            res.append(p[:len(p)])
-        t = board[x][y]
-        board[x][y] = "-1"
-        if x + 1 <= row and board[x + 1][y] in curNode:
-            find(x + 1, y, p, curNode[board[x + 1][y]])
-        if x - 1 >= 0 and board[x - 1][y] in curNode:
-            find(x - 1, y, p, curNode[board[x - 1][y]])
-        if y + 1 <= colum and board[x][y + 1] in curNode:
-            find(x, y + 1, p, curNode[board[x][y + 1]])
-        if y - 1 >= 0 and board[x][y - 1] in curNode:
-            find(x, y - 1, p, curNode[board[x][y - 1]])
-        board[x][y] = t
-
-    node = TrieNode.Trie()
+    root = TrieNode.Trie()
+    tmp = set()
     for i in words:
-        node.insert(i)
-    for x in range(row + 1):
-        for y in range(colum + 1):
-            if board[x][y] in node.root:
-                find(x, y, "", node.root[board[x][y]])
+        root.insert(i)
+        tmp.add(i[0])
+    for i in range(row):
+        for j in range(colum):
+            if board[i][j] in tmp:
+                find(i, j, "", root.root)
 
-    return list(set(res))
+    return res
 
 
 def isMatch(s, p):
@@ -285,8 +244,4 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(existOne([
-        ['A', 'B', 'C', 'E'],
-        ['S', 'F', 'C', 'S'],
-        ['A', 'D', 'E', 'E']
-    ], "ABCCED"))
+    print(findWordsOne([["a","a"]], ["a"]))
