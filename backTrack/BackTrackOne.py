@@ -130,28 +130,25 @@ def partition(s):
 def removeInvalidParentheses(s):
     '''
     TODO 好好理解
-    Remove Invalid Parentheses
+   301.删除无效的括号
     删除最小数量的无效括号，使得输入的字符串有效，返回所有可能的结果。
     说明: 输入可能包含了除 ( 和 ) 以外的字符。
     解法I：深度优先搜索（DFS）+剪枝（Pruning）
 
-利用评价函数计算字符串中未匹配括号的个数
-
-尝试从输入字符串中移除括号，若得到的新字符串的失配括号比原字符串少，则继续搜索；
-
-否则剪枝。
+    利用评价(剪枝)函数计算字符串中未匹配括号的个数，例如 ”)(“这样的字符串就应该为2
+    尝试从输入字符串中移除括号，若得到的新字符串的失配括号比原字符串少，则继续搜索；
+    否则剪枝。
     :param s:
     :return:
     '''
-    pass
     res = []
     mp = {"(": 1, ")": -1}
 
-    def vaildate(subString):
+    def vaildate(subString):  # 剪枝函数，判断不合格的括号有几个
         a = b = 0
-        for i in subString:
+        for i in subString:  # 右括号多 b+1 ,左括号多a+1
             a += mp.get(i, 0)
-            b += a < 0
+            b += (a < 0)  # a<0 如果不加数字就是True False,加数字就变成0/1
             a = max(a, 0)
         return a + b
 
@@ -173,4 +170,4 @@ def removeInvalidParentheses(s):
 
 
 if __name__ == '__main__':
-    print(partition("aab"))
+    print(removeInvalidParentheses("X("))
