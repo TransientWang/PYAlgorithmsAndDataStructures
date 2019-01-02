@@ -113,17 +113,17 @@ def partition(s):
             end -= 1
         return True
 
-    def find(string, result, index):
-        if index == len(string):
+    def find(result=[], index=0):
+        if index == len(s):
             res.append(result)
-        for i in range(index, len(string) + 1):
-            if string[index:i] != "" and isPalindrome(string[index:i]):
+        for i in range(index, len(s) + 1):
+            if s[index:i] != "" and isPalindrome(s[index:i]):
                 if index == 0:
-                    find(string, [string[index:i]], i)
+                    find([s[index:i]], i)
                 else:
-                    find(string, result + [string[index:i]], i)
+                    find(result + [s[index:i]], i)
 
-    find(s, [], 0)
+    find()
     return res
 
 
@@ -173,4 +173,4 @@ def removeInvalidParentheses(s):
 
 
 if __name__ == '__main__':
-    print(partitions("aab"))
+    print(partition("aab"))
