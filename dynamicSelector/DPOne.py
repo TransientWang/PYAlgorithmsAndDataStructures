@@ -211,5 +211,6 @@ def maxProfitOne(prices):
 
 
 if __name__ == '__main__':
-    print(wordBreakTwo("pineapplepenapple",["apple", "pen", "applepen", "pine", "pineapple"]))
+    pass
+    # print(wordBreakTwo("pineapplepenapple",["apple", "pen", "applepen", "pine", "pineapple"]))
     # [1,3,6,7,9,4,10,5,6]
