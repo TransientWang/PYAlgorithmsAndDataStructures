@@ -75,12 +75,12 @@ def generateParenthesis(n):
         '''
         if score < 0:  # 剪枝条件
             return
-        if h == n * 2: #终结条件
+        if h == n * 2:  # 终结条件
             if score == 0:
                 res.append(tmp)
             return
 
-        for i in range(2): #dfs过程
+        for i in range(2):  # dfs过程
             backTrack(h + 1, tmp + Parenth[i], score + 1 if i == 0 else score - 1)
 
     backTrack(0, "", 0)
@@ -89,14 +89,13 @@ def generateParenthesis(n):
 
 def partition(s):
     '''
-    分割回文串
+    131.分割回文串
     给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
     返回 s 所有可能的分割方案。
     思路:用一个index保存，当前遍历字符串的起始位置。然后从0开始，遇到回文串而且index==0说明刚开始分割，接下来的分割
-    应该是跟它一组的，所以新创建一个列表，如果不是就将现在的回文串加入，参数列表当中。
+    应该是跟它一组的，所以新创建一个列表，如果不是就将现在的回文串加入当前参数列表当中。
     如果index==len(s)则说明已经遍历完这个字符串了，可以将。参数列表加入结果集当中了。注意的是，它应该在 循环 外表，
     不然结果集会重复
-
     :param s:
     :return:
     '''
@@ -174,4 +173,4 @@ def removeInvalidParentheses(s):
 
 
 if __name__ == '__main__':
-    print(generateParenthesis(3))
+    print(partitions("aab"))
