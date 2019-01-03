@@ -192,21 +192,36 @@ def numRescueBoats(people, limit):
 
 
 def isMatch(s, p):
-    if len(p) == 0:
-        return len(s) == 0;
-    if len(p) == 1:
+    '''
+    TODO 多看看
+     10.正则表达式匹配
+    - 若p为空，若s也为空，返回true，反之返回false
+    - 若p的长度为1，若s长度也为1，且相同或是p为'.'则返回true，反之返回false
+    - 若p的第二个字符不为*，若此时s为空返回false，否则判断首字符是否匹配，且从各自的第二个字符开始调用递归函数匹配
+    - 若p的第二个字符为*，若s不为空且字符匹配，调用递归函数匹配s和去掉前两个字符的p，若匹配返回true，否则s去掉首字母
+    - 返回调用递归函数匹配s和去掉前两个字符的p的结果
+
+    :param s:
+    :param p:
+    :return:
+    '''
+    if len(p) == 0:  # 如果p的长度为0，如果s的长度为0则匹配成功，否则匹配失败
+        return len(s) == 0
+    if len(p) == 1:  # 如果p的长度为1，如果s的长度也为1并且s[0]==p[0]或者p[0]=="." 则匹配成功，否则匹配失败
         return len(s) == 1 and (p[0] == s[0] or p[0] == ".")
 
-    if p[1] != "*":
+    if p[1] != "*":  # 如果p的第一个字符不是"*" 如果s的长度为0则匹配失败，如果s,p第一个字符匹配成功，则继续匹配下一个字符
         if len(s) == 0:
             return False
         return (p[0] == s[0] or p[0] == ".") and isMatch(s[1:], p[1:])
-    f = isMatch
-    while len(s) != 0 and (s[0] == p[0] or p[0] == "."):
-        if f(s, p[2:]):
+
+    while len(s) != 0 and (s[0] == p[0] or p[0] == "."):  # 如果p的第一个字符是*，并且s的长度不为0，则尝试匹配第一个字符，成功了尝试匹配*后面的字符
+        if isMatch(s, p[2:]):  # 匹配*后面的字符成功直接返回，失败了将s后移一位继续尝试匹配
             return True
         s = s[1:]
-    return isMatch(s, p[2:])
+    return isMatch(s, p[2:])  # 如果s和p的第一个字符不匹配，则尝试匹配*后面的字符和s
+
+
 
 
 def removeDuplicates(nums):
@@ -282,5 +297,4 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(leastIntervalOne(["A","A","A","B","B","B"],
-2))
+    print(isMatchOne("sss", "s*s"))
