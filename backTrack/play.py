@@ -162,6 +162,7 @@ def existOne(board, word):
                 return True
     return False
 
+
 def findWords(board: list, words: list):
     '''
     212.单词搜索二
@@ -204,7 +205,7 @@ def findWords(board: list, words: list):
 def isMatch(s, p):
     """
     TODO 好好看看
-    通配符
+    44.通配符
     思路：贪心算法。
     问题的关键在于’*’,而不是’?’。因为’?’只能与单个字符匹配。
     而’*’可以不匹配任何字符或者匹配一个或多个。
@@ -224,16 +225,16 @@ def isMatch(s, p):
     s_start = 0  # 在遇到*的时候的
     p_start = -1  # 在遇到*
     while s_index < len_s:
-        if p_index < len_p and p[p_index] == "*":
+        if p_index < len_p and p[p_index] == "*":  # 如果遇到了 * ，那么记录当前遇到 * 时候s和p的索引位置
             p_start = p_index
-            p_index += 1
+            p_index += 1  # p_index后移一位，尝试匹配 * 匹配0长度字符是否成功
             s_start = s_index
         elif p_index < len_p and (p[p_index] == "?" or p[p_index] == s[s_index]):
             p_index += 1
             s_index += 1
-        elif p_start > -1:  # 如果p_index>0说明曾经碰见过 *，而且p[p_index]现在是*后面的第一个字母但是与是不匹配
-            s_start += 1  # ，因为*可以匹配任意的字符串 ，而且当前的字符并不匹配P串后面的字符，所以将S串要开始的索引后移一位
-            s_index = s_start
+        elif p_start > -1:  # 如果p_index>0说明曾经碰见过 *，并且 * 尝试匹配之前（有可能是0,1……）的长度字符不成功，
+            s_start += 1  # 尝试将 * 匹配长度增加1
+            s_index = s_start  # 重新记录起始字符索引的位置
             p_index = p_start
         else:
             return False
@@ -244,4 +245,4 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(findWordsOne([["a","a"]], ["a"]))
+    print(tmps("mississippi", "m??*ss*?i*pi"))
