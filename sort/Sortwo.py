@@ -5,23 +5,34 @@ import copy
 
 def wiggleSort(nums):
     '''
+    324.摆动排序 II
+    :param nums:
+    :return:
+    '''
+    t = nums[:]
+    t.sort()
+    i = 1
+    while i < len(nums):
+        nums[i] = t.pop()
+        i += 2
+    i = 0
+    while i < len(nums):
+        nums[i] = t.pop()
+        i += 2
+
+
+def wiggleSortOne(nums):
+    '''
+    324.摆动排序 II
+    nums[::2]最后一个2是每隔两个提出来
     摆动排序
     :param nums:
     :return:
     '''
-    t = copy.deepcopy(nums)
-    t.sort()
-    lens = len(nums)
-    i = 1
-    tmp = [0 for i in range(lens)]
-    while i < lens:
-        tmp[i] = t.pop()
-        i += 2
-    i = 0
-    while i < lens:
-        tmp[i] = t.pop()
-        i += 2
-    return tmp
+    print(nums[::-1])
+    nums.sort()
+    half = len(nums[::2]) - 1
+    nums[::2], nums[1::2] = nums[half::-1], nums[:half:-1]
 
 
 def findMedianSortedArrays(nums1, nums2):
@@ -70,4 +81,4 @@ def findMedianSortedArrays(nums1, nums2):
 
 
 if __name__ == '__main__':
-    print(findMedianSortedArrays([1, 3], [2]))
+    print(wiggleSortOne([1, 2, 3, 4, 5, 6, 7, 8, 9]))
