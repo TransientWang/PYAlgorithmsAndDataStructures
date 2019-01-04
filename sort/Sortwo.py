@@ -80,5 +80,63 @@ def findMedianSortedArrays(nums1, nums2):
     return t
 
 
+def kthSmallest(matrix, k):
+    '''
+    378	.有序矩阵中第K小的元素
+    思路：二分法，如果横向比较那么上一行的元素，不一定全比当前元素小，但是当前元素数值方向上面的元素一定比当前元素小
+    :param matrix:
+    :param k:
+    :return:
+    '''
+    def getMid(mid):
+        """
+        二分法，从左下角开始
+        只在向右移动时候计数数值方向上的元素个数
+        :param mid:
+        :return:
+        """
+        n = len(matrix)
+        res = 0
+        i = n - 1
+        j = 0
+        while i >= 0 and j < n:
+            if matrix[i][j] > mid:
+                i -= 1
+            else:
+                res += i + 1   # 每次向右移动一位，该值竖直方向向上（包括该值）的i+1位都一定小于预期值
+                j += 1
+        return res
+
+    n = len(matrix)
+    low = matrix[0][0]
+    high = matrix[n - 1][n - 1]
+    while low < high:
+        mid = low + (high - low) // 2
+        count = getMid(mid)
+        if count < k:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return low
+
+
+def getMid(matrix, mid):
+    n = len(matrix)
+    res = 0
+    i = n - 1
+    j = 0
+    while i >= 0 and j < n:
+        if matrix[i][j] > mid:
+            i -= 1
+        else:
+            res += i + 1
+            j += 1
+    return res
+
+
 if __name__ == '__main__':
-    print(wiggleSortOne([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+    print(getMid([
+        [1, 5, 9],
+        [10, 11, 13],
+        [12, 13, 15]
+    ], 13))
