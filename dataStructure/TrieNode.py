@@ -59,6 +59,6 @@ def startsWith(self, prefix):
 
 
 if __name__ == '__main__':
-    trie = Trie()
-    trie.insert("wong")
-    print()
+    pass
+
+
