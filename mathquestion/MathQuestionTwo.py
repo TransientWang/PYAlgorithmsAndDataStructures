@@ -243,6 +243,7 @@ def log(func):
 
 def largestNumber(nums):
     '''
+    179.最大数
     考察排序 贪心思想
     关键在于排序的规则
     考虑：如果位数相同的话，那么大的肯定应该在高位
@@ -251,15 +252,16 @@ def largestNumber(nums):
     最大数
     :param nums:
     :return:
-    '''
+    # '''
     res = ""
     from functools import cmp_to_key
     comp = cmp_to_key(lambda a, b: int(b + a) - int(a + b))
     return "".join(sorted(map(str, nums), key=comp)).lstrip("0") or "0"
 
 
+
 if __name__ == '__main__':
-    print(getSum(11, 23))
-    print( ~(-2147483649^0xFFFFFFFF))
+    print(largestNumber([3, 30, 34, 5, 9]))
+    print(~(-2147483649 ^ 0xFFFFFFFF))
 
     # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
