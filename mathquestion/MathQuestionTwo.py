@@ -199,8 +199,20 @@ class Point:
         self.y = b
 
 
+def log(func):
+    def wrapper(*args, **kw):
+        print("直线上最多的点数")
+        res = func(*args, **kw)
+
+        return res
+
+    return wrapper
+
+
+@log
 def maxPoints(points):
     '''
+    149	.直线上最多的点数
     hash
     给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。
     时间复杂度 o(n)=n²
@@ -212,34 +224,28 @@ def maxPoints(points):
     :param points:
     :return:
     '''
+    if len(points) == 0:
+        return 0
+    if len(points) == 1:
+        return 1
     r = 0
-    for i in range(len(points)):
+    for p in points:
+        dMap = {}
         res = 0
-        dpMap = {}
-        p = points[i]
         same = 0
-        for point in points:
-            if p.x == point.x and p.y == point.y:
+        for k in points:
+            if p.x == k.x and p.y == k.y:
                 same += 1
                 continue
-            d = float((p.x - point.x) / (p.y - point.y)) if p.y != point.y else 10000
-            if dpMap.get(d) is None:
-                dpMap[d] = 1
+            d = float((p.x - k.x) / (p.y - k.y)) if p.y != k.y else "#"
+            if dMap.get(d, -1) == -1:
+                dMap[d] = 1
             else:
-                dpMap[d] += 1
-            res = max(dpMap[d], res)
-        r = max(r, res + same)
+                dMap[d] += 1
+            res = max(res, dMap[d])
+        r = max(res + same, r)
 
     return r
-
-
-def log(func):
-    def wrapper(*args, **kw):
-        print('call %s():' % func.__name__)
-        return func(*args, **kw)
-
-    return wrapper
-
 
 def largestNumber(nums):
     '''
@@ -259,9 +265,6 @@ def largestNumber(nums):
     return "".join(sorted(map(str, nums), key=comp)).lstrip("0") or "0"
 
 
-
 if __name__ == '__main__':
-    print(largestNumber([3, 30, 34, 5, 9]))
-    print(~(-2147483649 ^ 0xFFFFFFFF))
-
-    # , Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]
+    print(maxPoints([Point(3, 2), Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]))
+    # print(~(-2147483649 ^ 0xFFFFFFFF))
