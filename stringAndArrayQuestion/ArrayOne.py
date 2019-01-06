@@ -172,9 +172,11 @@ def maxSlidingWindow(nums, k):
     return res
 
 
+
+
 def largestRectangleArea(heights):
     '''
-    柱状图中最大的矩形
+    84.柱状图中最大的矩形
     给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
     求在该柱状图中，能够勾勒出来的矩形的最大面积。
     思路：如果是一个递增的序列那么，最大值可以为 max(heights[i]*len(heights)) heights.pop(0)
@@ -188,20 +190,22 @@ def largestRectangleArea(heights):
     '''
     stack = []
     res = 0
-    for i in heights:
+    for height in heights:
         t = 1
-        while len(stack) > 0 and i < stack[-1]:
-            tmp = stack.pop() * t
+        while len(stack) != 0 and height < stack[-1]:  # 当前值比前面小的时候
+            res = max(res, stack.pop() * t)  # 求出前面的最大值
             t += 1
-            res = max(tmp, res)
-        while t >= 1:
-            stack.append(i)
+        while t >= 1:  # 将消峰的所有值入栈
+            stack.append(height)
             t -= 1
-    while len(stack) != 0:
+
+    while len(stack) != 0:  # 计算栈中的值
         res = max(res, stack[0] * len(stack))
         stack.pop(0)
     return res
 
 
+
+
 if __name__ == '__main__':
-    print(maxSlidingWindow([1, -1], 1))
+    print(largestRectangleAreaOne([2, 1, 5, 6, 2, 3]))
