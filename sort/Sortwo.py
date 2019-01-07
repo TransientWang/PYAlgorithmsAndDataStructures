@@ -148,8 +148,7 @@ from heapq import *
 
 def getSkyline(buildings):
     from functools import cmp_to_key
-
-    """
+    ''' 
     218.天际线问题
     :param self:
     :param buildings:
@@ -162,7 +161,7 @@ def getSkyline(buildings):
     接下来考虑更多建筑物的情况，从左到右扫描，当我们遇到第一个楼的左边界时，把它push到一个heap中。
     如果后面扫描的楼的高度比heap中最高的楼还高，那么它的左上顶点一定会被加入到skyline中。
     当我们遇到一个building的右边界时,我们需要将其从heap中pop掉，如果heap中max height有变化，则push到结果中。
-    """
+    '''
     # from collections import defaultdict
     # from heapq import heappush, heappop
     #
@@ -198,7 +197,7 @@ def getSkyline(buildings):
     #
     # return result
 
-    idx, n = 0, len(buildings)
+    idx, n = 0, len(buildings) # TODO  没有完全理解
     liveBuildings, skyLine = [], []
     # liveBuildings：左上顶点已经加入结果集skyLine 但右上顶点还没有处理的building的右上顶点的集合
     # skyLine : 结果集
