@@ -65,20 +65,20 @@ def canJumpTwo(nums):
     :param nums:
     :return:
     '''
-
-    count = 0
-    i = 0
-    while i < len(nums):
-        if i + nums[i] >= len(nums) - 1:
-            count += 1
+    step = 0
+    over = len(nums) - 1
+    idx = 0
+    while idx < over:
+        if idx + nums[idx] >= over:  # 如果当前位置能达到最远处 > 数组长度，则直接返回
+            step += 1
             break
-        max_pos = i
-        for j in range(i + 1, i + nums[i]):
-            if nums[max_pos] + max_pos <= nums[j] + j:
-                max_pos = j
-        i = max_pos
-        count += 1
-    return count
+        max_pos = idx  # 记录当前达到的最远位置
+        for i in range(idx + 1, idx + nums[idx] + 1):  # 贪心选择下一步走哪个位置能达到最远
+            if nums[max_pos] + max_pos <= nums[i] + i:  # 如果下一步能达到的最远 比当前能达到的最远更优
+                max_pos = i  # 记录最优值
+        idx = max_pos  # 跟新最优下一步
+        step += 1
+    return step
 
 
 def reconstructQueue(people):
@@ -107,9 +107,8 @@ def reconstructQueue(people):
             return x1[1] - x2[1]
 
     re = []
-    compare = cmp_to_key(lambda a, b:comp(a, b))
+    compare = cmp_to_key(lambda a, b: comp(a, b))
     people.sort(key=compare)
-
 
     for i in people:
         re.insert(i[1], i)
@@ -295,4 +294,4 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]))
+    print(canJumpTwo([2, 3, 1, 1, 4]))
