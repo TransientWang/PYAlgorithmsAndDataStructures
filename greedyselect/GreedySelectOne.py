@@ -81,36 +81,36 @@ def canJumpTwo(nums):
     return count
 
 
-def comp(x1, x2):
-    '''
-    假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
-    k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
-    每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
-
-    '''
-
-    if x1[0] - x2[0] > 0:
-        return 1
-    elif x1[0] - x2[0] < 0:
-        return -1
-    else:
-        return x2[1] - x1[1]
-
-
 def reconstructQueue(people):
     '''
+    406.根据身高重建队列
     思路：先按H降序K升序 重排序原数组
     然后按K位置插入
     如果H小的人先排徐插入，那么他就受到没有排徐插入人的影响 ，有可能排在他的前面
     而贪心选择的思想是只关心已经排好序的，所以 应该先按身高从大到小排序
     这样 他在插入时候已经是最大的值考虑已经插入的，不用考虑剩下没插入的
     '''
+    from functools import cmp_to_key
+    def comp(x1, x2):
+        '''
+        假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
+        k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
+        每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
+
+        '''
+
+        if x1[0] - x2[0] < 0:
+            return 1
+        elif x1[0] - x2[0] > 0:
+            return -1
+        else:
+            return x1[1] - x2[1]
+
     re = []
-    compare = comp
-    people.sort(cmp=compare, reverse=True)
-    people.reverse()
-    print(people)
-    people.reverse()
+    compare = cmp_to_key(lambda a, b:comp(a, b))
+    people.sort(key=compare)
+
+
     for i in people:
         re.insert(i[1], i)
     return re
@@ -222,8 +222,6 @@ def isMatch(s, p):
     return isMatch(s, p[2:])  # 如果s和p的第一个字符不匹配，则尝试匹配*后面的字符和s
 
 
-
-
 def removeDuplicates(nums):
     '''
     26.删除排序数组中的重复项
@@ -297,4 +295,4 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(isMatchOne("sss", "s*s"))
+    print(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]))
