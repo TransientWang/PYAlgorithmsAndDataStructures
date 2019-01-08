@@ -41,31 +41,31 @@ def threeSum(nums):
 
 def threeSumClosest(nums, target):
     '''
-    最接近的三数之和
+    16.最接近的三数之和
     与三数值和思路差不多
     但是要注意的是tmp需要与target比较
     :param nums:
     :param target:
     :return:
     '''
-    res = 10000000
+    res = 10000
     nums.sort()
     r = 0
-    for i in range(len(nums) - 2):
-        left = i + 1
+    for i in range(len(nums)-2):
+        tmp = nums[i]
+        left = i+1
         right = len(nums) - 1
-        while right > left:
-            tmp = nums[i] + nums[left] + nums[right]
-            if abs(tmp - target) < res:
-                res = abs(tmp - target)
-                r = nums[i] + nums[left] + nums[right]
-            if tmp > target:
-                left += 1
-            elif tmp < target:
+        while left < right:
+            num = tmp + nums[left] + nums[right]
+            if abs(target - num) < res:
+                res = abs(target - num)
+                r = num
+            if num == target:
+                return target
+            elif num > target:
                 right -= 1
             else:
-                return target
-
+                left += 1
     return r
 
 
@@ -234,7 +234,5 @@ def increasingTriplet(nums):
     return False
 
 
-
-
 if __name__ == '__main__':
-    print(increasingTriplet([2, 5, 3, 4, 5]))
+    print(threeSumClosest([-1, 2, 1, -4], 1))
