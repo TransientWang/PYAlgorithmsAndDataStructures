@@ -32,17 +32,6 @@ def maxPathSum(root):
     :param root:
     :return:
     '''
-    # def find(root, sums):
-    #     if not root:
-    #         return 0
-    #     left = max(find(root.left, sums), 0)
-    #     right = max(find(root.right, sums), 0)
-    #     sums[0] = max(sums[0], left + right + root.val)
-    #     return max(left, right) + root.val
-    #
-    # sums = [-1000]
-    # find(root, sums)
-    # return sums[0]
 
     sums = [-10000]
 

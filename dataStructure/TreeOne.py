@@ -19,6 +19,7 @@ def inorderTraversal(root):
     #         find(root.right)
     # find(root)
     # return res
+    # 迭代
     stack = []
     cur = root
     res = []
@@ -182,6 +183,7 @@ def numIslands(grid):
     :param grid:
     :return:
     '''
+
     def find(x, y):
         if x > -1 and x < len(grid) and y > -1 and y < len(grid[0]) and grid[x][y] == "1":
             grid[x][y] = "0"
@@ -205,14 +207,15 @@ if __name__ == '__main__':
     t.left.left = TreeNode.TreeNode(4)
     t.right = TreeNode.TreeNode(3)
     t.right.right = TreeNode.TreeNode(5)
-    root = TreeLinkNode(1)
+    # root = TreeLinkNode(1)
+    print(inorderTraversal(t))
     # root.left = TreeLinkNode(2)
     # root.right = TreeLinkNode(3)
     # head = buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
     # print(head)
-    grid = [["1", "1", "1", "1", "0"],
-            ["1", "1", "0", "1", "0"],
-            ["1", "1", "0", "0", "0"],
-            ["0", "0", "0", "0", "0"]]
-    numIslands(grid)
-    print(grid)
+    # grid = [["1", "1", "1", "1", "0"],
+    #         ["1", "1", "0", "1", "0"],
+    #         ["1", "1", "0", "0", "0"],
+    #         ["0", "0", "0", "0", "0"]]
+    # numIslands(grid)
+    # print(grid)
