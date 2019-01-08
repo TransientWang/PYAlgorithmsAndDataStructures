@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 class RestChain(object):
-    def __init__(self, path="https:/"):
+    def __init__(self, path="https://"):
         self._path = path
         self.name = "测试类"
 
@@ -8,7 +8,7 @@ class RestChain(object):
         return self._path
 
     def users(self, user):
-        return RestChain("users/%s" % user)
+        return RestChain(self._path+"users/%s" % user)
 
     def __getattr__(self, item):
         return RestChain("%s/%s" % (self._path, item))
@@ -17,7 +17,8 @@ class RestChain(object):
         return "这个类是一个rest风格的调用：%s" % self.name
 
 if __name__ == '__main__':
-    print((RestChain().users("wfy").profile.reposiory))
+    print((RestChain().users("wfy").profile.reposiory.kk))
 
     rest = RestChain()
+
     print((rest()))
