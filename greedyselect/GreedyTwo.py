@@ -144,6 +144,24 @@ def lengthOfLISGreedy(nums):
             r[left] = nums[i]
     return len(r)
 
+def intToRoman(num):
+    """
+    12. 整数转罗马数字
+    思路：贪心选择,首先列出所有表达式的字典，然后从大到小遍历字段。当num>k的时候，由于k是当前最大值，所以将k参与计算
+    当num < k 的时候，说明前面到现在已经么有比K更合适的了，只能继续遍历后面更小的值
+    :param self:
+    :param num:
+    :return:
+    """
+
+    hmap = {1000: "M", 900: "CM", 500: "D", 400: "CD", 100: "C", 90: "XC", 50: "L", 40: "XL", 10: "X", 9: "IX", 5: "V",
+            4: "IV", 1: "I"}
+    roman = ""
+    for k, v in hmap.items():
+        while num >= k:
+            roman += v
+            num -= k
+    return roman
 
 if __name__ == '__main__':
     print(singleNumber([1, 2, 2, 4, 5, 5, 1]))

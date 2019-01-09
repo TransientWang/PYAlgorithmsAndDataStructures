@@ -66,10 +66,12 @@ def isPowerOfThree(n):
 
     return b % n == 0
 
-
 def romanToInt(s):
     '''
-    罗马数字转换
+
+    13.罗马数字转整数
+    思路：正常情况下左边罗马数字比右边罗马数字大，这种情况下正常加
+    当出现特殊情况的时候，左边比右边数字小，但是之前已经加上之前的小值了，所以还要将多出来的值减去
     '''
     map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
     result = 0
@@ -77,7 +79,7 @@ def romanToInt(s):
         if i == 0 or map[s[i]] <= map[s[i - 1]]:
             result += map[s[i]]
         else:
-            result = result + map[s[i]] - 2 * map[s[i - 1]]
+            result += (map[s[i]] - 2 * map[s[i - 1]])
     return result
 
 
@@ -270,4 +272,4 @@ def sortColors(nums):
 
 
 if __name__ == '__main__':
-    print(sortColors([2, 0, 2, 1, 1, 0]))
+    print(intToRoman(19))
