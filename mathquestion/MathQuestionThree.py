@@ -46,5 +46,28 @@ def isPalindrome(x):
     return x - int("".join(s)) == 0
 
 
+def convert(s, numRows):
+    """
+    6. Z字形变换(新进度)
+    思路:纵向观察，图形首先从0 行 增加到 numRows -1 ，然后在从 numRows -1 减少 到 0行 ，
+    :type s: str
+    :type numRows: int
+    :rtype: str
+    """
+
+    if numRows == 1 or len(s) < numRows:
+        return s
+    res = [""] * numRows
+    idx, step = 0, 1
+    for i in s:
+        res[idx] += i
+        if idx == 0:
+            step = 1
+        elif idx == numRows - 1:
+            step = -1
+        idx += step
+    return "".join(res)
+
+
 if __name__ == '__main__':
-    print(fractionToDecimal(2,3))
+    print(convert("LEETCODEISHIRING", 3))

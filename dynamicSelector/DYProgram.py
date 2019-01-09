@@ -93,12 +93,11 @@ def minimumTotal(triangle):
     return min(r[len(triangle) - 1])
 
 
-'''
-两数之和 同一个元素不能被重复利用
-'''
-
 
 def twoSum(nums, target):
+    '''
+    两数之和 同一个元素不能被重复利用
+    '''
     dict = {}
     result = []
     for i in range(len(nums)):
