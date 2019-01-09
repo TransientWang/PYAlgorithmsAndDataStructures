@@ -57,5 +57,44 @@ def letterCombinations(digits):
     return res
 
 
+def fourSum(nums, target):
+    """
+    18.四数只和
+    思路：
+    :type nums: List[int]
+    :type target: int
+    :rtype: List[List[int]]
+    """
+    results = []
+    nums.sort()
+
+    def findNsum(left, right, target, N, result):
+        if right - left + 1 < N or N < 2 or target < nums[left] * N or target > nums[right] * N:
+            return
+        if N == 2:
+            while left < right:
+                s = nums[left] + nums[right]
+                if s == target:
+                    results.append(result + [nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+                elif s < target:
+                    left += 1
+                else:
+                    right -= 1
+        else:
+            for i in range(left, right + 1):
+                if i == left or (i > left and nums[i] != nums[i - 1]):
+                    findNsum(i + 1, right, target - nums[i], N - 1, result + [nums[i]])
+
+    findNsum(0, len(nums) - 1, target, 4, [])
+
+    return results
+
+
 if __name__ == '__main__':
     letterCombinations("23")
