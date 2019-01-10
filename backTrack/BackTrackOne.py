@@ -169,5 +169,51 @@ def removeInvalidParentheses(s):
     return res if len(res) > 0 else [""]
 
 
+def findSubstring(s, words):
+    """
+    30. 与所有单词相关联的字串
+    :type s: str
+    :type words: List[str]
+    :rtype: List[int]
+    """
+
+    def findans(sstart, lens, lenword, lensubs, s, times, ans):
+        wstart = sstart
+        cur = {}
+        while (sstart + lensubs <= lens):
+            word = s[wstart:wstart + lenword]
+            wstart += lenword
+            if word in times:
+                if word in cur:
+                    cur[word] += 1
+                else:
+                    cur[word] = 1
+                while cur[word] > times[word]:
+                    cur[s[sstart:sstart + lenword]] -= 1
+                    sstart += lenword
+                if wstart - sstart == lensubs:
+                    ans.append(sstart)
+            else:
+                cur.clear()
+                sstart = wstart
+
+    if not s or not words:
+        return []
+    lens = len(s)
+    lenword = len(words[0])
+    lensubs = len(words) * lenword
+    times = {}
+    for word in words:
+        if word in times:
+            times[word] += 1
+        else:
+            times[word] = 1
+    res = []
+    for i in range(min(lenword, lens - lensubs + 1)):
+        findans(i, lens, lenword, lensubs, s, times, res)
+    return res
+
+
 if __name__ == '__main__':
-    print(removeInvalidParentheses("X("))
+    print(findSubstring("barfoothefoobarman",
+["foo","bar"]))
