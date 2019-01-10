@@ -172,28 +172,29 @@ def removeInvalidParentheses(s):
 def findSubstring(s, words):
     """
     30. 与所有单词相关联的字串
+    解决办法：hash+指针
     :type s: str
     :type words: List[str]
     :rtype: List[int]
     """
 
     def findans(sstart, lens, lenword, lensubs, s, times, ans):
-        wstart = sstart
+        wstart = sstart  # 首先存储初始位置
         cur = {}
-        while (sstart + lensubs <= lens):
-            word = s[wstart:wstart + lenword]
-            wstart += lenword
+        while (sstart + lensubs <= lens):  # 当前位置+words总长小于s长度
+            word = s[wstart:wstart + lenword]  # 记录当前位置单词
+            wstart += lenword  # 初始位置后移
             if word in times:
-                if word in cur:
+                if word in cur:  # 记录单词出现次数
                     cur[word] += 1
                 else:
                     cur[word] = 1
-                while cur[word] > times[word]:
-                    cur[s[sstart:sstart + lenword]] -= 1
-                    sstart += lenword
+                while cur[word] > times[word]:  # 当cur中的word值大于times的时候，word单词有重复，word之前的单词已经不会符合要求，指针后移
+                    cur[s[sstart:sstart + lenword]] -= 1  # 减少cur中的值
+                    sstart += lenword  # 初始值后移到满足条件的位置
                 if wstart - sstart == lensubs:
                     ans.append(sstart)
-            else:
+            else:  # 没有匹配单词直接将初始值后移，重新开始
                 cur.clear()
                 sstart = wstart
 
@@ -202,7 +203,7 @@ def findSubstring(s, words):
     lens = len(s)
     lenword = len(words[0])
     lensubs = len(words) * lenword
-    times = {}
+    times = {}  # 记录words的单词出现次数
     for word in words:
         if word in times:
             times[word] += 1
@@ -215,5 +216,5 @@ def findSubstring(s, words):
 
 
 if __name__ == '__main__':
-    print(findSubstring("barfoothefoobarman",
-["foo","bar"]))
+    print(findSubstring("barfoofoothefoobarman",
+                        ["foo", "bar"]))
