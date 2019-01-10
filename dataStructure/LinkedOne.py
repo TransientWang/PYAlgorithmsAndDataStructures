@@ -75,12 +75,16 @@ def reverseListOne(head):
     '''
     206.反转链表 迭代
     将当前的下一个赋值给下次循环的当前值，根据传入头找到链表的尾
-    多重赋值，等号右边从左到右首先完成计算，然后从右到左复制给左边
+    多重赋值，等号右边从左到右首先完成计算，然后等号左边从左到右边赋值
     将等号左右两边认为成元组，右边元组先完成计算，然赋值给左边元组等号一遍的顺序可以调换。
     '''
     cur, pre = head, None
     while cur:
         cur.next, cur, pre = pre, cur.next, cur  # 逻辑：将cur赋值给pre|cur游标后移一位|cur.next->pre
+        # 首先等号右边的三个值已经被记录，也就是cur.next现在就是持有cur.next节点。
+        # 赋值的时候 等号左边 第一个先赋值，此时cur.next 指向pre（此时为null）,然后第二个赋值，cur移动到了已经记录的cur.next
+        # 位置（即使cur的下一个节点已经指向为null，但是由于cur.next提前记录好了所以赋值没有问题），最后是将pre移动到已经记录好的
+        # cur原位置（右边cur的引用还指向原处，不会因为其他赋值语句而变化）
     return pre
 
 
@@ -90,11 +94,12 @@ def reverseListTwo(head):
     先直接走到倒数第二个一个节点，
     然后逆置倒数第一个节点，返回递归
     '''
-    if head.__next__ == None:
+    if head.next == None:
         return head  # 尾节点返回
-    new_head = reverseListTwo(head.__next__)  # 当最后一次返回的时候new_head 为倒数第一个节点
+    new_head = reverseListTwo(head.next)  # 当最后一次返回的时候new_head 为倒数第一个节点
     head.next.next = head  # 第一次返回后处理的节点head 此时还是倒数第二个，这样就可以将最后两个逆置了
-    head.next = None  # 返回的new_head注意在if中是head,next也就是5，所以上一行代表吧new_head,next 5 指向 head 4
+    head.next = None  # 逆置过后此时最后两个节点的next指针值互相指向对方，
+    # 此时要把倒数第二个指向置null，然后将倒数第一个节点返回
     # 然后将 new_head返回递归调用
     return new_head
 
@@ -174,7 +179,6 @@ def isPalindrome(head):
     return True
 
 
-
 def hasCycle(head):
     '''
     141.环形链表
@@ -214,14 +218,14 @@ def hasCycleOne(head):
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(2)
-    head.next.next.next = ListNode.ListNode(1)
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
 
     # end = ListNode.ListNode(2)
     # end.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    print(isPalindrome(head))
+    print(reverseListTwo(head))
     # print(c)
     # while c.next != None:
     #     print(c.val)
