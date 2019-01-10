@@ -143,5 +143,35 @@ def levelOrder(root):
     return res
 
 
+from dataStructure import ListNode
+
+
+def swapPairs(head):
+    """
+    24. 两两交换链表中的节点
+    思路：1.在链表前面加一个辅助的虚拟节点
+          2.使用递归
+    :param head:
+    :return:
+    """
+    # dummy = ListNode.ListNode(-1)
+    # dummy.next = head
+    # cur = dummy
+    # while cur.next and cur.next.next:
+    #     one, two, three = cur.next, cur.next.next, cur.next.next.next
+    #     cur.next = two
+    #     two.next = one
+    #     one.next = three
+    #     cur = one
+    # return dummy.next
+
+    if not head or not head.next:
+        return head
+    tmp = head.next
+    head.next = swapPairs(head.next.next)
+    tmp.next = head
+    return tmp
+
+
 if __name__ == '__main__':
     isValidBST(None)
