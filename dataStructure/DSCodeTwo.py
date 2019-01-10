@@ -173,5 +173,33 @@ def swapPairs(head):
     return tmp
 
 
+def reverseKGroup(head, k):
+    """
+    25. k个一组翻转链表
+    """
+    if not head:
+        return head
+    cur, nextOne, pre, m = head, None, None, 0
+    while m < k and cur:  # 正常逆置
+        cur.next, cur, pre = pre, cur.next, cur
+        m += 1
+    if m < k:  # 当遍历到最后发现不够长，最后几个需要恢复逆置
+        cur, pre = pre, None
+        while cur:
+            cur.next, cur, pre = pre, cur.next, cur
+        pre = head
+    else:
+        head.next = reverseKGroup(cur, k)
+    return pre
+
+
 if __name__ == '__main__':
-    isValidBST(None)
+    head = ListNode.ListNode(1)
+    head.next = ListNode.ListNode(2)
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(4)
+    head.next.next.next.next = ListNode.ListNode(5)
+    p = reverseKGroup(head, 3)
+    while p:
+        print(p.val)
+        p = p.next
