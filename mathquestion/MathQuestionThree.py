@@ -68,6 +68,21 @@ def convert(s, numRows):
         idx += step
     return "".join(res)
 
+def removeElement(nums, val):
+    """
+    27. 移除元素
+    :type nums: List[int]
+    :type val: int
+    :rtype: int
+    """
+    i = 0
+
+    while i < len(nums):
+        if nums[i] != val:
+            i += 1
+        else:
+            nums.pop(i)
+    return len(nums)
 
 if __name__ == '__main__':
-    print(convert("LEETCODEISHIRING", 3))
+    print(removeElement([3,2,2,3], 3))
