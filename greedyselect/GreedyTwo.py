@@ -158,12 +158,39 @@ def intToRoman(num):
     hlist = ((1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
              (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I'))
     roman = ""
-    for k,v in hlist:
+    for k, v in hlist:
         while num >= k:
             roman += v
             num -= k
     return roman
 
 
+def nextPermutation(nums):
+    """
+    31. 下一个排列
+    思路：每一个序列和比他更大的序列都有一个公共前缀
+    前缀并不需要处理，只考虑不同的后缀
+    如果排列都是降序那么就没有比他更大的值了
+    如果某一位置比他前面的数更大，那么就需要从此处处理排列，
+    从此处向后面找到第一个比它大的数然后交换，
+    交换过后该索引的值变大了，需要注意的是索引后面的值应该变得最小才能得到下一个比较大的值，所以需要逆置
+    :type nums: List[int]
+    :rtype: void Do not return anything, modify nums in-place instead.
+    """
+    if len(nums) < 1:
+        return
+    idx = 0
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] > nums[i - 1]:
+            idx = i
+            break
+    if idx != 0:
+        for i in range(len(nums) - 1, idx - 1, -1):
+            if nums[i] > nums[idx - 1]:
+                nums[i], nums[idx - 1] = nums[idx - 1], nums[i]
+                break
+    nums[idx:] = nums[idx:][::-1]
+
+
 if __name__ == '__main__':
-    print(singleNumber([1, 2, 2, 4, 5, 5, 1]))
+    print(nextPermutation([1, 3, 2]))
