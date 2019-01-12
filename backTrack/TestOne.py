@@ -147,9 +147,31 @@ def solveSudoku(board):
         print(board[i])
 
 
+def combinationSum(candidates, target):
+    """
+    39. 组合总和
+    思路：排序+dfs+范围剪枝
+    :type candidates: List[int]
+    :type target: int
+    :rtype: List[List[int]]
+    """
+    res = []
+    candidates.sort()
+
+    def find(x, d_list):
+        tmp = sum(d_list)
+        if tmp == target:
+            res.append(d_list)
+        elif tmp < target:
+            for i in range(x, len(candidates)):
+                if tmp + candidates[i] <= target or candidates[i] >= target:  # 剪枝条件，首先要排序才有用
+                    find(i, d_list + [candidates[i]])
+                else:
+                    break
+
+    find(0, [])
+    return res
+
+
 if __name__ == '__main__':
-    solveSudoku([["5", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-                 [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-                 ["4", ".", ".", "8", ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-                 [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-                 [".", ".", ".", ".", "8", ".", ".", "7", "9"]])
+    print(combinationSum(candidates=[2, 3, 5], target=8))
