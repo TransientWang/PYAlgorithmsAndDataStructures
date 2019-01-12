@@ -172,7 +172,7 @@ def getSkyline(buildings):
     # for l, r, h in buildings:
     #     points += [(l, -h), (r, h)]
     #
-    # points.sort()
+    # points.sortAndSearch()
     #
     # result = []
     # heights = [0]

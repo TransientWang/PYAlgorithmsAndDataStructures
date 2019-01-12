@@ -68,6 +68,7 @@ def convert(s, numRows):
         idx += step
     return "".join(res)
 
+
 def removeElement(nums, val):
     """
     27. 移除元素
@@ -85,4 +86,4 @@ def removeElement(nums, val):
     return len(nums)
 
 if __name__ == '__main__':
-    print(removeElement([3,2,2,3], 3))
+    pass
