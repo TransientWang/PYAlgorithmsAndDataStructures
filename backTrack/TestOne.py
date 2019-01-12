@@ -3,7 +3,7 @@ import unittest
 import math
 
 
-class MyTestCase(unittest.TestCase):
+class MyTestCase:
     count = 0  # 结果数量
     n = 8;  # 皇后数量
     x = [-1, -1, -1, -1, -1, -1, -1, -1]  # x[i]表示第i个皇后在第几列
@@ -96,5 +96,60 @@ def fourSum(nums, target):
     return results
 
 
+def solveSudoku(board):
+    """
+    37.解数独
+    思路：深度优先搜索+空间换时间
+    :type board: List[List[str]]
+    :rtype: void Do not return anything, modify board in-place instead.
+    """
+
+    row = [[False for i in range(10)] for i in range(9)]  # 某一行的数字被摆放
+    col = [[False for i in range(10)] for i in range(9)]  # 某一列的数字被摆放
+    block = [[False for i in range(10)] for i in range(9)]  # 某一块的数字被摆放
+    for x in range(9):
+        for y in range(9):
+            if board[x][y] != ".":
+                num = int(board[x][y])
+                row[x][num] = True
+                col[y][num] = True
+                block[x // 3 * 3 + y // 3][num] = True
+
+    def find(x, y):
+        while board[x][y] != ".":
+            y += 1
+            if y >= 9:
+                x += 1
+                y = 0
+            if x >= 9:
+                return True
+
+        for i in range(1, 10):
+            block_idx = x // 3 * 3 + y // 3
+
+            if row[x][i] == False and col[y][i] == False and block[block_idx][i] == False:
+                board[x][y] = str(i)
+                row[x][i] = True
+                col[y][i] = True
+                block[block_idx][i] = True
+                if find(x, y):
+                    return True
+                else:
+                    board[x][y] = "."
+                    row[x][i] = False
+                    col[y][i] = False
+                    block[block_idx][i] = False
+        return False
+
+    find(0, 0)
+
+    for i in range(9):
+        print(board[i])
+
+
 if __name__ == '__main__':
-    letterCombinations("23")
+    solveSudoku([["5", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+                 [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+                 ["4", ".", ".", "8", ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+                 [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+                 [".", ".", ".", ".", "8", ".", ".", "7", "9"]])
