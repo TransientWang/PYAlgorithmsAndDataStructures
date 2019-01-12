@@ -173,5 +173,32 @@ def combinationSum(candidates, target):
     return res
 
 
+def combinationSum2(candidates, target):
+    """
+    40. 组合总和2
+    思路：排序+dfs+范围剪枝+已经计算的值略过
+    :type candidates: List[int]
+    :type target: int
+    :rtype: List[List[int]]
+    """
+
+    res = []
+    candidates.sort()
+
+    def find(x, d_list, target):
+        if 0 == target:
+            res.append(d_list)
+            return
+        for i in range(x, len(candidates)):  # x>len(candidates)的情况在for里被过滤了
+            if i > x and candidates[i] == candidates[i - 1]:
+                continue
+            if candidates[i] > target:
+                break
+            find(i + 1, d_list[:] + [candidates[i]], target - candidates[i])
+
+    find(0, [], target)
+    return res
+
+
 if __name__ == '__main__':
-    print(combinationSum(candidates=[2, 3, 5], target=8))
+    print(combinationSum2([10, 1, 2, 7, 6, 1, 5], 8))
