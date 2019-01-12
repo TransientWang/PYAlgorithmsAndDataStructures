@@ -190,9 +190,9 @@ def combinationSum2(candidates, target):
             res.append(d_list)
             return
         for i in range(x, len(candidates)):  # x>len(candidates)的情况在for里被过滤了
-            if i > x and candidates[i] == candidates[i - 1]:
+            if i > x and candidates[i] == candidates[i - 1]:  # 之前的重复值略过
                 continue
-            if candidates[i] > target:
+            if candidates[i] > target:  # 剪枝条件
                 break
             find(i + 1, d_list[:] + [candidates[i]], target - candidates[i])
 
