@@ -40,8 +40,7 @@ def solveNQueens(n):
     :rtype: List[List[str]]
     """
 
-    help = [["." for i in range(n)] for i in range(n)]
-    x = [-1 for i in range(n)]
+    x = [-1 for i in range(n)]  # x[i] 代表第i行第x[i]列
     res = []
 
     def validate(t):
@@ -52,20 +51,44 @@ def solveNQueens(n):
 
     def backtrack(t=0):
         if t >= n:
-            print(list(map(lambda d: "." * d + "Q" + "." * (n - d - 1), x)))
             res.append(map(lambda d: "." * d + "Q" + "." * (n - d - 1), x))
-
             return
         for j in range(n):
             x[t] = j
             if validate(t):
-                help[t][x[t]] = "Q"
                 backtrack(t + 1)
-                help[t][x[t]] = "."
 
     backtrack()
     return res
 
 
+def totalNQueens(n):
+    """
+    52. N皇后 II
+    :type n: int
+    :rtype: int
+    """
+    count = [0]
+    x = [-1 for i in range(n)]
+
+    def validate(t):
+        for i in range(t):
+            if x[i] != -1 and x[t] != -1 and x[i] == x[t] or fabs(t - i) == fabs(x[t] - x[i]):
+                return False
+        return True
+
+    def backtrack(t=0):
+        if t >= n:
+            count[0] += 1
+            return
+        for j in range(n):
+            x[t] = j
+            if validate(t):
+                backtrack(t + 1)
+
+    backtrack()
+    return count[0]
+
+
 if __name__ == '__main__':
-    print(solveNQueens(4))
+    print(totalNQueens(4))
