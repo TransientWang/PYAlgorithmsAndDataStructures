@@ -36,6 +36,7 @@ from copy import deepcopy
 def solveNQueens(n):
     """
     51.N皇后
+    优化：将剪枝函数的条件分别用list记录，空间换时间
     :type n: int
     :rtype: List[List[str]]
     """

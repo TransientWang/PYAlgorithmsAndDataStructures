@@ -150,9 +150,13 @@ class Interval(object):
         self.start = s
         self.end = e
 
+    def __str__(self):
+        return str(self.start + " ," + self.end)
+
 
 def merge(intervals):
     '''
+    56. 合并区间
     给出一个区间的集合，请合并所有重叠的区间。
     输入: [[1,3],[2,6],[8,10],[15,18]]
     输出: [[1,6],[8,10],[15,18]]
@@ -160,26 +164,49 @@ def merge(intervals):
     :param intervals:
     :return:
     '''
-    intervals.sort(key=lambda item: item.start)
-    i = 0
-    while i < len(intervals) - 1:
-        if intervals[i].end >= intervals[i + 1].start or intervals[i].start >= intervals[i + 1].start or intervals[
-            i].end >= intervals[i + 1].end:
-            s = intervals[i].start
-            e = intervals[i].end
-            if intervals[i].end >= intervals[i + 1].start:
-                e = intervals[i + 1].end
-
-            if intervals[i].start >= intervals[i + 1].start:
-                s = intervals[i + 1].start
-            if intervals[i].end >= intervals[i + 1].end:
-                e = intervals[i].end
-            intervals[i].start = s
-            intervals[i].end = e
-            intervals.remove(intervals[i + 1])
+    if not intervals:
+        return []
+    lsts = sorted(intervals, key=lambda x: x.start)
+    res = []
+    s, e = lsts[0].start, lsts[0].end
+    for i in range(1, len(lsts)):
+        if lsts[i].start > e:
+            res.append(Interval(s, e))
+            s = lsts[i].start
+            e = lsts[i].end
+        elif lsts[i].start <= e and lsts[i].end > e:
+            e = lsts[i].end
         else:
-            i += 1
-    return intervals
+            continue
+    res.append(Interval(s, e))
+    return res
+
+
+def insert(intervals, newInterval):
+    '''
+    57. 插入区间
+    给出一个区间的集合，请合并所有重叠的区间。
+    输入: [[1,3],[2,6],[8,10],[15,18]]
+    输出: [[1,6],[8,10],[15,18]]
+    解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+    :param intervals:
+    :return:
+    '''
+    intervals.append(newInterval)
+    lsts = sorted(intervals, key=lambda x: x.start)
+    res = []
+    s, e = lsts[0].start, lsts[0].end
+    for i in range(1, len(lsts)):
+        if lsts[i].start > e:
+            res.append(Interval(s, e))
+            s = lsts[i].start
+            e = lsts[i].end
+        elif lsts[i].start <= e and lsts[i].end > e:
+            e = lsts[i].end
+        else:
+            continue
+    res.append(Interval(s, e))
+    return res
 
 
 def search(nums, target):
@@ -237,9 +264,7 @@ def searchMatrix(matrix, target):
     return False
 
 
-
-
-
 if __name__ == '__main__':
-    print(searchRange([1, 4],
-                      4))
+    i = Interval(1, 4)
+    j = Interval(2, 3)
+    print(merge([i, j]))
