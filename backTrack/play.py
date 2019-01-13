@@ -245,4 +245,5 @@ def isMatch(s, p):
 
 
 if __name__ == '__main__':
-    print(tmps("mississippi", "m??*ss*?i*pi"))
+    p  = play()
+    p.backTrack(10)

@@ -28,5 +28,44 @@ def permuteUnique(nums):
     return res
 
 
+from math import fabs
+
+from copy import deepcopy
+
+
+def solveNQueens(n):
+    """
+    51.N皇后
+    :type n: int
+    :rtype: List[List[str]]
+    """
+
+    help = [["." for i in range(n)] for i in range(n)]
+    x = [-1 for i in range(n)]
+    res = []
+
+    def validate(t):
+        for i in range(t):
+            if x[i] != -1 and x[t] != -1 and x[i] == x[t] or fabs(t - i) == fabs(x[t] - x[i]):
+                return False
+        return True
+
+    def backtrack(t=0):
+        if t >= n:
+            print(list(map(lambda d: "." * d + "Q" + "." * (n - d - 1), x)))
+            res.append(map(lambda d: "." * d + "Q" + "." * (n - d - 1), x))
+
+            return
+        for j in range(n):
+            x[t] = j
+            if validate(t):
+                help[t][x[t]] = "Q"
+                backtrack(t + 1)
+                help[t][x[t]] = "."
+
+    backtrack()
+    return res
+
+
 if __name__ == '__main__':
-    permuteUnique([1, 1, 3])
+    print(solveNQueens(4))
