@@ -192,21 +192,36 @@ def insert(intervals, newInterval):
     :param intervals:
     :return:
     '''
-    intervals.append(newInterval)
-    lsts = sorted(intervals, key=lambda x: x.start)
-    res = []
-    s, e = lsts[0].start, lsts[0].end
-    for i in range(1, len(lsts)):
-        if lsts[i].start > e:
-            res.append(Interval(s, e))
-            s = lsts[i].start
-            e = lsts[i].end
-        elif lsts[i].start <= e and lsts[i].end > e:
-            e = lsts[i].end
-        else:
-            continue
-    res.append(Interval(s, e))
-    return res
+    # intervals.append(newInterval)
+    # lsts = sorted(intervals, key=lambda x: x.start)
+    # res = []
+    # s, e = lsts[0].start, lsts[0].end
+    # for i in range(1, len(lsts)):
+    #     if lsts[i].start > e:
+    #         res.append(Interval(s, e))
+    #         s = lsts[i].start
+    #         e = lsts[i].end
+    #     elif lsts[i].start <= e and lsts[i].end > e:
+    #         e = lsts[i].end
+    #     else:
+    #         continue
+    # res.append(Interval(s, e))
+    # return res
+    # 另一个方法
+    s, e = newInterval.start, newInterval.end
+    # 因为题干已经确定是不重叠的了，分别肯定不重叠的部分分别取出于left，right
+    left = [i for i in intervals if i.end < s]
+    right = [i for i in intervals if i.start > e]
+
+    # 如果总和对不上，说明一定可以有合并的地方
+    if left + right != intervals:
+        s = min(s, intervals[len(left)].start)
+        # 这里比较巧妙的是 ~len(right) 利用 “在列表索引中取反” 直接定位到新的一个元素！！！
+        # right=1, ~right=-2
+        # right=2, ~irght=-3
+        # right=3, ~right=-4 正好取到下一个
+        e = max(e, intervals[~len(right)].end)  # ~len(right)==-(len(right)+1)代表 intervals中比新加入元素 end 大的位置
+    return left + [Interval(s, e)] + right
 
 
 def search(nums, target):
@@ -265,6 +280,7 @@ def searchMatrix(matrix, target):
 
 
 if __name__ == '__main__':
-    i = Interval(1, 4)
-    j = Interval(2, 3)
-    print(merge([i, j]))
+    i = Interval(1, 3)
+    j = Interval(6, 9)
+    n = Interval(2, 5)
+    print(insert([i, j], n))
