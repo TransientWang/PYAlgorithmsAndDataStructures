@@ -154,5 +154,25 @@ def getPermutation(n, k):
     return seq
 
 
+def combine(n, k):
+    """
+    77. 组合
+    从1开始，每次有两个选择
+
+    取1，从后面的n-1个数中取k-1个数
+    不取1，从后面的n-1个数中取k个数
+    :type n: int
+    :type k: int
+    :rtype: List[List[int]]
+    """
+    if n == k or k == 0:  #临界条件
+        return [[i for i in range(1, k + 1)]]
+    res = combine(n - 1, k - 1)  # 选择n
+    res = [lst + [n] for lst in res]
+    res.extend(combine(n - 1, k))  # 不选择 n
+
+    return res
+
+
 if __name__ == '__main__':
     print(getPermutation(4, 15))
