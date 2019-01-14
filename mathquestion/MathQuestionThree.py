@@ -85,5 +85,40 @@ def removeElement(nums, val):
             nums.pop(i)
     return len(nums)
 
+
+def generateMatrix(n):
+    """
+    59. 螺旋矩阵 II
+    思路：横向走完下一次横向步数 -1 ，纵向走完下一次纵向步数 -1
+    定义四个方向 按 右→下→左→上 顺序遍历给数组赋值就可以
+    :type n: int
+    :rtype: List[List[int]]
+    """
+    direct = ((0, 1), (1, 0), (0, -1), (-1, 0))  # 方向
+    result = [[0 for i in range(n)] for i in range(n)]  # 输出数组
+    weight = n  # 横向步数
+    height = n - 1  # 纵向步数
+    x = 0  # 坐标
+    y = -1
+    i = 1  # 赋值
+    k = 0  # 方向辅助
+    while n > 0:
+        for h in range(weight):  # 横向
+            x += direct[k % 4][0]
+            y += direct[k % 4][1]
+            result[x][y] = i
+            i += 1
+        k += 1
+        weight -= 1
+        for h in range(height):  # 纵向
+            x += direct[k % 4][0]
+            y += direct[k % 4][1]
+            result[x][y] = i
+            i += 1
+        height -= 1
+        k += 1
+        n -= 1
+
+
 if __name__ == '__main__':
-    pass
+    generateMatrix(3)
