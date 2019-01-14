@@ -165,14 +165,30 @@ def combine(n, k):
     :type k: int
     :rtype: List[List[int]]
     """
-    if n == k or k == 0:  #临界条件
-        return [[i for i in range(1, k + 1)]]
-    res = combine(n - 1, k - 1)  # 选择n
-    res = [lst + [n] for lst in res]
-    res.extend(combine(n - 1, k))  # 不选择 n
+    ## 递归 反方向
+    # if n == k or k == 0:  # 临界条件
+    #     return [[i for i in range(1, k + 1)]]
+    # res = combine(n - 1, k - 1)  # 选择n
+    # res = [lst + [n] for lst in res]
+    # res.extend(combine(n - 1, k))  # 不选择 n
+    #
+    # return res
 
+    ## DFS 正方向
+    res = []
+
+    def DFS(cur, idx):
+        if len(cur) == k:
+            res.append(cur)
+        elif idx == n + 1:
+            return
+        else:
+            DFS(cur + [idx], idx + 1)
+            DFS(cur, idx + 1)
+
+    DFS([], 1)
     return res
 
 
 if __name__ == '__main__':
-    print(getPermutation(4, 15))
+    print(combine(4, 2))
