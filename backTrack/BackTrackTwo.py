@@ -91,5 +91,69 @@ def totalNQueens(n):
     return count[0]
 
 
+def getPermutation(n, k):
+    """
+    60. 第k个排列
+
+    直接用回溯法做的话需要在回溯到第k个排列时终止就不会超时了, 但是效率依旧感人
+    可以用数学的方法来解, 因为数字都是从1开始的连续自然数, 排列出现的次序可以推
+    算出来, 对于n=4, k=15 找到k=15排列的过程:
+
+    1 + 对2,3,4的全排列 (3!个)
+    2 + 对1,3,4的全排列 (3!个)         3, 1 + 对2,4的全排列(2!个)
+    3 + 对1,2,4的全排列 (3!个)-------> 3, 2 + 对1,4的全排列(2!个)-------> 3, 2, 1 + 对4的全排列(1!个)-------> 3214
+    4 + 对1,2,3的全排列 (3!个)         3, 4 + 对1,2的全排列(2!个)         3, 2, 4 + 对1的全排列(1!个)
+
+    确定第一位:
+        k = 14(从0开始计数)
+        index = k / (n-1)! = 2, 说明第15个数的第一位是3
+        更新k
+        k = k - index*(n-1)! = 2
+    确定第二位:
+        k = 2
+        index = k / (n-2)! = 1, 说明第15个数的第二位是2
+        更新k
+        k = k - index*(n-2)! = 0
+    确定第三位:
+        k = 0
+        index = k / (n-3)! = 0, 说明第15个数的第三位是1
+        更新k
+        k = k - index*(n-3)! = 0
+    确定第四位:
+        k = 0
+        index = k / (n-4)! = 0, 说明第15个数的第四位是4
+    最终确定n=4时第15个数为3214
+
+    :type n: int
+    :type k: int
+    :rtype: str
+    """
+    import math
+    # u, k0 = [-1] * n, 0
+    #
+    # for i in range(n):
+    #     for j in range(n):
+    #         if j + 1 not in u:
+    #             _k0 = k0 + math.factorial(n - i - 1)
+    #             if _k0 >= k:
+    #                 u[i] = j + 1
+    #                 break
+    #             else:
+    #                 k0 = _k0
+    # return ''.join([str(x) for x in u])
+
+    #####
+    seq, k, fact = '', k - 1, math.factorial(n - 1)
+    perm = [i for i in range(1, n + 1)]
+    for i in range(n)[::-1]:
+        curr = perm[int(k // fact)]
+        seq += str(curr)
+        perm.remove(curr)
+        if i > 0:
+            k %= fact
+            fact /= i
+    return seq
+
+
 if __name__ == '__main__':
-    print(totalNQueens(4))
+    print(getPermutation(4, 15))
