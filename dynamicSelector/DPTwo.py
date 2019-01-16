@@ -26,8 +26,8 @@ def minDistance(word1, word2):
     可以对字符串进行三种操作
     dp[i][j] 代表 word1[i] 转换到word2[j] 所需要的操作次数
     插入dp[i][j-1] +1 = dp[i][j] 代表word2[i]，可以由 word1[:j-1] 添加一个字符得到
-    删除 dp[i-1][j] + 1 = dp[i][j]  代表 word2[j] 可以 由 word1[i-1]删除一个字符得到
-    替换：dp[i-1[j-1] + t = dp[i][j] 代表 Word2 与word1的长度相等，则可以通过一次替换最后一位字符得到
+    删除 dp[i-1][j] + 1 = dp[i][j]  代表 word2[j] 可以 由 word1[i-1]删除一位字符得到
+    替换：dp[i-1[j-1] + t = dp[i][j] 代表 Word2 与word1的长度相等，则可以通过一次替换最后一个字符得到
     如果最后一个字符相同，则不用替换 所以 t 为 1/0
     :type word1: str
     :type word2: str
