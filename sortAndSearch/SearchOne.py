@@ -60,6 +60,34 @@ def searchMatrix(matrix, target):
     return False
 
 
+def search(nums, target):
+    """
+    81. 搜索旋转排序数组 II
+    :type nums: List[int]
+    :type target: int
+    :rtype: bool
+    """
+    left, right = 0, len(nums) - 1
+
+    while left <= right:
+        while left < right and nums[left] == nums[right]:  # 跳过边界上重复的
+            left += 1
+        mid = left + ((right - left) // 2)
+        if target == nums[mid]:
+            return True
+        if nums[mid] <= nums[right]:  # 右边的有序
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1  # 如果target在右边范围内则在右边找
+            else:
+                right = mid - 1  # 否则回到左边找
+        else:  # 左边的有序
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1  # target在左边的范围内在左边找
+            else:
+                left = mid + 1  # 否则在右边找
+    return False
+
 
 if __name__ == '__main__':
-    pass
+    search([1, 1, 3, 1],
+           3)
