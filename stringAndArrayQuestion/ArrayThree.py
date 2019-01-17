@@ -35,6 +35,20 @@ def simplifyPath(path):
 
     return res
 
+def removeDuplicates(nums):
+    """
+    80.删除排序数组中的重复项 II
+    :type nums: List[int]
+    :rtype: int
+    """
+    idx = 0
+    while idx < len(nums):
+        if idx < 2 or nums[idx] != nums[idx - 2]:
+            idx += 1
+        else:
+            nums.pop(idx)
+    return idx
+
 
 if __name__ == '__main__':
     print(simplifyPath("/home//foo/"))
