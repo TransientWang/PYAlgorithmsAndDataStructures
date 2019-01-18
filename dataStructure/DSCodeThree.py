@@ -93,10 +93,53 @@ def rotateRight(head, k):
     return head
 
 
+def deleteDuplicates(self, head):
+    """
+    :type head: ListNode
+    :rtype: ListNode
+    """
+
+
+def deleteDuplicates(head):
+    """\
+    82. 删除排序链表中的重复元素 II
+    思路：在链表前面放置一个dummy节点
+    :type head: ListNode
+    :rtype: ListNode
+    """
+    while not head or not head.next:
+        return head
+    dummy = ListNode.ListNode(None)
+    dummy.next = head
+    pre, mid, cur = dummy, head, head.next  # pre:节点保存没有重复的最后一个节点，mid，cur 遍历重复节点
+    k = 0  # 计数
+    while cur:
+        if cur.val == mid.val:  # 遇到重复节点
+            cur = cur.next
+            mid = mid.next
+            k += 1
+        else:
+            if k != 0:  # 前面的节点有重复，略过中间重复节点
+                pre.next = cur
+                mid = cur
+                cur = cur.next
+            else:  # 无重复，后移
+                pre = pre.next
+                cur = cur.next
+                mid = mid.next
+            k = 0
+    if k != 0:
+        pre.next = cur
+    return dummy.next
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    # head.next.next.next = ListNode.ListNode(4)
-    # head.next.next.next.next = ListNode.ListNode(5)
-    print(rotateRight(head, 3))
+    head.next = ListNode.ListNode(1)
+    head.next.next = ListNode.ListNode(2)
+    # head.next.next.next = ListNode.ListNode(2)
+    # head.next.next.next.next = ListNode.ListNode(3)
+    # # mid = head.next.next.next.next
+    # mid.next = ListNode.ListNode(4)
+    # mid.next.next = ListNode.ListNode(5)
+    print(deleteDuplicates(head))
