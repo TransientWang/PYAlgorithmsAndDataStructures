@@ -186,31 +186,45 @@ def largestRectangleArea(heights):
     :param heights:
     :return:
     '''
-    stack = []
-    res = 0
-    for height in heights:
-        t = 1
-        while len(stack) != 0 and height < stack[-1]:  # 当前值比前面小的时候
-            res = max(res, stack.pop() * t)  # 求出前面的最大值
-            t += 1
-        while t >= 1:  # 将消峰的所有值入栈
-            stack.append(height)
-            t -= 1
+    # stack = []
+    # res = 0
+    # for height in heights:
+    #     t = 1
+    #     while len(stack) != 0 and height < stack[-1]:  # 当前值比前面小的时候
+    #         res = max(res, stack.pop() * t)  # 求出前面的最大值
+    #         t += 1
+    #     while t >= 1:  # 将消峰的所有值入栈
+    #         stack.append(height)
+    #         t -= 1
+    #
+    # while len(stack) != 0:  # 计算栈中的值
+    #     res = max(res, stack[0] * len(stack))
+    #     stack.pop(0)
+    # return res
+    # 更快的解
+    l = len(heights)
+    if l == 0:
+        return 0
+    if len(set(heights)) == 1:
+        return l * heights[0]
+    heights.append(0)
+    stack, ans = [-1], 0  # stack存储heights[i]的索引
+    for i in range(l + 1):
+        while heights[i] < heights[stack[-1]]:  # 如果比当前的高度比栈顶的高度大
+            h = heights[stack.pop()]  # 从后王往前记录面积
+            w = i - stack[-1] - 1  # 宽度
+            ans = max(ans, h * w)
+        stack.append(i)  # 有序的位置入栈
+    return ans
 
-    while len(stack) != 0:  # 计算栈中的值
-        res = max(res, stack[0] * len(stack))
-        stack.pop(0)
-    return res
 
-
-def maximalRectangle(self, matrix):
+def maximalRectangle(matrix):
     """
     85. 最大矩形
     84题的拓展，从第一行开始记录 所有  1 的高度。
     :type matrix: List[List[str]]
     :rtype: int
     """
-
     if not matrix or not matrix[0]:
         return 0
     n = len(matrix[0])
@@ -230,4 +244,4 @@ def maximalRectangle(self, matrix):
 
 
 if __name__ == '__main__':
-    print([0] * 3)
+    print(largestRectangleArea([2, 1, 5, 6, 2, 3]))
