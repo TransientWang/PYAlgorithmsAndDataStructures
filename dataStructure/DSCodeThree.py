@@ -146,6 +146,7 @@ def deleteDuplicates(head):
     return dummy.next
 
 
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(1)
@@ -155,4 +156,10 @@ if __name__ == '__main__':
     # # mid = head.next.next.next.next
     # mid.next = ListNode.ListNode(4)
     # mid.next.next = ListNode.ListNode(5)
-    print(deleteDuplicates(head))
+    print(maximalRectangle([
+  ["1","0","1","0","0"],
+  ["1","0","1","1","1"],
+  ["1","1","1","1","1"],
+  ["1","0","0","1","0"]
+]))
+
