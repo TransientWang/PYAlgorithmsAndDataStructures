@@ -93,11 +93,24 @@ def rotateRight(head, k):
     return head
 
 
-def deleteDuplicates(self, head):
+def deleteDuplicates83(head):
     """
+    83. 删除排序链表中的重复元素
+
     :type head: ListNode
     :rtype: ListNode
     """
+    while not head or not head.next:
+        return head
+    pre, cur = head, head.next
+    while cur:
+        if pre.val == cur.val:
+            cur = cur.next
+            pre.next = cur
+        else:
+            pre = pre.next
+            cur = cur.next
+    return head
 
 
 def deleteDuplicates(head):
