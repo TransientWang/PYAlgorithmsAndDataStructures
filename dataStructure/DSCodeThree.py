@@ -170,6 +170,20 @@ def partition(head, x):
     return p.next
 
 
+def isSameTree(p, q):
+    """
+    100. 相同的树
+    :type p: TreeNode
+    :type q: TreeNode
+    :rtype: bool
+    """
+    if (q and not p) or (p and not q):
+        return False
+    if not p or not q:
+        return True
+    return p.val == q.val and isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(4)
