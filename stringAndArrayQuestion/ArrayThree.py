@@ -35,6 +35,7 @@ def simplifyPath(path):
 
     return res
 
+
 def removeDuplicates(nums):
     """
     80.删除排序数组中的重复项 II
@@ -48,6 +49,27 @@ def removeDuplicates(nums):
         else:
             nums.pop(idx)
     return idx
+
+
+def grayCode(n):
+    """
+    89. 格雷编码
+
+    关键是搞清楚格雷编码的生成过程, G(i) = i ^ (i/2);
+    如 n = 3:
+    G(0) = 000,
+    G(1) = 1 ^ 0 = 001 ^ 000 = 001
+    G(2) = 2 ^ 1 = 010 ^ 001 = 011
+    G(3) = 3 ^ 1 = 011 ^ 001 = 010
+    G(4) = 4 ^ 2 = 100 ^ 010 = 110
+    G(5) = 5 ^ 2 = 101 ^ 010 = 111
+    G(6) = 6 ^ 3 = 110 ^ 011 = 101
+    G(7) = 7 ^ 3 = 111 ^ 011 = 100
+    每一位是 i 与 i 右移一位的异或结果
+    :type n: int
+    :rtype: List[int]
+    """
+    return [i ^ (i >> 1) for i in range(1 << n)]
 
 
 if __name__ == '__main__':
