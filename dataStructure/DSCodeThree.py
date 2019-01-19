@@ -146,20 +146,37 @@ def deleteDuplicates(head):
     return dummy.next
 
 
+def partition(head, x):
+    """
+    86. 分隔链表
+    :type head: ListNodex`
+    :type x: int
+    :rtype: ListNode
+    """
+    new_head = ListNode.ListNode(None)
+    p = new_head
+    new_tail = ListNode.ListNode(None)
+    w = new_tail
+    while head:
+        if head.val < x:
+            new_head.next = head
+            new_head = new_head.next
+        else:
+            new_tail.next = head
+            new_tail = new_tail.next
+        head = head.next
+    new_tail.next = None
+    new_head.next = w.next
+    return p.next
+
 
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(1)
-    head.next.next = ListNode.ListNode(2)
-    # head.next.next.next = ListNode.ListNode(2)
-    # head.next.next.next.next = ListNode.ListNode(3)
-    # # mid = head.next.next.next.next
-    # mid.next = ListNode.ListNode(4)
+    head.next = ListNode.ListNode(4)
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(2)
+    head.next.next.next.next = ListNode.ListNode(5)
+    mid = head.next.next.next.next
+    mid.next = ListNode.ListNode(2)
     # mid.next.next = ListNode.ListNode(5)
-    print(maximalRectangle([
-  ["1","0","1","0","0"],
-  ["1","0","1","1","1"],
-  ["1","1","1","1","1"],
-  ["1","0","0","1","0"]
-]))
-
+    partition(head, 3)
