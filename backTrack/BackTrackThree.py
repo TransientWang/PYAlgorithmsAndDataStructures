@@ -24,18 +24,35 @@ def subsetsWithDup(nums):
     :type nums: List[int]
     :rtype: List[List[int]]
     """
+
+    # nums.sort()
+    # res = []
+    #
+    # def dfs(nums, lists):
+    #
+    #     if lists not in res:
+    #         res.append(lists)
+    #     for i in range(len(nums)):
+    #         sub = dfs(nums[i + 1:], lists + [nums[i]])
+    #
+    # dfs(nums, [])
+    #
+    # return res
+    res = [[]]
+
     nums.sort()
-    res = []
 
-    def dfs(nums, lists):
+    def dfs(index, lists):
+        if index == len(nums):
+            return
+        for i in range(index, len(nums)):
+            if i > index and nums[i] == nums[i - 1]:
+                continue
 
-        if lists not in res:
-            res.append(lists)
-        for i in range(len(nums)):
-            sub = dfs(nums[i + 1:], lists + [nums[i]])
+            res.append(lists+[nums[i]])
+            dfs(i + 1, lists+[nums[i]])
 
-    dfs(nums, [])
-
+    dfs(0,[])
     return res
 
 
