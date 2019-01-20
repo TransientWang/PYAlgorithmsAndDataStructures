@@ -18,6 +18,26 @@ def isScramble(s1, s2):
         for i in range(1, len(s1)))
 
 
-if __name__ == '__main__':
-    pass
+def subsetsWithDup(nums):
+    """
+    90. 子集 II
+    :type nums: List[int]
+    :rtype: List[List[int]]
+    """
+    nums.sort()
+    res = []
 
+    def dfs(nums, lists):
+
+        if lists not in res:
+            res.append(lists)
+        for i in range(len(nums)):
+            sub = dfs(nums[i + 1:], lists + [nums[i]])
+
+    dfs(nums, [])
+
+    return res
+
+
+if __name__ == '__main__':
+    print(subsetsWithDup([4, 4, 4, 1, 4]))
