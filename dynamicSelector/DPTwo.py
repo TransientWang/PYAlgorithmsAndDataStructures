@@ -48,5 +48,28 @@ def minDistance(word1, word2):
     return dp[-1][-1]
 
 
+def numDecodings(s):
+    """
+    91. 解码方法
+    斐波那契数列的加强版
+    :type s: str
+    :rtype: int
+    """
+    if len(s) == 0 or s[0] == "0":
+        return 0
+    dp = [0 for i in range(len(s) + 1)]
+    dp[0] = 1
+
+    for i in range(1, len(dp)):
+        if s[i - 1] == "0":  # 计算 i-1
+            dp[i] = 0
+        else:
+            dp[i] = dp[i - 1]
+
+        if i > 1 and (s[i - 2] == "1" or (s[i - 2] == "2" and s[i - 1] <= "6")):  # 计算 i-2
+            dp[i] += dp[i - 2]
+    return dp[-1]
+
+
 if __name__ == '__main__':
-    print(minDistance(word1="horse", word2="ros"))
+    print(numDecodings("17"))
