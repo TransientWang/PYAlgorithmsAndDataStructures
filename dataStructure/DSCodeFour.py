@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from dataStructure import ListNode
+from dataStructure import TreeNode
 
 
 def reverseBetween(head, m, n):
@@ -28,6 +29,16 @@ def reverseBetween(head, m, n):
     tmp.next = pre
     tail.next = cur
     return dummy.next
+
+
+def generateTrees(n):
+    """
+    :type n: int
+    :rtype: List[TreeNode]
+    """
+    pass
+
+
 
 
 if __name__ == '__main__':

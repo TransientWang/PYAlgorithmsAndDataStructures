@@ -64,7 +64,6 @@ def restoreIpAddresses(s):
     :type s: str
     :rtype: List[str]
     """
-
     res = []
 
     def find(remain, num, tmp):
