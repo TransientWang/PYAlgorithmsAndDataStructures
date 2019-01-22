@@ -90,5 +90,8 @@ def restoreIpAddresses(s):
     return res
 
 
+
+
+
 if __name__ == '__main__':
-    print(restoreIpAddresses("010010"))
+   pass

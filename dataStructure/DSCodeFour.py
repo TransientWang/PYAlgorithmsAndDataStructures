@@ -33,10 +33,35 @@ def reverseBetween(head, m, n):
 
 def generateTrees(n):
     """
+    95. 不同的二叉搜索树 II
+    递归
     :type n: int
     :rtype: List[TreeNode]
     """
-    pass
+    if n == 0:
+        return []
+
+    def find(left, right):
+        tmp = []
+
+        if left > right:
+            tmp.append(None)
+            return tmp
+
+        for i in range(left, right + 1):
+            left_tree = find(left, i - 1)
+            right_tree = find(i + 1, right)
+
+            for lt in left_tree:
+                for rt in right_tree:
+                    node = TreeNode.TreeNode(i)
+                    node.left = lt
+                    node.right = rt
+                    tmp.append(node)
+
+        return tmp
+
+    return find(1, n)
 
 
 
