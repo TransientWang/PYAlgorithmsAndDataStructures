@@ -48,12 +48,48 @@ def subsetsWithDup(nums):
             if i > index and nums[i] == nums[i - 1]:
                 continue
 
-            res.append(lists+[nums[i]])
-            dfs(i + 1, lists+[nums[i]])
+            res.append(lists + [nums[i]])
+            dfs(i + 1, lists + [nums[i]])
 
-    dfs(0,[])
+    dfs(0, [])
+    return res
+
+
+def restoreIpAddresses(s):
+    """
+    93. 复原IP地址
+    思路：DFS + 剪枝条件
+    剪枝条件 ：
+    当 remain[:i] > 255 或者remain[:i] 长度 > 1 但是 remain[:i][0] == "0"  并且剩余字符串长度  > 合法长度
+    :type s: str
+    :rtype: List[str]
+    """
+
+    res = []
+
+    def find(remain, num, tmp):
+        """
+        :param remain: 剩余字符串
+        :param num: 还剩几节没遍历
+        :param tmp: 临时字符串
+        :return:
+        """
+        if num == 1 and ((len(remain) > 1 and remain[0] != "0") or len(remain) == 1) and int(remain) <= 255:
+            res.append(tmp + remain)
+            return
+        for i in range(1, len(remain)):
+
+            if int(remain[:i]) > 255:
+                return
+            if len(remain[i:]) <= (num - 1) * 3 and (
+                    (len(remain[:i]) > 1 and remain[:i][0] != "0") or len(remain[:i]) == 1):
+                tmp = remain[:i] + "." if tmp == "" else tmp + remain[:i] + "."
+                find(remain[i:], num - 1, tmp)
+                tmp = tmp[:-i - 1]
+
+    find(s, 4, "")
     return res
 
 
 if __name__ == '__main__':
-    print(subsetsWithDup([4, 4, 4, 1, 4]))
+    print(restoreIpAddresses("010010"))
