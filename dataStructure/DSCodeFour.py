@@ -156,6 +156,32 @@ def recoverTreeOne(root):
     first.val, second.val = second.val, first.val
 
 
+def levelOrderBottom(root):
+    """
+    107. 二叉树的层次遍历 II
+    用栈存储每层的结果
+    :type root: TreeNode
+    :rtype: List[List[int]]
+    """
+    if not root:
+        return []
+    queue = []
+    queue.append(root)
+    res = []
+    while queue:
+        lens = len(queue)
+        t = []
+        for i in range(lens):
+            tmp = queue.pop(0)
+            t.append(tmp.val)
+            if tmp.left:
+                queue.append(tmp.left)
+            if tmp.right:
+                queue.append(tmp.right)
+        res.insert(0, t)
+    return res
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
