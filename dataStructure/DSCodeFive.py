@@ -53,6 +53,28 @@ def isBalanced(root):
     return True
 
 
+def minDepth(root):
+    """
+    111. 二叉树的最小深度
+    递归求深度当子节点为0的时候不应该参与计算
+    :type root: TreeNode
+    :rtype: int
+    """
+
+    def find(root):
+        if not root:
+            return 0
+        left = find(root.left)
+        right = find(root.right)
+        if left == 0:
+            return right + 1
+        if right == 0:
+            return left + 1
+        return min(left + 1, 1 + right)
+
+    return find(root)
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
@@ -64,7 +86,7 @@ if __name__ == '__main__':
 
     root = TreeNode.TreeNode(3)
     root.left = TreeNode.TreeNode(9)
-    root.right = TreeNode.TreeNode(20)
-    root.right.left = TreeNode.TreeNode(15)
-    root.right.right = TreeNode.TreeNode(7)
-    isBalanced(root)
+    # root.right = TreeNode.TreeNode(20)
+    # root.right.left = TreeNode.TreeNode(15)
+    # root.right.right = TreeNode.TreeNode(7)
+    print(minDepth(root))
