@@ -75,6 +75,24 @@ def minDepth(root):
     return find(root)
 
 
+def hasPathSum(root, sum):
+    """
+    112. 路径总和
+    :type root: TreeNode
+    :type sum: int
+    :rtype: bool
+    """
+
+    def find(root, t):
+        if not root:  # 这个条件一定要在最前面
+            return False
+        if not root.left and not root.right:
+            return sum == t + root.val
+        return find(root.left, t + root.val) or find(root.right, t + root.val)
+
+    return find(root, 0)
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
@@ -84,9 +102,9 @@ if __name__ == '__main__':
     mid = head.next.next.next.next
     mid.next = ListNode.ListNode(6)
 
-    root = TreeNode.TreeNode(3)
-    root.left = TreeNode.TreeNode(9)
-    # root.right = TreeNode.TreeNode(20)
+    root = TreeNode.TreeNode(-2)
+    # root.left = TreeNode.TreeNode(2)
+    root.right = TreeNode.TreeNode(-3)
     # root.right.left = TreeNode.TreeNode(15)
     # root.right.right = TreeNode.TreeNode(7)
-    print(minDepth(root))
+    print(hasPathSum(root, -5))
