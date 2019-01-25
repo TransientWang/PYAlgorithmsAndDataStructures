@@ -104,11 +104,12 @@ def isInterleave(s1, s2, s3):
     dp[-1][-1] = True
     for i in range(len(s1), -1, -1):
         for j in range(len(s2), -1, -1):
-            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:  #如果s1[i]满足条件并且 s2[i+j+1] 之前的子串可满足
+            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:  # 如果s1[i]满足条件并且 s2[i+j+1] 之前的子串可满足
                 dp[i][j] = True
             elif j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:
                 dp[i][j] = True
     return dp[0][0]
+
 
 def numDistinct(s, t):
     """
@@ -152,5 +153,26 @@ def numDistinct(s, t):
     #             dp[j] += dp[j - 1]
     # return dp[-1]
 
+
+def getRow(rowIndex):
+    """
+    119. 杨辉三角 II
+    :type rowIndex: int
+    :rtype: List[int]
+    """
+    dp = [0] * (rowIndex + 1)
+    dp[0] = 1
+    dp[-1] = 1
+    np = dp[:]
+    for i in range(1, rowIndex+1):
+        for j in range(i + 1):
+            if j == 0 or j == i:
+                np[j] = dp[j - 1]
+            else:
+                np[j] = dp[j] + dp[j - 1]
+        dp = np[:]
+    return dp
+
+
 if __name__ == '__main__':
-    print(isInterleave(s1="aabcc", s2="dbbca", s3="aadbbcbcac"))
+    print(getRow(3))
