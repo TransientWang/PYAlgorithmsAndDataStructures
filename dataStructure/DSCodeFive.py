@@ -118,6 +118,30 @@ def pathSum(root, sum):
     return res
 
 
+def flatten(root):
+    """
+    114. 二叉树展开为链表
+    :type root: TreeNode
+    :rtype: void Do not return anything, modify root in-place instead.
+    """
+
+    def dfs(root):
+        if not root:
+            return None
+        left = dfs(root.left)
+        right = dfs(root.right)
+        if left:
+            left.right = root.right
+            root.right = root.left
+            root.left = None
+        if right:
+            return right
+        if left:
+            return left
+        return root
+    dfs(root)
+
+
 if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
@@ -128,11 +152,11 @@ if __name__ == '__main__':
     mid.next = ListNode.ListNode(6)
 
     root = TreeNode.TreeNode(1)
-    root.left = TreeNode.TreeNode(-2)
-    root.right = TreeNode.TreeNode(-3)
-    root.left.left = TreeNode.TreeNode(1)
-    root.left.right = TreeNode.TreeNode(3)
-    root.right.left = TreeNode.TreeNode(-2)
-    # root.right.right = TreeNode.TreeNode(7)
-    root.left.left.left = TreeNode.TreeNode(-1)
-    print(pathSum(root, -1))
+    root.left = TreeNode.TreeNode(2)
+    root.right = TreeNode.TreeNode(5)
+    root.left.left = TreeNode.TreeNode(3)
+    root.left.right = TreeNode.TreeNode(4)
+    # root.right.left = TreeNode.TreeNode(-2)
+    root.right.right = TreeNode.TreeNode(6)
+    # root.left.left.left = TreeNode.TreeNode(-1)
+    print(flatten(root))
