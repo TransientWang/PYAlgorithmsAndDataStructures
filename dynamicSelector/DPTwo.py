@@ -164,7 +164,7 @@ def getRow(rowIndex):
     dp[0] = 1
     dp[-1] = 1
     np = dp[:]
-    for i in range(1, rowIndex+1):
+    for i in range(1, rowIndex + 1):
         for j in range(i + 1):
             if j == 0 or j == i:
                 np[j] = dp[j - 1]
@@ -172,6 +172,24 @@ def getRow(rowIndex):
                 np[j] = dp[j] + dp[j - 1]
         dp = np[:]
     return dp
+
+
+def maxProfit(prices):
+    """
+    123. 买卖股票的最佳时机 III
+    fstBuy, fstSell 今天作为第一次买入的收益，今天作为第一次卖出的收益
+    secBuy, secSell 今天作为第二次买入的收益，今天作为第二次卖出的收益
+    :type prices: List[int]
+    :rtype: int
+    """
+    fstBuy, fstSell = -2 ** 31, 0
+    secBuy, secSell = -2 ** 31, 0
+    for i in prices:
+        fstBuy = max(fstBuy, -i)  # 第一次买，收益为负值
+        fstSell = max(fstSell, fstBuy + i)  # 第一次卖，收益为 第一次买 的收益+当天价格
+        secBuy = max(secBuy, fstSell - i)  # 第二次买收益为第一次卖的收益 - 当前价格
+        secSell = max(secSell, secBuy + i)  # 第二次卖收益为第二次买收益 + 当前价格
+    return secSell
 
 
 if __name__ == '__main__':
