@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+from dataStructure import TreeNode
+
+
 def isScramble(s1, s2):
     """
     87. 扰乱字符串
@@ -130,22 +133,37 @@ def findLadders(beginWord, endWord, wordList):
     return res
 
 
-#
-# def dfs(beginWord=beginWord, tmpList=[], wordList=[]):
-#     for i in range(lens - 1, -1, -1):
-#         for j in range(97, 97 + 26):
-#             p = beginWord[:i] + str(chr(j)) + beginWord[i + 1:]
-#             if p in wordList:
-#                 if p == endWord:
-#                     tmpList.append(p)
-#                     res.append(tmpList[:])
-#                 wordList.remove(p)
-#                 dfs(p,tmpList + [p], wordList)
-#                 wordList.append(p)
-#
-# dfs(beginWord, [beginWord], wordList)
-# return res
+def sumNumbers(root):
+    """
+    129. 求根到叶子节点数字之和
+    dfs
+    :type root: TreeNode
+    :rtype: int
+    """
+    if not root:
+        return 0
+    res = [0]
+
+    def find(root, tmp):
+        if root.left:
+            find(root.left, tmp + str(root.val))
+        if root.right:
+            find(root.right, tmp + str(root.val))
+        if not root.left and not root.right:
+            res[0] += int(tmp + str(root.val))
+
+    find(root, "")
+
+    return res[0]
 
 
 if __name__ == '__main__':
-    print(findLadders("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]))
+    root = TreeNode.TreeNode(4)
+    # root.left = TreeNode.TreeNode(9)
+    # root.right = TreeNode.TreeNode(0)
+    # root.left.left = TreeNode.TreeNode(5)
+    # root.left.right = TreeNode.TreeNode(1)
+    # root.right.left = TreeNode.TreeNode(-2)
+    # root.right.right = TreeNode.TreeNode(6)
+    # root.left.left.left = TreeNode.TreeNode(-1)
+    print(sumNumbers(root))
