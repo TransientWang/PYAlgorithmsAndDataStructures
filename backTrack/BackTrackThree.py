@@ -90,5 +90,62 @@ def restoreIpAddresses(s):
     return res
 
 
+def findLadders(beginWord, endWord, wordList):
+    """
+    126. 单词接龙 II
+    bfs
+    先找出在遍历每个单词之前可以找到的相邻单词，然后回溯
+    :type beginWord: str
+    :type endWord: str
+    :type wordList: List[str]
+    :rtype: List[List[str]]
+    """
+    if endWord not in wordList:
+        return []
+    wordList = set(wordList)
+    lookup = set(wordList + [beginWord])
+    res, cur, routine = [], set([beginWord]), {word: [] for word in lookup}
+    while cur and endWord not in cur:
+        next_queue = set()
+        for i in cur:
+            lookup.remove(i)
+        for word in cur:
+            for i in range(len(word)):
+                for j in "abcdefghijklmnopqrstuvwxyz":
+                    tmp = word[:i] + j + word[i + 1:]
+                    if tmp in lookup:
+                        next_queue.add(tmp)
+                        routine[tmp].append(word)
+        cur = next_queue
+
+    def bfs(path, word):
+        if len(routine[word]) == 0:
+            res.append([word] + path)
+        else:
+            for pre in routine[word]:
+                bfs([word] + path, pre)
+
+    if cur:
+        bfs([], endWord)
+    return res
+
+
+#
+# def dfs(beginWord=beginWord, tmpList=[], wordList=[]):
+#     for i in range(lens - 1, -1, -1):
+#         for j in range(97, 97 + 26):
+#             p = beginWord[:i] + str(chr(j)) + beginWord[i + 1:]
+#             if p in wordList:
+#                 if p == endWord:
+#                     tmpList.append(p)
+#                     res.append(tmpList[:])
+#                 wordList.remove(p)
+#                 dfs(p,tmpList + [p], wordList)
+#                 wordList.append(p)
+#
+# dfs(beginWord, [beginWord], wordList)
+# return res
+
+
 if __name__ == '__main__':
-    pass
+    print(findLadders("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]))
