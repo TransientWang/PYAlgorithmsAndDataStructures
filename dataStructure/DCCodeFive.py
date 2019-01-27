@@ -69,6 +69,8 @@ def cloneGraph(node=UndirectedGraphNode(2)):
     return dfs(node)
 
 
+
+
 if __name__ == '__main__':
     # root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
@@ -78,10 +80,12 @@ if __name__ == '__main__':
     # root.right.right = TreeLinkNode(7)
     # connect(root)
 
-    node = UndirectedGraphNode(0)
-    nNode = UndirectedGraphNode(1)
-    pNode = UndirectedGraphNode(2)
-    node.neighbors = [nNode, pNode]
-    nNode.neighbors = [pNode]
-    pNode.neighbors = [pNode]
-    cloneGraph(node)
+    # node = UndirectedGraphNode(0)
+    # nNode = UndirectedGraphNode(1)
+    # pNode = UndirectedGraphNode(2)
+    # node.neighbors = [nNode, pNode]
+    # nNode.neighbors = [pNode]
+    # pNode.neighbors = [pNode]
+    # cloneGraph(node)
+    print(canCompleteCircuit([5,1,2,3,4],
+[4,4,1,5,1]))

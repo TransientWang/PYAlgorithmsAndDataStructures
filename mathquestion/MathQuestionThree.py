@@ -120,5 +120,21 @@ def generateMatrix(n):
         n -= 1
 
 
+def singleNumber(nums):
+    """
+    137. 只出现一次的数字 II
+    https://cloud.tencent.com/developer/article/1131945
+    :type nums: List[int]
+    :rtype: int
+    """
+    a, b = 0, 0
+    for num in nums:  # ^ 与 & 满足结合律     (1 ^ 3 ^4) = (1 ^ 4 ^3)
+        a = (a ^ num) & ~b  # [2,2,2] 第三次的时候b 是 0 需要 异或 2 但是需要他为0
+        # ，此时 a为2，a取反在 与就能 将 2再变成0
+        b = (b ^ num) & ~a
+    return a
+
+
 if __name__ == '__main__':
-    generateMatrix(3)
+    singleNumber([2, 2, 2, 1])
+
