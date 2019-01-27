@@ -10,6 +10,19 @@ class TreeLinkNode:
         return str(self.val)
 
 
+class UndirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+
+    def __str__(self):
+        st = str(self.label)
+        for i in self.neighbors:
+            st += str(i.x)
+        print(st)
+        return str(self.label)
+
+
 def connect(root):
     """
     117. 填充同一层的兄弟节点 II
@@ -35,11 +48,40 @@ def connect(root):
                 tmp = t
 
 
+def cloneGraph(node=UndirectedGraphNode(2)):
+    """
+    133. 克隆图
+    :param node:a undirected graph node
+    :return:a undirected graph node
+    """
+    if not node:
+        return
+    visited = {}
+
+    def dfs(node):
+        if node.label in visited:
+            return visited[node.label]
+        new_node = UndirectedGraphNode(node.label)
+        visited[new_node.label] = new_node
+        new_node.neighbors = [dfs(i) for i in node.neighbors]
+        return new_node
+
+    return dfs(node)
+
+
 if __name__ == '__main__':
-    root = TreeLinkNode(1)
-    root.left = TreeLinkNode(2)
-    root.right = TreeLinkNode(3)
-    root.left.left = TreeLinkNode(4)
-    root.left.right = TreeLinkNode(5)
-    root.right.right = TreeLinkNode(7)
-    connect(root)
+    # root = TreeLinkNode(1)
+    # root.left = TreeLinkNode(2)
+    # root.right = TreeLinkNode(3)
+    # root.left.left = TreeLinkNode(4)
+    # root.left.right = TreeLinkNode(5)
+    # root.right.right = TreeLinkNode(7)
+    # connect(root)
+
+    node = UndirectedGraphNode(0)
+    nNode = UndirectedGraphNode(1)
+    pNode = UndirectedGraphNode(2)
+    node.neighbors = [nNode, pNode]
+    nNode.neighbors = [pNode]
+    pNode.neighbors = [pNode]
+    cloneGraph(node)
