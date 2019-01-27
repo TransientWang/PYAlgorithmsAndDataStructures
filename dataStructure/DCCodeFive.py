@@ -69,9 +69,33 @@ def cloneGraph(node=UndirectedGraphNode(2)):
     return dfs(node)
 
 
+def detectCycle(head):
+    """
+    142. 环形链表 II
+    链表只有环的情况下，两指针相遇的点为起点，
+    当环外还有一定长度的链表的时候，相遇点距离起点的位移就是链表的长度
+    :type head: ListNode
+    :rtype: ListNode
+    """
+    if not head:
+        return None
+    low, fast = head, head
+
+    while fast and fast.next:  # 快慢指针条件
+        low = low.next
+        fast = fast.next.next
+        if low == fast:
+            fast = head
+            while low != fast:
+                low = low.next
+                fast = fast.next
+            return fast
+    return None
 
 
 if __name__ == '__main__':
+    from dataStructure import ListNode
+
     # root = TreeLinkNode(1)
     # root.left = TreeLinkNode(2)
     # root.right = TreeLinkNode(3)
@@ -87,5 +111,10 @@ if __name__ == '__main__':
     # nNode.neighbors = [pNode]
     # pNode.neighbors = [pNode]
     # cloneGraph(node)
-    print(canCompleteCircuit([5,1,2,3,4],
-[4,4,1,5,1]))
+    head = ListNode.ListNode(3)
+    head.next = ListNode.ListNode(2)
+    head.next.next = head
+    # head.next.next = ListNode.ListNode(0)
+    # head.next.next.next = ListNode.ListNode(-4)
+    # head.next.next.next.next = head.next
+    print(detectCycle(head))
