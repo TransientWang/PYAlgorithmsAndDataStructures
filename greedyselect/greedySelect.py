@@ -139,47 +139,33 @@ def lemonadeChange(bills):
 
 def canCompleteCircuit(gas, cost):
     """
-    在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
-
-    你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
-
-    如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
-    直接遍历 时间复杂度过大
+    134.加油站
+    1. 如果汽车从A开始且无法到达B. A和B之间的任何站点都不能到达B.（B是A无法到达的第一个站点。）
+    2. 如果天然气总数大于总成本数。必须有一个解决方案。
     :type gas: List[int]      第i个加油站有汽油gas[i]升
     :type cost: List[int]     从i到i+1需要耗费汽油cost[i]
     :rtype: int
     """
-    i = 0
-    k = 0
-    total = 0
-    while i < len(gas):
-        if gas[i] < cost[i]:  # 先找到第一个可以出发的位置
-            i += 1
-
-        else:
-            k = i
-            while True:
-                total += gas[k]  # 找到了先加油
-                if total >= cost[k]:  # 判断能否有足够的油去往下一站
-                    total -= cost[k]  # 有就走
-                    if k < len(gas) - 1:  # 到了下一站，更新下一站索引
-                        k += 1
-                    else:
-                        k = 0
-                    if k == i:
-                        return i
-                else:
-                    if k == i:
-                        return i
-                    else:
-                        break
-        i += 1
-        total = 0
+    for i in range(len(gas)):
+        p = 0
+        k = 0
+        for j in range(len(gas)):
+            z = i + j
+            p += gas[(i + j) % len(gas)]
+            if p < cost[(i + j) % len(gas)]:
+                k = 1
+                break
+            p -= cost[(i + j) % len(gas)]
+        if k == 0:
+            return i
     return -1
-
 
 def canCompleteCircuit1(gas, cost):
     '''
+    134.加油站
+    REVIEW
+    1. 如果汽车从A开始且无法到达B. A和B之间的任何站点都不能到达B.（B是A无法到达的第一个站点。）
+    2. 如果天然气总数大于总成本数。必须有一个解决方案。
     贪心选择解题思路
     一、贪心选择性质：原问题整体最优解 可以通过一系列局部最优的选择得到
 
@@ -193,20 +179,15 @@ def canCompleteCircuit1(gas, cost):
     :param cost:
     :return:
     '''
-    sum = 0  # 辅助计算从当前节点能否到达下一节点
-    total = 0  # 总油量是关键 如果遍历一遍总油量 还小于0 说明从哪里走都不可能走出一圈
-    # 如果油量大于0那么一定可以有一点环绕 一圈  而且这个点一定可以从当前节点走到
-    # 最后一个节点
-    for i in range(len(gas)):
-        total += gas[i] - cost[i]
-        sum += gas[i] - cost[i]
-        if sum < 0:  # 油量不够到达下一加油站
-            j = i + 1  # 尝试下一个加油站
-            sum = 0
-    if total < 0:
+    if sum(gas) < sum(cost):  # 排除-1的情况
         return -1
-    else:
-        return j
+    tank, start = 0, 0
+    for i in range(len(gas)):  # 一定有解，找到能使油箱油量大于0 的最后一个点
+        tank += gas[i] - cost[i]
+        if tank < 0:
+            start = i + 1
+            tank = 0
+    return start
 
 
 def candy(ratings):
@@ -244,4 +225,4 @@ def candy(ratings):
 
 
 if __name__ == '__main__':
-    print((maxProfit([1,2,3,4,5])))
+    print((maxProfit([1, 2, 3, 4, 5])))
