@@ -124,7 +124,7 @@ def preorderTraversal(root):
     """
     if not root:
         return []
-    #递归
+    # 递归
     # lists = [root.val]
     # lefts = preorderTraversal(root.left)
     # rights = preorderTraversal(root.right)
@@ -143,14 +143,53 @@ def preorderTraversal(root):
     return lists
 
 
+def postorderTraversal(root):
+    """
+    145. 二叉树的后序遍历
+    :type root: TreeNode
+    :rtype: List[int]
+    """
+    if not root:
+        return []
+    # stack = [root]
+    # lists = []
+    # while stack:
+    #     p = stack[-1]
+    #     if p.right:
+    #         stack.append(p.right)
+    #     if p.left:
+    #         stack.append(p.left)
+    #     if not p.left and not p.right:
+    #         lists.append(p.val)
+    #         stack.pop()
+    #         continue
+    #     p.left = None
+    #     p.right = None
+    # return lists
+
+    a = [root]
+    b = []
+    c = []  # 一个不够再加一个
+    while a:
+        node = a.pop()
+        if node.left:
+            a.append(node.left)
+        if node.right:
+            a.append(node.right)
+        b.append(node)
+    while b:
+        c.append(b.pop().val)
+    return c
+
+
 if __name__ == '__main__':
     from dataStructure import ListNode
 
     root = TreeLinkNode(1)
     root.left = TreeLinkNode(2)
     root.right = TreeLinkNode(3)
-    # root.left.left = TreeLinkNode(4)
-    # root.left.right = TreeLinkNode(5)
+    root.left.left = TreeLinkNode(4)
+    root.left.right = TreeLinkNode(5)
     # root.right.right = TreeLinkNode(7)
     # connect(root)
 
@@ -166,4 +205,4 @@ if __name__ == '__main__':
     head.next.next = ListNode.ListNode(3)
     head.next.next.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    print(preorderTraversal(root))
+    print(postorderTraversal(root))
