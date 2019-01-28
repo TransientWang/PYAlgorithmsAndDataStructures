@@ -210,7 +210,6 @@ def insertionSortList(head):
                 break
         if flag:
             flag = False
-            continue
         else:
             stack.append(p)
             p = p.next
