@@ -115,12 +115,40 @@ def reorderList(head):
         head.next.next = fast
         head = fast
 
+
+def preorderTraversal(root):
+    """
+    144. 二叉树的前序遍历
+    :type root: TreeNode
+    :rtype: List[int]
+    """
+    if not root:
+        return []
+    #递归
+    # lists = [root.val]
+    # lefts = preorderTraversal(root.left)
+    # rights = preorderTraversal(root.right)
+    # return lists + lefts + rights
+    stack = []
+    # 迭代
+    lists = []
+    stack = [root]
+    while stack:
+        p = stack.pop()
+        lists.append(p.val)
+        if p.right:
+            stack.append(p.right)
+        if p.left:
+            stack.append(p.left)
+    return lists
+
+
 if __name__ == '__main__':
     from dataStructure import ListNode
 
-    # root = TreeLinkNode(1)
-    # root.left = TreeLinkNode(2)
-    # root.right = TreeLinkNode(3)
+    root = TreeLinkNode(1)
+    root.left = TreeLinkNode(2)
+    root.right = TreeLinkNode(3)
     # root.left.left = TreeLinkNode(4)
     # root.left.right = TreeLinkNode(5)
     # root.right.right = TreeLinkNode(7)
@@ -138,4 +166,4 @@ if __name__ == '__main__':
     head.next.next = ListNode.ListNode(3)
     head.next.next.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
-    print(reorderList(head))
+    print(preorderTraversal(root))
