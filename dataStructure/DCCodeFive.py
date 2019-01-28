@@ -93,6 +93,28 @@ def detectCycle(head):
     return None
 
 
+def reorderList(head):
+    """
+    143. 重排链表
+    思路：链表问题除了快慢指针，增加辅助节点以外，还可以与栈等数据结构集合使用
+    :type head: ListNode
+    :rtype: void Do not return anything, modify head in-place instead.
+    """
+    stack = []
+    low, fast = head, head.next
+    while fast and fast.next:
+        fast = fast.next.next
+        low = low.next
+    low.next, low = None, low.next
+    while low:
+        stack.append(low)
+        low = low.next
+    while stack:
+        fast = head.next
+        head.next = stack.pop()
+        head.next.next = fast
+        head = fast
+
 if __name__ == '__main__':
     from dataStructure import ListNode
 
@@ -111,10 +133,9 @@ if __name__ == '__main__':
     # nNode.neighbors = [pNode]
     # pNode.neighbors = [pNode]
     # cloneGraph(node)
-    head = ListNode.ListNode(3)
+    head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(2)
-    head.next.next = head
-    # head.next.next = ListNode.ListNode(0)
-    # head.next.next.next = ListNode.ListNode(-4)
-    # head.next.next.next.next = head.next
-    print(detectCycle(head))
+    head.next.next = ListNode.ListNode(3)
+    head.next.next.next = ListNode.ListNode(4)
+    # head.next.next.next.next = ListNode.ListNode(5)
+    print(reorderList(head))
