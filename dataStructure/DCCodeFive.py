@@ -182,6 +182,42 @@ def postorderTraversal(root):
     return c
 
 
+def insertionSortList(head):
+    """
+    147. 对链表进行插入排序
+    :type head: ListNode
+    :rtype: ListNode
+    """
+    if not head:
+        return []
+    stack = [head]
+    p = head.next
+    flag = False
+    while p:
+        for i in range(len(stack)):
+            if p.val < stack[i].val:
+                t = p.next
+                stack.insert(i, p)
+                if i - 1 >= 0:
+                    stack[i - 1].next = stack[i]
+                if i + 1 < len(stack):
+                    stack[i].next = stack[i + 1]
+                else:
+                    stack[i].next = None
+                stack[-1].next = t
+                p = t
+                flag = True
+                break
+        if flag:
+            flag = False
+            continue
+        else:
+            stack.append(p)
+            p = p.next
+
+    return stack[0]
+
+
 if __name__ == '__main__':
     from dataStructure import ListNode
 
@@ -201,8 +237,8 @@ if __name__ == '__main__':
     # pNode.neighbors = [pNode]
     # cloneGraph(node)
     head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
+    head.next = ListNode.ListNode(3)
+    head.next.next = ListNode.ListNode(2)
+    head.next.next.next = ListNode.ListNode(-1)
     # head.next.next.next.next = ListNode.ListNode(5)
-    print(postorderTraversal(root))
+    print(insertionSortList(head))
