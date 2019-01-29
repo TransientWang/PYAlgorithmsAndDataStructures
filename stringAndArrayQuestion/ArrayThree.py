@@ -71,6 +71,7 @@ def grayCode(n):
     """
     return [i ^ (i >> 1) for i in range(1 << n)]
 
+
 def findMin(nums):
     """
     153. 寻找旋转排序数组中的最小值
@@ -82,7 +83,7 @@ def findMin(nums):
     :type nums: List[int]
     :rtype: int
     """
-    low,high = 0, len(nums)-1
+    low, high = 0, len(nums) - 1
     while low < high:
         mid = low + (high - low) // 2
         if nums[high] < nums[mid]:
@@ -91,5 +92,24 @@ def findMin(nums):
             high = mid
     return nums[low]
 
+
+def findMin(nums):
+    """
+    154. 寻找旋转排序数组中的最小值 II
+    :type nums: List[int]
+    :rtype: int
+    """
+    low, high = 0, len(nums) - 1
+    while low < high:
+        mid = (low + high) // 2
+        if nums[high] < nums[mid]:
+            low = mid + 1
+        elif nums[high] > nums[mid]:
+            high = mid
+        else:
+            high -= 1
+    return nums[low]
+
+
 if __name__ == '__main__':
-    print(simplifyPath("/home//foo/"))
+    print(findMin([1, 3, 3]))
