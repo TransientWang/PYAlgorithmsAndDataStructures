@@ -71,6 +71,25 @@ def grayCode(n):
     """
     return [i ^ (i >> 1) for i in range(1 << n)]
 
+def findMin(nums):
+    """
+    153. 寻找旋转排序数组中的最小值
+    二分法
+    最小的数必然在无序的部分, 所以每次划分都进入无序的那一部分
+    由于条件是 lo < hi 所以 hi 永远都不等于 mid, 但是 lo
+    可能等于 mid, 例如 lo = 1, hi = 2, mid = 1. 所以每次
+    和 hi 对应元素比较可以保证数组范围收敛到 1
+    :type nums: List[int]
+    :rtype: int
+    """
+    low,high = 0, len(nums)-1
+    while low < high:
+        mid = low + (high - low) // 2
+        if nums[high] < nums[mid]:
+            low = mid + 1
+        else:
+            high = mid
+    return nums[low]
 
 if __name__ == '__main__':
     print(simplifyPath("/home//foo/"))
