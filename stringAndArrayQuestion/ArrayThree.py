@@ -111,5 +111,44 @@ def findMin(nums):
     return nums[low]
 
 
+def maximumGap(nums):
+    """
+    164. 最大间距
+    :type nums: List[int]
+    :rtype: int
+    """
+    if len(nums) < 2:
+        return 0
+
+    Min = min(nums)
+    Max = max(nums)
+    if Min == Max:
+        return 0
+
+    bucket_Min = [None] * (len(nums) + 1)
+    bucket_Max = [None] * (len(nums) + 1)
+    bucket_hasnum = [0] * (len(nums) + 1)
+    for i in range(len(nums)):
+        idx = (nums[i] - Min) * len(nums) // (Max - Min)  #
+        if not bucket_hasnum[idx]:
+            bucket_Min[idx] = nums[i]
+            bucket_Max[idx] = nums[i]
+            bucket_hasnum[idx] = 1
+        else:
+            bucket_Min[idx] = min(bucket_Min[idx], nums[i])
+            bucket_Max[idx] = max(bucket_Max[idx], nums[i])
+
+    last = None
+    Max = 0
+    for i in range(len(nums) + 1):
+        if bucket_hasnum[i]:
+            if not last:
+                last = bucket_Max[i]
+            else:
+                Max = max(Max, bucket_Min[i] - last)
+                last = bucket_Max[i]
+    return Max
+
+
 if __name__ == '__main__':
-    print(findMin([1, 3, 3]))
+    print(maximumGap([100,200,676767,13124,3453,333,3444]))
