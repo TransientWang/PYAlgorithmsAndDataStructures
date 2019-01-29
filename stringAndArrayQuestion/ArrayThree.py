@@ -114,6 +114,11 @@ def findMin(nums):
 def maximumGap(nums):
     """
     164. 最大间距
+    桶排序
+    思路：准备 n+1 和桶，每个桶中存放 3 个值，1、是否有元素 2、当前桶最大值看， 3、当前桶最小值
+    最后一个桶 放最大值，省下的 (n-1)个元素放在面 n 个桶中，现在一定至少有一个桶为 空桶，而且中间有空桶的两侧的差值一定大
+    于桶区间值，所以过滤掉了桶区间的计算。
+    https://blog.csdn.net/zxzxzx0119/article/details/82889998
     :type nums: List[int]
     :rtype: int
     """
@@ -129,8 +134,9 @@ def maximumGap(nums):
     bucket_Max = [None] * (len(nums) + 1)
     bucket_hasnum = [0] * (len(nums) + 1)
     for i in range(len(nums)):
-        idx = (nums[i] - Min) * len(nums) // (Max - Min)  #
-        if not bucket_hasnum[idx]:
+        idx = (nums[i] - Min) * len(nums) // (Max - Min)  # 每个桶的区间为 ( max-min) // 桶长度 ，每个元素落在的桶中，
+        if not bucket_hasnum[  # idx 为 nums[i] // 桶区间    即：nums[i] //((max-min) // 桶长度） = nums[i] * 桶长度 // (max -min)
+            idx]:
             bucket_Min[idx] = nums[i]
             bucket_Max[idx] = nums[i]
             bucket_hasnum[idx] = 1
@@ -151,4 +157,4 @@ def maximumGap(nums):
 
 
 if __name__ == '__main__':
-    print(maximumGap([100,200,676767,13124,3453,333,3444]))
+    print(maximumGap([1, 1000, 2000, 3000, 4000, 5000]))
