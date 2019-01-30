@@ -40,11 +40,11 @@ def calculateMinimumHP(dungeon):
     """
     m = len(dungeon)
     n = len(dungeon[0])
-    dp = [[0] * n] * m
+    dp = [[0] * n] * m  # 代表从dp[i][j] 出发所需要的最少血量
 
     for i in range(m - 1, -1, -1):
         for j in range(n - 1, -1, -1):
-            if i == m - 1 and j == n - 1:  # 边界值
+            if i == m - 1 and j == n - 1:
                 dp[i][j] = max(1, 1 - dungeon[i][j])
             elif i == m - 1:
                 print(dp[i][j + 1] - dungeon[i][j])
@@ -53,7 +53,7 @@ def calculateMinimumHP(dungeon):
             elif j == n - 1:
                 dp[i][j] = max(1, dp[i + 1][j] - dungeon[i][j])
 
-            else:
+            else:  # 从dp[i][j] 出发需要的最少血量，为从它的后一步（往右，往下），到它之间需要的最少血量
                 dp[i][j] = max(1, min(dp[i + 1][j] - dungeon[i][j], dp[i][j + 1] - dungeon[i][j]))
     return dp[0][0]
 
