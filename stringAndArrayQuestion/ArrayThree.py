@@ -156,5 +156,31 @@ def maximumGap(nums):
     return Max
 
 
+def twoSum(numbers, target):
+    """
+    167. 两数之和 II - 输入有序数组
+    先二分缩小范围，再双指针
+    :type numbers: List[int]
+    :type target: int
+    :rtype: List[int]
+    """
+    low, high = 0, len(numbers) - 1
+    while low < high:
+        mid = low + (high - low) // 2
+        if numbers[mid] > target:
+            high = mid
+        else:
+            low = mid + 1
+    low, high = 0, low
+    while low < high:
+        if numbers[low] + numbers[high] == target:
+            return [low + 1, high + 1]
+        elif numbers[low] + numbers[high] < target:
+            low += 1
+        else:
+            high -= 1
+
+
 if __name__ == '__main__':
-    print(maximumGap([1, 1000, 2000, 3000, 4000, 5000]))
+    print(twoSum([-3, 3, 4, 90],
+                 0))
