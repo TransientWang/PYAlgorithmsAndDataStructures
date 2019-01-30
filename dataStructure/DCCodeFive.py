@@ -177,7 +177,7 @@ def postorderTraversal(root):
         if node.right:
             a.append(node.right)
         b.append(node)
-    while b:
+    while b:  # 每个根节点在后序遍历中，一定是最后遍历到的
         c.append(b.pop().val)
     return c
 
