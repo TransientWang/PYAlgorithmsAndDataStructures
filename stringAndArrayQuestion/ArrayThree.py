@@ -181,6 +181,23 @@ def twoSum(numbers, target):
             high -= 1
 
 
+def convertToTitle(n):
+    """
+    168. Excel表列名称
+    26 进制
+    :type n: int
+    :rtype: str
+    """
+    res = ""
+    while n:
+        mod = n % 26
+        n //= 26
+        if mod == 0:  # 证明 n 是 26 的倍数，此时应该补 Z，n 作为 Z 的个数，应该减小1
+            mod = 26
+            n -= 1
+        res += str(chr(64 + mod))
+    return res[::-1]
+
+
 if __name__ == '__main__':
-    print(twoSum([-3, 3, 4, 90],
-                 0))
+    print(convertToTitle(26))
