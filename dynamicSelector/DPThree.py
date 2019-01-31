@@ -82,9 +82,9 @@ def maxProfit(k, prices):
 
     # 优化空间
     dp = [0] * (k + 1)
-    mdp = prices[0] * (k + 1)
+    mdp = [prices[0]] * (k + 1)
     for i in range(1, len(prices)):
-        for j in range(1, min(k + 1, i // 2)):
+        for j in range(1, min(k + 1, i // 2 + 2)):  # min(k + 1, i // 2 + 2) 计算优化 + 2 是因为进度问题 +1 范围会不准确
             mdp[j] = min(mdp[j], prices[i] - dp[k - 1])
             dp[j] = max(dp[j], prices[i] - mdp[j])
     return dp[-1]
