@@ -40,6 +40,23 @@ def compareVersion(version1, version2):
     return 0
 
 
+def findRepeatedDnaSequences(s):
+    """
+    187. 重复的DNA序列
+    :type s: str
+    :rtype: List[str]
+    """
+    exist = set()
+    res = []
+
+    for i in range(len(s) - 9):
+
+        if s[i:i + 10] in exist:
+            res.append(s[i:i + 10])
+        else:
+            exist.add(s[i:i + 10])
+    return res
+
+
 if __name__ == '__main__':
-    print(compareVersion("0.1",
-                         "1.1"))
+    print(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"))
