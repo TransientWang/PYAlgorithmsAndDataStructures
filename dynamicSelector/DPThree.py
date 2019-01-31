@@ -58,5 +58,36 @@ def calculateMinimumHP(dungeon):
     return dp[0][0]
 
 
+def maxProfit(k, prices):
+    """
+    188. 买卖股票的最佳时机 IV
+    dp[k][i] 代表第 i 天完成 k 次交易的最大收益
+    dp[k][i] = max(dp[k][i-1],dp[k-1][i-1] + prices[i] - prices[j]) (0<j<i )
+    :type k: int
+    :type prices: List[int]
+    :rtype: int
+    """
+    if k >= len(prices) // 2:
+        return sum([max(prices[i] - prices[i - 1], 0) for i in range(1, len(prices))])
+    if not prices or len(prices) == 0:
+        return 0
+    # dp = [[0] * len(prices)] * (k + 1)
+    # mdp = [prices[0]] * (k + 1)
+    # for i in range(1, len(prices)):
+    #     for j in range(1, k + 1):
+    #         mdp[j] = min(mdp[j], prices[i] - dp[j - 1][i - 1]) # prices[i] - dp[j - 1][i - 1] 代表当前减去之前最优值的付出
+    #         dp[j][i] = max(dp[j][i - 1], prices[i] - mdp[j]) #当前值 - 之前的总付出= 当前收益
+    # return dp[-1][-1]
+
+    # 优化空间
+    dp = [0] * (k + 1)
+    mdp = prices[0] * (k + 1)
+    for i in range(1, len(prices)):
+        for j in range(1, min(k + 1, i // 2)):
+            mdp[j] = min(mdp[j], prices[i] - dp[k - 1])
+            dp[j] = max(dp[j], prices[i] - mdp[j])
+    return dp[-1]
+
+
 if __name__ == '__main__':
-    print(calculateMinimumHP([[2, -1, 2]]))
+    print(maxProfit(2, [3, 2, 6, 5, 0, 3]))
