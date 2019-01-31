@@ -139,24 +139,49 @@ def flatten(root):
         if left:
             return left
         return root
+
     dfs(root)
 
 
+def rightSideView(root):
+    """
+    199. 二叉树的右视图
+    队列
+    :type root: TreeNode
+    :rtype: List[int]
+    """
+    if not root:
+        return []
+    queue, res = [root], []
+
+    while queue:
+        lens = len(queue)
+        for i in range(lens):
+            tmp = queue.pop(0)
+            if tmp.right:
+                queue.append(tmp.right)
+            if tmp.left:
+                queue.append(tmp.left)
+            if i == 0:
+                res.append(tmp.val)
+    return res
+
+
 if __name__ == '__main__':
-    head = ListNode.ListNode(1)
-    head.next = ListNode.ListNode(2)
-    head.next.next = ListNode.ListNode(3)
-    head.next.next.next = ListNode.ListNode(4)
-    head.next.next.next.next = ListNode.ListNode(5)
-    mid = head.next.next.next.next
-    mid.next = ListNode.ListNode(6)
+    # head = ListNode.ListNode(1)
+    # head.next = ListNode.ListNode(2)
+    # head.next.next = ListNode.ListNode(3)
+    # head.next.next.next = ListNode.ListNode(4)
+    # head.next.next.next.next = ListNode.ListNode(5)
+    # mid = head.next.next.next.next
+    # mid.next = ListNode.ListNode(6)
 
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
-    root.right = TreeNode.TreeNode(5)
-    root.left.left = TreeNode.TreeNode(3)
-    root.left.right = TreeNode.TreeNode(4)
+    root.right = TreeNode.TreeNode(3)
+    # root.left.left = TreeNode.TreeNode(7)
+    root.left.right = TreeNode.TreeNode(5)
     # root.right.left = TreeNode.TreeNode(-2)
-    root.right.right = TreeNode.TreeNode(6)
+    root.right.right = TreeNode.TreeNode(4)
     # root.left.left.left = TreeNode.TreeNode(-1)
-    print(flatten(root))
+    print(rightSideView(root))
