@@ -67,10 +67,11 @@ def maxProfit(k, prices):
     :type prices: List[int]
     :rtype: int
     """
-    if k >= len(prices) // 2:
-        return sum([max(prices[i] - prices[i - 1], 0) for i in range(1, len(prices))])
     if not prices or len(prices) == 0:
         return 0
+    if k >= len(prices) // 2:
+        return sum([max(prices[i] - prices[i - 1], 0) for i in range(1, len(prices))])
+
     # dp = [[0] * len(prices)] * (k + 1)
     # mdp = [prices[0]] * (k + 1)
     # for i in range(1, len(prices)):
