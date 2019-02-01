@@ -134,7 +134,25 @@ def singleNumber(nums):
         b = (b ^ num) & ~a
     return a
 
+def rangeBitwiseAnd(m, n):
+    """
+    201. 数字范围按位与
+    :type m: int
+    :type n: int
+    :rtype: int
+    """
+    count = 0
+    while m != n and m != 0:
+        m >>= 1
+        n >>= 1
+        count += 1
+    return m << count
+    # return m if (m == 0 or n == 0) else (rangeBitwiseAnd(m >> 1, n >> 1) << 1)
+
 
 if __name__ == '__main__':
-    singleNumber([2, 2, 2, 1])
+
+
+    print(rangeBitwiseAnd(8,8))
+
 
