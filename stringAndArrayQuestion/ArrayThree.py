@@ -199,5 +199,30 @@ def convertToTitle(n):
     return res[::-1]
 
 
+def minSubArrayLen(s, nums):
+    """
+    209. 长度最小的子数组
+    :type s: int
+    :type nums: List[int]
+    :rtype: int
+    """
+    if not nums:
+        return 0
+    start = 0
+    sums = 0
+    i, m = 0, len(nums)
+    ans = m + 1
+    while i < m:
+        sums += nums[i]
+        if sums >= s:
+            while start <= i and sums >= s:
+                ans = min(ans, i - start + 1)
+                sums -= nums[start]
+                start += 1
+        i += 1
+    return ans if ans != m + 1 else 0
+
+
 if __name__ == '__main__':
-    print(convertToTitle(26))
+    print(minSubArrayLen(15,
+                         [1, 2, 3, 4, 5]))
