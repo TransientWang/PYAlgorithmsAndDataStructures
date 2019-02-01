@@ -134,9 +134,13 @@ def singleNumber(nums):
         b = (b ^ num) & ~a
     return a
 
+
 def rangeBitwiseAnd(m, n):
     """
     201. 数字范围按位与
+    基数与偶数按位与的最后一位一定是 （0&1) 0 ，
+    那么在 m !=0 或者 m != n 的情况下（可以直接返回 m,0 & 其他 = 0，m &m =m），
+    只需要从低位第二位起开（右移一位）始计算就可以，然后结果再相应的（左移回来）就可以。
     :type m: int
     :type n: int
     :rtype: int
@@ -147,12 +151,8 @@ def rangeBitwiseAnd(m, n):
         n >>= 1
         count += 1
     return m << count
-    # return m if (m == 0 or n == 0) else (rangeBitwiseAnd(m >> 1, n >> 1) << 1)
+    # return m if (m == 0 or m == 0) else (rangeBitwiseAnd(m >> 1, n >> 1) << 1)
 
 
 if __name__ == '__main__':
-
-
-    print(rangeBitwiseAnd(8,8))
-
-
+    print(rangeBitwiseAnd(8, 8))
