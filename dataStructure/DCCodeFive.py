@@ -217,6 +217,27 @@ def insertionSortList(head):
     return stack[0]
 
 
+def removeElements(head, val):
+    """
+    203. 移除链表元素
+    dummy 节点
+    :type head: ListNode
+    :type val: int
+    :rtype: ListNode
+    """
+    dummy = ListNode.ListNode(None)
+    dummy.next = head
+    left, right = dummy, head
+    while right:
+        if right.val == val:
+            left.next = right.next
+            right = left.next
+        else:
+            right = right.next
+            left = left.next
+    return dummy.next
+
+
 if __name__ == '__main__':
     from dataStructure import ListNode
 
@@ -238,6 +259,6 @@ if __name__ == '__main__':
     head = ListNode.ListNode(1)
     head.next = ListNode.ListNode(3)
     head.next.next = ListNode.ListNode(2)
-    head.next.next.next = ListNode.ListNode(-1)
+    head.next.next.next = ListNode.ListNode(3)
     # head.next.next.next.next = ListNode.ListNode(5)
-    print(insertionSortList(head))
+    print(removeElements(head, 3))
