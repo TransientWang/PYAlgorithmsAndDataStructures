@@ -61,6 +61,7 @@ def findRepeatedDnaSequences(s):
 def isIsomorphic(s, t):
     """
     205. 同构字符串
+    相同的字符串必须被相同的字符替换
     :type s: str
     :type t: str
     :rtype: bool
