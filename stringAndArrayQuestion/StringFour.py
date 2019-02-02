@@ -58,5 +58,25 @@ def findRepeatedDnaSequences(s):
     return res
 
 
+def isIsomorphic(s, t):
+    """
+    205. 同构字符串
+    :type s: str
+    :type t: str
+    :rtype: bool
+    """
+    if len(s) != len(t):
+        return False
+    if len(set(s)) != len(set(t)):
+        return False
+    table = {}
+    for i in range(len(s)):
+        if s[i] in table and table[s[i]] != t[i]:
+            return False
+        else:
+            table[s[i]] = t[i]
+    return True
+
+
 if __name__ == '__main__':
-    print(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"))
+    print(isIsomorphic("paper","title"))
