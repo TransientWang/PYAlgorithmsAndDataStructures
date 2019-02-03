@@ -74,7 +74,6 @@ def trapOne(height):
     pass
 
 
-
 def trap(height):
     '''
     42.接雨水
@@ -92,14 +91,15 @@ def trap(height):
     max_l = height[0]
     res = 0
 
-    for i in range(len(height) - 1, -1,-1):
+    for i in range(len(height) - 1, -1, -1):
         maxR[i] = max(max_r, height[i])
-        max_r = max(max_r,maxR[i])
+        max_r = max(max_r, maxR[i])
 
     for i in range(1, len(height)):
         max_l = max(max_l, height[i])
         res += max(min(max_l, maxR[i]) - height[i], 0)
     return res
+
 
 def KMP(string, pattern):
     '''
@@ -215,6 +215,33 @@ def multiply(num1, num2):
     return "".join(tmp)
 
 
+def shortestPalindrome(s):
+    """
+    214. 最短回文串
+    最长回文前缀字符串是谁然后在它前面加上其后缀的逆序即可，即suff[::-1] + pref + suff
+    :type s: str
+    :rtype: str
+    """
+    # for i in range(len(s), -1, -1):
+    #     pref, suff = s[:i], s[i:]
+    #     if pref == pref[::-1]:
+    #         return suff[::-1] + s
+    # 优化
+    # reversed_s = s[::-1]
+    # for i in range(len(s)):
+    #     if s.startswith(reversed_s[i:]):  # 说明s[:n-i]是回文
+    #         return reversed_s[:i] + s
+    # return s
+
+    i = 0
+    for j in range(len(s) - 1, -1, -1):
+        if s[i] == s[j]:
+            i += 1
+    if i == len(s):
+        return s
+    tmp = s[i:][::-1]
+    return tmp + shortestPalindrome(s[:i]) + s[i:]
+
+
 if __name__ == '__main__':
-    print(trapOne([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
-    print()
+    print(shortestPalindrome("abcd"))

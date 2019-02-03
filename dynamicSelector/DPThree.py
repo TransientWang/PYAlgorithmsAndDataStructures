@@ -76,7 +76,7 @@ def maxProfit(k, prices):
     # mdp = [prices[0]] * (k + 1)
     # for i in range(1, len(prices)):
     #     for j in range(1, k + 1):
-    #         mdp[j] = min(mdp[j], prices[i] - dp[j - 1][i - 1]) # prices[i] - dp[j - 1][i - 1] 代表当前减去之前最优值的付出
+    #         mdp[j] = min(mdp[j], prices[i] - dp[j - 1][i - 1]) # prices[i] - dp[j - 1][i - 1] 第 i 天的金额减去 i-1 天之前的收益
     #         dp[j][i] = max(dp[j][i - 1], prices[i] - mdp[j]) #当前值 - 之前的总付出= 当前收益
     # return dp[-1][-1]
 
@@ -85,7 +85,7 @@ def maxProfit(k, prices):
     mdp = [prices[0]] * (k + 1)
     for i in range(1, len(prices)):
         for j in range(1, min(k + 1, i // 2 + 2)):  # min(k + 1, i // 2 + 2) 计算优化 + 2 是因为进度问题 +1 范围会不准确
-            mdp[j] = min(mdp[j], prices[i] - dp[k - 1])
+            mdp[j] = min(mdp[j], prices[i] - dp[j - 1])
             dp[j] = max(dp[j], prices[i] - mdp[j])
     return dp[-1]
 
