@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+import math
+
+
 def combinationSum3(k, n):
     """
     216. 组合总和 III
@@ -8,6 +11,7 @@ def combinationSum3(k, n):
     :rtype: List[List[int]]
     """
     res = []
+    math.sqrt()
 
     def find(s_list, begin, end):
         if len(s_list) == k:
@@ -59,7 +63,56 @@ def containsNearbyAlmostDuplicate(nums, k, t):
     return False
 
 
+def maximalSquare(matrix):
+    """
+    221. 最大正方形
+    动态规划：dp[x][y] 代表以matrix[x][y]为右下角的正方形的最大面积
+    最长边 = min(dp[x][y - 1], dp[x - 1][y], dp[x - 1][y - 1]) + 1
+    :type matrix: List[List[str]]
+    :rtype: int
+    """
+    # 解法 1
+    # if not matrix:
+    #     return 0
+    # dp = [[0 for i in range(len(matrix[0]))] for i in range(len(matrix))]
+    # res = 0
+    # for x in range(len(matrix)):
+    #     if matrix[x][0] == "1":
+    #         res = 1
+    #         dp[x][0] = 1
+    # for y in range(len(matrix[0])):
+    #     if matrix[0][y] == "1":
+    #         res = 1
+    #         dp[0][y] = 1
+    # for x in range(1, len(matrix)):
+    #     for y in range(1, len(matrix[0])):
+    #         if matrix[x][y] == "1":
+    #             # 正方形条件
+    #             t = min(dp[x][y - 1], dp[x - 1][y], dp[x - 1][y - 1]) + 1
+    #             if t > 1:
+    #                 dp[x][y] = t
+    #                 res = max(dp[x][y], res)
+    #             else:
+    #                 dp[x][y] = 1
+    # return res ** 2
+    # 解法 2
+    if not matrix:
+        return 0
+    row = [0] * len(matrix[0])  # 竖着的边的长度
+    min_bian = 0
+    for i in range(len(matrix)):
+        flag = 0  # 在每一行遇到 竖边大于最小正方形边长的时候，flag+=1如果 flag == min_bian + 1则证明遇到了一个更大的正方形
+        for j in range(len(matrix[0])):
+            row[j] = row[j] + 1 if matrix[i][j] == '1' else 0  # 求每列的中最长竖边
+            flag = flag + 1 if row[j] > min_bian else 0  # 求遇到竖边大于 min_bian 的时候，横边有多长
+            if flag == min_bian + 1:  # 遇到更大的正放形
+                min_bian += 1
+                flag = 0
+    return min_bian * min_bian
+
+
 if __name__ == '__main__':
-    print(containsNearbyAlmostDuplicate([7, 2, 8],
-                                        2,
-                                        1))
+    print(maximalSquare([["0", "1", "1", "0", "0"],
+                         ["1", "1", "1", "0", "0"],
+                         ["1", "1", "1", "1", "1"],
+                         ["1", "0", "0", "1", "0"]]))
