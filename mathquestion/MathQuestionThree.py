@@ -153,6 +153,12 @@ def rangeBitwiseAnd(m, n):
     return m << count
     # return m if (m == 0 or m == 0) else (rangeBitwiseAnd(m >> 1, n >> 1) << 1)
 
-
+def computeArea(A, B, C, D, E, F, G, H):
+    """
+    223. 矩形面积
+    :type A: int
+    :rtype: int
+    """
+    return (C - A) * (D - B) + (H - F) * (G - E) - max(min(C, G) - max(A, E), 0) * max(min(D, H) - max(B, F), 0)
 if __name__ == '__main__':
     print(rangeBitwiseAnd(8, 8))
