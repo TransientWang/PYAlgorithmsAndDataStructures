@@ -33,8 +33,19 @@ def countNodes(root):
     # return 1 + countNodes(root.left) + countNodes(root.right)
 
 
-def countNodes(root):
+def invertTree(root):
     """
+    226. 翻转二叉树
     :type root: TreeNode
-    :rtype: int
+    :rtype: TreeNode
     """
+    if not root:
+        return None
+    left_ = root.left
+    right_ = root.right
+    invertTree(left_)
+    invertTree(right_)
+    root.right = left_
+    root.left = right_
+    return root
+
