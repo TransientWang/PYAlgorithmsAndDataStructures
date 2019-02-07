@@ -169,6 +169,7 @@ def isNumber(s):
     :type s: str
     :rtype: bool
     """
+
     def isInt(s):
         if s == '': return False
         if s[0] in ['+', '-']:
@@ -196,6 +197,7 @@ def isNumber(s):
         return True
 
     s = s.strip()
+
     if len(s) == 0: return False
     data = s.split('e')
     if len(data) > 2:
@@ -206,5 +208,95 @@ def isNumber(s):
         return isFloat(data[0])
 
 
+def calculate(s):
+    """
+    224. 基本计算器
+    :type s: str
+    :rtype: int
+    """
+
+    def total(stack):
+        while len(stack) > 2:
+            if stack[1] == '+':
+                p = stack[0] + stack[2]
+            else:
+                p = stack[0] - stack[2]
+            stack = stack[3:]
+            stack.insert(0, p)
+        return stack
+
+    stack = []
+    k = ""
+    for idx, i in enumerate(s):
+        if i == " ":
+            continue
+        if i == "(":
+            stack.append([])
+
+        elif str(i).isnumeric():
+            k += str(i)
+            if idx < len(s) - 1 and str(s[idx + 1]).isnumeric():
+                continue
+            if len(stack) > 0 and isinstance(stack[-1], list):
+                stack[-1].append(int(k))
+            else:
+                stack.append(int(k))
+            k = ""
+        elif i == "+" or i == "-":
+            if isinstance(stack[-1], list):
+                stack[-1].append(i)
+            else:
+                stack.append(i)
+        elif i == ")":
+            p = stack.pop()
+            if not isinstance(p, list):
+                p = [p]
+            else:
+                p = total(p)
+            if len(stack) > 0 and isinstance(stack[-1], list):
+                stack[-1] += p
+            else:
+                stack += p
+    stack = total(stack)
+
+    return stack[0]
+
+
+def calculate_(s):
+    """
+    224. 基本计算器
+    :type s: str
+    :rtype: int
+    """
+    num = 0
+    result = 0
+    operator = 1
+    stack = []
+    for char in s:
+        if char == '+':
+            result += operator * num
+            num = 0
+            operator = 1
+        elif char == '-':
+            result += operator * num
+            num = 0
+            operator = -1
+        elif char == '(':
+            stack.append(result)  # 把“(”前的结果和操作符保存起来
+            stack.append(operator)
+            num = 0
+            result = 0
+            operator = 1
+        elif char == ')':
+            result += operator * num  # 这个result是()中计算的结果
+            num = 0
+            result = result * stack.pop()
+            result += stack.pop()
+        elif char != ' ':
+            num = num * 10 + int(char)
+    result += operator * num
+    return result
+
+
 if __name__ == '__main__':
-    print(rangeBitwiseAnd(8, 8))
+    print(calculate_("(1+(4+5+2)-3)+(6+8)"))
