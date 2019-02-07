@@ -153,6 +153,7 @@ def rangeBitwiseAnd(m, n):
     return m << count
     # return m if (m == 0 or m == 0) else (rangeBitwiseAnd(m >> 1, n >> 1) << 1)
 
+
 def computeArea(A, B, C, D, E, F, G, H):
     """
     223. 矩形面积
@@ -160,5 +161,50 @@ def computeArea(A, B, C, D, E, F, G, H):
     :rtype: int
     """
     return (C - A) * (D - B) + (H - F) * (G - E) - max(min(C, G) - max(A, E), 0) * max(min(D, H) - max(B, F), 0)
+
+
+def isNumber(s):
+    """
+    65. 有效数字
+    :type s: str
+    :rtype: bool
+    """
+    def isInt(s):
+        if s == '': return False
+        if s[0] in ['+', '-']:
+            s = s[1:]
+        if s == '': return False
+        for c in s:
+            if c > '9' or c < '0':
+                return False
+        return True
+
+    def isFloat(s):
+        if s == '': return False
+        if s[0] in ['+', '-']:
+            s = s[1:]
+        if s == '': return False
+        if s == '.':
+            return False
+        if s.count('.') > 1:
+            return False
+        for c in s:
+            if c == '.' or '0' <= c <= '9':
+                continue
+            else:
+                return False
+        return True
+
+    s = s.strip()
+    if len(s) == 0: return False
+    data = s.split('e')
+    if len(data) > 2:
+        return False
+    elif len(data) == 2:
+        return isFloat(data[0]) and isInt(data[1])
+    else:
+        return isFloat(data[0])
+
+
 if __name__ == '__main__':
     print(rangeBitwiseAnd(8, 8))
