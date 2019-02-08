@@ -137,5 +137,28 @@ def summaryRanges(nums):
     return res
 
 
+def majorityElement(nums):
+    """
+    229. 求众数 II
+    :type nums: List[int]
+    :rtype: List[int]
+    """
+    # dict1 = dict(Counter(nums))
+    # subn = len(nums) // 3
+    # return [i for i in dict1 if dict1[i] > subn]
+    h = len(nums) // 3
+    dic = dict()
+    res = []
+    for i in nums:
+        if dic.get(i, "#") == "#":
+            dic[i] = 1
+        else:
+            dic[i] += 1
+    for k, v in dic.items():
+        if v > h:
+            res.append(k)
+    return res
+
+
 if __name__ == '__main__':
-    print(summaryRanges([0, 2, 3, 4, 6, 8, 9]))
+    print(majorityElement([1, 1]))
