@@ -167,6 +167,23 @@ def rightSideView(root):
     return res
 
 
+def lowestCommonAncestor(root, p, q):
+    """
+    235. 二叉搜索树的最近公共祖先
+    :type root: TreeNode
+    :type p: TreeNode
+    :type q: TreeNode
+    :rtype: TreeNode
+    """
+    if not root or (p.val < root.val and q.val > root.val) or (p.val > root.val and q.val < root.val) or root.val == p.val or root.val == q.val:
+        return root
+
+    if p.val > root.val:
+        return lowestCommonAncestor(root.right, p, q)
+    else:
+        return lowestCommonAncestor(root.left, p, q)
+
+
 if __name__ == '__main__':
     # head = ListNode.ListNode(1)
     # head.next = ListNode.ListNode(2)
@@ -176,12 +193,12 @@ if __name__ == '__main__':
     # mid = head.next.next.next.next
     # mid.next = ListNode.ListNode(6)
 
-    root = TreeNode.TreeNode(1)
-    root.left = TreeNode.TreeNode(2)
+    root = TreeNode.TreeNode(2)
+    root.left = TreeNode.TreeNode(1)
     root.right = TreeNode.TreeNode(3)
-    # root.left.left = TreeNode.TreeNode(7)
-    root.left.right = TreeNode.TreeNode(5)
-    # root.right.left = TreeNode.TreeNode(-2)
-    root.right.right = TreeNode.TreeNode(4)
+    # root.left.left = TreeNode.TreeNode(0)
+    # root.left.right = TreeNode.TreeNode(4)
+    # root.right.left = TreeNode.TreeNode(7)
+    # root.right.right = TreeNode.TreeNode(9)
     # root.left.left.left = TreeNode.TreeNode(-1)
-    print(rightSideView(root))
+    print(lowestCommonAncestor(root, TreeNode.TreeNode(3), TreeNode.TreeNode(1)))
