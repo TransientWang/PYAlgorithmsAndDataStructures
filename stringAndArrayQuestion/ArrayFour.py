@@ -146,6 +146,7 @@ def majorityElement(nums):
     # dict1 = dict(Counter(nums))
     # subn = len(nums) // 3
     # return [i for i in dict1 if dict1[i] > subn]
+    math.ceil()
     h = len(nums) // 3
     dic = dict()
     res = []
@@ -186,6 +187,35 @@ def majorityElement(nums):
         res.append(num2)
     return res
 
+def countDigitOne(n):
+    """
+    233. 数字1的个数
+    :type n: int
+    :rtype: int
+    """
+    length = len(str(n))  # w位数
+    time = 0
+    base = 1
+    for i in range(length):
+        if i == 0:  # 个位
+            r = n / (base * 10)
+            current = n % (base * 10)
+            time += r * base
+            if current >= 1:
+                time += 1
+        else:  # 其他位数
+            r = n / (base * 10)
+            current = (n % (base * 10)) / base
+            end = n % base
+            if current == 0:
+                time += r * base
+            elif current == 1:
+                time += r * base + end + 1
+            else:
+                time += (r + 1) * base
+        base = base * 10
+    return time
+
 
 if __name__ == '__main__':
-    print(majorityElement([1, 1]))
+    print(countDigitOne(100))
