@@ -111,8 +111,31 @@ def maximalSquare(matrix):
     return min_bian * min_bian
 
 
+def summaryRanges(nums):
+    """
+    228. 汇总区间
+    :type nums: List[int]
+    :rtype: List[str]
+    """
+    nums.sort()
+    p = []
+    res = []
+    i = 0
+    while i < len(nums):
+        if not p:
+            p.append(nums[i])
+            i += 1
+        elif nums[i] - p[-1] == 1:
+            p.append(nums[i])
+            i += 1
+        else:
+            p = str(p[0]) if len(p) == 1 else str(p[0]) + "->" + str(p[-1])
+            res.append(p)
+            p = []
+    p = str(p[0]) if len(p) == 1 else str(p[0]) + "->" + str(p[-1])
+    res.append(p)
+    return res
+
+
 if __name__ == '__main__':
-    print(maximalSquare([["0", "1", "1", "0", "0"],
-                         ["1", "1", "1", "0", "0"],
-                         ["1", "1", "1", "1", "1"],
-                         ["1", "0", "0", "1", "0"]]))
+    print(summaryRanges([0, 2, 3, 4, 6, 8, 9]))
