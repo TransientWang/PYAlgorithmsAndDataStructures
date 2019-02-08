@@ -187,6 +187,7 @@ def majorityElement(nums):
         res.append(num2)
     return res
 
+
 def countDigitOne(n):
     """
     233. 数字1的个数
@@ -197,15 +198,15 @@ def countDigitOne(n):
     time = 0
     base = 1
     for i in range(length):
-        if i == 0:  # 个位
-            r = n / (base * 10)
+        if i == 0:  # 有几个10（没隔10算一个1） + 各位余数
+            r = n // (base * 10)
             current = n % (base * 10)
             time += r * base
             if current >= 1:
                 time += 1
         else:  # 其他位数
-            r = n / (base * 10)
-            current = (n % (base * 10)) / base
+            r = n // (base * 10)
+            current = (n % (base * 10)) // base
             end = n % base
             if current == 0:
                 time += r * base
@@ -218,4 +219,4 @@ def countDigitOne(n):
 
 
 if __name__ == '__main__':
-    print(countDigitOne(100))
+    print(countDigitOne(30))
