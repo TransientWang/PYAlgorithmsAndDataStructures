@@ -166,7 +166,7 @@ def diffWaysToCompute(input):
 
     opt = {"+": lambda x, y: x + y, "-": lambda x, y: x - y, "*": lambda x, y: x * y}
     if input.isdigit():
-        return [int(input)]
+        return [int(input)]  # 返回列表较少问题复杂性
     res = []
     for i in range(len(input)):
         if input[i] in "-+*":
@@ -178,7 +178,6 @@ def diffWaysToCompute(input):
 
 if __name__ == '__main__':
     print(diffWaysToCompute("2*3-4*5"))
-
 
     # root = TreeNode.TreeNode(4)
     # # root.left = TreeNode.TreeNode(9)
