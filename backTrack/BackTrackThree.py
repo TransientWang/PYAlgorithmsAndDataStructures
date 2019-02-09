@@ -164,14 +164,7 @@ def diffWaysToCompute(input):
     :rtype: List[int]
     """
 
-    def helper(m, n, op):
-        if op == "+":
-            return m + n
-        elif op == "-":
-            return m - n
-        else:
-            return m * n
-
+    opt = {"+": lambda x, y: x + y, "-": lambda x, y: x - y, "*": lambda x, y: x * y}
     if input.isdigit():
         return [int(input)]
     res = []
@@ -179,13 +172,13 @@ def diffWaysToCompute(input):
         if input[i] in "-+*":
             res1 = diffWaysToCompute(input[:i])
             res2 = diffWaysToCompute(input[i + 1:])
-            res.extend(helper(j, k, input[i]) for j in res1 for k in res2)
+            res.extend(opt[input[i]](j, k) for j in res1 for k in res2)
     return res
-
 
 
 if __name__ == '__main__':
     print(diffWaysToCompute("2*3-4*5"))
+
 
     # root = TreeNode.TreeNode(4)
     # # root.left = TreeNode.TreeNode(9)
