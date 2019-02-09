@@ -175,10 +175,10 @@ def lowestCommonAncestor(root, p, q):
     :type q: TreeNode
     :rtype: TreeNode
     """
-    if not root\
-            or (p.val < root.val and q.val > root.val)\
-            or (p.val > root.val and q.val < root.val)\
-            or root.val == p.val\
+    if not root \
+            or (p.val < root.val and q.val > root.val) \
+            or (p.val > root.val and q.val < root.val) \
+            or root.val == p.val \
             or root.val == q.val:
         return root
 

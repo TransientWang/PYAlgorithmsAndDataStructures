@@ -157,13 +157,42 @@ def sumNumbers(root):
     return res[0]
 
 
+def diffWaysToCompute(input):
+    """
+    241. 为运算表达式设计优先级
+    :type input: str
+    :rtype: List[int]
+    """
+
+    def helper(m, n, op):
+        if op == "+":
+            return m + n
+        elif op == "-":
+            return m - n
+        else:
+            return m * n
+
+    if input.isdigit():
+        return [int(input)]
+    res = []
+    for i in range(len(input)):
+        if input[i] in "-+*":
+            res1 = diffWaysToCompute(input[:i])
+            res2 = diffWaysToCompute(input[i + 1:])
+            res.extend(helper(j, k, input[i]) for j in res1 for k in res2)
+    return res
+
+
+
 if __name__ == '__main__':
-    root = TreeNode.TreeNode(4)
-    # root.left = TreeNode.TreeNode(9)
-    # root.right = TreeNode.TreeNode(0)
-    # root.left.left = TreeNode.TreeNode(5)
-    # root.left.right = TreeNode.TreeNode(1)
-    # root.right.left = TreeNode.TreeNode(-2)
-    # root.right.right = TreeNode.TreeNode(6)
-    # root.left.left.left = TreeNode.TreeNode(-1)
-    print(sumNumbers(root))
+    print(diffWaysToCompute("2*3-4*5"))
+
+    # root = TreeNode.TreeNode(4)
+    # # root.left = TreeNode.TreeNode(9)
+    # # root.right = TreeNode.TreeNode(0)
+    # # root.left.left = TreeNode.TreeNode(5)
+    # # root.left.right = TreeNode.TreeNode(1)
+    # # root.right.left = TreeNode.TreeNode(-2)
+    # # root.right.right = TreeNode.TreeNode(6)
+    # # root.left.left.left = TreeNode.TreeNode(-1)
+    # print(sumNumbers(root))
