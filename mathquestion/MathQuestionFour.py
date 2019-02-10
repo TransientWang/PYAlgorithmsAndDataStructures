@@ -27,3 +27,15 @@ def singleNumber(nums):
         else:
             num2 ^= num
     return [num1, num2]
+
+def addDigits(num):
+    """
+    258. 各位相加
+    https://en.wikipedia.org/wiki/Digital_root
+    例如，11的数字根是2，这意味着11是9之后的第二个数字。
+    同样，2035的数字根是1，这意味着2035-1是9的倍数。如果数字产生数字正好9的根，那么数字是9的倍数。
+    :type num: int
+    :rtype: int
+    """
+
+    return (num - 1) % 9 + 1 if num != 0 else 0
