@@ -178,7 +178,8 @@ def diffWaysToCompute(input):
 
 if __name__ == '__main__':
     print(diffWaysToCompute("2*3-4*5"))
-
+    p = "dawd"
+    print(p[:-2])
     # root = TreeNode.TreeNode(4)
     # # root.left = TreeNode.TreeNode(9)
     # # root.right = TreeNode.TreeNode(0)
