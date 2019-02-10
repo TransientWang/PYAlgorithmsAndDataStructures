@@ -19,8 +19,7 @@ def singleNumber(nums):
     for i in nums:
         xor ^= i
     bit_1 = 1
-    while (xor & 1) == 0:
-        xor >>= 1
+    while (xor & bit_1) == 0:
         bit_1 <<= 1
     for num in nums:
         if num & bit_1 == 0:
