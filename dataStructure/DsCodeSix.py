@@ -78,11 +78,10 @@ def binaryTreePaths(root):
     find()
     return res
 
-
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
     root.left.right = TreeNode.TreeNode(5)
     # root.right.right = TreeNode.TreeNode(5)
-    print(binaryTreePaths(root))
+
