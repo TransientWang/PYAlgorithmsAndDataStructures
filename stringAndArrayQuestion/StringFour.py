@@ -78,6 +78,57 @@ def isIsomorphic(s, t):
             table[s[i]] = t[i]
     return True
 
+def numberToWords(num):
+    """
+    273. 整数转换英文表示
+    :type num: int
+    :rtype: str
+    """
+    if num == 0:
+        return "Zero"
+    oneNum = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+    tenNum = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
+              "Nineteen"]
+    tyNum = ["Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+    Num = ["", "Thousand", "Million", "Billion"]
+    num = str(num)
+
+    t = []
+    p = 0
+    h = []
+    for i in range(len(num) - 1, -1, -1):
+        if p % 3 != 0 or p == 0:
+            h.append(num[i])
+        else:
+            t.append(h[:])
+            h = [num[i]]
+        p += 1
+    if h:
+        t.append(h)
+    res = ""
+    for i in range(len(t)):
+        z = ""
+        for j in range(len(t[i])):
+            if j == 0:
+                z += " " + oneNum[int(t[i][j]) - 1]
+            elif j == 1:
+                m = int(t[i][j] + t[i][j - 1])
+                if m > 9 and m < 20:
+                    z = " " + tenNum[int(t[i][j - 1])]
+                elif m > 19 and int(t[i][j - 1]) == 0:
+                    z = " " + tyNum[int(t[i][j]) - 2]
+                elif m > 19 and int(t[i][j - 1]) != 0:
+                    z = " " + tyNum[int(t[i][j]) - 2] + z
+            elif j == 2:
+                if int(t[i][0]) + int(t[i][1]) == 0 and int(t[i][2]) != 0:
+                    z = oneNum[int(t[i][j]) - 1] + " " + "Hundred"
+                elif int(t[i][j]) != 0:
+                    z = oneNum[int(t[i][j]) - 1] + " " + "Hundred" + z
+                elif int(t[i][0]) + int(t[i][1]) == 0 + int(t[i][2]) == 0:
+                    z = ""
+        res = " " + z.strip() + " " + Num[i] + res if z != "" else res
+    return res.strip()
+
 
 if __name__ == '__main__':
     print(isIsomorphic("paper","title"))
