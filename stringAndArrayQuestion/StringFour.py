@@ -134,16 +134,26 @@ def numberToWords(num):
 def hIndex(citations):
     """
     274. H指数
+    274. H指数II
     :type citations: List[int]
     :rtype: int
     """
     citations.sort()
-    citations.reverse()
-    p = 0
-    for i in range(len(citations)):
-        if i <= citations[i] - 1:
-            p = i + 1
-    return p
+    # citations.reverse()
+    # p = 0
+    # for i in range(len(citations)):
+    #     if i <= citations[i] - 1:
+    #         p = i + 1
+    # return p
+    N = len(citations)
+    low, high = 0, N - 1
+    while low <= high:
+        mid = (low + high) / 2
+        if N - mid > citations[mid]:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return N - low
 
 
 
