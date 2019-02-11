@@ -78,6 +78,7 @@ def isIsomorphic(s, t):
             table[s[i]] = t[i]
     return True
 
+
 def numberToWords(num):
     """
     273. 整数转换英文表示
@@ -130,5 +131,20 @@ def numberToWords(num):
     return res.strip()
 
 
+def hIndex(citations):
+    """
+    274. H指数
+    :type citations: List[int]
+    :rtype: int
+    """
+    citations.sort()
+    citations.reverse()
+    p = 0
+    for i in range(len(citations)):
+        if i <= citations[i] - 1:
+            p = i + 1
+    return p
+
+
 if __name__ == '__main__':
-    print(isIsomorphic("paper","title"))
+    print(hIndex([1]))
