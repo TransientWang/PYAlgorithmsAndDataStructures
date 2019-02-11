@@ -28,6 +28,7 @@ def singleNumber(nums):
             num2 ^= num
     return [num1, num2]
 
+
 def addDigits(num):
     """
     258. 各位相加
@@ -39,3 +40,24 @@ def addDigits(num):
     """
 
     return (num - 1) % 9 + 1 if num != 0 else 0
+
+
+def isUgly(num):
+    """
+    263. 丑数
+    :type num: int
+    :rtype: bool
+    """
+    if num == 0:
+        return False
+    dmap = (2, 3, 5)
+    if num == 1 or num in dmap:
+        return True
+    for i in dmap:
+        if num % i == 0:
+            return isUgly(num //i)
+    return False
+
+
+if __name__ == '__main__':
+    print(isUgly(0))
