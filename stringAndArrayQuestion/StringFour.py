@@ -146,5 +146,7 @@ def hIndex(citations):
     return p
 
 
+
+
 if __name__ == '__main__':
-    print(hIndex([1]))
+    print(hIndex([1,2]))
