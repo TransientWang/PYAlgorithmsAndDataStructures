@@ -232,6 +232,32 @@ def wordPattern(pattern, str):
     return True
 
 
+def getHint(secret, guess):
+    """
+    299. 猜数字游戏
+    :type secret: str
+    :type guess: str
+    :rtype: str
+    """
+
+    secret = [i for i in secret]
+    mp = []
+    guess = [i for i in guess]
+    A = 0
+    B = 0
+    for idx, i in enumerate(secret):
+        if guess[idx] != i:
+            mp.append(i)
+    for idx, i in enumerate(secret):
+        if guess[idx] == i:
+            A += 1
+        else:
+            if guess[idx] in mp:
+                mp.remove(guess[idx])
+                B += 1
+    return str(A) + "A" + str(B) + "B"
+
+
 if __name__ == '__main__':
-    print(wordPattern("jquery",
-                      "jquery"))
+    print(getHint("1807",
+                  "7810"))
