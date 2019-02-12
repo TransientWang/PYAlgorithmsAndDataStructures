@@ -239,7 +239,6 @@ def getHint(secret, guess):
     :type guess: str
     :rtype: str
     """
-
     secret = [i for i in secret]
     mp = []
     guess = [i for i in guess]
