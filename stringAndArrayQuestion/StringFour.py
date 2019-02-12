@@ -174,11 +174,11 @@ def addOperators(num, target):
 
     def dfs(i, expr, preSum, pre, cur):
         """
-        :param i:
-        :param expr: 结果表达式
-        :param preSum: 不包括pre 的表达式结果
-        :param pre: 表达式中的最后一个计算得到的结果
-        :param cur: 最近参与计算的一个数字
+        :param i: 位置索引
+        :param pre: 表达式中的最后一个数值参与计算所得到的结果
+        :param preSum: 不包括 pre 的表达式结果
+        :param expr: 结果表达式 ，其计算结果 = preSum + pre
+        :param cur: 最后一次参与计算的一个数字 per/cur = 上
         :return:
         """
         if i == len(num) - 1:
@@ -188,21 +188,25 @@ def addOperators(num, target):
                 res.append(expr + "-" + str(num[i]))
             if preSum + pre * num[i] == target:
                 res.append(expr + "*" + str(num[i]))
-            # pre = prevProd*cur;
+            # prevProd = pre/cur （prevProd 是最后一次参与计算的 pre。对于加减法来说prevProd 的值只值 ±1，
+            # 对于乘法来说是最后一次次参与计算的pre）
+            # curr*10+nums[i] 为前一个数与当前数字的和
             # new_prod = prevProd * (curr*10+nums[i]) = 10*prod + prod//curr*nums[i]
-            if cur and 10 * pre + pre // cur * num[i] + preSum == target:
+            if cur and 10 * pre + pre // cur * num[i] + preSum == target:  # 处理多个数字组合
                 res.append(expr + str(num[i]))
         else:
             dfs(i + 1, expr + "+" + str(num[i]), preSum + pre, num[i], num[i])
-            dfs(i + 1, expr + "-" + str(num[i]), preSum + pre, -num[i], num[i])
+            dfs(i + 1, expr + "-" + str(num[i]), preSum + pre, -num[i], num[i])  # 因为计算的时候需要知道上一个参与计算的数值，
+            # 但是如果考虑上一个参与计算的符号就会变得更加复杂，所以当有减号参与的时候，直接将计算数值变为负值
             dfs(i + 1, expr + "*" + str(num[i]), preSum, num[i] * pre, num[i])
-            if cur:
-                # append nums[i] directly to last number, impossible when last number is 0
-                dfs(i + 1, expr + str(num[i]), preSum, 10 * pre + pre // cur * num[i], cur * 10 + num[i])
+            # if cur:
+            # append nums[i] directly to last number, impossible when last number is 0
+            if cur:  # 过滤最后一个参与计算的值为 0 的情况
+                dfs(i + 1, expr + str(num[i]), preSum, 10 * pre + pre // cur * num[i], cur * 10 + num[i])  # 处理多个数字组合
 
     dfs(1, str(num[0]), 0, num[0], num[0])
     return res
 
 
 if __name__ == '__main__':
-    print(addOperators("0105", 5))
+    print(addOperators("232", 8))
