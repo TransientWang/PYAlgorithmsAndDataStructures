@@ -208,5 +208,30 @@ def addOperators(num, target):
     return res
 
 
+def wordPattern(pattern, str):
+    """
+    290. 单词模式
+    :type pattern: str
+    :type str: str
+    :rtype: bool
+    """
+    if len(pattern) == 1:
+        return str != ""
+    mp = dict()
+    str = str.split(" ")
+    if len(pattern) != len(str):
+        return False
+    for idx, i in enumerate(pattern):
+        if mp.get(i, "#") == "#":
+            for k, v in mp.items():
+                if k != i and v == str[idx]:
+                    return False
+            mp[i] = str[idx]
+        elif str[idx] != mp[i]:
+            return False
+    return True
+
+
 if __name__ == '__main__':
-    print(addOperators("232", 8))
+    print(wordPattern("jquery",
+                      "jquery"))
