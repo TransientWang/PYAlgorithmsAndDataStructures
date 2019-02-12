@@ -156,7 +156,53 @@ def hIndex(citations):
     return N - low
 
 
+def addOperators(num, target):
+    """
+    282. 给表达式添加运算符
+    :type num: str
+    :type target: int
+    :rtype: List[str]
+    """
+    if not num:
+        return []
+    if len(num) == 1:
+        if int(num) == target:
+            return target
+        return []
+    num = [int(i) for i in num]
+    res = []
+
+    def dfs(i, expr, preSum, pre, cur):
+        """
+        :param i:
+        :param expr: 结果表达式
+        :param preSum: 不包括pre 的表达式结果
+        :param pre: 表达式中的最后一个计算得到的结果
+        :param cur: 最近参与计算的一个数字
+        :return:
+        """
+        if i == len(num) - 1:
+            if preSum + pre + num[i] == target:
+                res.append(expr + "+" + str(num[i]))
+            if preSum + pre - num[i] == target:
+                res.append(expr + "-" + str(num[i]))
+            if preSum + pre * num[i] == target:
+                res.append(expr + "*" + str(num[i]))
+            # pre = prevProd*cur;
+            # new_prod = prevProd * (curr*10+nums[i]) = 10*prod + prod//curr*nums[i]
+            if cur and 10 * pre + pre // cur * num[i] + preSum == target:
+                res.append(expr + str(num[i]))
+        else:
+            dfs(i + 1, expr + "+" + str(num[i]), preSum + pre, num[i], num[i])
+            dfs(i + 1, expr + "-" + str(num[i]), preSum + pre, -num[i], num[i])
+            dfs(i + 1, expr + "*" + str(num[i]), preSum, num[i] * pre, num[i])
+            if cur:
+                # append nums[i] directly to last number, impossible when last number is 0
+                dfs(i + 1, expr + str(num[i]), preSum, 10 * pre + pre // cur * num[i], cur * 10 + num[i])
+
+    dfs(1, str(num[0]), 0, num[0], num[0])
+    return res
 
 
 if __name__ == '__main__':
-    print(hIndex([1,2]))
+    print(addOperators("0105", 5))
