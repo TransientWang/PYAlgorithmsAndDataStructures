@@ -14,8 +14,6 @@ class NumMatrix(object):
             for j in range(1, len(matrix[0]) + 1):
                 s += matrix[i - 1][j - 1]
                 self.dp[i][j] = s + self.dp[i - 1][j]
-        for i in self.dp:
-            print(i)
 
     def sumRegion(self, row1, col1, row2, col2):
         """
