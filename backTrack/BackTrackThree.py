@@ -176,6 +176,33 @@ def diffWaysToCompute(input):
     return res
 
 
+def isAdditiveNumber(num):
+    """
+    306. 累加数
+    :type num: str
+    :rtype: bool
+    """
+    if not num:
+        return False
+
+    def find(idx=0, res=[], res_len=0):
+        if idx == len(num) and len(res) > 2:
+            return True
+        for i in range(idx, len(num)):
+            if num[idx] == "0" and i > idx:
+                return False
+            tmp = int(num[idx:i + 1])
+            if res_len > 1 and tmp > res[-1] + res[-2]:
+                return False
+            if res_len < 2 or tmp == res[-1] + res[-2]:
+                res.append(tmp)
+                if find(i + 1, res, res_len + 1):
+                    return True
+                res.pop()
+        return False
+    return find()
+
+
 if __name__ == '__main__':
     print(diffWaysToCompute("2*3-4*5"))
     p = "dawd"
