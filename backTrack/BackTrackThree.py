@@ -178,7 +178,7 @@ def diffWaysToCompute(input):
 
 def isAdditiveNumber(num):
     """
-    306. 累加数
+    306. 累加数天际线问题
     :type num: str
     :rtype: bool
     """
