@@ -148,8 +148,10 @@ from heapq import *
 
 def getSkyline(buildings):
     from functools import cmp_to_key
+    from heapq import heappush, heappop
     ''' 
     218.天际线问题
+    线段树问题，去掉重合的线段，并且加入了高度这一维度
     :param self:
     :param buildings:
     :return:
@@ -162,61 +164,38 @@ def getSkyline(buildings):
     如果后面扫描的楼的高度比heap中最高的楼还高，那么它的左上顶点一定会被加入到skyline中。
     当我们遇到一个building的右边界时,我们需要将其从heap中pop掉，如果heap中max height有变化，则push到结果中。
     '''
-    # from collections import defaultdict
-    # from heapq import heappush, heappop
-    #
-    # if not buildings:
-    #     return buildings
-    #
-    # points = []
-    # for l, r, h in buildings:
-    #     points += [(l, -h), (r, h)]
-    #
-    # points.sortAndSearch()
-    #
-    # result = []
-    # heights = [0]
-    # prev = heights[0]
-    #
-    # ignored = defaultdict(int)
-    #
-    # for x, h in points:
-    #     if h < 0:
-    #         heappush(heights, h)
-    #     else:
-    #         ignored[-h] += 1
-    #
-    #     while ignored[heights[0]] > 0:
-    #         ignored[heights[0]] -= 1
-    #         heappop(heights)
-    #
-    #     cur = heights[0]
-    #     if cur != prev:
-    #         result.append((x, -cur))
-    #         prev = cur
-    #
-    # return result
+    events = sorted([(L, -H, R) for L, R, H in buildings] + list(set((R, 0, None) for _, R, _ in buildings)))
+    # (R, 0, None)可以与  (L, -H, R) 区分出左右顶点
+    res, hp = [[0, 0]], [(0, 2 ** 31)]  # res:结果集 hp：大顶堆，左顶点已经加入结果集，但是右顶点还没有处理的（高度，右顶点）
+    for x, H, R in events:
+        while x >= hp[0][1]:  # 如果当前左顶点大于大顶堆中最高的右顶点
+            heappop(hp)  # 已经该建筑物处理完毕，将其高度排除
+        if H:  # 如果是左顶点，则将左顶点加入大顶堆
+            heappush(hp, (H, R))
+        if res[-1][-1] + hp[0][0]:  # 前一个是左顶点时候同一个建筑物的右顶点不能加入，或者不同建筑物的高度不可以相同
+            res.append([x, -hp[0][0]])
+    return res[1:]
 
-    idx, n = 0, len(buildings) # TODO  没有完全理解
-    liveBuildings, skyLine = [], []
-    # liveBuildings：左上顶点已经加入结果集skyLine 但右上顶点还没有处理的building的右上顶点的集合
-    # skyLine : 结果集
-
-    while idx < n or len(liveBuildings) > 0:  # 如果所有building没处理完，或者有右顶点没处理完
-        if len(liveBuildings) == 0 or (
-                idx < n and buildings[idx][0] <= - liveBuildings[0][1]):  # 如果没有右顶点需要处理或者当前building左顶点比前面的右顶点小
-            start = buildings[idx][0]  # 将处理的开始顶点设置为当前左顶点
-            while idx < n and buildings[idx][0] == start:  # while 考虑左右坐标相同但是height不同的building
-                heappush(liveBuildings, [-buildings[idx][2], -buildings[idx][1]])  # 将当前顶点的右顶点加入liveBuilding
-                idx += 1
-        else:  # 如果之前的右顶点没处理完，并且当前左顶点 >没处理的最大右顶点
-            start = - liveBuildings[0][1]  # 将最大没处理右顶点当做处理的起始点
-            while len(liveBuildings) > 0 and - liveBuildings[0][1] <= start:  # 如果还有右顶点没处理完，并且最高右顶点的横坐标大于 处理起点
-                heappop(liveBuildings)
-        height = len(liveBuildings) and - liveBuildings[0][0]
-        if len(skyLine) == 0 or skyLine[-1][1] != height:
-            skyLine.append([start, height])
-    return skyLine
+    # idx, n = 0, len(buildings) # TODO  没有完全理解
+    # liveBuildings, skyLine = [], []
+    # # liveBuildings：左上顶点已经加入结果集skyLine 但右上顶点还没有处理的building的右上顶点的集合
+    # # skyLine : 结果集
+    #
+    # while idx < n or len(liveBuildings) > 0:  # 如果所有building没处理完，或者有右顶点没处理完
+    #     if len(liveBuildings) == 0 or (
+    #             idx < n and buildings[idx][0] <= - liveBuildings[0][1]):  # 如果没有右顶点需要处理或者当前building左顶点比前面的右顶点小
+    #         start = buildings[idx][0]  # 将处理的开始顶点设置为当前左顶点
+    #         while idx < n and buildings[idx][0] == start:  # while 考虑左右坐标相同但是height不同的building
+    #             heappush(liveBuildings, [-buildings[idx][2], -buildings[idx][1]])  # 将当前顶点的右顶点加入liveBuilding
+    #             idx += 1
+    #     else:  # 如果之前的右顶点没处理完，并且当前左顶点 >没处理的最大右顶点
+    #         start = - liveBuildings[0][1]  # 将最大没处理右顶点当做处理的起始点
+    #         while len(liveBuildings) > 0 and - liveBuildings[0][1] <= start:  # 如果还有右顶点没处理完，并且最高右顶点的横坐标大于 处理起点
+    #             heappop(liveBuildings)
+    #     height = len(liveBuildings) and - liveBuildings[0][0]
+    #     if len(skyLine) == 0 or skyLine[-1][1] != height:
+    #         skyLine.append([start, height])
+    # return skyLine
 
 
 if __name__ == '__main__':
