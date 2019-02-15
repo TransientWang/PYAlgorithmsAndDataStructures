@@ -80,6 +80,9 @@ def nthUglyNumber(n):
     return ugly[-1]
 
 
+from heapq import *
+
+
 def nthSuperUglyNumber(n, primes):
     """
     313. 超级丑数
@@ -87,16 +90,30 @@ def nthSuperUglyNumber(n, primes):
     :type primes: List[int]
     :rtype: int
     """
-    res = [1]
-    prime = [0 for i in range(len(primes))]
-    for i in range(n - 1):
-        p = [res[prime[j]] * primes[j] for j in range(len(prime))]
-        min_ = min(p)
-        for k in range(len(prime)):
-            if p[k] == min_:
-                prime[k] += 1
-        res.append(min_)
-    return res[-1]
+
+    # res = [1]
+    # prime = [0 for i in range(len(primes))]
+    # for i in range(n - 1):
+    #     p = [res[prime[j]] * primes[j] for j in range(len(prime))]
+    #     min_ = min(p)
+    #     for k in range(len(prime)):
+    #         if p[k] == min_:
+    #             prime[k] += 1
+    #     res.append(min_)
+    # return res[-1]
+
+    heap, uglies, idx, ugly_last = [], [0] * n, [0] * len(primes), [0] * n
+    uglies[0] = 1
+    for p, k in enumerate(primes):
+        heappush(heap, (k, p))
+    for i in range(1, n):
+        uglies[i], k = heappop(heap)
+        ugly_last[i] = k
+        idx[k] += 1
+        while ugly_last[idx[k]] > k:
+            idx[k] += 1
+        heappush(heap, (primes[k] * uglies[idx[k]], k))
+    return uglies[-1]
 
 
 if __name__ == '__main__':
