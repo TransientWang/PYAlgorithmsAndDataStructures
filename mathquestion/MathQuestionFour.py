@@ -80,7 +80,24 @@ def nthUglyNumber(n):
     return ugly[-1]
 
 
+def nthSuperUglyNumber(n, primes):
+    """
+    313. 超级丑数
+    :type n: int
+    :type primes: List[int]
+    :rtype: int
+    """
+    res = [1]
+    prime = [0 for i in range(len(primes))]
+    for i in range(n - 1):
+        p = [res[prime[j]] * primes[j] for j in range(len(prime))]
+        min_ = min(p)
+        for k in range(len(prime)):
+            if p[k] == min_:
+                prime[k] += 1
+        res.append(min_)
+    return res[-1]
+
 
 if __name__ == '__main__':
-    pass
-    # print(numberToWords(1001))
+    print(nthSuperUglyNumber(12, [2, 7, 13, 19]))
