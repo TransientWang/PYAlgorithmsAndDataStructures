@@ -104,6 +104,9 @@ def change(amount, coins):
         for j in range(coins[i], amount + 1):
             # 使用前 i 中钱币，兑换 j的方案数 = 使用前 i 中钱币表示兑换 j + 使用前 i 中钱币表示兑换 j-coins[i]
             dp[j] = dp[j] + dp[j - coins[i]]
+            # 兑换 j 的方案数 可以分为两部分，一部分是算上coins[i]的方案数 为 dp[j]
+            # 另一部分是去除 coins[i] 的方案数，因为 coins[i]+每种组成 j - coins[i] 的方案 都会得到 j
+            # 所以为dp[j-coins[i]]
     return dp[-1]
 
 
