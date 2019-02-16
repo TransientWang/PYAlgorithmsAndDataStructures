@@ -116,5 +116,22 @@ def nthSuperUglyNumber(n, primes):
     return uglies[-1]
 
 
+def maxProduct(words):
+    """318. 最大单词长度乘积
+    位运算
+    通过位运算将重复的找出来
+    :type words: List[str]
+    :rtype: int
+    """
+
+    lookup = dict()
+    for i in words:
+        mask = 0  # 因为只有小写字母，所以可以在32位数上表达出来
+        for c in set(i):
+            mask |= 1 << (ord(c) - ord('a'))  # 将每个字母对位置1，然后跟mask 做或操作，最后的mask就能代表唯一的字符串了
+        lookup[mask] = max(lookup.get(mask, 0), len(i))
+    return max([lookup[x] * lookup[y] for x in lookup for y in lookup if not x & y] + [0])
+
+
 if __name__ == '__main__':
-    print(nthSuperUglyNumber(12, [2, 7, 13, 19]))
+    print(maxProduct(["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]))
