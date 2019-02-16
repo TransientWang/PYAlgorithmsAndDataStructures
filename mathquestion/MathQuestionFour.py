@@ -133,5 +133,25 @@ def maxProduct(words):
     return max([lookup[x] * lookup[y] for x in lookup for y in lookup if not x & y] + [0])
 
 
+def bulbSwitch(n):
+    """319. 灯泡开关
+    :type n: int
+    :rtype: int
+    """
+    # 超时做法，解释过程
+    # bulb = [1] * n
+    # for i in range(2,n+1):
+    #     for x in range(i-1, n, i):
+    #         bulb[x] = 1 if bulb[x] == 0 else 0
+    #     print(bulb,i)
+    # return bulb.count(1)
+    # 第二种表达
+    # p = [i for i in range(1, n + 1) if i ** 0.5 - int(i ** 0.5) == 0]
+    # print(p)
+    # return len([i for i in range(1, n + 1) if i ** 0.5 - int(i ** 0.5) == 0])
+    # 正解
+    # return int(n ** 0.5)
+
+
 if __name__ == '__main__':
-    print(maxProduct(["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]))
+    print(bulbSwitch(36))
