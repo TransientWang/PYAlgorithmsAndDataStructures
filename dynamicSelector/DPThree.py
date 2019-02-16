@@ -110,5 +110,30 @@ def change(amount, coins):
     return dp[-1]
 
 
+def longestCommonSubstring(m, n):
+    """
+    最长公共连续子串
+    给出两个字符串（可能包含空格）,找出其中最长的公共连续子串,输出其长度。
+
+    输入描述:
+    输入为两行字符串（可能包含空格），长度均小于等于50.
+
+    :param m:
+    :param n:
+    :return:最长公共连续子串的长度。
+    """
+    dp = [[0 for i in range(len(n) + 1)] for i in range(len(m) + 1)]  # m[:i] 与 n[:j] 的最长公共子序列
+    res = 0
+    for i in range(1, len(m) + 1):
+        for j in range(1, len(n) + 1):
+            if m[i - 1] == n[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                res = max(res, dp[i][j])
+            else:
+                dp[i][j] = 0
+
+    return res
+
+
 if __name__ == '__main__':
-    print(maxProfit(2, [3, 2, 6, 5, 0, 3]))
+    print(longestCommonSubstring("abcde", "abgde"))
