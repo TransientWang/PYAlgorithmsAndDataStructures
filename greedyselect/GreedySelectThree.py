@@ -41,6 +41,31 @@ def fullJustify(words, maxWidth):
     return res
 
 
+import collections
+
+
+def removeDuplicateLetters(s):
+    """
+    316. 去除重复字母
+    :type s: str
+    :rtype: str
+    """
+    map = dict()
+    for i in s:
+        if map.get(i, -1) == -1:
+            map[i] = 1
+        else:
+            map[i] += 1
+    res, cur_set = [], set()
+    for i in s:
+        if i not in cur_set:
+            while res and res[-1] > i  and map[res[-1]] > 0:
+                cur_set.remove(res.pop())
+            res.append(i)
+            cur_set.add(i)
+        map[i] -= 1
+    return "".join(res)
+
+
 if __name__ == '__main__':
-    print(fullJustify(["What", "must", "be", "acknowledgment", "shall", "be"],
-                      16))
+    print(removeDuplicateLetters("cbacdcbc"))
