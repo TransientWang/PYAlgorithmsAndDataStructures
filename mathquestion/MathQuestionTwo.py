@@ -93,6 +93,13 @@ def mySqrt(x):
 
 def majorityElement(nums):
     '''
+    这个问题有一个很出名的算法
+
+Boyer-Moore众数(majority number) 问题
+
+在数组中找到两个不相同的元素并删除它们，不断重复此过程，直到数组中元素都相同，那么剩下的元素就是主要元素。
+
+这个算法的妙处在于不直接删除数组中的元素，而是利用一个计数变量.
     169.求众数
     :param nums:
     :return:
@@ -246,6 +253,7 @@ def maxPoints(points):
         r = max(res + same, r)
 
     return r
+
 
 def largestNumber(nums):
     '''
