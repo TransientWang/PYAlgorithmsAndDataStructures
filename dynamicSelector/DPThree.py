@@ -90,5 +90,22 @@ def maxProfit(k, prices):
     return dp[-1]
 
 
+def change(amount, coins):
+    """
+    518. 零钱兑换 II
+    动态规划
+    :type amount: int
+    :type coins: List[int]
+    :rtype: int
+    """
+    dp = [0 for i in range(amount + 1)]  # 兑换 i 元的方案数
+    dp[0] = 1
+    for i in range(len(coins)):
+        for j in range(coins[i], amount + 1):
+            # 使用前 i 中钱币，兑换 j的方案数 = 使用前 i 中钱币表示兑换 j + 使用前 i 中钱币表示兑换 j-coins[i]
+            dp[j] = dp[j] + dp[j - coins[i]]
+    return dp[-1]
+
+
 if __name__ == '__main__':
     print(maxProfit(2, [3, 2, 6, 5, 0, 3]))
