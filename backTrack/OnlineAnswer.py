@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # 牛客网上答题样例
-#题目：输入两个整数 n 和 m，从数列1，2，3.......n 中随意取几个数,使其和等于 m ,要求将其中所有的可能组合列出来
+# 题目：输入两个整数 n 和 m，从数列1，2，3.......n 中随意取几个数,使其和等于 m ,要求将其中所有的可能组合列出来
 # 输入描述:
 # 每个测试输入包含2个整数,n和m
 #
@@ -19,11 +19,10 @@ def dfs(begin, total):
 
     if p == m:
         # print("".join(total))
+        sout = ""
         for idx, i in enumerate(total):
-            if idx == len(total) - 1:
-                print(i)
-                break
-            print(i, end=" ")
+            sout += str(i) + " "
+        print(sout.strip())
         return
     for i in range(begin, n + 1):
         s = sum(total)
