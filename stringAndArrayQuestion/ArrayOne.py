@@ -199,7 +199,7 @@ def largestRectangleArea(heights):
     #
     # while len(stack) != 0:  # 计算栈中的值
     #     res = max(res, stack[0] * len(stack))
-    #     stack.pop(0)
+    #     stack.pop(0)  # 将最矮的出栈
     # return res
     # 更快的解
     l = len(heights)
