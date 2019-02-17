@@ -120,21 +120,31 @@ def maxCoins(nums):
     求所能获得硬币的最大数量。
     测试用例：3,1,5,8
     '''
+    #
+    # nums.append(1)
+    # nums.insert(0, 1)  # 在数组前面后面加上 1 计算方便
+    # r = [[0 for z in range(len(nums))] for z in range(len(nums))]  # r[i][j]表示第i和j气球之间的气球戳烂 能得到的最大硬币数量
+    # orlen = len(nums) - 2  # 原数组长度
+    # for length in range(1, orlen + 1):  # 计算的每一子问题的长度
+    #     for head in range(1, orlen - length + 1 + 1):  # 子问题的起始点
+    #         tail = head + length - 1  # 子问题的结束点
+    #         for point in range(head, tail + 1):  # 子问题中间的戳气球的点
+    #             ocorn = r[head][tail]  # 子问题原最大值
+    #             latercoin = r[head][point - 1] + r[point + 1][tail] + nums[head - 1] * nums[point] * nums[tail + 1]
+    #             # 子问题当前值  head到Tail都被戳破后 每个被戳破点的能对换硬币值
+    #             r[head][tail] = max(ocorn, latercoin)  # 更新最优值
+    #
+    # return r[1][len(nums) - 2]
 
-    nums.append(1)
-    nums.insert(0, 1)  # 在数组前面后面加上 1 计算方便
-    r = [[0 for z in range(len(nums))] for z in range(len(nums))]  # r[i][j]表示第i和j气球之间的气球戳烂 能得到的最大硬币数量
-    orlen = len(nums) - 2  # 原数组长度
-    for length in range(1, orlen + 1):  # 计算的每一子问题的长度
-        for head in range(1, orlen - length + 1 + 1):  # 子问题的起始点
-            tail = head + length - 1  # 子问题的结束点
-            for point in range(head, tail + 1):  # 子问题中间的戳气球的点
-                ocorn = r[head][tail]  # 子问题原最大值
-                latercoin = r[head][point - 1] + r[point + 1][tail] + nums[head - 1] * nums[point] * nums[tail + 1]
-                # 子问题当前值  head到Tail都被戳破后 每个被戳破点的能对换硬币值
-                r[head][tail] = max(ocorn, latercoin)  # 更新最优值
-
-    return r[1][len(nums) - 2]
+    nums = [1] + nums + [1]
+    n = len(nums)
+    dp = [[0] * n for _ in range(n)]
+    for k in range(2, n):
+        for left in range(n - k):
+            right = left + k
+            for i in range(left + 1, right):
+                dp[left][right] = max(dp[left][right], nums[left] * nums[i] * nums[right] + dp[left][i] + dp[i][right])
+    return dp[0][-1]
 
 
 def isValidSudoku(board):

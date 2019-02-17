@@ -181,4 +181,5 @@ def integerBreak(n):
 
 
 if __name__ == '__main__':
-    print(integerBreak(2))
+    # print(maxCoins([3, 1, 5, 8]))
+    pass
