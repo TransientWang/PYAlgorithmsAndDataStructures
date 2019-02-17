@@ -157,5 +157,28 @@ def countBits(num):
     return list1[:num + 1]
 
 
+def integerBreak(n):
+    """
+    343. 整数拆分
+    将 7-10进行拆分得到规律
+    从 7 开始往后 如果 数字 n -4 得到的值 能整除3 则结果为 4 * (3 ** ((n - 4) // 3))
+    否则 计算n //3 的值three，再计算 n- three*3 =lift 结果为(3 ** three) * lift
+    :type n: int
+    :rtype: int
+    """
+    dp = [1, 2]
+    if n < 4:
+        return dp[n - 2]
+    three = 0
+    lift = 0
+    if (n - 4) % 3 != 0:
+        three = n // 3
+        lift = n - three * 3
+        if lift == 0: lift = 1
+        return (3 ** three) * lift
+    else:
+        return 4 * (3 ** ((n - 4) // 3))
+
+
 if __name__ == '__main__':
-    print(countBits(10))
+    print(integerBreak(2))
