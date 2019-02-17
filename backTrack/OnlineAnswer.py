@@ -6,31 +6,31 @@
 #
 # 输出描述:
 # 按每个组合的字典序排列输出,每行输出一种组合
-#
-#
-# p = input().split(" ")
-#
-# n = int(p[0])
-# m = int(p[1])
-#
-#
-# def dfs(begin, total):
-#     p = sum(total)
-#
-#     if p == m:
-#         # print("".join(total))
-#         sout = ""
-#         for idx, i in enumerate(total):
-#             sout += str(i) + " "
-#         print(sout.strip())
-#         return
-#     for i in range(begin, n + 1):
-#         s = sum(total)
-#         if s + i <= m:
-#             dfs(i + 1, total + [i])
-#
-#
-# dfs(1, [])
+
+
+p = input().split(" ")
+
+n = int(p[0])
+m = int(p[1])
+
+
+def dfs(begin, total):
+    p = sum(total)
+
+    if p == m:
+        # print("".join(total))
+        sout = ""
+        for idx, i in enumerate(total):
+            sout += str(i) + " "
+        print(sout.strip())
+        return
+    for i in range(begin, n + 1):
+        s = sum(total)
+        if s + i <= m:
+            dfs(i + 1, total + [i])
+
+
+dfs(1, [])
 
 if __name__ == '__main__':
-    print(1 & 1)
+    pass

@@ -93,7 +93,6 @@ def minimumTotal(triangle):
     return min(r[len(triangle) - 1])
 
 
-
 def twoSum(nums, target):
     '''
     两数之和 同一个元素不能被重复利用
@@ -225,4 +224,4 @@ def numSquaresOne(n):
 
 
 if __name__ == '__main__':
-    print(numSquaresOne(12))
+    pass

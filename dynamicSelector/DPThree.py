@@ -132,5 +132,30 @@ def longestCommonSubstring(m, n):
     return res
 
 
+def countBits(num):
+    """
+    338. 比特位计数
+    动态规划
+    思路：将数字转换成二进制
+    最多需要1 的个数为，0 、2 ** 0（1）,2**1（2-3）、2**2（4-7）、2**3（8-15）
+    每个数二进制中1的个数= 1+ （该数字 - 该数字所在区间大小所在数字的 1的位数））
+    :type num: int
+    :rtype: List[int]
+    """
+    # dp = [0]
+    # k = 0
+    # for i in range(1,num + 1):
+    #     dp.append(dp[i - 2 ** k] + 1)
+    #     if i == 2 ** k:
+    #         k += 1
+    # return dp
+
+    list1 = [0]
+    while len(list1) < num + 1:
+        list1 += [i + 1 for i in list1]
+
+    return list1[:num + 1]
+
+
 if __name__ == '__main__':
-    print(longestCommonSubstring("abcde", "abgde"))
+    print(countBits(10))
