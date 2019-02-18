@@ -185,43 +185,43 @@ def maxNumber(nums1, nums2, k):
     321. 拼接最大数
     贪心选择，动态规划
     一共k位digit，我们可以先确定从nums1里面取i位，那么从nums2肯定就是取k-i位
-然后我们确定了从nums1里面取i位的话，就可以算出所能取得的长度为i的最大子序列lis1，相应的也可以算出从nums2取得的长度为k-i的最大子序列lis2
-然后我们用双指针依次从lis1和lis2中取较大的那个数就可以了，不停更新res
-Note：
+    然后我们确定了从nums1里面取i位的话，就可以算出所能取得的长度为i的最大子序列lis1，相应的也可以算出从nums2取得的长度为k-i的最大子序列lis2
+    然后我们用双指针依次从lis1和lis2中取较大的那个数就可以了，不停更新res
+    Note：
 
-i至少需要k - len(nums2)，否则digit不够, 但是如果k - len(nums2)小于0的话，i还是要从0开始取
-i最多取到k，但是因为num1也有长度限制，所以如果k > len(nums1)的时候，i最多取len(nums1)
+    i至少需要k - len(nums2)，否则digit不够, 但是如果k - len(nums2)小于0的话，i还是要从0开始取
+    i最多取到k，但是因为num1也有长度限制，所以如果k > len(nums1)的时候，i最多取len(nums1)
     :type nums1: List[int]
     :type nums2: List[int]
     :type k: int
     :rtype: List[int]
     """
 
-    def getLis(nums, k):
+    def getList(num, k):
         """
-        最大子序列
-        栈
-        :param nums:
+        求最大子序列
+        贪心选择、栈
+        :param num:
         :param k:
         :return:
         """
-        res, n = [], len(nums)
+        res, n = [], len(num)
         for i in range(n):
-            while res and len(res) + (n - i) > k and res[-1] < nums[i]:  # len(res) + (n - i) > k保证有足够数量的元素
+            while res and len(res) + (n - i) > k and res[-1] < num[i]:  # len(res) + (n - i) > k保证有足够数量的元素
                 res.pop()
             if len(res) < k:
-                res.append(nums[i])
+                res.append(num[i])
         return res
 
     res = [0] * k
     for i in range(max(0, k - len(nums2)), min(k, len(nums1)) + 1):
         # max(0, k - len(nums2))当 nums2 长度较短的时候，min(k, len(nums1))：当nums1 长度过长的时候
-        lis1 = getLis(nums1, i)
-        lis2 = getLis(nums2, k - i)
-        res = max(res, [max(lis1, lis2).pop(0) for _ in range(k)])
+        list1 = getList(nums1, i)
+        list2 = getList(nums2, k - i)
+        res = max(res, [max(list1, list2).pop(0) for _ in range(k)])
     return res
 
 
 if __name__ == '__main__':
     print(maxNumber([3, 4, 6, 5], [9, 1, 2, 5, 8, 3], 5))
-    pass
+    print(max([2, 2, 3], [2, 3, 4]))
