@@ -153,5 +153,21 @@ def bulbSwitch(n):
     # return int(n ** 0.5)
 
 
+def countNumbersWithUniqueDigits(n):
+    """
+    357. 计算各个位数不同的数字个数
+    :type n: int
+    :rtype: int
+    """
+    if n == 0:
+        return 1
+    res = 10
+    t = 9
+    for i in range(1, n):
+        t *= (10 - i)
+        res += t
+    return res
+
+
 if __name__ == '__main__':
     print(bulbSwitch(36))
