@@ -59,7 +59,7 @@ def removeDuplicateLetters(s):
     res, cur_set = [], set()
     for i in s:
         if i not in cur_set:
-            while res and res[-1] > i  and map[res[-1]] > 0:
+            while res and res[-1] > i and map[res[-1]] > 0:
                 cur_set.remove(res.pop())
             res.append(i)
             cur_set.add(i)
@@ -67,5 +67,30 @@ def removeDuplicateLetters(s):
     return "".join(res)
 
 
+def removeKdigits(num, k):
+    """
+    402. 移掉K位数字
+    贪心选择
+    :type num: str
+    :type k: int
+    :rtype: str
+    """
+    num = list(num)
+    i = 0
+    while i < len(num) - 1 and k > 0:
+        if num[i] > num[i + 1] and k > 0:
+            num.pop(i)
+            k -= 1
+            if i > 0:  # 重要：贪心选择退回到上一个，重新比较
+                i -= 1
+        else:
+            i += 1
+    num = num[:len(num) - k]
+    while len(num) > 0 and num[0] == "0":
+        num.pop(0)
+    return "".join(num) if len(num) > 0 else "0"
+
+
 if __name__ == '__main__':
-    print(removeDuplicateLetters("cbacdcbc"))
+    print(removeKdigits("112",
+                        1))
