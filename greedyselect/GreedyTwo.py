@@ -121,28 +121,39 @@ def lengthOfLISGreedy(nums):
     300.最长上升子序列
     给定一个无序的整数数组，找到其中最长上升子序列的长度。
     '''
+
+    def binarySearch(left, right, nums, target):
+
+        while left < right:
+            mid = (left + right - 1) // 2
+            if nums[mid] == target:
+                left = mid
+                break
+            elif nums[mid] >= target:
+                right = mid
+            else:
+                left = mid + 1
+        nums[left] = target
+
     if len(nums) == 0:
         return 0
-    r = [nums[0]]  # 维护维护一个递增序列
-
+    r = [nums[0]]
     for i in range(1, len(nums)):
-        if nums[i] > r[-1]:  # 当前元素大于递增序列的右端 直接加上
+        if nums[i] > r[-1]:
             r.append(nums[i])
-
-        else:  # 找到第一个比 nums[i]大的替换
-            left = 0
-            right = len(r)
-            while left < right:
-                mid = (left + right - 1) // 2
-                if nums[i] == r[mid]:
-                    left = mid
-                    break
-                elif r[mid] >= nums[i]:
-                    right = mid
-                else:
-                    left = mid + 1
-            r[left] = nums[i]
+        else:
+            binarySearch(0, len(r), r, nums[i])
     return len(r)
+
+
+# 普通dp
+# max_ = [1] * len(nums)
+# for i in range(1, len(nums)):
+#     for j in range(i):
+#         if nums[i] > nums[j]:
+#             max_[i] = max(max_[i], max_[j] + 1)
+# print(max_)
+# return max_[-1]
 
 
 def intToRoman(num):
@@ -193,4 +204,4 @@ def nextPermutation(nums):
 
 
 if __name__ == '__main__':
-    print(nextPermutation([1, 3, 2]))
+    print(lengthOfLISGreedy([10, 9, 2, 5, 3, 7, 101, 18]))
