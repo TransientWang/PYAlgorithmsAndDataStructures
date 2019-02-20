@@ -78,21 +78,35 @@ def longestPalindromeSubseq(s):
     #     return len(s)
     # return find(s, s[::-1])
 
-    n = len(s)
-    dp = [0 for j in range(n)]
-    dp[n - 1] = 1
+    # n = len(s)
+    # dp = [0 for j in range(n)]
+    # dp[n - 1] = 1
+    #
+    # for i in range(n - 1, -1, -1):  # can actually start with n-2...
+    #     newdp = dp[:]
+    #     newdp[i] = 1
+    #     for j in range(i + 1, n):
+    #         if s[i] == s[j]:
+    #             newdp[j] = 2 + dp[j - 1]
+    #         else:
+    #             newdp[j] = max(dp[j], newdp[j - 1])
+    #     dp = newdp
+    #
+    # return dp[n - 1]
 
-    for i in range(n - 1, -1, -1):  # can actually start with n-2...
-        newdp = dp[:]
-        newdp[i] = 1
-        for j in range(i + 1, n):
+    dp = [[0] * len(s) for i in range(len(s))]
+    for i in range(1, len(s)):
+        dp[i][i] = 1
+    for lens in range(1, len(s)):
+        for i in range(len(s)):
+            j = i + lens
+            if j >= len(s):
+                break
             if s[i] == s[j]:
-                newdp[j] = 2 + dp[j - 1]
+                dp[i][j] = dp[i + 1][j - 1] + 2
             else:
-                newdp[j] = max(dp[j], newdp[j - 1])
-        dp = newdp
-
-    return dp[n - 1]
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][len(s) - 1]
 
 
 if __name__ == '__main__':
