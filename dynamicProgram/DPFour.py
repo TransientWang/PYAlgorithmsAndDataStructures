@@ -57,26 +57,44 @@ def maxEnvelopes(envelopes):
 def longestPalindromeSubseq(s):
     """
     516. 最长回文子序列
+    回文子串可以不连续，相当于删除掉某些值
     回文串倒过来是一样的
     :type s: str
     :rtype: int
     """
+    #
+    # def find(s1, s2):
+    #     m, n = len(s1), len(s2)
+    #     dp = [[0] * (n + 1) for i in range(m + 1)]
+    #     for i in range(1, m + 1):
+    #         for j in range(1, n + 1):
+    #             if s1[i - 1] == s2[j - 1]:
+    #                 dp[i][j] = dp[i - 1][j - 1] + 1
+    #             else:
+    #                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    #     return dp[-1][-1]
+    #
+    # if s == s[::-1]:
+    #     return len(s)
+    # return find(s, s[::-1])
 
-    def find(s1, s2):
-        m, n = len(s1), len(s2)
-        dp = [[0] * (n + 1) for i in range(m + 1)]
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if s1[i - 1] == s2[j - 1]:
-                    dp[i][j] = dp[i - 1][j - 1] + 1
-                else:
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-        return dp[-1][-1]
+    n = len(s)
+    dp = [0 for j in range(n)]
+    dp[n - 1] = 1
 
-    if s == s[::-1]:
-        return len(s)
-    return find(s, s[::-1])
+    for i in range(n - 1, -1, -1):  # can actually start with n-2...
+        newdp = dp[:]
+        newdp[i] = 1
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                newdp[j] = 2 + dp[j - 1]
+            else:
+                newdp[j] = max(dp[j], newdp[j - 1])
+        dp = newdp
+
+    return dp[n - 1]
 
 
 if __name__ == '__main__':
-    print(longestPalindromeSubseq("bbbab"))
+    print(longestPalindromeSubseq(
+        "bbbab"))
