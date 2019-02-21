@@ -109,6 +109,43 @@ def longestPalindromeSubseq(s):
     return dp[0][len(s) - 1]
 
 
+def countRangeSum(nums, lower, upper):
+    """
+    327. 区间和的个数
+    :param nums:
+    :param lower:
+    :param upper:
+    :return:
+    """
+    # nums.sort()
+    # dp = [[0] * len(nums) for i in range(len(nums))]
+    # sum = 0
+    # for i in range(len(nums)):
+    #     for j in range(i, len(nums)):
+    #         dp[i][j] = nums[j] + dp[i][j - 1]
+    #         if dp[i][j] >= lower and dp[i][j] <= upper:
+    #             sum += 1
+    # return sum
+
+    first = [0]
+    for num in nums:
+        first.append(first[-1] + num)
+
+    def sort(lo, hi):
+        mid = (lo + hi) // 2
+        if mid == lo:
+            return 0
+        count = sort(lo, mid) + sort(mid, hi)
+        i = j = mid
+        for left in first[lo:mid]:
+            while i < hi and first[i] - left < lower: i += 1
+            while j < hi and first[j] - left <= upper: j += 1
+            count += j - i
+        first[lo:hi] = sorted(first[lo:hi])
+        return count
+
+    return sort(0, len(first))
+
+
 if __name__ == '__main__':
-    print(longestPalindromeSubseq(
-        "bbbab"))
+    print(countRangeSum([1, 1, 1, 1, 1, 1], 3, 5))

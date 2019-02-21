@@ -134,7 +134,7 @@ def countSmaller(nums):
     tmp = []
     t = [0 for i in range(len(nums))]
 
-    def serarch(key, index):
+    def serarchAndInsert(key, index):
         left, right = 0, len(tmp)
         while left < right:
             mid = left + (right - left) // 2
@@ -147,7 +147,7 @@ def countSmaller(nums):
 
     nums.reverse()  # 从右侧开始找
     for i in range(len(nums)):
-        serarch(nums[i], i)
+        serarchAndInsert(nums[i], i)
     t.reverse()
     return t
 
