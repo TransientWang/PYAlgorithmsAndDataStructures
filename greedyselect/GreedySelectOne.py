@@ -83,7 +83,7 @@ def canJumpTwo(nums):
 
 def reconstructQueue(people):
     '''
-    406.根据身高重建队列
+
     思路：先按H降序K升序 重排序原数组
     然后按K位置插入
     如果H小的人先排徐插入，那么他就受到没有排徐插入人的影响 ，有可能排在他的前面
@@ -92,13 +92,6 @@ def reconstructQueue(people):
     '''
     from functools import cmp_to_key
     def comp(x1, x2):
-        '''
-        假设有打乱顺序的一群人站成一个队列。 每个人由一个整数对(h, k)表示，其中h是这个人的身高，
-        k是排在这个人前面且身高大于或等于h的人数。 编写一个算法来重建这个队列。
-        每一次选择 下一个位置的时候值需要关心 站在前面的人就可以
-
-        '''
-
         if x1[0] - x2[0] < 0:
             return 1
         elif x1[0] - x2[0] > 0:
@@ -108,7 +101,7 @@ def reconstructQueue(people):
 
     re = []
     compare = cmp_to_key(lambda a, b: comp(a, b))
-    people.sort(key=compare)
+    people = sorted(people, key=compare)
 
     for i in people:
         re.insert(i[1], i)
@@ -294,4 +287,4 @@ def rotate(nums, k):
 
 
 if __name__ == '__main__':
-    print(canJumpTwo([2, 3, 1, 1, 4]))
+    print(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]))
