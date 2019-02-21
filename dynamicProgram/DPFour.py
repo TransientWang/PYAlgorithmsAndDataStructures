@@ -111,7 +111,7 @@ def longestPalindromeSubseq(s):
 
 def countRangeSum(nums, lower, upper):
     """
-    327. 区间和的个数（没全理解，493. 翻转对 与这个类似）
+    327. 区间和的个数
     :param nums:
     :param lower:
     :param upper:
@@ -132,7 +132,6 @@ def countRangeSum(nums, lower, upper):
     sums = [0]
     for i in nums:
         sums.append(sums[-1] + i)
-    sums = [8, 6, 3, 9, 7, 1]
 
     def sort(lo, hi):
         if hi - lo <= 1:  # 如果数组只有一个数，那么下面的算法将不能比较出来
@@ -140,18 +139,20 @@ def countRangeSum(nums, lower, upper):
 
         mid = (lo + hi) // 2
         count = sort(lo, mid) + sort(mid, hi)
-        i = j = mid
+        i = j = mid  # 放在for 循环的外面，已经计算过的就不再重复，减少计算量
         for left in sums[lo:mid]:  # 对于 lo:mid 和 mid:hi 的所有情况已经在递归中全部计算过了，现在只有右边减去左边的可能没有出现过
+
             while i < hi and sums[i] - left < lower: i += 1
             while j < hi and sums[j] - left <= upper: j += 1
             count += j - i
-        sums[lo:hi] = sorted(sums[lo:hi])
+        sums[lo:hi] = sorted(sums[lo:hi])  # 如果全部都是整数那么就没有必要排序，但是如果sums中随机出现了负数，就会出现前面较大的数
+        # 在索引低位的数 left计算失败后，left后移，而后面较小的数计算不到的情况
         return count
 
     return sort(0, len(sums))
 
 
 if __name__ == '__main__':
-    print(countRangeSum([1, 1, -3, 1, 1, 1],
-                        3,
-                        5))
+    print(countRangeSum([-2, 5, -1],
+                        -2,
+                        2))
