@@ -134,7 +134,7 @@ def countRangeSum(nums, lower, upper):
         sums.append(sums[-1] + i)
 
     def sort(lo, hi):
-        if hi - lo <= 1:  # 如果数组只有一个数，那么下面的算法将不能比较出来
+        if hi - lo <= 1:  # 如果数组只有一个数，那么下面的算法将不能比较出来，还会将数组长度退化成1，在下面的 sort 会栈溢出
             return 0
 
         mid = (lo + hi) // 2
