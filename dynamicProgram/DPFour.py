@@ -111,12 +111,13 @@ def longestPalindromeSubseq(s):
 
 def countRangeSum(nums, lower, upper):
     """
-    327. 区间和的个数
+    327. 区间和的个数（没全理解，493. 翻转对 与这个类似）
     :param nums:
     :param lower:
     :param upper:
     :return:
     """
+    # 动态规划 TLE
     # nums.sort()
     # dp = [[0] * len(nums) for i in range(len(nums))]
     # sum = 0
@@ -127,25 +128,30 @@ def countRangeSum(nums, lower, upper):
     #             sum += 1
     # return sum
 
-    first = [0]
-    for num in nums:
-        first.append(first[-1] + num)
+    # 分治法，通过分治法将范围不断缩小，由递归函数处理每一块较小的范围
+    sums = [0]
+    for i in nums:
+        sums.append(sums[-1] + i)
+    sums = [8, 6, 3, 9, 7, 1]
 
     def sort(lo, hi):
-        mid = (lo + hi) // 2
-        if mid == lo:
+        if hi - lo <= 1:  # 如果数组只有一个数，那么下面的算法将不能比较出来
             return 0
+
+        mid = (lo + hi) // 2
         count = sort(lo, mid) + sort(mid, hi)
         i = j = mid
-        for left in first[lo:mid]:
-            while i < hi and first[i] - left < lower: i += 1
-            while j < hi and first[j] - left <= upper: j += 1
+        for left in sums[lo:mid]:  # 对于 lo:mid 和 mid:hi 的所有情况已经在递归中全部计算过了，现在只有右边减去左边的可能没有出现过
+            while i < hi and sums[i] - left < lower: i += 1
+            while j < hi and sums[j] - left <= upper: j += 1
             count += j - i
-        first[lo:hi] = sorted(first[lo:hi])
+        sums[lo:hi] = sorted(sums[lo:hi])
         return count
 
-    return sort(0, len(first))
+    return sort(0, len(sums))
 
 
 if __name__ == '__main__':
-    print(countRangeSum([1, 1, 1, 1, 1, 1], 3, 5))
+    print(countRangeSum([1, 1, -3, 1, 1, 1],
+                        3,
+                        5))
