@@ -141,12 +141,11 @@ def countRangeSum(nums, lower, upper):
         count = sort(lo, mid) + sort(mid, hi)
         i = j = mid  # 放在for 循环的外面，已经计算过的就不再重复，减少计算量
         for left in sums[lo:mid]:  # 对于 lo:mid 和 mid:hi 的所有情况已经在递归中全部计算过了，现在只有右边减去左边的可能没有出现过
-
             while i < hi and sums[i] - left < lower: i += 1
             while j < hi and sums[j] - left <= upper: j += 1
             count += j - i
-        sums[lo:hi] = sorted(sums[lo:hi])  # 如果全部都是整数那么就没有必要排序，但是如果sums中随机出现了负数，就会出现前面较大的数
-        # 在索引低位的数 left计算失败后，left后移，而后面较小的数计算不到的情况
+        sums[lo:hi] = sorted(sums[lo:hi])  # 如果不排序，就会出现前面较大的数sums[h] (h >=mid)
+        # 在索引低位的数 left计算失败后，left后移，而后面较小的数 sums[h+1] 计算不到 left 的情况的情况
         return count
 
     return sort(0, len(sums))
