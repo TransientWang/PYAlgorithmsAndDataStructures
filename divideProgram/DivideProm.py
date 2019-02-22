@@ -119,8 +119,9 @@ def reversePairs(nums):
             else:
                 left += 1
         # 核心
-        nums[lo: hi + 1] = sorted(nums[lo: hi + 1])  # 排序是因为 mid 左右两边在比较的时候可以,节省时间，否则需要 o(n^2)
+        nums[lo: hi + 1] = sorted(nums[lo: hi + 1])  # 排序是因为 mid 左右两边在比较的时候可以节省时间，否则需要 o(n^2)
         return count
+
     if not nums:
         return 0
 
@@ -128,4 +129,4 @@ def reversePairs(nums):
 
 
 if __name__ == '__main__':
-    print(reversePairs([1, 3, 2, 3, 1]))
+    print(reversePairs([2, 2, -2, -2, -2, 2]))
