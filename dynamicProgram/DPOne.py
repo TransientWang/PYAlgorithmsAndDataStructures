@@ -13,14 +13,12 @@ def coinChange(coins, amount):
     所以可以看出，通过求出所有dp[1]、dp[2]、...、dp[10]的值，最终就能得到dp[11]的值。
     '''
 
-    dp = [amount + 1 for i in range(amount + 1)]
+    dp = [amount + 1 for _ in range(amount + 1)]
     dp[0] = 0
-    for i in range(1, amount + 1):
-        for j in coins:
-            if i >= j:
-                dp[i] = min(dp[i - j] + 1, dp[i])
-
-    return dp[-1] if dp[-1] != amount + 1 else -1
+    for j in coins:
+        for i in range(j, amount + 1):
+            dp[i] = min(dp[i - j] + 1, dp[i])
+    return dp[-1] if dp[-1] != -1 else -1
 
 
 def lengthOfLIS(nums):
@@ -94,7 +92,7 @@ def wordBreak(s, wordDict):
     :return:
     '''
     dp = [False for i in range(len(s) + 1)]  # 多1防止s长度为0的情况
-    for i in range(1, len(s)+1):
+    for i in range(1, len(s) + 1):
         for word in wordDict:
             if i < len(word):
                 continue
@@ -126,7 +124,7 @@ def wordBreakOne(s, wordDict):
         max_val = max(max_val, len(word))
 
     def check(s):
-        dp = [False for i in range(len(s) + 1)] # 多1防止s长度为0的情况
+        dp = [False for i in range(len(s) + 1)]  # 多1防止s长度为0的情况
         dp[0] = True
         for i in range(1, len(s) + 1):
             for j in range(len(wordDict)):
@@ -141,13 +139,13 @@ def wordBreakOne(s, wordDict):
         if check(ss):
             if ss == "":
                 return res.append(result)
-            for i in range(max_val+1):
+            for i in range(max_val + 1):
                 for word in wordDict:
                     if i <= len(ss) and ss[:i] == word:
                         DFS(ss[i:], str(result + " " + ss[:i]).strip())
-    DFS(s,"")
-    return res
 
+    DFS(s, "")
+    return res
 
 
 def maxProfit(prices):
@@ -213,5 +211,4 @@ def maxProfitOne(prices):
 
 if __name__ == '__main__':
     pass
-    # print(wordBreakTwo("pineapplepenapple",["apple", "pen", "applepen", "pine", "pineapple"]))
-    # [1,3,6,7,9,4,10,5,6]
+    print(coinChange([1, 2, 5], 11))
