@@ -79,21 +79,9 @@ def findContentChildren(g, s):
                 break
     return sum
 
-
-def lemonadeChange(bills):
+def lemonadeChange(self, bills: 'List[int]') -> 'bool':
     """
-        在柠檬水摊上，每一杯柠檬水的售价为 5 美元。
-
-    顾客排队购买你的产品，（按账单 bills 支付的顺序）一次购买一杯。
-
-    每位顾客只买一杯柠檬水，然后向你付 5 美元、10 美元或 20 美元。你必须给每个顾客正确找零，也就是说净交易是每位顾客向你支付 5 美元。
-
-    注意，一开始你手头没有任何零钱。
-
-    如果你能给每位顾客正确找零，返回 true ，否则返回 false
-
-    问题只跟找钱有关  跟挣多少钱没有关系
-    20块钱 不能用于找零
+    860. 柠檬水找零(review)
     贪心选择 每次先把 大票找出去
     思路：
 
@@ -108,32 +96,22 @@ def lemonadeChange(bills):
     :type bills: List[int]
     :rtype: bool
     """
-    if bills[0] > 5:
-        return False
-    fmon = 0
-    tenmon = 0
+    mp = [0, 0, 0]
     for i in bills:
-        if i == 5:  # 给5元不用找
-            fmon += 1
-
-        elif i == 10:  # 给10元找一张5元
-            tenmon += 1
-            if fmon > 0:
-                fmon -= 1
-            else:
-                return False  # 找不了就返回False
-        elif i == 20:  # 给20  找15 先能找10元的先找10元，再找5元。 找不了 找3张5元的  找不了就返回
-            if tenmon > 0:
-                tenmon -= 1
-                if fmon > 0:
-                    fmon -= 1
-                else:
-                    return False
-            elif fmon >= 3:
-                fmon -= 3
-            else:
-                return False
-
+        if i == 5:
+            mp[0] += 1
+        elif i == 10 and mp[0] > 0:
+            mp[0] -= 1
+            mp[1] += 1
+        elif i == 20 and mp[0] > 0 and mp[1] > 0:
+            mp[2] += 1
+            mp[0] -= 1
+            mp[1] -= 1
+        elif i == 20 and mp[0] > 2:
+            mp[2] += 1
+            mp[0] -= 3
+        else:
+            return False
     return True
 
 
@@ -159,6 +137,7 @@ def canCompleteCircuit(gas, cost):
         if k == 0:
             return i
     return -1
+
 
 def canCompleteCircuit1(gas, cost):
     '''
