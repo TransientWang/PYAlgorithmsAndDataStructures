@@ -166,11 +166,7 @@ def maxProfit1(prices):
 
 def minCostClimbingStairs(cost):
     """
-    数组的每个索引做为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost[i](索引从0开始)。
-
-    每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。
-
-    您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。
+    746. 使用最小花费爬楼梯(review)
     当索引位置为0的时候不耗费体力  跳过
     一、最优解的结构特征
         当只有一个台阶时 则直接到达顶点 不用耗费代价
@@ -182,6 +178,10 @@ def minCostClimbingStairs(cost):
     :type cost: List[int]
     :rtype: int
     """
+    # dp = [0] * (len(cost)+2)
+    # for i in range(2,len(dp)):
+    #     dp[i] = min(dp[i-1],dp[i - 2]) + cost[i-2]
+    # return min(dp[-1],dp[-2])
     if len(cost) == 2:
         return min(cost[0], cost[1])  # 如果只有两个台阶  那么只有一步  跳到代价小的那个台阶上即可
     list = [0 for j in range(len(cost) + 1)]  # 记录从i到j的最小代价，因为要跳出去。所以list的长度要比台阶数+1  list[0] =0 已经包含了只有一个台阶的最优解

@@ -79,7 +79,7 @@ def findContentChildren(g, s):
                 break
     return sum
 
-def lemonadeChange(self, bills: 'List[int]') -> 'bool':
+def lemonadeChange(bills: 'List[int]') -> 'bool':
     """
     860. 柠檬水找零(review)
     贪心选择 每次先把 大票找出去
