@@ -56,13 +56,13 @@ def maxEnvelopes(envelopes):
 
 def longestPalindromeSubseq(s):
     """
-    516. 最长回文子序列
+    516. 最长回文子序列（review）
     回文子串可以不连续，相当于删除掉某些值
     回文串倒过来是一样的
     :type s: str
     :rtype: int
     """
-    #
+    #解 一
     # def find(s1, s2):
     #     m, n = len(s1), len(s2)
     #     dp = [[0] * (n + 1) for i in range(m + 1)]
@@ -78,6 +78,19 @@ def longestPalindromeSubseq(s):
     #     return len(s)
     # return find(s, s[::-1])
 
+    #解 二
+    size = len(s)
+    if s == s[::-1]: return size
+    dp = [[0] * size for _ in range(size)]
+    for i in range(size - 1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i + 1, size):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][-1]
+    # 解 二优化
     # n = len(s)
     # dp = [0 for j in range(n)]
     # dp[n - 1] = 1
@@ -94,6 +107,7 @@ def longestPalindromeSubseq(s):
     #
     # return dp[n - 1]
 
+    #解 三
     dp = [[0] * len(s) for i in range(len(s))]
     for i in range(1, len(s)):
         dp[i][i] = 1
