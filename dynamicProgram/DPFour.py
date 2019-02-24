@@ -62,7 +62,7 @@ def longestPalindromeSubseq(s):
     :type s: str
     :rtype: int
     """
-    #解 一
+    # 解 一
     # def find(s1, s2):
     #     m, n = len(s1), len(s2)
     #     dp = [[0] * (n + 1) for i in range(m + 1)]
@@ -78,7 +78,7 @@ def longestPalindromeSubseq(s):
     #     return len(s)
     # return find(s, s[::-1])
 
-    #解 二
+    # 解 二
     size = len(s)
     if s == s[::-1]: return size
     dp = [[0] * size for _ in range(size)]
@@ -107,7 +107,7 @@ def longestPalindromeSubseq(s):
     #
     # return dp[n - 1]
 
-    #解 三
+    # 解 三
     dp = [[0] * len(s) for i in range(len(s))]
     for i in range(1, len(s)):
         dp[i][i] = 1
@@ -123,5 +123,34 @@ def longestPalindromeSubseq(s):
     return dp[0][len(s) - 1]
 
 
+def reversePairs(nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+
+    def merge_count(lo, hi):
+
+        if lo == hi:
+            return 0
+        mid = (lo + hi) // 2
+        count = merge_count(lo, mid) + merge_count(mid + 1, hi)
+        j = mid + 1
+        i = lo
+        while i <= mid and j <= hi:
+
+            if nums[i] > nums[j] * 2:
+
+                count += mid - i+1
+                j += 1
+            else:
+                i += 1
+
+        nums[lo:hi + 1] = sorted(nums[lo:hi + 1])
+        return count
+
+    return merge_count(0, len(nums) - 1)
+
+
 if __name__ == '__main__':
-    pass
+    print(reversePairs([1,3,2,3,1]))

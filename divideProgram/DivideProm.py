@@ -95,16 +95,15 @@ def countRangeSum(nums, lower, upper):
 
 def reversePairs(nums):
     """
-    493. 翻转对
+    493. 翻转对(review)
     归并
     :type nums: List[int]
     :rtype: int
     """
 
     def find(lo, hi):
-        if lo == hi:
+        if lo >= hi:
             return 0
-
         count = 0
         mid = (lo + hi) // 2
         count += find(lo, mid) + find(mid + 1, hi)
@@ -121,9 +120,6 @@ def reversePairs(nums):
         # 核心
         nums[lo: hi + 1] = sorted(nums[lo: hi + 1])  # 排序是因为 mid 左右两边在比较的时候可以节省时间，否则需要 o(n^2)
         return count
-
-    if not nums:
-        return 0
 
     return find(0, len(nums) - 1)
 
