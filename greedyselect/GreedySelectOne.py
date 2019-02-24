@@ -156,6 +156,7 @@ def leastInterval(tasks, n):
 
 def numRescueBoats(people, limit):
     '''
+    881. 救生艇（review）
     第 i 个人的体重为 people[i]，每艘船可以承载的最大重量为 limit。
 
     每艘船最多可同时载两人，但条件是这些人的重量之和最多为 limit。
@@ -171,16 +172,16 @@ def numRescueBoats(people, limit):
     :return:
     '''
     people.sort()
-    count = 0
-    i = 0
-    j = len(people) - 1
-    # print(people)
-    while i <= j:
-        count += 1
-        if people[i] + people[j] <= limit:
-            i += 1
-        j -= 1
-    return count
+    lo, hi = 0, len(people) - 1
+    res = 0
+    while lo <= hi:
+        if (people[lo] + people[hi]) <= limit:
+            lo += 1
+            hi -= 1
+        else:
+            hi -= 1
+        res += 1
+    return res
 
 
 def isMatch(s, p):
