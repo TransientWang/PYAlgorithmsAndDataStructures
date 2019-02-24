@@ -123,34 +123,5 @@ def longestPalindromeSubseq(s):
     return dp[0][len(s) - 1]
 
 
-def reversePairs(nums):
-    """
-    :type nums: List[int]
-    :rtype: int
-    """
-
-    def merge_count(lo, hi):
-
-        if lo == hi:
-            return 0
-        mid = (lo + hi) // 2
-        count = merge_count(lo, mid) + merge_count(mid + 1, hi)
-        j = mid + 1
-        i = lo
-        while i <= mid and j <= hi:
-
-            if nums[i] > nums[j] * 2:
-
-                count += mid - i+1
-                j += 1
-            else:
-                i += 1
-
-        nums[lo:hi + 1] = sorted(nums[lo:hi + 1])
-        return count
-
-    return merge_count(0, len(nums) - 1)
-
-
 if __name__ == '__main__':
-    print(reversePairs([1,3,2,3,1]))
+    pass

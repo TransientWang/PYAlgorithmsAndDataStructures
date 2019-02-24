@@ -78,10 +78,28 @@ def binaryTreePaths(root):
     find()
     return res
 
+
+def isValidSerialization(preorder):
+    """
+    331. 验证二叉树的前序序列化
+    思路：二叉树叶子节点等于非叶子节点 + 1
+    :type preorder: str
+    :rtype: bool
+    """
+    res = 1
+    for i in preorder.split(','):
+        if not res:  #不能有根是叶子
+            return False
+        if i == "#":
+            res -= 1
+        else:
+            res += 1
+    return not res
+
+
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
     root.left.right = TreeNode.TreeNode(5)
     # root.right.right = TreeNode.TreeNode(5)
-
