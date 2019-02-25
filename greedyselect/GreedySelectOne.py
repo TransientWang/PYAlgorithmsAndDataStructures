@@ -83,29 +83,18 @@ def canJumpTwo(nums):
 
 def reconstructQueue(people):
     '''
-
+    406. 根据身高重建队列(reverse)
     思路：先按H降序K升序 重排序原数组
     然后按K位置插入
     如果H小的人先排徐插入，那么他就受到没有排徐插入人的影响 ，有可能排在他的前面
     而贪心选择的思想是只关心已经排好序的，所以 应该先按身高从大到小排序
     这样 他在插入时候已经是最大的值考虑已经插入的，不用考虑剩下没插入的
     '''
-    from functools import cmp_to_key
-    def comp(x1, x2):
-        if x1[0] - x2[0] < 0:
-            return 1
-        elif x1[0] - x2[0] > 0:
-            return -1
-        else:
-            return x1[1] - x2[1]
-
-    re = []
-    compare = cmp_to_key(lambda a, b: comp(a, b))
-    people = sorted(people, key=compare)
-
+    people = sorted(people, key=lambda i: (i[0], -i[1]), reverse=True)
+    res = []
     for i in people:
-        re.insert(i[1], i)
-    return re
+        res.insert(i[1], i)
+    return res
 
 
 def leastInterval(tasks, n):
