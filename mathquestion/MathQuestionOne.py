@@ -181,7 +181,7 @@ def missingNumber(nums):
 
 def hammingDistance(x, y):
     '''
-    461.汉明距离
+    461.汉明距离（review）
     :param x:
     :param y:
     :return:
@@ -203,6 +203,15 @@ def hammingDistance(x, y):
         if (x & (1 << i)) ^ (y & (1 << i)):
             res += 1
     return res
+
+    # 解法二
+    # res = 0
+    # num = bin(x ^ y)
+    #
+    # for i in range(2, len(num)):
+    #     if num[i] == "1":
+    #         res += 1
+    # return res
 
 
 '''
