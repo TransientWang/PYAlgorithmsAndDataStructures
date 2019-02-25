@@ -26,10 +26,7 @@ def aa(*argsl, **kwargs):
 
 def fourSumCount(A, B, C, D):
     '''
-     454.四数相加 II
-    给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
-
-    为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500 。所有整数的范围在 -228 到 228 - 1 之间，最终结果不会超过 231 - 1 。
+     454.四数相加 II（review）
     思路：分治思想：用hashMap存储 前两组的和以及重复次数
     在计算后两组倒数 在不在hashMap中，存在就加1
     :param A:
@@ -38,16 +35,19 @@ def fourSumCount(A, B, C, D):
     :param D:
     :return:
     '''
-    hMap = {}
-    for i in range(len(A)):
-        for j in range(len(A)):
-            t = A[i] + B[j]
-            hMap[t] = 0 if t not in hMap else hMap[t] + 1
     count = 0
-    for i in range(len(A)):
-        for j in range(len(A)):
-            t = - (C[i] + D[j])
-            count = count + hMap[t] + 1 if t in hMap else count
+    mp = dict()
+    for i in A:
+        for j in B:
+            if i + j in mp:
+                mp[i + j] += 1
+            else:
+                mp[i + j] = 1
+
+    for i in C:
+        for j in D:
+            if -(i + j) in mp:
+                count += mp[-(i + j)]
     return count
 
 
