@@ -6,6 +6,7 @@ import random
 
 def fizzBuzz(n):
     '''
+    412. Fizz Buzz(reviw)
     写一个程序，输出从 1 到 n 数字的字符串表示。
 
     1. 如果 n 是3的倍数，输出“Fizz”；
