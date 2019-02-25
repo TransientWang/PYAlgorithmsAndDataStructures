@@ -5,38 +5,32 @@ from copy import deepcopy
 
 def threeSum(nums):
     '''
-    15.三数之和
+    15.三数之和（review）
     先排顺序，然后双指针遍历,
     :param nums:
     :return:
     '''
     nums.sort()
-    lens = len(nums) - 1
-    result = []
-    for i, num in enumerate(nums):
-        if num > 0:
-            break
-        elif i > 0 and num == nums[i - 1]:  # 去重
-            continue
-        left = i + 1
-        right = lens
-
+    res = []
+    for i, v in enumerate(nums):
+        if v > 0: break
+        if i > 0 and nums[i] == nums[i - 1]: continue
+        left, right = i + 1, len(nums) - 1
         while left < right:
-            tmp = nums[left] + nums[right] + num
+            tmp = nums[left] + nums[right] + v
             if tmp == 0:
-                result.append([num, nums[left], nums[right]])
-                while left < right and nums[left] == nums[left + 1]:  # 去重
+                res.append([v, nums[left], nums[right]])
+                while left < right and nums[left] == nums[left + 1]:
                     left += 1
-                while left < right and nums[right] == nums[right - 1]:  # 去重
+                while left < right and nums[right] == nums[right - 1]:
                     right -= 1
                 left += 1
                 right -= 1
-
-            elif tmp > 0:
-                right -= 1
             elif tmp < 0:
                 left += 1
-    print(result)
+            elif tmp > 0:
+                right -= 1
+    return res
 
 
 def threeSumClosest(nums, target):
