@@ -69,26 +69,20 @@ def removeDuplicateLetters(s):
 
 def removeKdigits(num, k):
     """
-    402. 移掉K位数字
-    贪心选择
+    402. 移掉K位数字（review）
+    贪心选择、栈
     :type num: str
     :type k: int
     :rtype: str
     """
-    num = list(num)
-    i = 0
-    while i < len(num) - 1 and k > 0:
-        if num[i] > num[i + 1] and k > 0:
-            num.pop(i)
+    stack = []
+    for i in num:
+        while k and stack and i < stack[-1]:
+            stack.pop()
             k -= 1
-            if i > 0:  # 重要：贪心选择退回到上一个，重新比较
-                i -= 1
-        else:
-            i += 1
-    num = num[:len(num) - k]
-    while len(num) > 0 and num[0] == "0":
-        num.pop(0)
-    return "".join(num) if len(num) > 0 else "0"
+        stack.append(i)
+    res = "".join(stack[:len(stack) - k]).lstrip('0')
+    return res if res else "0"
 
 
 def minPatches(nums, n):
