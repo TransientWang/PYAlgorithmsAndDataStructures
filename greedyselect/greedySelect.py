@@ -57,6 +57,7 @@ def maxProfit2(prices):
 
 def findContentChildren(g, s):
     """
+    455. 分发饼干(review)
     假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每个孩子 i ，
     都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺寸 sj 。
     如果 sj >= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足越
@@ -68,7 +69,6 @@ def findContentChildren(g, s):
      """
     g.sort()
     s.sort()
-    cmin = 0
     ind = 0
     sum = 0
     for i in range(len(s)):
@@ -78,6 +78,7 @@ def findContentChildren(g, s):
             if ind >= len(g):
                 break
     return sum
+
 
 def lemonadeChange(bills: 'List[int]') -> 'bool':
     """
