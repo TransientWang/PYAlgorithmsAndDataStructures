@@ -215,14 +215,14 @@ def hammingDistance(x, y):
     # return res
 
 
-'''
-Shuffle an Array
-打乱一个没有重复元素的数组。
-'''
+
 
 
 class Solution(object):
-
+    '''
+    384. 打乱数组(review)
+    打乱一个没有重复元素的数组。
+    '''
     def __init__(self, nums):
         self.nums = nums
         """
@@ -238,16 +238,20 @@ class Solution(object):
 
     def shuffle(self):
         """
-               Returns a random shuffling of the array.
-               :rtype: List[int]
-               """
-        r = []
-        tmp = self.nums[:]
-        while tmp:
-            ran = int(random.uniform(0, len(tmp)))
-            r.append(tmp[ran])
-            tmp.remove(tmp[ran])
-        return r
+       Returns a random shuffling of the array.
+       :rtype: List[int]
+       """
+        p = self.nums[:]
+        random.shuffle(p)
+        return p
+
+        # r = []
+        # tmp = self.nums[:]
+        # while tmp:
+        #     ran = int(random.uniform(0, len(tmp)))
+        #     r.append(tmp[ran])
+        #     tmp.remove(tmp[ran])
+        # return r
 
 
 def sortColors(nums):
