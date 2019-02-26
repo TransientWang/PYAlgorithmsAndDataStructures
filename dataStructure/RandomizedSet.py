@@ -3,6 +3,7 @@ class RandomizedSet:
 
     def __init__(self):
         """
+        380. 常数时间插入、删除和获取随机元素(review)
         Initialize your data structure here.
         """
         self.r = set()
