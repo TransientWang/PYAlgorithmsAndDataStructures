@@ -122,6 +122,29 @@ def longestPalindromeSubseq(s):
                 dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
     return dp[0][len(s) - 1]
 
+def minSteps(n, m):
+    """
+    最小步数（非LeetCode）
+    输入两个整数 n,m，n可以乘2，减1，加1三种运算，求从 n 到 m 最少需要多少步。
+    :param n:
+    :param m:
+    :return:
+    """
+    caluate = ["+", "-", "*"]
+    dp = [0 for i in range(m - n + 1)]
+    for i in range(1, len(dp)):
+        p = []
+        for j in caluate:
+            if j == "*" and (i + n) % 2 == 0 and (i + n) // 2 >= n:
+                p.append(dp[(i + n) // 2 - n] + 1)
+            elif j == "+" and i + n - 1 >= n:
+                p.append(dp[i - 1] + 1)
+            elif j == "-" and i + n + 1 <= m:
+                p.append(dp[i - 1] + 1)
+        dp[i] = min(p)
+
+    return dp[-1]
+
 
 if __name__ == '__main__':
     pass
