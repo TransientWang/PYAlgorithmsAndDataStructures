@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 class RandomizedSet:
-
+    from heapq import heappop,heappush
     def __init__(self):
         """
         380. 常数时间插入、删除和获取随机元素(review)

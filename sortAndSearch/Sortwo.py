@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import copy
-
+from heapq import *
 
 def wiggleSort(nums):
     '''
@@ -90,60 +90,47 @@ def findMedianSortedArrays(nums1, nums2):
 
 def kthSmallest(matrix, k):
     '''
-    378	.有序矩阵中第K小的元素
-    思路：二分法，如果横向比较那么上一行的元素，不一定全比当前元素小，但是当前元素数值方向上面的元素一定比当前元素小
+    378	.有序矩阵中第K小的元素（review）
+    思路：二分法，如果横向比较那么上一行的元素，不一定全比当前元素小，但是当前元素竖直方向上面的元素一定比当前元素小
     :param matrix:
     :param k:
     :return:
     '''
+    # 解法一
+    queue = []
 
-    def getMid(mid):
-        """
-        二分法，从左下角开始
-        只在向右移动时候计数数值方向上的元素个数
-        :param mid:
-        :return:
-        """
-        n = len(matrix)
-        res = 0
-        i = n - 1
-        j = 0
-        while i >= 0 and j < n:
-            if matrix[i][j] > mid:
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if len(queue) < k:
+                heappush(queue, -matrix[i][j])
+            elif -matrix[i][j] >= queue[0]:
+                heappop(queue)
+                heappush(queue, -matrix[i][j])
+
+    return -heappop(queue)
+    #解法二
+    def counter(mid):
+        i, j, count = len(matrix) - 1, 0, 0
+        while i >= 0 and j < len(matrix[0]):
+            if mid < matrix[i][j]:
                 i -= 1
             else:
-                res += i + 1  # 每次向右移动一位，该值竖直方向向上（包括该值）的i+1位都一定小于预期值
+                count += i + 1
                 j += 1
-        return res
+        return count
 
-    n = len(matrix)
-    low = matrix[0][0]
-    high = matrix[n - 1][n - 1]
-    while low < high:
-        mid = low + (high - low) // 2
-        count = getMid(mid)
+
+    lo, hi = matrix[0][0], matrix[-1][-1]
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2
+        count = counter(mid)
         if count < k:
-            low = mid + 1
+            lo = mid + 1
         else:
-            high = mid - 1
-    return low
+            hi = mid - 1
+    return lo
 
 
-def getMid(matrix, mid):
-    n = len(matrix)
-    res = 0
-    i = n - 1
-    j = 0
-    while i >= 0 and j < n:
-        if matrix[i][j] > mid:
-            i -= 1
-        else:
-            res += i + 1
-            j += 1
-    return res
-
-
-from heapq import *
 
 
 def getSkyline(buildings):
