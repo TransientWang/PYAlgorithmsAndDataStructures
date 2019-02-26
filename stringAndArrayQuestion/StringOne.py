@@ -20,30 +20,22 @@ def reverse(x):
     return int(res)
 
 
-'''
-给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
-'''
-
-
-def firstUniqChar(s):
-    if len(s) == 0:
-        return -1
-    ss = list(s)
-
-    dp = {}
-    for st in ss:
-        if dp.get(st) == None:
-            dp[st] = 0
+def firstUniqChar(s: str) -> int:
+    """
+    387. 字符串中的第一个唯一字符(review)
+    :param s:
+    :return:
+    """
+    mp = dict()
+    for i, v in enumerate(s):
+        if v in mp:
+            mp[v] = 2
         else:
-            dp[st] = 1
-    res = len(s)
-
-    for key, val in list(dp.items()):
-        if val == 0:
-            res = s.index(key) if s.index(key) < res else res
-    if res == len(s):
-        return -1
-    return res
+            mp[v] = 1
+    for i in range(len(s)):
+        if mp[s[i]] == 1:
+            return i
+    return -1
 
 
 '''
@@ -179,7 +171,7 @@ def countAndSay(n):
 
     注意：整数顺序将表示为一个字符串。
     '''
-    if n ==1:
+    if n == 1:
         return "1"
     else:
         data = countAndSay(n - 1)
@@ -195,6 +187,7 @@ def countAndSay(n):
                 time = 1
         res += str(time) + curr
         return res
+
 
 def longestCommonPrefix(strs):
     '''
