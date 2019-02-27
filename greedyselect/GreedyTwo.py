@@ -118,7 +118,7 @@ def reverseString(s):
 
 def lengthOfLISGreedy(nums):
     '''
-    300.最长上升子序列
+    300.最长上升子序列(review)
     给定一个无序的整数数组，找到其中最长上升子序列的长度。
     '''
 
@@ -146,14 +146,14 @@ def lengthOfLISGreedy(nums):
     return len(r)
 
 
-# 普通dp
-# max_ = [1] * len(nums)
-# for i in range(1, len(nums)):
-#     for j in range(i):
-#         if nums[i] > nums[j]:
-#             max_[i] = max(max_[i], max_[j] + 1)
-# print(max_)
-# return max_[-1]
+    # 普通dp
+    # max_ = [1] * len(nums)
+    # for i in range(1, len(nums)):
+    #     for j in range(i):
+    #         if nums[i] > nums[j]:
+    #             max_[i] = max(max_[i], max_[j] + 1)
+    # print(max_)
+    # return max_[-1]
 
 
 def intToRoman(num):
