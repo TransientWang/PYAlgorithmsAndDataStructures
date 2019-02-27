@@ -3,7 +3,7 @@ class BSTIterator(object):
 
     def __init__(self, root):
         """
-        173. 二叉搜索树迭代器
+        173. 二叉搜索树迭代器（review）
         中序遍历迭代版本
         :type root: TreeNode
         """
