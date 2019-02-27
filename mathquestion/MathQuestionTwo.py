@@ -119,7 +119,7 @@ Boyer-Moore众数(majority number) 问题
 
 def getSum(a, b):
     """
-    371.两整数之和
+    371. 两整数之和(review)
     32 bits integer max
     MAX = 0x7FFFFFFF == 2147483647
     32 bits interger min
