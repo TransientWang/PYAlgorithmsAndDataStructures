@@ -122,6 +122,7 @@ def longestPalindromeSubseq(s):
                 dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
     return dp[0][len(s) - 1]
 
+
 def minSteps(n, m):
     """
     最小步数（非LeetCode）
@@ -144,6 +145,21 @@ def minSteps(n, m):
         dp[i] = min(p)
 
     return dp[-1]
+
+
+def longestSubstring(s, k):
+    """
+    395. 至少有K个重复字符的最长子串
+    :type s: str
+    :type k: int
+    :rtype: int
+    """
+    if len(s) < k:
+        return 0
+    for c in set(s):
+        if s.count(c) < k:
+            return max(longestSubstring(t, k) for t in s.split(c))
+    return len(s)
 
 
 if __name__ == '__main__':
