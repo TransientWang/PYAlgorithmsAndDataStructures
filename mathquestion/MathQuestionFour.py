@@ -155,7 +155,7 @@ def bulbSwitch(n):
 
 def countNumbersWithUniqueDigits(n):
     """
-    357. 计算各个位数不同的数字个数
+    357. 计算各个位数不同的数字个数(review)
     :type n: int
     :rtype: int
     """
