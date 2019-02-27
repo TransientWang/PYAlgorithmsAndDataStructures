@@ -150,6 +150,7 @@ def minSteps(n, m):
 def longestSubstring(s, k):
     """
     395. 至少有K个重复字符的最长子串
+    如果某一个字符在字符串中出现的次数少于 k,那么最长的子串一定在它两边
     :type s: str
     :type k: int
     :rtype: int
