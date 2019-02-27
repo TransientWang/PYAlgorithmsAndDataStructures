@@ -23,18 +23,42 @@ def coinChange(coins, amount):
 
 def lengthOfLIS(nums):
     '''
-     300.最长上升子序列
-    给定一个无序的整数数组，找到其中最长上升子序列的长度。
-    用一个辅助数组来保存从0当前节点的最优值
+     300.最长上升子序列（review）
     '''
-    dp = [1 for i in range(len(nums))]
-    res = 1
-    for i in range(len(nums)):
-        for j in range(i):
-            if nums[i] > nums[j] and dp[i] < dp[j] + 1:
-                dp[i] = dp[j] + 1
-            res = max(res, dp[i])
-    return res
+    # dp = [1 for i in range(len(nums))]
+    # res = 1
+    # for i in range(len(nums)):
+    #     for j in range(i):
+    #         if nums[i] > nums[j] and dp[i] < dp[j] + 1:
+    #             dp[i] = dp[j] + 1
+    #         res = max(res, dp[i])
+    # return res
+
+    # 优化
+    if len(nums) == 0:
+        return 0
+    r = [nums[0]]  # 维护维护一个递增序列
+
+    for i in range(1, len(nums)):
+        if nums[i] > r[-1]:  # 当前元素大于递增序列的右端 直接加上
+            r.append(nums[i])
+
+        else:  # 找到第一个比 nums[i]大的替换
+            left = 0
+            right = len(r)
+            while left < right:
+                mid = (left + right - 1) // 2
+                if nums[i] == r[mid]:
+                    left = mid
+                    break
+                elif r[mid] >= nums[i]:
+                    right = mid
+                else:
+                    left = mid + 1
+            r[left] = nums[i]
+
+    print(r)
+    return len(r)
 
 
 def maxArea(height):
