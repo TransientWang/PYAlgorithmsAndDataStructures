@@ -4,9 +4,10 @@ from functools import cmp_to_key
 
 def maxEnvelopes(envelopes):
     """
-    354. 俄罗斯套娃信封问题
+    354. 俄罗斯套娃信封问题（review）
     动态规划
     二分
+    把二维问题转化为一维问题
     :type envelopes: List[List[int]]
     :rtype: int
     """
