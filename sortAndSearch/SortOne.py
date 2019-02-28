@@ -61,9 +61,7 @@ def sortCount(nums, min, max):
 
 def topKFrequent(nums, k):
     '''
-    给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
-    你可以假设给定的 k 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。
-    你的算法的时间复杂度必须优于 O(n log n) , n 是数组的大小。
+    347. 前K个高频元素（review）
     思路：用堆排序和hash(字典)来解决
     先用一个字典记录每个元素出现的次数
     再将 字典的val key转换成数组
@@ -83,6 +81,10 @@ def topKFrequent(nums, k):
 
     t = map(lambda item: item[0], array)
     return list(t)[:k]
+
+    # 解法2
+    count = collections.Counter(nums)
+    return heapq.nlargest(k, count.keys(), key=count.get)
 
 
 def findPeakElement(nums):
