@@ -160,7 +160,7 @@ def countBits(num):
 
 def integerBreak(n):
     """
-    343. 整数拆分
+    343. 整数拆分(review)
     将 7-10进行拆分得到规律
     从 7 开始往后 如果 数字 n -4 得到的值 能整除3 则结果为 4 * (3 ** ((n - 4) // 3))
     否则 计算n //3 的值three，再计算 n- three*3 =lift 结果为(3 ** three) * lift
