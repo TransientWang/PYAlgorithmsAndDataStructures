@@ -91,19 +91,9 @@ def rotate(matrix):
         print("\n")
 
 
-def reverseString(s):
-    i = 0
-    j = len(s) - 1
-    ss = list(s)
 
-    while i < j:
-        tmp = ss[i]
-        ss[i] = ss[j]
-        ss[j] = tmp
-        i += 1
-        j -= 1
 
-    return "".join(ss)
+
 
 
 def intToRoman(num):
