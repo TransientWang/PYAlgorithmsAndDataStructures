@@ -135,11 +135,11 @@ def longestCommonSubstring(m, n):
 
 def countBits(num):
     """
-    338. 比特位计数
+    338. 比特位计数(reciew)
     动态规划
     思路：将数字转换成二进制
     最多需要1 的个数为，0 、2 ** 0（1）,2**1（2-3）、2**2（4-7）、2**3（8-15）
-    每个数二进制中1的个数= 1+ （该数字 - 该数字所在区间大小所在数字的 1的位数））
+    每个数二进制中1的个数 = 1+ （该数字 - 该数字所在区间大小所在数字的 1的位数））
     :type num: int
     :rtype: List[int]
     """
@@ -222,5 +222,5 @@ def maxNumber(nums1, nums2, k):
 
 
 if __name__ == '__main__':
-    print(maxNumber([3, 4, 6, 5], [9, 1, 2, 5, 8, 3], 5))
+    print(countBits(4))
     print(max([2, 2, 3], [2, 3, 4]))
