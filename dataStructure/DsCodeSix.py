@@ -88,13 +88,33 @@ def isValidSerialization(preorder):
     """
     res = 1
     for i in preorder.split(','):
-        if not res:  #不能有根是叶子
+        if not res:  # 不能有根是叶子
             return False
         if i == "#":
             res -= 1
         else:
             res += 1
     return not res
+
+
+def rob(root: TreeNode) -> int:
+    """
+    337. 打家劫舍 III
+    :param self:
+    :param root:
+    :return:
+    """
+
+    def dfs(root):
+        if not root:
+            return [0, 0]  # [抢劫了root,没有抢劫root]
+        left = dfs(root.left)
+        right = dfs(root.right)
+        # 返回结果的第一个元素为我们抢劫了当前root,那么我们只能加上左右子树没有抢劫的值，
+        # 第二个元素是我们不抢劫当前root,那么我们可以随意抢劫连个子树的任意组合。
+        return [left[1] + right[1] + root.val, max(left) + max(right)]
+
+    return max(dfs(root))
 
 
 if __name__ == '__main__':

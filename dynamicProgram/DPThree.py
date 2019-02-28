@@ -222,5 +222,6 @@ def maxNumber(nums1, nums2, k):
 
 
 if __name__ == '__main__':
+    print(2 & 1)
     print(countBits(4))
     print(max([2, 2, 3], [2, 3, 4]))
