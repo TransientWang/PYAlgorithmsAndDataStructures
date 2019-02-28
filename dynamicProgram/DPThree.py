@@ -170,8 +170,6 @@ def integerBreak(n):
     dp = [1, 2]
     if n < 4:
         return dp[n - 2]
-    three = 0
-    lift = 0
     if (n - 4) % 3 != 0:
         three = n // 3
         lift = n - three * 3
