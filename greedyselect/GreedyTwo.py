@@ -33,31 +33,20 @@ def singleNumber(nums):
 
 def intersect(nums1, nums2):
     '''
-    350. 两个数组的交集 II
+    350. 两个数组的交集 II（review）
     :param nums1:
     :param nums2:
     :return:
     '''
-    nums1.sort()
-    nums2.sort()
-    i = 0
-    j = 0
+    dic = dict()
     res = []
-    while i < len(nums1) and j < len(nums2):
-        if nums1[i] != nums2[j]:
-            if nums1[i] < nums2[j] and i < len(nums1):
-                i += 1
-            elif nums1[i] > nums2[j] and j < len(nums2):
-                j += 1
-        else:
-            if i > j:
-                res.append(nums1[i])
-            else:
-                res.append(nums2[j])
-            i += 1
-            j += 1
+    for i in nums1:
+        dic[i] = dic[i] + 1 if i in dic else 1
+    for i in nums2:
+        if i in dic and dic[i] >= 1:
+            res.append(i)
+            dic[i] -= 1
     return res
-
 
 def moveZeroes(nums):
     '''
