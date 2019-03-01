@@ -4,7 +4,8 @@ import collections
 
 def findItinerary(tickets: 'List[List[str]]') -> 'List[str]':
     """
-    332. 重新安排行程
+    332. 重新安排行程(review)
+    https://leetcode.com/problems/reconstruct-itinerary/discuss/78768/Short-Ruby-Python-Java-C%2B%2B
     我们从'JFK'出发，一直按照lexical order往下走，比如从'JFK'可以去'SFO'和'ATL‘，那么我们优先去'ATL'
     边走边消除ticket，也就是说我们从'JFK'出发去了'ATL'，那么ticket ["JFK","ATL"]就没了
     然后走到某一个位置的时候我们发现往下走不下去了，我们就将当前卡住的位置放到最终结果route中去，然后我们倒退一步看看除了这条路还
