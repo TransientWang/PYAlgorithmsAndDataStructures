@@ -9,6 +9,13 @@ class MyFile(object):
             print(os.rename(path, path[:path.rindex(".")] + "." + newPrefix))
 
     def renameFile(self, path: str, oldPrefix="jsp", newPrefix="html"):
+        """
+        递归修改后缀
+        :param path:
+        :param oldPrefix:
+        :param newPrefix:
+        :return:
+        """
         if os.path.isfile(path):
             self.dealFile(path, oldPrefix, newPrefix)
         else:
