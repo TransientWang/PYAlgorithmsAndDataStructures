@@ -119,6 +119,7 @@ def reorderList(head):
 def preorderTraversal(root):
     """
     144. 二叉树的前序遍历
+    中左右
     :type root: TreeNode
     :rtype: List[int]
     """
@@ -143,14 +144,31 @@ def preorderTraversal(root):
     return lists
 
 
-def postorderTraversal(root):
+def postorderTraversalOne(root):
     """
     145. 二叉树的后序遍历
+    前序遍历思路：中右左，然后逆序输出
     :type root: TreeNode
     :rtype: List[int]
     """
     if not root:
         return []
+
+    res, stack = [], [root]
+
+    while stack:
+        node = stack.pop()
+        res.append(node.val)
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+
+    return res[::-1]
+
+    # 思路，便利过的删除
+    # if not root:
+    #     return []
     # stack = [root]
     # lists = []
     # while stack:
@@ -166,20 +184,6 @@ def postorderTraversal(root):
     #     p.left = None
     #     p.right = None
     # return lists
-
-    a = [root]
-    b = []
-    c = []  # 一个不够再加一个
-    while a:
-        node = a.pop()
-        if node.left:
-            a.append(node.left)
-        if node.right:
-            a.append(node.right)
-        b.append(node)
-    while b:  # 每个根节点在后序遍历中，一定是最后遍历到的
-        c.append(b.pop().val)
-    return c
 
 
 def insertionSortList(head):
