@@ -3,6 +3,7 @@
 import copy
 from heapq import *
 
+
 def wiggleSort(nums):
     '''
     324.摆动排序 II
@@ -108,7 +109,8 @@ def kthSmallest(matrix, k):
                 heappush(queue, -matrix[i][j])
 
     return -heappop(queue)
-    #解法二
+
+    # 解法二
     def counter(mid):
         i, j, count = len(matrix) - 1, 0, 0
         while i >= 0 and j < len(matrix[0]):
@@ -119,7 +121,6 @@ def kthSmallest(matrix, k):
                 j += 1
         return count
 
-
     lo, hi = matrix[0][0], matrix[-1][-1]
     while lo <= hi:
         mid = lo + (hi - lo) // 2
@@ -129,8 +130,6 @@ def kthSmallest(matrix, k):
         else:
             hi = mid - 1
     return lo
-
-
 
 
 def getSkyline(buildings):
@@ -183,6 +182,27 @@ def getSkyline(buildings):
     #     if len(skyLine) == 0 or skyLine[-1][1] != height:
     #         skyLine.append([start, height])
     # return skyLine
+
+
+def reverseVowels(s):
+    """
+    :type s: str
+    :rtype: str
+    """
+    s = list(s)
+    p = ("a", "e", "i", "o", "u", "A", "E", "I", "O", "U")
+    left, right = 0, len(s) - 1
+    while left < right:
+        while left < right and s[left] not in p:
+            left += 1
+
+        while left < right and s[right] not in p:
+            right -= 1
+
+        s[left], s[right] = s[right], s[left]
+        left += 1
+        right -= 1
+    return "".join(s)
 
 
 if __name__ == '__main__':
