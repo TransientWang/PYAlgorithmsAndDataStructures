@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from dataStructure import TreeNode
+import os
 
 
 def countNodes(root):
@@ -117,9 +118,36 @@ def rob(root: TreeNode) -> int:
     return max(dfs(root))
 
 
+def increasingTriplet(nums):
+    """
+    :type nums: List[int]
+    :rtype: bool
+    """
+    if len(nums) < 3:
+        return False
+    t = [2 ** 31]
+    for i in range(len(nums)):
+        if len(t) > 2:
+            return True
+        else:
+            if nums[i] > t[-1]:
+                t.append(nums[i])
+            else:
+                b = False
+                for j in range(len(t) - 1, -1, -1):
+                    if nums[i] > t[j]:
+                        b = True
+                        t[j + 1] = nums[i]
+                if not b:
+                    t[0] = nums[i]
+
+    return False
+
+
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
     root.right = TreeNode.TreeNode(3)
     root.left.right = TreeNode.TreeNode(5)
+    print(increasingTriplet([2,1,5,0,4,6]))
     # root.right.right = TreeNode.TreeNode(5)

@@ -208,7 +208,7 @@ def longestPalindrome(s):
 
 def increasingTriplet(nums):
     '''
-     334.递增的三元子序列
+     334.递增的三元子序列（review）
     给定一个未排序的数组，判断这个数组中是否存在长度为 3 的递增子序列。
     贪心选择
     数学表达式如下:
