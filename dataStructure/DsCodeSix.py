@@ -82,7 +82,7 @@ def binaryTreePaths(root):
 
 def isValidSerialization(preorder):
     """
-    331. 验证二叉树的前序序列化
+    331. 验证二叉树的前序序列化（review）
     思路：二叉树叶子节点等于非叶子节点 + 1
     :type preorder: str
     :rtype: bool
