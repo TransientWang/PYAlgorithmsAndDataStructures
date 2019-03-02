@@ -164,5 +164,24 @@ def longestSubstring(s, k):
     return len(s)
 
 
+def largestDivisibleSubset(nums):
+    """
+    368. 最大整除子集
+    :type nums: List[int]
+    :rtype: List[int]
+    """
+    nums.sort()
+    res = []
+    dp = [[]] * len(nums)  #以nums[i] 结尾的符合要求的最长数组
+    for i in range(len(nums)):
+        tp = [nums[i]]
+        for j in range(max(i - 1, 0), -1, -1):
+            if not nums[i] % nums[j] and len(dp[j]) + 1 > len(tp):
+                tp = dp[j] + [nums[i]]
+        res = tp if len(tp) > len(res) else res
+        dp[i] = tp
+    return res
+
+
 if __name__ == '__main__':
-    pass
+    largestDivisibleSubset([1, 2, 4, 8])
