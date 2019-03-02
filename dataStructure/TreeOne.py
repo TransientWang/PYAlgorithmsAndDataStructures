@@ -4,8 +4,11 @@ from dataStructure import TreeNode
 
 def inorderTraversal(root):
     '''
-    94.二叉树的中序遍历 TODO：迭代不熟悉
-    给定一个二叉树，返回它的中序遍历。
+    94.二叉树的中序遍历（reviwe）
+    给定一个二叉树，返回它的中序遍历。左中右
+    迭代法，使用栈，从root 开始将所有子节点迭代的添加栈，
+    最后一个入栈的就是 遍历的起点，最左下的叶子节点。将其弹出出栈
+    如果有右子节点，则需要将其入栈，然后迭代的遍历其右子节点，
     '''
     # res = []
     #
@@ -21,13 +24,13 @@ def inorderTraversal(root):
     # return res
     # 迭代
     stack = []
-    cur = root
     res = []
+    cur = root
     while cur or len(stack):
-        while cur:
+        if cur:  # while cur
             stack.append(cur)
-            cur = cur.left
-        if len(stack):
+            cur.left
+        else:  #if stack
             cur = stack.pop()
             res.append(cur.val)
             cur = cur.right
