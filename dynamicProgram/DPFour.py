@@ -204,6 +204,7 @@ def palindromePairs(words):
                 # 后面不能再算一遍('abcd'+'')+'dcba'和(‘dcba'+'')+'abcd'了
                 if j != 0:
                     res.append([lookup[suff[::-1]], i])
+
     return res
 
 
