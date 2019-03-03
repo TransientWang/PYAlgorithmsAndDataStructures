@@ -55,10 +55,16 @@ class sol(object):
 
 def oddEvenList(head):
     '''
-    328.奇偶链表 TODO：比较绕
+    328.奇偶链表(review)
     思路：两个指针  一个指向奇节点 另一个指向偶数节点
     将偶数节点后面的节点 移动到 奇节点的后面 此时前面有两个奇数几点，后面是两个偶数节点
     重复次过程
+    1 2 3 4 5 6
+    s f
+    1 3 2 4 5 6
+      s   f
+    1 3 5 2 4 6
+        s     f
     '''
     if not head:
         return None
@@ -97,7 +103,7 @@ if __name__ == '__main__':
     # head.next.next.next = ListNode.ListNode(4)
     # head.next.next.next.next = ListNode.ListNode(5)
     # head.next.next.next.next.next = ListNode.ListNode(6)
-    print(getIntersectionNode(headA,headB))
+    print(getIntersectionNode(headA, headB))
     # while h:
     #     print(h.val)
     #     h = h.next
