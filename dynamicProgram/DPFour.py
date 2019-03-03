@@ -172,7 +172,7 @@ def largestDivisibleSubset(nums):
     """
     nums.sort()
     res = []
-    dp = [[]] * len(nums)  #以nums[i] 结尾的符合要求的最长数组
+    dp = [[]] * len(nums)  # 以nums[i] 结尾的符合要求的最长数组
     for i in range(len(nums)):
         tp = [nums[i]]
         for j in range(max(i - 1, 0), -1, -1):
@@ -183,5 +183,29 @@ def largestDivisibleSubset(nums):
     return res
 
 
+def palindromePairs(words):
+    """
+    336. 回文对
+    :type words: List[str]
+    :rtype: List[List[int]]
+    """
+    lookup = {word: i for i, word in enumerate(words)}
+    res = []
+    for i, word in enumerate(words):
+        for j in range(len(word) + 1):
+            pref, suff = word[:j], word[j:]
+            # 去过后缀是回文，并且前缀在lookup里面而且前缀不等于当前单词，那么 pref[::-1]+suff + pref 是回文
+            if suff == suff[::-1] and pref[::-1] in lookup and pref[::-1] != word:
+                res.append([i, lookup[pref[::-1]]])
+            # 如果前缀pref是回文且后缀suff的reverse也在words里面，那么suff[::-1]+(pref+suff)肯定是回文
+            if pref == pref[::-1] and suff[::-1] in lookup and suff[::-1] != word:
+                # 这是为了保证没有重复，例如：
+                # 如果前面算了'abcd'+(''+'dcba')和'dcba'+(''+'abcd')的情况
+                # 后面不能再算一遍('abcd'+'')+'dcba'和(‘dcba'+'')+'abcd'了
+                if j != 0:
+                    res.append([lookup[suff[::-1]], i])
+    return res
+
+
 if __name__ == '__main__':
-    largestDivisibleSubset([1, 2, 4, 8])
+    palindromePairs(["abcd", "dcba", "lls", "s", "sssll"])
