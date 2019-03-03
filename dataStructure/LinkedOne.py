@@ -73,14 +73,14 @@ def reverseList(head):
 
 def reverseListOne(head):
     '''
-    206.反转链表 迭代
+    206.反转链表 迭代（review）
     将当前的下一个赋值给下次循环的当前值，根据传入头找到链表的尾
     多重赋值，等号右边从左到右首先完成计算，然后等号左边从左到右边赋值
     将等号左右两边认为成元组，右边元组先完成计算，然赋值给左边元组等号一遍的顺序可以调换。
     '''
     cur, pre = head, None
     while cur:
-        cur.next, cur, pre = pre, cur.next, cur  # 逻辑：将cur赋值给pre|cur游标后移一位|cur.next->pre
+        cur.next, cur, pre = pre, cur.next, cur  # 逻辑：cur.next->pre|cur游标后移一位|将cur赋值给pre
         # 首先等号右边的三个值已经被记录，也就是cur.next现在就是持有cur.next节点。
         # 赋值的时候 等号左边 第一个先赋值，此时cur.next 指向pre（此时为null）,然后第二个赋值，cur移动到了已经记录的cur.next
         # 位置（即使cur的下一个节点已经指向为null，但是由于cur.next提前记录好了所以赋值没有问题），最后是将pre移动到已经记录好的
@@ -90,9 +90,12 @@ def reverseListOne(head):
 
 def reverseListTwo(head):
     '''
-    206.反转链表 递归
-    先直接走到倒数第二个一个节点，
+    206.反转链表 递归（review）
+    先直接走到倒数第二个节点，
     然后逆置倒数第一个节点，返回递归
+    1 2 3 4 5 6
+    1 2 3 4 6 -> 5 # 4.next 为 5
+    1 2 3 6 -> 5 -> 4 #3.next 为 4
     '''
     if head.next == None:
         return head  # 尾节点返回
