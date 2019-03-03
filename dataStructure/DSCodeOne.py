@@ -76,10 +76,9 @@ def findCircleNum(M):
 
 def longestIncreasingPath(matrix):
     '''
-     329.矩阵中的最长递增路径
+     329.矩阵中的最长递增路径(review)
      给定一个整数矩阵，找出最长递增路径的长度。
 
-    对于每个单元格，你可以往上，下，左，右四个方向移动。 你不能在对角线方向上移动或移动到边界外（即不允许环绕）。
     思路：这道题考察了DFS和动态规划，因为需要计算每一个点的最大长度，如果只用DFS计算就会超时
     解决办法就是动态规划
     用一个数组来保存[x,y]点的最长长度，当计算到某个点的时候 如果辅助数组上该点不为0那么就代表该点已经计算过了，
@@ -88,33 +87,22 @@ def longestIncreasingPath(matrix):
     :param matrix:
     :return:
     '''
-    if len(matrix) == 0 or matrix is None:
-        return 0
-    direct = ((1, 0), (-1, 0), (0, 1), (0, -1))
-    row = len(matrix)
-    colum = len(matrix[0])
-    hMap = [[0 for i in range(colum)] for i in range(row)]
 
-    def find(x, y):
-        if hMap[x][y] != 0:
-            return hMap[x][y]
-        res = 1
-        for i in direct:
-            k = x + i[0]
-            v = y + i[1]
-            if k >= 0 and k < row and v >= 0 and v < colum and matrix[k][v] > matrix[x][y]:
-                lens = 1 + find(k, v)
-                res = max(lens, res)
-        hMap[x][y] = res
-        return res
+    def dfs(i, j):
+        if not dp[i][j]:
+            val = matrix[i][j]
+            dp[i][j] = 1 + max(
+                dfs(i - 1, j) if i and val > matrix[i - 1][j] else 0,
+                dfs(i + 1, j) if i < M - 1 and val > matrix[i + 1][j] else 0,
+                dfs(i, j - 1) if j and val > matrix[i][j - 1] else 0,
+                dfs(i, j + 1) if j < N - 1 and val > matrix[i][j + 1] else 0
+            )
+        return dp[i][j]
 
-    max_res = 1
-    for i in range(row):
-        for j in range(colum):
-            max_res = max(max_res, find(i, j))
-    for i in range(row):
-        print(hMap[i])
-    return max_res
+    if not matrix or not matrix[0]: return 0
+    M, N = len(matrix), len(matrix[0])
+    dp = [[0] * N for i in range(M)]
+    return max(dfs(x, y) for x in range(M) for y in range(N))
 
 
 def countSmaller(nums):
@@ -253,9 +241,36 @@ def findOrder(numCourses, prerequisites):
             return []
     return res
 
+def longestIncreasingPathOne(matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: int
+    """
+    if not matrix:
+        return 0
+    vector = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+    weight = len(matrix[0])
+    height = len(matrix)
 
+    def dfs(last, x, y, deepth):
+        if x >= height or y >= weight or matrix[x][y] == "#" or matrix[x][y] <= last:
+            return deepth
+        p = matrix[x][y]
+        matrix[x][y] = "#"
+        res = 1
+        for vx, vy in vector:
+            res = max(dfs(p, x + vx, y + vy, deepth + 1), res)
+
+        matrix[x][y] = p
+        return res
+
+    result = 1
+    for i in range(height):
+        for j in range(weight):
+            result = max(dfs(-2 ** 31, i, j, 0), result)
+    return result
 if __name__ == '__main__':
     root = TreeNode.TreeNode(-1)
     # root.left = TreeNode.TreeNode(2)
     # root.right = TreeNode.TreeNode(3)
-    print(maxPathSum(root))
+    print(longestIncreasingPathOne([[9,9,4],[6,6,8],[2,1,1]]))
