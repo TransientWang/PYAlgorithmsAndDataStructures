@@ -53,7 +53,7 @@ def fourSumCount(A, B, C, D):
 
 def countRangeSum(nums, lower, upper):
     """
-    327. 区间和的个数
+    327. 区间和的个数(review)
     :param nums:
     :param lower:
     :param upper:
@@ -125,4 +125,4 @@ def reversePairs(nums):
 
 
 if __name__ == '__main__':
-    print(reversePairs([2, 2, -2, -2, -2, 2]))
+    print(countRangeSum([1,2,3,4,5,6],1,21))
