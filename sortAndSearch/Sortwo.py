@@ -6,7 +6,7 @@ from heapq import *
 
 def wiggleSort(nums):
     '''
-    324.摆动排序 II
+    324.摆动排序 II(review)
     :param nums:
     :return:
     '''
@@ -21,19 +21,10 @@ def wiggleSort(nums):
         nums[i] = t.pop()
         i += 2
 
+    # nums.sort()
+    # half = len(nums[::2]) - 1
+    # nums[::2], nums[1::2] = nums[half::-1], nums[:half:-1]
 
-def wiggleSortOne(nums):
-    '''
-    324.摆动排序 II
-    nums[::2]最后一个2是每隔两个提出来
-    摆动排序
-    :param nums:
-    :return:
-    '''
-    print(nums[::-1])
-    nums.sort()
-    half = len(nums[::2]) - 1
-    nums[::2], nums[1::2] = nums[half::-1], nums[:half:-1]
 
 
 def findMedianSortedArrays(nums1, nums2):
