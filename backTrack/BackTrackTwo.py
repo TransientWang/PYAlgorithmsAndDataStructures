@@ -190,5 +190,16 @@ def combine(n, k):
     return res
 
 
+def hechangtuan(stds, k, d):
+    dp = [0] * len(stds)
+    dp[0] = stds[0]
+    for i in range(1, len(dp)):
+        for j in range(i):
+            if i - j <= d:
+                dp[i] = max(dp[j])
+
+
 if __name__ == '__main__':
-    print(combine(4, 2))
+    for i in solveNQueens(4):
+        for j in i:
+            print(j)
