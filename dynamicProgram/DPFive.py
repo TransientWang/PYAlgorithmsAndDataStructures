@@ -37,5 +37,7 @@ def minFlipsMonoIncr(S):
         res = min(res, count_1[i] + (count_0[-1] - count_0[i]))
     return res
 
+
+
 if __name__ == '__main__':
-    minFlipsMonoIncr("00011000")
+   pass
