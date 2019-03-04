@@ -60,20 +60,5 @@ def isLongPressedName(name, typed):
     return True if name[-1] == typed[-1] else False
 
 
-def countRangeSum(nums, lower: int, upper: int) -> int:
-    nums = nums
-    dp = [[0] * len(nums) for i in range(len(nums))]
-    res = 0
-
-    for i in range(len(nums)):
-        for j in range(i, len(nums)):
-            if i == j:
-                dp[i][j] = nums[i]
-            else:
-                dp[i][j] = dp[i][j - 1] + nums[j]
-            if dp[i][j] >= lower and dp[i][j] <= upper:
-                res += 1
-
-    return res
 if __name__ == '__main__':
-    print(countRangeSum([2147483647, -2147483648, -1, 0], -1, 0))
+    pass
