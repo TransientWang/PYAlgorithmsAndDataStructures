@@ -10,6 +10,8 @@ class TreeNode:
 
 
 class Solution:
+    def __init__(self):
+        self.root = None
 
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
         """
@@ -43,6 +45,7 @@ class Solution:
                 root.left = TreeNode(val)
             else:
                 self.insertIntoBST(root.left, val)
+        self.root = root
         return root
 
     def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
@@ -77,7 +80,8 @@ class Solution:
 
     def searchMin(self, root):
         """
-        找中序遍历后继，就是最左下的子树
+        找到二叉搜索树种最小的节点时
+        按中序遍历后继，就是最左下的子树
         :param root:
         :return:
         """
@@ -91,16 +95,38 @@ class Solution:
             p.right = None
         return p
 
+    def getIntervals(self):
+        """
+        352. 将数据流变为多个不相交间隔
+        :rtype: List[Interval]
+        """
+        res = []
+        root = self.root
+        stack = []
+
+        while root or stack:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                if res and root.val == res[-1][-1] + 1:
+                    res[-1] = [res[-1][0], root.val]
+                else:
+                    res.append([root.val, root.val])
+
+                root = root.right
+        return res
+
 
 if __name__ == '__main__':
-    t = TreeNode(4)
-    t.left = TreeNode(1)
-    root = TreeNode(4)
-    root.left = TreeNode(3)
-    root.right = TreeNode(7)
-    root.right.left = TreeNode(5)
-    root.right.left.right = TreeNode(6)
-    # t.right = root
+    t = TreeNode(1)
+
     s = Solution()
-    p = s.deleteNode(t, 4)
-    print(p)
+    s.insertIntoBST(t, 1)
+    s.insertIntoBST(t, 3)
+    s.insertIntoBST(t, 7)
+    s.insertIntoBST(t, 2)
+    t = s.insertIntoBST(t, 6)
+
+    print(s.getIntervals())
