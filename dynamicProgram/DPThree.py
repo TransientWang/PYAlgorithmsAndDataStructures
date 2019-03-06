@@ -222,6 +222,9 @@ def maxNumber(nums1, nums2, k):
 
 
 if __name__ == '__main__':
-    print(2 & 1)
+    import bisect
+    import math
+    math.gcd()
+    bisect.insort()
     print(countBits(4))
     print(max([2, 2, 3], [2, 3, 4]))
