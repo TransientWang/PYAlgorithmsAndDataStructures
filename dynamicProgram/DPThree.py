@@ -181,7 +181,7 @@ def integerBreak(n):
 
 def maxNumber(nums1, nums2, k):
     """
-    321. 拼接最大数
+    321. 拼接最大数（review）
     贪心选择，动态规划
     一共k位digit，我们可以先确定从nums1里面取i位，那么从nums2肯定就是取k-i位
     然后我们确定了从nums1里面取i位的话，就可以算出所能取得的长度为i的最大子序列lis1，相应的也可以算出从nums2取得的长度为k-i的最大子序列lis2
@@ -206,7 +206,7 @@ def maxNumber(nums1, nums2, k):
         """
         res, n = [], len(num)
         for i in range(n):
-            while res and len(res) + (n - i) > k and res[-1] < num[i]:  # len(res) + (n - i) > k保证有足够数量的元素
+            while res and len(res) + (n - i) > k and res[-1] < num[i]:  # len(res) + (n - i) > k 贪心性质保证有足够数量的元素
                 res.pop()
             if len(res) < k:
                 res.append(num[i])
