@@ -60,6 +60,7 @@ def findCircleNum(M):
     :return:
     '''
     dp = [False] * len(M)
+
     def find(x):
         for i in range(len(M)):
             if M[x][i] == 1 and dp[i] == False:
@@ -105,33 +106,45 @@ def longestIncreasingPath(matrix):
     return max(dfs(x, y) for x in range(M) for y in range(N))
 
 
+import bisect
+
+
 def countSmaller(nums):
     '''
-    315.计算右侧小于当前元素的个数
+    315.计算右侧小于当前元素的个数（review）
     给定一个整数数组 nums，按要求返回一个新数组 counts。数组 counts 有该性质： counts[i] 的值是  nums[i] 右侧小于 nums[i] 的元素的数量
     思路：插入排序，存储元素在排序数组中的位置，用二分提高时间复杂度
     :param nums:
     :return:
     '''
+    # tmp = []
+    # t = [0 for i in range(len(nums))]
+    #
+    # def serarchAndInsert(key, index):
+    #     left, right = 0, len(tmp)
+    #     while left < right:
+    #         mid = left + (right - left) // 2
+    #         if key < tmp[mid]:
+    #             right = mid
+    #         else:
+    #             left = mid + 1
+    #     tmp.insert(left, key)
+    #     t[index] = left
+    #
+    # nums.reverse()  # 从右侧开始找
+    # for i in range(len(nums)):
+    #     serarchAndInsert(nums[i], i)
+    # t.reverse()
+    # return t
+
+    # bisect模块解法
     tmp = []
-    t = [0 for i in range(len(nums))]
-
-    def serarchAndInsert(key, index):
-        left, right = 0, len(tmp)
-        while left < right:
-            mid = left + (right - left) // 2
-            if key < tmp[mid]:
-                right = mid
-            else:
-                left = mid + 1
-        tmp.insert(left, key)
-        t[index] = left
-
-    nums.reverse()  # 从右侧开始找
-    for i in range(len(nums)):
-        serarchAndInsert(nums[i], i)
-    t.reverse()
-    return t
+    res = []
+    for x in nums[::-1]:
+        idx = bisect.bisect_left(tmp, x)
+        res.append(idx)
+        tmp.insert(idx, x)
+    return res[::-1]
 
 
 import collections
@@ -241,6 +254,7 @@ def findOrder(numCourses, prerequisites):
             return []
     return res
 
+
 def longestIncreasingPathOne(matrix):
     """
     :type matrix: List[List[int]]
@@ -269,8 +283,10 @@ def longestIncreasingPathOne(matrix):
         for j in range(weight):
             result = max(dfs(-2 ** 31, i, j, 0), result)
     return result
+
+
 if __name__ == '__main__':
     root = TreeNode.TreeNode(-1)
     # root.left = TreeNode.TreeNode(2)
     # root.right = TreeNode.TreeNode(3)
-    print(longestIncreasingPathOne([[9,9,4],[6,6,8],[2,1,1]]))
+    print(countSmaller([5, 2, 6, 1]))
