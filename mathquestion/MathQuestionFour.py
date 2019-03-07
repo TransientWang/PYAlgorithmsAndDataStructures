@@ -134,7 +134,8 @@ def maxProduct(words):
 
 
 def bulbSwitch(n):
-    """319. 灯泡开关
+    """
+    319. 灯泡开关（review）
     :type n: int
     :rtype: int
     """
@@ -150,7 +151,8 @@ def bulbSwitch(n):
     # print(p)
     # return len([i for i in range(1, n + 1) if i ** 0.5 - int(i ** 0.5) == 0])
     # 正解
-    # return int(n ** 0.5)
+    return int(n ** 0.5)
+
 
 
 def countNumbersWithUniqueDigits(n):
