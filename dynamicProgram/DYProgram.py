@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
+from typing import List
+
 
 def findKthLargest(nums, k):
     """
-    215	.数组中的第K个最大元素
+    215	.数组中的第K个最大元素(review)
     思路：分治思想+快速排序
     快排一次，如果哨兵位置 ==k 直接返回
     如果哨兵位置大于k说明第k个元素应该从左边找，反之从右边找
@@ -231,7 +233,6 @@ def numSquaresOne(n):
         i += 1
 
     return 3
-
 
 if __name__ == '__main__':
     pass
