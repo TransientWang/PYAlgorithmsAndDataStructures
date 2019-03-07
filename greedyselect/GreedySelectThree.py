@@ -46,24 +46,19 @@ import collections
 
 def removeDuplicateLetters(s):
     """
-    316. 去除重复字母
+    316. 去除重复字母（review）
     :type s: str
     :rtype: str
     """
-    map = dict()
-    for i in s:
-        if map.get(i, -1) == -1:
-            map[i] = 1
-        else:
-            map[i] += 1
+    lookup = collections.Counter(s)
     res, cur_set = [], set()
     for i in s:
         if i not in cur_set:
-            while res and res[-1] > i and map[res[-1]] > 0:
+            while res and res[-1] > i and lookup[res[-1]] > 0:
                 cur_set.remove(res.pop())
             res.append(i)
             cur_set.add(i)
-        map[i] -= 1
+        lookup[i] -= 1
     return "".join(res)
 
 
@@ -119,5 +114,4 @@ def minPatches(nums, n):
 
 
 if __name__ == '__main__':
-    print(minPatches([1, 3],
-                     6))
+    print(removeDuplicateLetters("cbacdcbc"))
