@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import collections
 def singleNumber(nums):
     """
     260. 只出现一次的数字 III
@@ -117,19 +118,21 @@ def nthSuperUglyNumber(n, primes):
 
 
 def maxProduct(words):
-    """318. 最大单词长度乘积
+    """
+    318. 最大单词长度乘积(review)
     位运算
     通过位运算将重复的找出来
     :type words: List[str]
     :rtype: int
     """
 
-    lookup = dict()
-    for i in words:
-        mask = 0  # 因为只有小写字母，所以可以在32位数上表达出来
-        for c in set(i):
-            mask |= 1 << (ord(c) - ord('a'))  # 将每个字母对位置1，然后跟mask 做或操作，最后的mask就能代表唯一的字符串了
-        lookup[mask] = max(lookup.get(mask, 0), len(i))
+    lookup = collections.defaultdict(int)
+    for word in words:
+        num = 0  # 因为只有小写字母，所以可以在32位数上表达出来
+        for c in word:
+            num |= 1 << (ord(c) - ord('a'))  # 将每个字母对位置1，然后跟mask 做或操作，最后的mask就能代表唯一的字符串了
+        lookup[num] = max(lookup[num], len(word))
+
     return max([lookup[x] * lookup[y] for x in lookup for y in lookup if not x & y] + [0])
 
 
@@ -152,7 +155,6 @@ def bulbSwitch(n):
     # return len([i for i in range(1, n + 1) if i ** 0.5 - int(i ** 0.5) == 0])
     # 正解
     return int(n ** 0.5)
-
 
 
 def countNumbersWithUniqueDigits(n):
@@ -185,6 +187,5 @@ def isSelfCrossing(x):
     return False
 
 
-
 if __name__ == '__main__':
-    pass
+    print(ord('a') - 97)
