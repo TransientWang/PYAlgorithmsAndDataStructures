@@ -90,7 +90,7 @@ class Solution:
             stack.append(root)
             root = root.left
         p = stack.pop()
-        if stack:  # 处理最坐下子树的右子树
+        if stack:  # 处理最左下子树的右子树
             stack[-1].left = p.right
             p.right = None
         return p
