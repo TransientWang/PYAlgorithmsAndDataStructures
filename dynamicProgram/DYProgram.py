@@ -114,7 +114,7 @@ def twoSum(nums, target):
 def maxCoins(nums):
     '''
     TODO 此题目比较难，多回顾
-    312.戳气球
+    312.戳气球(review)
     有 n 个气球，编号为0 到 n-1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
     现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。
     这里的 left 和 right 代表和 i 相邻的两个气球的序号。
@@ -235,4 +235,4 @@ def numSquaresOne(n):
     return 3
 
 if __name__ == '__main__':
-    pass
+    maxCoins([3,1,5,7])
