@@ -62,7 +62,7 @@ def isUgly(num):
 
 def nthUglyNumber(n):
     """
-    264	.丑数 II
+    264	.丑数 II（review）
     :type n: int
     :rtype: int
     """
