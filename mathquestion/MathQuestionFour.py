@@ -86,7 +86,7 @@ from heapq import *
 
 def nthSuperUglyNumber(n, primes):
     """
-    313. 超级丑数
+    313. 超级丑数(review)
     :type n: int
     :type primes: List[int]
     :rtype: int
@@ -188,4 +188,4 @@ def isSelfCrossing(x):
 
 
 if __name__ == '__main__':
-    print(ord('a') - 97)
+    print(nthSuperUglyNumber(n = 12, primes = [2,7,13,19]))
