@@ -143,6 +143,26 @@ def increasingTriplet(nums):
 
     return False
 
+def kSmallestPairs(nums1, nums2, k):
+    """
+    373. 查找和最小的K对数字
+    :type nums1: List[int]
+    :type nums2: List[int]
+    :type k: int
+    :rtype: List[List[int]]
+    """
+    res = []
+    if nums1 and nums2:
+        n1, n2 = len(nums1), len(nums2)
+        heap = [[nums1[0] + nums2[i], 0, i] for i in range(n2)]
+        while k and heap:
+            val, left, right = heapq.heappop(heap)
+            res.append([nums1[left], nums2[right]])
+            if left + 1 < n1:
+                heapq.heappush(heap, [nums1[left + 1] + nums2[right], left + 1, right])
+            k -= 1
+    return res
+
 
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
