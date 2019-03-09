@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 from typing import List
 
+from heapq import *
+
 
 def findKthLargest(nums, k):
     """
@@ -49,6 +51,16 @@ def findKthLargest(nums, k):
             return search(m + 1, right, k - (m - left + 1))
 
     return search(0, len(nums) - 1, k)
+    # 堆
+
+    if not nums:
+        return 0
+    heap = []
+    for i in range(len(nums)):
+        heappush(heap, nums[i])
+        if len(heap) > k:
+            heappop(heap)
+    return heap[0]
 
 
 def minimumTotal(triangle):
@@ -229,5 +241,6 @@ def numSquaresOne(n):
 
     return 3
 
+
 if __name__ == '__main__':
-    maxCoins([3,1,5,7])
+    maxCoins([3, 1, 5, 7])
