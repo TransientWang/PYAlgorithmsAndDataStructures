@@ -5,6 +5,8 @@ if __name__ == '__main__':
     """
     字母交换
     区间动态规划
+    https://blog.csdn.net/flushhip/article/details/79416715
+    https://www.nowcoder.com/test/question/done?tid=21881021&qid=141023#summary
     【编码题】字符串S由小写字母构成，长度为n。定义一种操作，每次都可以挑选字符串中任意的两个相邻字母进行交换。询问在至多交换m次之后，字符串中最多有多少个连续的位置上的字母相同？
 
     输入描述:

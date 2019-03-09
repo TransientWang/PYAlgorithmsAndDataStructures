@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+import collections
+
+
 def minFlipsMonoIncr(S):
     """
     926. 将字符串翻转到单调递增
@@ -38,6 +41,32 @@ def minFlipsMonoIncr(S):
     return res
 
 
+def numExchange(line, n):
+    """
+    数字交换
+    区间DP
+    字符串S由小写字母构成，长度为n。定义一种操作，每次都可以挑选字符串中任意的两个相邻字母进行交换。
+    询问在至多交换m次之后，字符串中最多有多少个连续的位置上的字母相同？
+    :param line: abcdaa
+    :param n: 2
+    :return: 2
+    """
+    mp = collections.defaultdict(list)
+    for i, val in enumerate(line):
+        mp[val].append(i)
+    count = 1
+    for k, v in mp.items():
+        if len(v) <= 1:
+            continue
+        dp = [[0] * len(v) for i in range(len(v))]
+        for lens in range(2, len(v) + 1):
+            for begin in range(len(v) - lens + 1):
+                end = begin + lens - 1
+                dp[begin][end] = dp[begin + 1][end - 1] + (v[end] - v[begin]) - lens + 1
+
+                if dp[begin][end] < int(n):
+                    count = max(count, lens)
+
 
 if __name__ == '__main__':
-   pass
+    pass
