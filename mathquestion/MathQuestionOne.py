@@ -215,14 +215,12 @@ def hammingDistance(x, y):
     # return res
 
 
-
-
-
 class Solution(object):
     '''
     384. 打乱数组(review)
     打乱一个没有重复元素的数组。
     '''
+
     def __init__(self, nums):
         self.nums = nums
         """
@@ -256,35 +254,22 @@ class Solution(object):
 
 def sortColors(nums):
     '''
-    75.颜色分类
+    75.颜色分类(review)
     :param nums:
     :return:
     '''
 
-    def quickSort(nums, left, right):
-        partition = 1
-        l = left
-        r = right
-        i = left
-        while i <= r:
-            if nums[i] < partition:
-                swap(nums, i, l)
-                i += 1
-                l += 1
-            elif nums[i] > partition:
-                swap(nums, i, r)
-                r -= 1
-            else:
-                i += 1
-
-    def swap(nums, i, j):
-        t = nums[j]
-        nums[j] = nums[i]
-        nums[i] = t
-
-    quickSort(nums, 0, len(nums) - 1)
-    return nums
-
+    lo, cur, hi = 0, 0, len(nums) - 1
+    while cur <= hi:
+        if nums[cur] == 0:
+            nums[lo], nums[cur] = nums[cur], nums[lo]
+            cur += 1
+            lo += 1
+        elif nums[cur] == 1:
+            cur += 1
+        else:
+            nums[cur], nums[hi] = nums[hi], nums[cur]
+            hi -= 1
 
 if __name__ == '__main__':
-    print(intToRoman(19))
+    print(sortColors([1, 0, 2, 2, 1, 0]))
