@@ -156,7 +156,7 @@ def rangeBitwiseAnd(m, n):
 
 def computeArea(A, B, C, D, E, F, G, H):
     """
-    223. 矩形面积
+    223. 矩形面积(review)
     :type A: int
     :rtype: int
     """
