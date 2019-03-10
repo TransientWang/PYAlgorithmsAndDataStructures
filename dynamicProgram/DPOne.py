@@ -202,12 +202,14 @@ def maxProfit(prices):
 def maxProfitOne(prices):
     '''
     TODO
-    309.最佳买卖股票时机含冷冻期
-    上一题的不超时解法
+    309.最佳买卖股票时机含冷冻期（review）
+    动态规划问题，首先找出所有的状态
+    分析每种状态，怎么由之前的最大值得来
+    将状态设为记忆数组。
     有三中情况
     一、该索引位置卖出的时候的最大值
     二、该索引位置买入的时候的最大值
-    三、该索引位置冷调期时候的最大值
+    三、该索引位置冷冻期时候的最大值
     rest[i] = max(sell[i-1], buy[i-1], rest[i-1])
     buy[i] = max(rest[i-1]-price,buy[i-1])
     sell[i] = max(buy[i-1] + price,sell[i-1])
@@ -219,7 +221,7 @@ def maxProfitOne(prices):
     :param prices:
     :return:
     '''
-    pass
+
     buy = -2 ** 31  # buy[i]
     preBuy = 0  # 上次卖的
     sell = 0  # sell[i]
@@ -230,6 +232,18 @@ def maxProfitOne(prices):
         preSell = sell
         sell = max(preBuy + price, preSell)
     return sell
+
+    # 动态规划完整
+    if prices == []:
+        return 0
+    buy = [0] * len(prices)
+    buy[0] = -prices[0]
+    sell = [0] * len(prices)
+    for i, v in enumerate(prices):
+        if i > 0:
+            buy[i] = max(sell[i - 2] - v, buy[i - 1])
+            sell[i] = max(sell[i - 1], buy[i - 1] + v)
+    return sell[-1]
 
 
 if __name__ == '__main__':
