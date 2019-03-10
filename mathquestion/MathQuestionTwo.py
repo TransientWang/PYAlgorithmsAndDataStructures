@@ -274,5 +274,5 @@ def largestNumber(nums):
 
 
 if __name__ == '__main__':
-    print(maxPoints([Point(3, 2), Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]))
-    # print(~(-2147483649 ^ 0xFFFFFFFF))
+    # print(maxPoints([Point(3, 2), Point(3, 2), Point(5, 3), Point(4, 1), Point(2, 3), Point(1, 4)]))
+    print(majorityElement([1,2,3,1,1,3,4,6]))
