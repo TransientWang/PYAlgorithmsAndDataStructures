@@ -49,9 +49,9 @@ class NumArray:
 import collections
 
 
-def findMinHeightTrees(n=5, edges=[[0, 1], [0, 2], [0, 3], [3, 4]]):
+def findMinHeightTrees(n=6, edges=[[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]):
     """
-    310. 最小高度树
+    310. 最小高度树（reveiw）
     图
     首先我们要找到一棵树，使得它的高度最短
     并且这是一个联通的图，因此我们试图找到一个点，从它往外延伸出去的距离最短，那么这样一个点势必就是整个图的中心点。
