@@ -178,29 +178,28 @@ def diffWaysToCompute(input):
 
 def isAdditiveNumber(num):
     """
-    306. 累加数天际线问题
+    306. 累加数(review)
     :type num: str
     :rtype: bool
     """
     if not num:
         return False
 
-    def find(idx=0, res=[], res_len=0):
+    def dfs(idx, res):
         if idx == len(num) and len(res) > 2:
             return True
         for i in range(idx, len(num)):
-            if num[idx] == "0" and i > idx:
+            if num[idx] == '0' and idx < i:
                 return False
-            tmp = int(num[idx:i + 1])
-            if res_len > 1 and tmp > res[-1] + res[-2]:
+            cur = int(num[idx:i + 1])
+            if len(res) > 1 and cur > sum(res[-2:]):
                 return False
-            if res_len < 2 or tmp == res[-1] + res[-2]:
-                res.append(tmp)
-                if find(i + 1, res, res_len + 1):
+            if len(res) < 2 or cur == sum(res[-2:]):
+                if dfs(i + 1, res + [cur]):
                     return True
-                res.pop()
         return False
-    return find()
+
+    return dfs(0, [])
 
 
 if __name__ == '__main__':
