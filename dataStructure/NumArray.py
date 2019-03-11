@@ -2,16 +2,17 @@
 class NumArray:
     def __init__(self, nums):
         """
-        307. 区域和检索 - 数组可修改
+        307. 区域和检索 - 数组可修改（review）
         构造一棵线段树，可以按完全二叉树的结构构建，最多需要 2*n -1 个节点存储，
         所以可以使用相应长度的数组来存储它，
         :type nums: List[int]
         """
         self.n = len(nums)
-        self.tree = [0] * (2 * self.n)
-        self.tree[self.n:] = nums[:]  # 叶子节点在右侧 ，这样从根节点层到最后一层，一次从左王右排列
+        self.arrTree = [0] * 2 * self.n
+        self.arrTree[self.n:] = nums  # 叶子节点在右侧 ，这样从根节点层到最后一层，一次从左往右排列
         for i in range(self.n - 1, 0, -1):  # 自底向上构建线段树
-            self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
+            self.arrTree[i] = self.arrTree[i * 2] + self.arrTree[i * 2 + 1]
+
 
     def update(self, i, val):
         """
@@ -20,10 +21,12 @@ class NumArray:
         :rtype: void
         """
         i += self.n
-        self.tree[i] = val
-        while i > 0:
-            self.tree[i // 2] = self.tree[i // 2 * 2] + self.tree[i // 2 * 2 + 1]
-            i //= 2  # 跳到上一层计算
+        ori = val - self.arrTree[i]
+        self.arrTree[i] = val
+
+        while i >= 1:
+            i /= 2
+            self.arrTree[i] += ori# 跳到上一层计算
 
     def sumRange(self, i, j):
         """
@@ -32,19 +35,19 @@ class NumArray:
         :rtype: int
         """
         # 1、在叶子节点中找到左右边界的索引
-        i, j = self.n + i, self.n + j
-        sum_ = 0
+        i += self.n
+        j += self.n
+        res = 0
         while i <= j:
             if i % 2 == 1:
-                sum_ += self.tree[i]  # 左边没有参与计算
+                res += self.arrTree[i]# 左边没有参与计算
                 i += 1
             if j % 2 == 0:
-                sum_ += self.tree[j]  # 右边没有参与计算
+                res +=  self.arrTree[j]# 右边没有参与计算
                 j -= 1
             i //= 2
             j //= 2
-        return sum_
-
+        return res
 
 import collections
 
