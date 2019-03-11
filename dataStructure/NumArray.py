@@ -88,36 +88,10 @@ def findMinHeightTrees(n=6, edges=[[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]):
             if len(graph[node]) == 1:
                 new_leaves.append(node)
         leaves = new_leaves
-
     return leaves
 
-
-def isAdditiveNumber(num):
-    """
-    :type num: str
-    :rtype: bool
-    """
-
-    if not num:
-        return False
-
-    def dfs(idx, res):
-        if idx == len(num) and len(res) > 2:
-            return True
-        for i in range(idx, len(num)):
-            if num[idx] == '0' and idx < i:
-                return False
-            cur = int(num[idx:i + 1])
-            if len(res) > 1 and cur > sum(res[-2:]):
-                return False
-            if len(res) < 2 or cur == sum(res[-2:]):
-                if dfs(i + 1, res + [cur]):
-                    return True
-        return False
-
-    return dfs(0, [])
 
 
 if __name__ == '__main__':
     print(sum([1, 2, 3][-2:]))
-    print(isAdditiveNumber("1023"))
+
