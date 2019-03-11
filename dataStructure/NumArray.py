@@ -13,7 +13,6 @@ class NumArray:
         for i in range(self.n - 1, 0, -1):  # 自底向上构建线段树
             self.arrTree[i] = self.arrTree[i * 2] + self.arrTree[i * 2 + 1]
 
-
     def update(self, i, val):
         """
         :type i: int
@@ -26,7 +25,7 @@ class NumArray:
 
         while i >= 1:
             i /= 2
-            self.arrTree[i] += ori# 跳到上一层计算
+            self.arrTree[i] += ori  # 跳到上一层计算
 
     def sumRange(self, i, j):
         """
@@ -40,14 +39,15 @@ class NumArray:
         res = 0
         while i <= j:
             if i % 2 == 1:
-                res += self.arrTree[i]# 左边没有参与计算
+                res += self.arrTree[i]  # 左边没有参与计算
                 i += 1
             if j % 2 == 0:
-                res +=  self.arrTree[j]# 右边没有参与计算
+                res += self.arrTree[j]  # 右边没有参与计算
                 j -= 1
             i //= 2
             j //= 2
         return res
+
 
 import collections
 
@@ -92,5 +92,32 @@ def findMinHeightTrees(n=6, edges=[[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]):
     return leaves
 
 
+def isAdditiveNumber(num):
+    """
+    :type num: str
+    :rtype: bool
+    """
+
+    if not num:
+        return False
+
+    def dfs(idx, res):
+        if idx == len(num) and len(res) > 2:
+            return True
+        for i in range(idx, len(num)):
+            if num[idx] == '0' and idx < i:
+                return False
+            cur = int(num[idx:i + 1])
+            if len(res) > 1 and cur > sum(res[-2:]):
+                return False
+            if len(res) < 2 or cur == sum(res[-2:]):
+                if dfs(i + 1, res + [cur]):
+                    return True
+        return False
+
+    return dfs(0, [])
+
+
 if __name__ == '__main__':
-    print(findMinHeightTrees())
+    print(sum([1, 2, 3][-2:]))
+    print(isAdditiveNumber("1023"))
