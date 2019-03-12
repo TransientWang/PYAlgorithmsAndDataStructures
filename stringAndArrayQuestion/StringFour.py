@@ -234,7 +234,7 @@ def wordPattern(pattern, str):
 
 def getHint(secret, guess):
     """
-    299. 猜数字游戏
+    299. 猜数字游戏（review）
     :type secret: str
     :type guess: str
     :rtype: str
@@ -255,7 +255,21 @@ def getHint(secret, guess):
                 mp.remove(guess[idx])
                 B += 1
     return str(A) + "A" + str(B) + "B"
+    #
+    s = [0] * 10
+    g = [0] * 10
+    A = 0
+    B = 0
 
+    for i, v in enumerate(secret):
+        if v == guess[i]:
+            A += 1
+        else:
+            s[int(v)] += 1
+            g[int(guess[i])] += 1
+    for i in range(len(s)):
+        B += min(s[i], g[i])
+    return str(A) + "A" + str(B) + "B"
 
 if __name__ == '__main__':
     print(getHint("1807",
