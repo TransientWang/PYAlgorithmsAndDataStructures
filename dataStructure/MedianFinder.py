@@ -1,38 +1,38 @@
 # -*- coding: UTF-8 -*-
 from heapq import *
 
-
-class MedianFinder:
+class MedianFinder(object):
 
     def __init__(self):
         """
-        295.数据流的中位数
+        295. 数据流的中位数(reveiw)
         initialize your data structure here.
         """
-        self.flag = False
-        self.left = []  # 小顶堆
-        self.right = []  # 小顶堆
+        self.left = []
+        self.right = []
+        self.tag = 1
 
     def addNum(self, num):
         """
         :type num: int
-        :rtype: void
+        :rtype: None
         """
-        self.flag = not self.flag
-        if self.flag:
-            heappush(self.right, - heappushpop(self.left, -num))
+        if self.tag & 1 == 1:
+            heappush(self.left, - heappushpop(self.right, float(num)))
         else:
-            heappush(self.left, -heappushpop(self.right, num))
+            heappush(self.right, - heappushpop(self.left, -float(num)))
+
+        self.tag += 1
 
     def findMedian(self):
         """
         :rtype: float
         """
-        if self.flag:
-            return self.right[0]
 
-        return (-self.left[0] + self.right[0]) // 2
-
+        if self.tag & 1 != 1:
+            return -self.left[0]
+        else:
+            return (self.right[0] - self.left[0]) / 2
 
 if __name__ == '__main__':
     obj = MedianFinder()

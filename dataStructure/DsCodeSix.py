@@ -172,4 +172,7 @@ if __name__ == '__main__':
     root.right = TreeNode.TreeNode(3)
     root.left.right = TreeNode.TreeNode(5)
     print(increasingTriplet([2, 1, 5, 0, 4, 6]))
+    from heapq import *
+    heappop()
+
     # root.right.right = TreeNode.TreeNode(5)
