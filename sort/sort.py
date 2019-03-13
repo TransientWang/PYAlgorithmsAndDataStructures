@@ -153,7 +153,28 @@ def heapSort(num):
         heapAdjust(0, num, i)
 
 
+def countSort(num):
+    """
+    计数排序
+    :param num:
+    :return:
+    """
+    min_ = max_ = 0
+    for i in num:
+        min_ = min(min_, i)
+        max_ = max(max_, i)
+    tmp = [0] * (max_ - min_)
+    for i in num:
+        tmp[i - min_ - 1] += 1
+    res = []
+    for i in range(len(tmp)):
+        while tmp[i] >= 1:
+            res.append(min_ + i+1)
+            tmp[i] -= 1
+    return res
+
+
 if __name__ == '__main__':
     p = [9, 8, 7, 6, 5, 4, 3, 1, 2]
-    heapSort(p)
-    print(p)
+
+    print(countSort(p))
