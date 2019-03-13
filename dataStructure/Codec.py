@@ -6,7 +6,7 @@ class Codec:
 
     def serialize(self, root):
         """Encodes a tree to a single string.
-        297.二叉树的序列化与反序列化
+        297.二叉树的序列化与反序列化(revoew)
         :type root: TreeNode
         :rtype: str
         """
@@ -34,22 +34,22 @@ class Codec:
 
         root = data.pop(0)
 
-        stack = [root]
+        queue = [root]
 
         while len(data) != 0:
-            tmp = stack.pop(0)
+            tmp = queue.pop(0)
             if len(data) > 0 and data[0] is None:
                 data.pop(0)
             elif len(data) > 0:
                 leftNode = data.pop(0)
                 tmp.left = leftNode
-                stack.append(leftNode)
+                queue.append(leftNode)
             if len(data) > 0 and data[0] is None:
                 data.pop(0)
             elif len(data) > 0:
                 rightNode = data.pop(0)
                 tmp.right = rightNode
-                stack.append(rightNode)
+                queue.append(rightNode)
 
         return root
 
@@ -165,15 +165,15 @@ if __name__ == '__main__':
     root.right.left = TreeNode.TreeNode(4)
     root.right.right = TreeNode.TreeNode(5)
     codex = Codec()
-    # p = codex.deserialize(codex.serialize(root))
-    # print(p)
-
-    print(solve([["O", "X", "O", "O", "O", "O", "O", "O", "O"],
-                 ["O", "O", "O", "X", "O", "O", "O", "O", "X"],
-                 ["O", "X", "O", "X", "O", "O", "O", "O", "X"],
-                 ["O", "O", "O", "O", "X", "O", "O", "O", "O"],
-                 ["X", "O", "O", "O", "O", "O", "O", "O", "X"],
-                 ["X", "X", "O", "O", "X", "O", "X", "O", "X"],
-                 ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
-                 ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
-                 ["O", "O", "O", "O", "O", "X", "X", "O", "O"]]))
+    p = codex.deserialize(codex.serialize(root))
+    print(p)
+    #
+    # print(solve([["O", "X", "O", "O", "O", "O", "O", "O", "O"],
+    #              ["O", "O", "O", "X", "O", "O", "O", "O", "X"],
+    #              ["O", "X", "O", "X", "O", "O", "O", "O", "X"],
+    #              ["O", "O", "O", "O", "X", "O", "O", "O", "O"],
+    #              ["X", "O", "O", "O", "O", "O", "O", "O", "X"],
+    #              ["X", "X", "O", "O", "X", "O", "X", "O", "X"],
+    #              ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+    #              ["O", "O", "O", "X", "O", "O", "O", "O", "O"],
+    #              ["O", "O", "O", "O", "O", "X", "X", "O", "O"]]))
