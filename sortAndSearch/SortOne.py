@@ -172,10 +172,8 @@ def merge(intervals):
             res.append(Interval(s, e))
             s = lsts[i].start
             e = lsts[i].end
-        elif lsts[i].start <= e and lsts[i].end > e:
+        elif lsts[i].end > e:
             e = lsts[i].end
-        else:
-            continue
     res.append(Interval(s, e))
     return res
 
