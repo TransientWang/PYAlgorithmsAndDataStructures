@@ -165,7 +165,7 @@ def computeArea(A, B, C, D, E, F, G, H):
 
 def isNumber(s):
     """
-    65. 有效数字
+    65. 有效数字（review）
     :type s: str
     :rtype: bool
     """
