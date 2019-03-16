@@ -190,19 +190,26 @@ def candy(ratings):
         :type ratings: List[int]
         :rtype: int
     """
+
+
     lens = len(ratings)
     r = [1 for i in range(lens)]
 
     for x in range(1, lens):
         r[x] = r[x - 1] + 1 if ratings[x] > ratings[x - 1] and r[x] <= r[x - 1] else r[x]
+
     t = lens - 1
     for x in range(1, lens):
         r[t - x] = r[lens - x] + 1 if ratings[t - x] > ratings[lens - x] and r[t - x] <= r[lens - x] else r[t - x]
+
     sum = 0
+    print(r)
     for q in r:
         sum += q
+
+
     return sum
 
 
 if __name__ == '__main__':
-    print((maxProfit([1, 2, 3, 4, 5])))
+    print((candy([6,1,2,3,4,6])))

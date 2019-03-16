@@ -158,20 +158,33 @@ def hIndex(citations):
 
 def addOperators(num, target):
     """
-    282. 给表达式添加运算符
+    282. 给表达式添加运算符（review）
     :type num: str
     :type target: int
     :rtype: List[str]
     """
-    if not num:
+    if not num or len(num) == 1 and int(num) != target:
         return []
-    if len(num) == 1:
-        if int(num) == target:
-            return target
-        return []
+
     num = [int(i) for i in num]
     res = []
-
+    #传统
+    # def dfs(pos, path, cur, last):
+    #     if cur == target and pos == len(num):
+    #         res.append(path)
+    #         return
+    #     for i in range(pos, len(num)):
+    #         cur_num = num[pos:i+1]
+    #         if len(cur_num) > 1 and cur_num[0] == "0":
+    #             break
+    #         if pos == 0:
+    #             dfs(i+1, cur_num, int(cur_num), int(cur_num))
+    #         else:
+    #             dfs(i + 1, path + "+" + cur_num, cur + int(cur_num), int(cur_num))
+    #             dfs(i + 1, path + "-" + cur_num, cur - int(cur_num), -int(cur_num))
+    #             dfs(i + 1, path + "*" + cur_num, cur - last + last * int(cur_num), last * int(cur_num))
+    #
+    # dfs(0, "", 0, 0)
     def dfs(i, expr, preSum, pre, cur):
         """
         :param i: 位置索引
@@ -194,14 +207,14 @@ def addOperators(num, target):
             # new_prod = prevProd * (curr*10+nums[i]) = 10*prod + prod//curr*nums[i]
             if cur and 10 * pre + pre // cur * num[i] + preSum == target:  # 处理多个数字组合
                 res.append(expr + str(num[i]))
-        else:
+        else:  #处理单个数组的情况
             dfs(i + 1, expr + "+" + str(num[i]), preSum + pre, num[i], num[i])
             dfs(i + 1, expr + "-" + str(num[i]), preSum + pre, -num[i], num[i])  # 因为计算的时候需要知道上一个参与计算的数值，
             # 但是如果考虑上一个参与计算的符号就会变得更加复杂，所以当有减号参与的时候，直接将计算数值变为负值
             dfs(i + 1, expr + "*" + str(num[i]), preSum, num[i] * pre, num[i])
             # if cur:
             # append nums[i] directly to last number, impossible when last number is 0
-            if cur:  # 过滤最后一个参与计算的值为 0 的情况
+            if cur:  # 过滤最后一个参与计算的值为 0 的情况,处理多个数字的组合数
                 dfs(i + 1, expr + str(num[i]), preSum, 10 * pre + pre // cur * num[i], cur * 10 + num[i])  # 处理多个数字组合
 
     dfs(1, str(num[0]), 0, num[0], num[0])
@@ -271,6 +284,7 @@ def getHint(secret, guess):
         B += min(s[i], g[i])
     return str(A) + "A" + str(B) + "B"
 
+
 if __name__ == '__main__':
-    print(getHint("1807",
-                  "7810"))
+    print(addOperators("231",
+                       22))
