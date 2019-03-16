@@ -163,18 +163,18 @@ def countSort(num):
     for i in num:
         min_ = min(min_, i)
         max_ = max(max_, i)
-    tmp = [0] * (max_ - min_)
+    tmp = [0] * (max_ - min_+1)
     for i in num:
-        tmp[i - min_ - 1] += 1
+        tmp[i - min_] += 1
     res = []
     for i in range(len(tmp)):
         while tmp[i] >= 1:
-            res.append(min_ + i+1)
+            res.append(min_ + i)
             tmp[i] -= 1
     return res
 
 
 if __name__ == '__main__':
-    p = [9, 8, 7, 6, 5, 4, 3, 1, 2]
+    p = [0,9, 8, 7, 6, 5, 4, 3, 1, 2]
 
     print(countSort(p))
