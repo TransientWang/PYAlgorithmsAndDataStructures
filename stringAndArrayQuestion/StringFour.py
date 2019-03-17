@@ -133,8 +133,8 @@ def numberToWords(num):
 
 def hIndex(citations):
     """
-    274. H指数
-    274. H指数II
+    274. H指数(review)
+    275. H指数II（review）
     :type citations: List[int]
     :rtype: int
     """
