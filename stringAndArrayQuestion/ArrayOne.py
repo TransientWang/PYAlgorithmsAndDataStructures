@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 def productExceptSelf(nums):
     '''
-    238	.除自身以外数组的乘积
+    3238.除自身以外数组的乘积（reveiw）
     给定长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，
     其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
     :param nums:
@@ -19,6 +19,19 @@ def productExceptSelf(nums):
     for i in range(len(nums)):
         output[i] = r[i] * r1[i]
     return output
+
+
+    # 二
+    p = 1
+    out = []
+    for i in range(len(nums)):
+        out.append(p)
+        p = p * nums[i]
+    p = 1
+    for i in range(len(nums) - 1, -1, -1):
+        out[i] = p * out[i]
+        p *= nums[i]
+    return out
 
 
 def spiralOrder(matrix):
@@ -169,9 +182,8 @@ def maxSlidingWindow(nums, k):
         while deque and nums[i] > nums[deque[-1]]:  # 如果新值比窗口中的最大值大则将，窗口中的最大值弹出
             deque.pop()
         deque.append(i)  # 将当前值入队
-    res.append(nums[deque[0]])  #还剩下一个
+    res.append(nums[deque[0]])  # 还剩下一个
     return res
-
 
 
 def largestRectangleArea(heights):
@@ -246,4 +258,4 @@ def maximalRectangle(matrix):
 
 
 if __name__ == '__main__':
-    print(largestRectangleArea([2, 1, 5, 6, 2, 3]))
+    print(productExceptSelf([1, 2, 3, 4]))
