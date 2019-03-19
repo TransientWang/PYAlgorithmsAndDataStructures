@@ -147,29 +147,31 @@ def findDuplicate(nums):
 
 
 def maxSlidingWindow(nums, k):
-    '''
-    239.滑动窗口最大值
-    给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口 k 内的数字。滑动窗口每次只向右移动一位。
-
-    返回滑动窗口最大值。
-    思路：先求出第一个滑动窗口的值，然后从第一个向后遍历，
-    如果下一个进来的值大于等于当前最大值,那么当前最大值就是下一个进来的值
-    如果当前最大值 在滑动窗口外，只能比较出滑动窗口里的最大值
-    :param nums:
-    :param k:
-    :return:
-    '''
-    if not nums or k <= 0 or k > len(nums):
-        return []
-    res = [max(nums[:k])]
-    max_val = res[0]
+    """
+    239. 滑动窗口最大值(review)
+    deque 左边保存窗口中最大值的索引
+    :type nums: List[int]
+    :type k: int
+    :rtype: List[int]
+    """
+    if not nums or len(nums) == 0:
+        return
+    deque = []
+    for i in range(k):  # 初始化，将队列左边变为第一个窗口最大值的索引
+        while deque and nums[i] > nums[deque[-1]]:
+            deque.pop()
+        deque.append(i)
+    res = []
     for i in range(k, len(nums)):
-        if nums[i] > max_val:
-            max_val = nums[i]
-        elif nums[i - k] == max_val:
-            max_val = max(nums[i - k + 1:i + 1])
-        res.append(max_val)
+        res.append(nums[deque[0]])  # 将索引中的最大值添加到队列中
+        if deque[0] < i - k + 1:  # 如果窗口中的最左侧索引已经超出范围则弹出
+            deque.pop(0)
+        while deque and nums[i] > nums[deque[-1]]:  # 如果新值比窗口中的最大值大则将，窗口中的最大值弹出
+            deque.pop()
+        deque.append(i)  # 将当前值入队
+    res.append(nums[deque[0]])  #还剩下一个
     return res
+
 
 
 def largestRectangleArea(heights):

@@ -124,5 +124,8 @@ def isMatchTwo(s, p):
 
     return dp[-1][-1]
 
+
+
+
 if __name__ == '__main__':
     isMatch("qqqqqqqq", "q*")

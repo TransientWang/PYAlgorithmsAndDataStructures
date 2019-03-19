@@ -166,6 +166,8 @@ def kSmallestPairs(nums1, nums2, k):
     return res
 
 
+
+
 if __name__ == '__main__':
     root = TreeNode.TreeNode(1)
     root.left = TreeNode.TreeNode(2)
@@ -173,6 +175,6 @@ if __name__ == '__main__':
     root.left.right = TreeNode.TreeNode(5)
     print(increasingTriplet([2, 1, 5, 0, 4, 6]))
     from heapq import *
-    heappop()
+
 
     # root.right.right = TreeNode.TreeNode(5)
