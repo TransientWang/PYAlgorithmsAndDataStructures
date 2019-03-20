@@ -127,13 +127,14 @@ def isMatchTwo(s, p):
 
 def getMoneyAmount(n: int) -> int:
     # 375. 猜数字大小 II
-    #区间dp
+    # 区间dp
     cache = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
     for lo in range(n - 1, 0, -1):
         for hi in range(lo + 1, n + 1):
             cache[lo][hi] = float('inf')
             for pivot in range(lo, hi):
                 cache[lo][hi] = min(cache[lo][hi], pivot + max(cache[lo][pivot - 1], cache[pivot + 1][hi]))
+                # 每次猜完后有三种回答，大了，小了，等于（这种情况不用付钱）。取前两种情况的最大值
     return cache[1][n]
 
 
