@@ -229,4 +229,4 @@ def countDigitOne(n):
         m *= 10
     return ones
 if __name__ == '__main__':
-    print(majorityElement([1, 1, 1, 1, 1, 2, 2, 2]))
+    print(countDigitOne(90))
