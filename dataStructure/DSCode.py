@@ -161,7 +161,7 @@ import copy
 
 def lowestCommonAncestor(root, p, q):
     """
-    236.二叉树的最近公共祖先
+    236.二叉树的最近公共祖先（review）
     思路：
     如果根节点为None，或者跟节点== q | p
     则可以直接返回
