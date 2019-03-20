@@ -222,7 +222,11 @@ def countDigitOne(n):
                 time += (r + 1) * base
         base = base * 10
     return time
-
-
+    #解法二
+    # ones, m = 0, 1
+    # while m <= n:
+    #     ones += (n/m + 8) / 10 * m + (n/m % 10 == 1) * (n%m + 1)
+    #     m *= 10
+    # return ones
 if __name__ == '__main__':
-    print(majorityElement([1, 1, 1, 1, 1, 2, 2, 2]))
+    print(countDigitOne(10))
