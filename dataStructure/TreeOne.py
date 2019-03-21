@@ -148,7 +148,7 @@ def connect(root):
 
 def kthSmallest(root, k):
     '''
-    230.二叉搜索树中第K小的元素
+    230.二叉搜索树中第K小的元素（review）
     给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。
     二叉搜索树：左子树上的节点都小于根节点的值，又子树的节点都大于根节点的值
     这是一个递归的过程
@@ -175,7 +175,20 @@ def kthSmallest(root, k):
         return kthSmallest(root.left, k)
     else:
         return kthSmallest(root.right, k - num - 1)
-
+    #解法二 中序遍历
+    # stack = [root]
+    # res = []
+    # while stack or root:
+    #     if root:
+    #         stack.append(root)
+    #
+    #         root = root.left
+    #     else:
+    #         p = stack.pop()
+    #         res.append(p.val)
+    #         if len(res) == k:
+    #             return res[k - 1]
+    #         root = p.right
 
 def numIslands(grid):
     '''

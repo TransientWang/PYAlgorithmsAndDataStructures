@@ -197,36 +197,41 @@ def majorityElement(nums):
 def countDigitOne(n):
     """
     233. 数字1的个数
+    https://www.cnblogs.com/grandyang/p/4629032.html
     :type n: int
     :rtype: int
     """
-    length = len(str(n))  # w位数
-    time = 0
-    base = 1
-    for i in range(length):
-        if i == 0:  # 有几个10（没隔10算一个1） + 各位余数
-            r = n // (base * 10)
-            current = n % (base * 10)
-            time += r * base
-            if current >= 1:
-                time += 1
-        else:  # 其他位数
-            r = n // (base * 10)
-            current = (n % (base * 10)) // base
-            end = n % base
-            if current == 0:
-                time += r * base
-            elif current == 1:
-                time += r * base + end + 1
-            else:
-                time += (r + 1) * base
-        base = base * 10
-    return time
-    #解法二
+    # length = len(str(n))  # w位数
+    # time = 0
+    # base = 1
+    # for i in range(length):
+    #     if i == 0:  # 10 位数与个位数的1的总和
+    #         r = n // (base * 10)
+    #         current = n % (base * 10)
+    #         time += r * base
+    #         if current >= 1:
+    #             time += 1
+    #     else:  # 其他位数
+    #         r = n // (base * 10)
+    #         current = (n % (base * 10)) // base
+    #         end = n % base
+    #         if current == 0:
+    #             time += r * base
+    #         elif current == 1:
+    #             time += r * base + end + 1
+    #         else:
+    #             time += (r + 1) * base
+    #     base = base * 10
+    # return time
+    # 解法二
     ones, m = 0, 1
     while m <= n:
-        ones += (n/m + 8) / 10 * m + (n/m % 10 == 1) * (n%m + 1)
+        ones += (n // m + 8) // 10 * m
+        ones += (n // m % 10 == 1) * (n % m + 1)
         m *= 10
     return ones
+
+
 if __name__ == '__main__':
-    print(countDigitOne(90))
+
+    print(countDigitOne(1001))
