@@ -146,7 +146,7 @@ def checkSubarraySum(nums, k):
     :rtype: bool
     """
     # sums = sum(nums)
-    # if ((nums == 0 and k ==0) and len(nums) >1) or (k!=0 and sums % k ==0 and len(nums) >1):
+    # if ((sums == 0 and k ==0) and len(nums) >1) or (k!=0 and sums % k ==0 and len(nums) >1):
     #     return True
     # for start in range(len(nums)):
     #     sum_ = nums[start]
@@ -156,21 +156,21 @@ def checkSubarraySum(nums, k):
     #             return True
     # return False
     # 解法二
-    dic = {0: -1}
-    summ = 0
-    for i, n in enumerate(nums):
+
+    lookup = {0: -1}
+    summing = 0
+    n = len(nums)
+    if n < 2: return False
+    for i in range(0, n):
+        summing += nums[i]
         if k != 0:
-            summ += n
-            summ = (summ + n) % k
-        else:
-            summ += n
-        if summ not in dic:
-            dic[summ] = i
-        else:
-            if i - dic[summ] >= 2:
-                return True
+            summing = summing % k
+        pre = lookup.get(summing, None)
+        if (pre == 0 or pre) and i - pre > 1:
+            return True
+        elif pre != 0 and not pre:
+            lookup[summing] = i
     return False
 
-
 if __name__ == '__main__':
-    print(checkSubarraySum([23, 2, 6, 4, 7], 6))
+    print(checkSubarraySum([1,0], 2))
