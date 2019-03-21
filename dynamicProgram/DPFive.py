@@ -166,9 +166,9 @@ def checkSubarraySum(nums, k):
         if k != 0:
             summing = summing % k
         pre = lookup.get(summing, None)
-        if (pre == 0 or pre) and i - pre > 1:
+        if pre != None and i - pre > 1:
             return True
-        elif pre != 0 and not pre:
+        elif pre == None:
             lookup[summing] = i
     return False
 
