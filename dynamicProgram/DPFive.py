@@ -138,5 +138,39 @@ def getMoneyAmount(n: int) -> int:
     return cache[1][n]
 
 
+def checkSubarraySum(nums, k):
+    """
+    523. 连续的子数组和
+    :type nums: List[int]
+    :type k: int
+    :rtype: bool
+    """
+    # sums = sum(nums)
+    # if ((nums == 0 and k ==0) and len(nums) >1) or (k!=0 and sums % k ==0 and len(nums) >1):
+    #     return True
+    # for start in range(len(nums)):
+    #     sum_ = nums[start]
+    #     for end in range(start +1,len(nums)):
+    #         sum_ += nums[end]
+    #         if (k == 0 and sum_ ==0) or (k != 0 and sum_ % k ==0):
+    #             return True
+    # return False
+    # 解法二
+    dic = {0: -1}
+    summ = 0
+    for i, n in enumerate(nums):
+        if k != 0:
+            summ += n
+            summ = (summ + n) % k
+        else:
+            summ += n
+        if summ not in dic:
+            dic[summ] = i
+        else:
+            if i - dic[summ] >= 2:
+                return True
+    return False
+
+
 if __name__ == '__main__':
-    print(getMoneyAmount(10))
+    print(checkSubarraySum([23, 2, 6, 4, 7], 6))
