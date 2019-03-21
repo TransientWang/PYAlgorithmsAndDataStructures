@@ -37,7 +37,7 @@ def minWindow(s, t):
 
 def calculate(s):
     '''
-    227.基本计算器 II
+    227.基本计算器 II（review）
     实现一个基本的计算器来计算一个简单的字符串表达式的值。
     字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
     思路：用栈来存储数字，由于涉及到优先级，所以遇到减号
@@ -244,4 +244,4 @@ def shortestPalindrome(s):
 
 
 if __name__ == '__main__':
-    print(shortestPalindrome("abcd"))
+    print(calculate("22-1"))
