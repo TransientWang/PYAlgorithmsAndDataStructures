@@ -41,8 +41,7 @@ def countNodes(root):
 
 def invertTree(root):
     """
-    226. 翻转二叉树
-    同样的代码在 py和py3 中执行速度查太多了
+    226. 翻转二叉树（review）
     :type root: TreeNode
     :rtype: TreeNode
     """
