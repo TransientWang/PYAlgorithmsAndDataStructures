@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import collections
+from typing import List
 
 
 def minFlipsMonoIncr(S):
@@ -172,5 +173,15 @@ def checkSubarraySum(nums, k):
             lookup[summing] = i
     return False
 
+def combinationSum4(nums: List[int], target: int) -> int:
+    #377. 组合总和 Ⅳ
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for i in range(target+1):
+        for j in nums:
+            if i + j <= target:
+                dp[i + j] += dp[i]
+        print(dp)
+    return dp[-1]
 if __name__ == '__main__':
-    print(checkSubarraySum([1,0], 2))
+    print(combinationSum4([1, 2, 3], 4))
