@@ -210,7 +210,7 @@ def isNumber(s):
 
 def calculate(s):
     """
-    224. 基本计算器（review）
+    224. 基本计算器
     :type s: str
     :rtype: int
     """
@@ -264,7 +264,7 @@ def calculate(s):
 
 def calculate_(s):
     """
-    224. 基本计算器
+    224. 基本计算器(review)
     :type s: str
     :rtype: int
     """
