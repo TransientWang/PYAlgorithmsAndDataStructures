@@ -6,7 +6,7 @@ import heapq
 
 def countNodes(root):
     """
-    222. 完全二叉树的节点个数
+    222. 完全二叉树的节点个数（review）
     :type root: TreeNode
     :rtype: int
     """
@@ -29,8 +29,8 @@ def countNodes(root):
     # if not root:
     #   return 0
     # left = right = root
-    # hight = 1
-    # while not right:
+    # hight = 0
+    # while right:
     #     left = left.left
     #     right = right.right
     #     h += 1
