@@ -62,10 +62,24 @@ def containsNearbyAlmostDuplicate(nums, k, t):
             a.remove(nums[i - k])
     return False
 
+    #桶排序
+    width = t + 1
+    if width <= 0:
+        return False
+    lookup = dict()
+    for i in range(len(nums)):
+        bucket = nums[i] // width
+        if bucket in lookup or (bucket - 1 in lookup and abs(nums[i] - lookup[bucket - 1]) < width) or (
+                bucket + 1 in lookup and abs(nums[i] - lookup[bucket + 1]) < width):
+            return True
+        lookup[bucket] = nums[i]
+        if i >= k:
+            lookup.pop(nums[i - k] // width)
+    return False
 
 def maximalSquare(matrix):
     """
-    221. 最大正方形
+    221. 最大正方形(review)
     动态规划：dp[x][y] 代表以matrix[x][y]为右下角的正方形的最大面积
     最长边 = min(dp[x][y - 1], dp[x - 1][y], dp[x - 1][y - 1]) + 1
     :type matrix: List[List[str]]
