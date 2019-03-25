@@ -27,7 +27,7 @@ def combinationSum3(k, n):
 
 def containsNearbyAlmostDuplicate(nums, k, t):
     """
-    220. 存在重复元素 III
+    220. 存在重复元素 III(review)
     滑动窗口
     :type nums: List[int]
     :type k: int
