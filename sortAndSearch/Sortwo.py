@@ -127,7 +127,7 @@ def getSkyline(buildings):
     from functools import cmp_to_key
     from heapq import heappush, heappop
     ''' 
-    218.天际线问题
+    218.天际线问题（review）
     线段树问题，去掉重合的线段，并且加入了高度这一维度
     :param self:
     :param buildings:
@@ -147,7 +147,7 @@ def getSkyline(buildings):
     for x, H, R in events:
         while x >= hp[0][1]:  # 如果当前左顶点大于大顶堆中最高的右顶点
             heappop(hp)  # 已经该建筑物处理完毕，将其高度排除
-        if H:  # 如果是左顶点，则将左顶点加入大顶堆
+        if H:  # 如果是左顶点，则将右顶点加入大顶堆
             heappush(hp, (H, R))
         if res[-1][-1] + hp[0][0]:  # 前一个是左顶点时候同一个建筑物的右顶点不能加入，或者不同建筑物的高度不可以相同
             res.append([x, -hp[0][0]])
@@ -194,6 +194,23 @@ def reverseVowels(s):
         left += 1
         right -= 1
     return "".join(s)
+
+def getSkylines(buildings):
+    """
+    :type buildings: List[List[int]]
+    :rtype: List[List[int]]
+    """
+    events = sorted([(L, -H) for L, _, H in buildings] + list(set((R, 0) for _, R, _ in buildings)))
+    result = [[0, 0]]
+    height = [[0, 2 ** 31]]
+    for x, h in events:
+        while x > height[0][1]:
+            heappop(height)
+        if h < 0:
+            heappush(height, [h, x])
+        if result[-1][-1] + height[0][0]:
+            result.append([x, -height[0][0]])
+    return result[1:]
 
 
 if __name__ == '__main__':

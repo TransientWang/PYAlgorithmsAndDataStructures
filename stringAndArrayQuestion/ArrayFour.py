@@ -69,8 +69,9 @@ def containsNearbyAlmostDuplicate(nums, k, t):
     lookup = dict()
     for i in range(len(nums)):
         bucket = nums[i] // width
-        if bucket in lookup or (bucket - 1 in lookup and abs(nums[i] - lookup[bucket - 1]) < width) or (
-                bucket + 1 in lookup and abs(nums[i] - lookup[bucket + 1]) < width):
+        if bucket in lookup \
+                or (bucket - 1 in lookup and abs(nums[i] - lookup[bucket - 1]) < width)\
+                or (bucket + 1 in lookup and abs(nums[i] - lookup[bucket + 1]) < width):
             return True
         lookup[bucket] = nums[i]
         if i >= k:
