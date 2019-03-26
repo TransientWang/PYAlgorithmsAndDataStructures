@@ -195,23 +195,5 @@ def reverseVowels(s):
         right -= 1
     return "".join(s)
 
-def getSkylines(buildings):
-    """
-    :type buildings: List[List[int]]
-    :rtype: List[List[int]]
-    """
-    events = sorted([(L, -H) for L, _, H in buildings] + list(set((R, 0) for _, R, _ in buildings)))
-    result = [[0, 0]]
-    height = [[0, 2 ** 31]]
-    for x, h in events:
-        while x > height[0][1]:
-            heappop(height)
-        if h < 0:
-            heappush(height, [h, x])
-        if result[-1][-1] + height[0][0]:
-            result.append([x, -height[0][0]])
-    return result[1:]
-
-
 if __name__ == '__main__':
     print(getSkyline([[2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8]]))
