@@ -1,41 +1,32 @@
 # -*- coding: UTF-8 -*-
 from dataStructure import ListNode
+import collections
+from heapq import heappush, heappop
 
 
 def mergeKLists(lists):
     '''
-    23.合并K个元素的有序链表
-    超时
-    n:lists长度
-    m:单个链表长度
-    时间复杂度O（n) = (n*m)
+    23.合并K个元素的有序链表(review)
+    时间复杂度O（n) = O(nklogk)
     :param lists:
     :return:
     '''
-    root = ListNode.ListNode(0)
-    t = root
-    while True:
-        if len(lists) > 0:
-            m = -1
-            h = 2 ** 31
-            L = len(lists) - 1
-            i = 0
-            while i <= L:
-                if lists[i] is not None:
-                    if lists[i].val <= h:
-                        h = lists[i].val
-                        m = i
-                    i += 1
-                else:
-                    lists.remove(None)
-                    L -= 1
-            if m != -1:
-                t.next = ListNode.ListNode(lists[m].val)
-                t = t.next
-                lists[m] = lists[m].next
-        else:
-            break
-    return root.next
+    node_pool = []
+    lookup = collections.defaultdict(list)
+    for node in lists:
+        if node:
+            heappush(node_pool, node.val)
+            lookup[node.val].append(node)
+    head = cur = ListNode(-1)
+    while node_pool:
+        min_val = heappop(node_pool)
+        min_node = lookup[min_val].pop(0)
+        cur.next = min_node
+        cur = cur.next
+        if min_node.next:
+            heappush(node_pool, min_node.next.val)
+            lookup[min_node.next.val].append(min_node.next)
+    return head.next
 
 
 def mergeKListsOne(lists):

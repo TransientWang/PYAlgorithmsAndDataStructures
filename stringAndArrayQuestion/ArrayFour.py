@@ -11,8 +11,6 @@ def combinationSum3(k, n):
     :rtype: List[List[int]]
     """
     res = []
-    math.sqrt()
-
     def find(s_list, begin, end):
         if len(s_list) == k:
             if sum(s_list) == n:
