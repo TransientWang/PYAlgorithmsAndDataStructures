@@ -3,7 +3,7 @@ class LRUCache:
 
     def __init__(self, capacity):
         """
-        146.LRU缓存机制
+        146.LRU缓存机制(review)
         acity: int
         """
         self.hash = {}
@@ -28,16 +28,16 @@ class LRUCache:
         :type value: int
         :rtype: void
         """
-        if self.hash.get(key) is None:
-            if self.cur == 0:  # cur减少到0的时候就开始往外弹过期的
-                self.hash.pop(self.list.pop())
-                self.list.insert(0, key)
-            else:
-                self.cur -= 1  # cur不为0就减1
-                self.list.insert(0, key)
-        else:  # 已存在
+        if self.hash.get(key):
             self.list.remove(key)
             self.list.insert(0, key)
+        elif self.cur == 0:  # cur减少到0的时候就开始往外弹过期的
+            self.hash.pop(self.list.pop())
+            self.list.insert(0, key)
+        else:
+            self.cur -= 1  # cur不为0就减1
+            self.list.insert(0, key)
+
         self.hash[key] = value
 
 
