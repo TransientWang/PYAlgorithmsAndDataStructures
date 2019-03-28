@@ -16,11 +16,6 @@ def findKthLargest(nums, k):
     :return:
     """
 
-    def swap(nums, i, j):
-        t = nums[j]
-        nums[j] = nums[i]
-        nums[i] = t
-
     def find(left, right):
         if left > right:
             return
@@ -34,7 +29,7 @@ def findKthLargest(nums, k):
                 i += 1
 
             if i < j:
-                swap(nums, i, j)
+                nums[i], nums[j] = nums[j], nums[i]
         nums[left] = nums[i]
         nums[i] = tmp
 
@@ -42,7 +37,6 @@ def findKthLargest(nums, k):
 
     def search(left, right, k):
         m = find(left, right)
-        print(nums)
         if m - left + 1 == k:
             return nums[m]
         elif k < m - left + 1:
@@ -52,15 +46,14 @@ def findKthLargest(nums, k):
 
     return search(0, len(nums) - 1, k)
     # 堆
-
-    if not nums:
-        return 0
-    heap = []
-    for i in range(len(nums)):
-        heappush(heap, nums[i])
-        if len(heap) > k:
-            heappop(heap)
-    return heap[0]
+    # if not nums:
+    #     return 0
+    # heap = []
+    # for i in range(len(nums)):
+    #     heappush(heap, nums[i])
+    #     if len(heap) > k:
+    #         heappop(heap)
+    # return heap[0]
 
 
 def minimumTotal(triangle):
