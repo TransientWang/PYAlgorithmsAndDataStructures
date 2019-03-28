@@ -217,7 +217,7 @@ def multiply(num1, num2):
 
 def shortestPalindrome(s):
     """
-    214. 最短回文串
+    214. 最短回文串(reveiw)
     最长回文前缀字符串是谁然后在它前面加上其后缀的逆序即可，即suff[::-1] + pref + suff
     :type s: str
     :rtype: str
@@ -244,4 +244,4 @@ def shortestPalindrome(s):
 
 
 if __name__ == '__main__':
-    print(calculate("22-1"))
+    print(shortestPalindrome("2132-1"))
