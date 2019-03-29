@@ -172,6 +172,7 @@ def canCompleteCircuit1(gas, cost):
 
 def candy(ratings):
     """
+    135. 分发糖果(reveiw)
     老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
 
     你需要按照以下要求，帮助老师给这些孩子分发糖果：
@@ -191,7 +192,6 @@ def candy(ratings):
         :rtype: int
     """
 
-
     lens = len(ratings)
     r = [1 for i in range(lens)]
 
@@ -201,15 +201,34 @@ def candy(ratings):
     t = lens - 1
     for x in range(1, lens):
         r[t - x] = r[lens - x] + 1 if ratings[t - x] > ratings[lens - x] and r[t - x] <= r[lens - x] else r[t - x]
-
     sum = 0
-    print(r)
     for q in r:
         sum += q
+    return sum
 
 
+def candyTwo(ratings):
+    ratings = [ratings[-1]] + ratings + [ratings[0]]
+    dp = [1 for i in range(len(ratings))]
+    flag = True
+    while flag:
+        flag = False
+        for i in range(1, len(ratings) - 2):
+            if ratings[i] > ratings[i - 1] and dp[i] <= dp[i - 1]:
+                flag = True
+                dp[i] = dp[i] + 1
+        for i in range(1, len(ratings) - 2):
+            if ratings[i] > ratings[i + 1] and dp[i] <= dp[i + 1]:
+                flag = True
+                dp[i] = dp[i] + 1
+
+        ratings[0] = ratings[-2]
+        ratings[-1] = ratings[1]
+    sum = 0
+    for i in range(1, len(ratings) - 2):
+        sum += dp[i]
     return sum
 
 
 if __name__ == '__main__':
-    print((candy([6,1,2,3,4,6])))
+    print((candyTwo([6, 1, 2, 3, 4, 6])))
