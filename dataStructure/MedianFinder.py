@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from heapq import *
 
+
 class MedianFinder(object):
 
     def __init__(self):
@@ -10,29 +11,26 @@ class MedianFinder(object):
         """
         self.left = []
         self.right = []
-        self.tag = 1
+        self.tag = True
 
     def addNum(self, num):
         """
         :type num: int
         :rtype: None
         """
-        if self.tag & 1 == 1:
+        if self.tag:
             heappush(self.left, - heappushpop(self.right, float(num)))
         else:
             heappush(self.right, - heappushpop(self.left, -float(num)))
 
-        self.tag += 1
+        self.tag = not self.tag
 
     def findMedian(self):
         """
         :rtype: float
         """
+        return -self.left[0] if not self.tag else (self.right[0] - self.left[0]) / 2
 
-        if self.tag & 1 != 1:
-            return -self.left[0]
-        else:
-            return (self.right[0] - self.left[0]) / 2
 
 if __name__ == '__main__':
     obj = MedianFinder()
