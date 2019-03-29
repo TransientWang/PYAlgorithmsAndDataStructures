@@ -208,27 +208,39 @@ def candy(ratings):
 
 
 def candyTwo(ratings):
-    ratings = [ratings[-1]] + ratings + [ratings[0]]
-    dp = [1 for i in range(len(ratings))]
+    """
+    分发糖果（环状）
+    字节跳动2019春招后端开发3月16日笔试题
+第三题：
+n个人参加比赛，结束后每个人一个分数。
+领奖时所有人依次排成一圈，第一个和第n个相邻。
+要求:
+1.如果某个人的分数比旁边的人高，那么奖品数量也要比他多。
+2.每个至少得一个奖品。
+问最少应该准备多少个奖品?
+求解思路：化环为直，动态调整循环次数
+    :param ratings:
+    :return:
+    """
+    n = len(ratings)
+    ratings = ratings + [ratings[0]]
+    dp = [1 for _ in range(len(ratings))]
     flag = True
     while flag:
         flag = False
-        for i in range(1, len(ratings) - 2):
+        for i in range(1, len(ratings)):
             if ratings[i] > ratings[i - 1] and dp[i] <= dp[i - 1]:
+                dp[i] = dp[i - 1] + 1
                 flag = True
-                dp[i] = dp[i] + 1
-        for i in range(1, len(ratings) - 2):
+        dp[0] = dp[n]
+        for i in range(n - 1, -1, -1):
             if ratings[i] > ratings[i + 1] and dp[i] <= dp[i + 1]:
+                dp[i] = dp[i + 1] + 1
                 flag = True
-                dp[i] = dp[i] + 1
+        dp[n] = dp[0]
 
-        ratings[0] = ratings[-2]
-        ratings[-1] = ratings[1]
-    sum = 0
-    for i in range(1, len(ratings) - 2):
-        sum += dp[i]
-    return sum
+    return sum(dp[:-1])
 
 
 if __name__ == '__main__':
-    print((candyTwo([6, 1, 2, 3, 4, 6])))
+    print((candyTwo([1, 2, 3, 4, 1, 4])))
