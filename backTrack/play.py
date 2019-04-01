@@ -165,7 +165,7 @@ def existOne(board, word):
 
 def findWords(board: list, words: list):
     '''
-    212.单词搜索二
+    212.单词搜索二（review）
     正确解法是 前缀树 + DFS
     :param board:
     :param words:
