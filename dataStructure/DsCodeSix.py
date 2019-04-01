@@ -165,15 +165,55 @@ def kSmallestPairs(nums1, nums2, k):
     return res
 
 
+def distanceK(root, target, K):
+    """
+    863. 二叉树中所有距离为 K 的结点
+    :type root: TreeNode
+    :type target: TreeNode
+    :type K: int
+    :rtype: List[int]
+    """
+    parent = dict()
+
+    def dfs(node, pre):
+        if node:
+            parent[node] = pre
+            dfs(node.left, node)
+            dfs(node.right, node)
+
+    dfs(root, None)
+    seen = {target}
+    deque = [target]
+    dist = 0
+    res = []
+    while deque:
+        if dist == K:
+            return [n.val for n in deque]
+        l = len(deque)
+        for _ in range(l):
+            node = deque.pop(0)
+            if node.left and node.left not in seen:
+                seen.add(node.left)
+                deque.append(node.left)
+            if node.right and node.right not in seen:
+                seen.add(node.right)
+                deque.append(node.right)
+            pre = parent[node]
+            if pre and pre not in seen:
+                seen.add(pre)
+                deque.append(pre)
+        dist += 1
+    return res
 
 
 if __name__ == '__main__':
-    root = TreeNode.TreeNode(1)
-    root.left = TreeNode.TreeNode(2)
-    root.right = TreeNode.TreeNode(3)
-    root.left.right = TreeNode.TreeNode(5)
-    print(increasingTriplet([2, 1, 5, 0, 4, 6]))
-    from heapq import *
-
-
-    # root.right.right = TreeNode.TreeNode(5)
+    root = TreeNode.TreeNode(3)
+    root.left = TreeNode.TreeNode(5)
+    root.right = TreeNode.TreeNode(1)
+    root.left.left = TreeNode.TreeNode(6)
+    root.left.right = TreeNode.TreeNode(2)
+    root.right.left = TreeNode.TreeNode(0)
+    root.right.right = TreeNode.TreeNode(8)
+    root.left.right.left = TreeNode.TreeNode(7)
+    root.left.right.right = TreeNode.TreeNode(4)
+    print(distanceK(root, root.left, 2))
