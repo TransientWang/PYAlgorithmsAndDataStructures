@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import collections
+from typing import List
 
 
 def reverseString(s):
@@ -58,6 +59,21 @@ def isLongPressedName(name, typed):
             return False
 
     return True if name[-1] == typed[-1] else False
+
+
+def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
+    #713. 乘积小于K的子数组
+    if k <= 1:
+        return 0
+    left = res = 0
+    pre = 1
+    for right, val in enumerate(nums):
+        pre *= val
+        while pre >= k:
+            pre /= nums[left]
+            left += 1
+        res += right - left + 1
+    return res
 
 
 if __name__ == '__main__':
