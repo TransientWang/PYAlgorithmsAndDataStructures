@@ -63,6 +63,7 @@ def isLongPressedName(name, typed):
 
 def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
     #713. 乘积小于K的子数组
+    #尺取法
     if k <= 1:
         return 0
     left = res = 0
