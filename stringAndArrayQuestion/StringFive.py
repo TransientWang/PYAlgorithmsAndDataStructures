@@ -76,6 +76,23 @@ def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
         res += right - left + 1
     return res
 
-
+def slove(nums, S):
+    """
+    尺取法
+    给定长度为n的数列整数 nums,与最大值S。求总和不小于S的连续子序列长度的最小值。
+    :param nums:
+    :param S:
+    :return:
+    """
+    res = len(nums) + 1
+    left = sums = 0
+    for right, val in enumerate(nums):
+        if sums < S:
+            sums += val
+        while sums >= S:
+            sums -= nums[left]
+            res = min(res, right - left + 1)
+            left += 1
+    return res
 if __name__ == '__main__':
     pass
