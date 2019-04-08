@@ -142,8 +142,7 @@ def canCompleteCircuit(gas, cost):
 
 def canCompleteCircuit1(gas, cost):
     '''
-    134.加油站
-    REVIEW
+    134.加油站（reveiw）
     1. 如果汽车从A开始且无法到达B. A和B之间的任何站点都不能到达B.（B是A无法到达的第一个站点。）
     2. 如果天然气总数大于总成本数。必须有一个解决方案。
     贪心选择解题思路
