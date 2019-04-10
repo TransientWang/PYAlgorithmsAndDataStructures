@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import collections
+import itertools
 from typing import List
 
 
@@ -62,8 +63,8 @@ def isLongPressedName(name, typed):
 
 
 def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
-    #713. 乘积小于K的子数组
-    #尺取法
+    # 713. 乘积小于K的子数组
+    # 尺取法
     if k <= 1:
         return 0
     left = res = 0
@@ -75,6 +76,7 @@ def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
             left += 1
         res += right - left + 1
     return res
+
 
 def slove(nums, S):
     """
@@ -94,5 +96,34 @@ def slove(nums, S):
             res = min(res, right - left + 1)
             left += 1
     return res
+
+
+def buddyStrings(A, B):
+    """
+    859. 亲密字符串
+    :type A: str
+    :type B: str
+    :rtype: bool
+    """
+    if len(A) != len(B):
+        return False
+    if A == B:
+        seen = set()
+        for a in A:
+            if a in seen:
+                return True
+            seen.add(a)
+        return False
+    else:
+        pairs = []
+
+        for a, b in itertools.zip_longest(A, B):
+            if a != b:
+                pairs.append((a, b))
+            if (len(pairs) >= 3):
+                return False
+        return len(pairs) == 2 and pairs[0] == pairs[1][::-1]
+
+
 if __name__ == '__main__':
-    pass
+    print(buddyStrings("aaa", "aaa"))
