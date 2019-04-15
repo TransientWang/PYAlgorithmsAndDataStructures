@@ -169,23 +169,28 @@ def rightSideView(root):
 
 def lowestCommonAncestor(root, p, q):
     """
-    235. 二叉搜索树的最近公共祖先
+    235. 二叉搜索树的最近公共祖先(review)
     :type root: TreeNode
     :type p: TreeNode
     :type q: TreeNode
     :rtype: TreeNode
     """
-    if not root \
-            or (p.val < root.val and q.val > root.val) \
-            or (p.val > root.val and q.val < root.val) \
-            or root.val == p.val \
-            or root.val == q.val:
-        return root
-
-    if p.val > root.val:
-        return lowestCommonAncestor(root.right, p, q)
-    else:
+    # if not root \
+    #         or (p.val < root.val and q.val > root.val) \
+    #         or (p.val > root.val and q.val < root.val) \
+    #         or root.val == p.val \
+    #         or root.val == q.val:
+    #     return root
+    #
+    # if p.val > root.val:
+    #     return lowestCommonAncestor(root.right, p, q)
+    # else:
+    #     return lowestCommonAncestor(root.left, p, q)
+    if root.val > p.val and root.val > q.val:
         return lowestCommonAncestor(root.left, p, q)
+    elif root.val < p.val and root.val < q.val:
+        return lowestCommonAncestor(root.right, p, q)
+    return root
 
 
 if __name__ == '__main__':
