@@ -46,3 +46,10 @@ def canMeasureWater(self, x: int, y: int, z: int) -> bool:
     while y % x != 0:
         y, x = x, y % x
     return z % x == 0
+
+def divisorGame(self, N: int) -> bool:
+    # 1025. 除数博弈
+    if N % 2 ==0:
+        return True
+    else:
+        return False
