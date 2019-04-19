@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import math
+from typing import List
 
 
 def slove(nums, k):
@@ -61,6 +62,19 @@ def AggressiveCows(nums, n):
         else:
             right = mid
     return left
+
+
+def checkPossibility(self, nums: List[int]) -> bool:
+    # 665. 非递减数列
+    p = None
+    for i in range(len(nums) - 1):
+        if nums[i] > nums[i + 1]:
+            if p is not None:
+                return False
+            p = i
+
+    return (p is None or p == 0 or p == len(nums) - 2 or
+            nums[p - 1] <= nums[p + 1] or nums[p] <= nums[p + 2])
 
 
 if __name__ == '__main__':

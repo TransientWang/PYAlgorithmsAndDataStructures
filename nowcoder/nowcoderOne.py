@@ -71,3 +71,6 @@ if __name__ == '__main__':
         idx += 1
     for i in res:
         print(i)
+
+
+
