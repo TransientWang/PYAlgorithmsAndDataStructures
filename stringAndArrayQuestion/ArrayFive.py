@@ -76,6 +76,13 @@ def checkPossibility(self, nums: List[int]) -> bool:
     return (p is None or p == 0 or p == len(nums) - 2 or
             nums[p - 1] <= nums[p + 1] or nums[p] <= nums[p + 2])
 
-
+def removeOuterParentheses(S: str) -> str:
+    #1021. 删除最外层的括号
+    res, opened = [], 0
+    for c in S:
+        if c == '(' and opened > 0: res.append(c)
+        if c == ')' and opened > 1: res.append(c)
+        opened += 1 if c == '(' else -1
+    return "".join(res)
 if __name__ == '__main__':
     print(AggressiveCows([1, 2, 8, 4, 9], 3))
